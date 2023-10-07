@@ -6,7 +6,7 @@ type User @model {
 	commands: [Command] @hasMany(fields: ["id"])
 }
 
-type Command @model {
+type Command @model @auth(rules: [{ allow: owner }]) {
 	id: ID!
 	userID: ID!
 	baseCommand: String!
@@ -23,7 +23,7 @@ enum ParameterType {
 	DROPDOWN
 }
 
-type Parameter @model {
+type Parameter @model @auth(rules: [{ allow: owner }]) {
 	id: ID!
 	commandID: ID!
 	type: ParameterType!
