@@ -1,5 +1,5 @@
 type User @model {
-	id: ID!
+	id: ID! @auth(rules: [{ allow: owner, operations: [read] }])
 	email: String! @auth(rules: [{ allow: owner, operations: [read] }])
 	password: String! @auth(rules: [{ allow: owner, operations: [read, update] }])
 	darkMode: Boolean!
