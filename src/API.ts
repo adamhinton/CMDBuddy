@@ -74,7 +74,6 @@ export type User = {
   commands?: ModelCommandConnection | null,
   createdAt: string,
   updatedAt: string,
-  owner?: string | null,
 };
 
 export type ModelCommandConnection = {
@@ -94,7 +93,6 @@ export type Command = {
   user?: User | null,
   createdAt: string,
   updatedAt: string,
-  owner?: string | null,
 };
 
 export type ModelParameterConnection = {
@@ -120,7 +118,6 @@ export type Parameter = {
   command?: Command | null,
   createdAt: string,
   updatedAt: string,
-  owner?: string | null,
 };
 
 export enum ParameterType {
@@ -131,15 +128,15 @@ export enum ParameterType {
 }
 
 
-export type DeleteUserInput = {
-  id: string,
-};
-
 export type UpdateUserInput = {
   id: string,
   email?: string | null,
   password?: string | null,
   darkMode?: boolean | null,
+};
+
+export type DeleteUserInput = {
+  id: string,
 };
 
 export type CreateCommandInput = {
@@ -407,46 +404,11 @@ export type CreateUserMutation = {
         order: number,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type DeleteUserMutationVariables = {
-  input: DeleteUserInput,
-  condition?: ModelUserConditionInput | null,
-};
-
-export type DeleteUserMutation = {
-  deleteUser?:  {
-    __typename: "User",
-    id: string,
-    email: string,
-    password: string,
-    darkMode: boolean,
-    commands?:  {
-      __typename: "ModelCommandConnection",
-      items:  Array< {
-        __typename: "Command",
-        id: string,
-        userID: string,
-        baseCommand: string,
-        title: string,
-        order: number,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -473,13 +435,42 @@ export type UpdateUserMutation = {
         order: number,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
+  } | null,
+};
+
+export type DeleteUserMutationVariables = {
+  input: DeleteUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type DeleteUserMutation = {
+  deleteUser?:  {
+    __typename: "User",
+    id: string,
+    email: string,
+    password: string,
+    darkMode: boolean,
+    commands?:  {
+      __typename: "ModelCommandConnection",
+      items:  Array< {
+        __typename: "Command",
+        id: string,
+        userID: string,
+        baseCommand: string,
+        title: string,
+        order: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -514,7 +505,6 @@ export type CreateCommandMutation = {
         allowedValues?: Array< string | null > | null,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -530,11 +520,9 @@ export type CreateCommandMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -569,7 +557,6 @@ export type UpdateCommandMutation = {
         allowedValues?: Array< string | null > | null,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -585,11 +572,9 @@ export type UpdateCommandMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -624,7 +609,6 @@ export type DeleteCommandMutation = {
         allowedValues?: Array< string | null > | null,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -640,11 +624,9 @@ export type DeleteCommandMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -687,15 +669,12 @@ export type CreateParameterMutation = {
         darkMode: boolean,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -738,15 +717,12 @@ export type UpdateParameterMutation = {
         darkMode: boolean,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -789,15 +765,12 @@ export type DeleteParameterMutation = {
         darkMode: boolean,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -823,13 +796,11 @@ export type GetUserQuery = {
         order: number,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -854,7 +825,6 @@ export type ListUsersQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -890,7 +860,6 @@ export type GetCommandQuery = {
         allowedValues?: Array< string | null > | null,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -906,11 +875,9 @@ export type GetCommandQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -942,11 +909,9 @@ export type ListCommandsQuery = {
         darkMode: boolean,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -990,15 +955,12 @@ export type GetParameterQuery = {
         darkMode: boolean,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -1034,11 +996,9 @@ export type ListParametersQuery = {
         order: number,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1046,7 +1006,6 @@ export type ListParametersQuery = {
 
 export type OnCreateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateUserSubscription = {
@@ -1067,19 +1026,16 @@ export type OnCreateUserSubscription = {
         order: number,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateUserSubscription = {
@@ -1100,19 +1056,16 @@ export type OnUpdateUserSubscription = {
         order: number,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteUserSubscription = {
@@ -1133,19 +1086,16 @@ export type OnDeleteUserSubscription = {
         order: number,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnCreateCommandSubscriptionVariables = {
   filter?: ModelSubscriptionCommandFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateCommandSubscription = {
@@ -1174,7 +1124,6 @@ export type OnCreateCommandSubscription = {
         allowedValues?: Array< string | null > | null,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1190,17 +1139,14 @@ export type OnCreateCommandSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateCommandSubscriptionVariables = {
   filter?: ModelSubscriptionCommandFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateCommandSubscription = {
@@ -1229,7 +1175,6 @@ export type OnUpdateCommandSubscription = {
         allowedValues?: Array< string | null > | null,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1245,17 +1190,14 @@ export type OnUpdateCommandSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteCommandSubscriptionVariables = {
   filter?: ModelSubscriptionCommandFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteCommandSubscription = {
@@ -1284,7 +1226,6 @@ export type OnDeleteCommandSubscription = {
         allowedValues?: Array< string | null > | null,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1300,17 +1241,14 @@ export type OnDeleteCommandSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnCreateParameterSubscriptionVariables = {
   filter?: ModelSubscriptionParameterFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateParameterSubscription = {
@@ -1347,21 +1285,17 @@ export type OnCreateParameterSubscription = {
         darkMode: boolean,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateParameterSubscriptionVariables = {
   filter?: ModelSubscriptionParameterFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateParameterSubscription = {
@@ -1398,21 +1332,17 @@ export type OnUpdateParameterSubscription = {
         darkMode: boolean,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteParameterSubscriptionVariables = {
   filter?: ModelSubscriptionParameterFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteParameterSubscription = {
@@ -1449,14 +1379,11 @@ export type OnDeleteParameterSubscription = {
         darkMode: boolean,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };

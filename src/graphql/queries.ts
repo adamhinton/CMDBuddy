@@ -18,7 +18,6 @@ export const getUser = /* GraphQL */ `
           order
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -26,7 +25,6 @@ export const getUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -49,7 +47,6 @@ export const listUsers = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       nextToken
@@ -81,7 +78,6 @@ export const getCommand = /* GraphQL */ `
           allowedValues
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -98,12 +94,10 @@ export const getCommand = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -132,12 +126,10 @@ export const listCommands = /* GraphQL */ `
           darkMode
           createdAt
           updatedAt
-          owner
           __typename
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       nextToken
@@ -177,17 +169,14 @@ export const getParameter = /* GraphQL */ `
           darkMode
           createdAt
           updatedAt
-          owner
           __typename
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -220,12 +209,10 @@ export const listParameters = /* GraphQL */ `
           order
           createdAt
           updatedAt
-          owner
           __typename
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       nextToken

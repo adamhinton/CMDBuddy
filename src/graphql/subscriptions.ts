@@ -3,11 +3,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onCreateUser(filter: $filter, owner: $owner) {
+  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
+    onCreateUser(filter: $filter) {
       id
       email
       password
@@ -21,7 +18,6 @@ export const onCreateUser = /* GraphQL */ `
           order
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -29,17 +25,13 @@ export const onCreateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onUpdateUser(filter: $filter, owner: $owner) {
+  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
+    onUpdateUser(filter: $filter) {
       id
       email
       password
@@ -53,7 +45,6 @@ export const onUpdateUser = /* GraphQL */ `
           order
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -61,17 +52,13 @@ export const onUpdateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onDeleteUser(filter: $filter, owner: $owner) {
+  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
+    onDeleteUser(filter: $filter) {
       id
       email
       password
@@ -85,7 +72,6 @@ export const onDeleteUser = /* GraphQL */ `
           order
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -93,17 +79,13 @@ export const onDeleteUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
 export const onCreateCommand = /* GraphQL */ `
-  subscription OnCreateCommand(
-    $filter: ModelSubscriptionCommandFilterInput
-    $owner: String
-  ) {
-    onCreateCommand(filter: $filter, owner: $owner) {
+  subscription OnCreateCommand($filter: ModelSubscriptionCommandFilterInput) {
+    onCreateCommand(filter: $filter) {
       id
       userID
       baseCommand
@@ -125,7 +107,6 @@ export const onCreateCommand = /* GraphQL */ `
           allowedValues
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -142,22 +123,17 @@ export const onCreateCommand = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
 export const onUpdateCommand = /* GraphQL */ `
-  subscription OnUpdateCommand(
-    $filter: ModelSubscriptionCommandFilterInput
-    $owner: String
-  ) {
-    onUpdateCommand(filter: $filter, owner: $owner) {
+  subscription OnUpdateCommand($filter: ModelSubscriptionCommandFilterInput) {
+    onUpdateCommand(filter: $filter) {
       id
       userID
       baseCommand
@@ -179,7 +155,6 @@ export const onUpdateCommand = /* GraphQL */ `
           allowedValues
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -196,22 +171,17 @@ export const onUpdateCommand = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
 export const onDeleteCommand = /* GraphQL */ `
-  subscription OnDeleteCommand(
-    $filter: ModelSubscriptionCommandFilterInput
-    $owner: String
-  ) {
-    onDeleteCommand(filter: $filter, owner: $owner) {
+  subscription OnDeleteCommand($filter: ModelSubscriptionCommandFilterInput) {
+    onDeleteCommand(filter: $filter) {
       id
       userID
       baseCommand
@@ -233,7 +203,6 @@ export const onDeleteCommand = /* GraphQL */ `
           allowedValues
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -250,12 +219,10 @@ export const onDeleteCommand = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -263,9 +230,8 @@ export const onDeleteCommand = /* GraphQL */ `
 export const onCreateParameter = /* GraphQL */ `
   subscription OnCreateParameter(
     $filter: ModelSubscriptionParameterFilterInput
-    $owner: String
   ) {
-    onCreateParameter(filter: $filter, owner: $owner) {
+    onCreateParameter(filter: $filter) {
       id
       commandID
       type
@@ -295,17 +261,14 @@ export const onCreateParameter = /* GraphQL */ `
           darkMode
           createdAt
           updatedAt
-          owner
           __typename
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -313,9 +276,8 @@ export const onCreateParameter = /* GraphQL */ `
 export const onUpdateParameter = /* GraphQL */ `
   subscription OnUpdateParameter(
     $filter: ModelSubscriptionParameterFilterInput
-    $owner: String
   ) {
-    onUpdateParameter(filter: $filter, owner: $owner) {
+    onUpdateParameter(filter: $filter) {
       id
       commandID
       type
@@ -345,17 +307,14 @@ export const onUpdateParameter = /* GraphQL */ `
           darkMode
           createdAt
           updatedAt
-          owner
           __typename
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -363,9 +322,8 @@ export const onUpdateParameter = /* GraphQL */ `
 export const onDeleteParameter = /* GraphQL */ `
   subscription OnDeleteParameter(
     $filter: ModelSubscriptionParameterFilterInput
-    $owner: String
   ) {
-    onDeleteParameter(filter: $filter, owner: $owner) {
+    onDeleteParameter(filter: $filter) {
       id
       commandID
       type
@@ -395,17 +353,14 @@ export const onDeleteParameter = /* GraphQL */ `
           darkMode
           createdAt
           updatedAt
-          owner
           __typename
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }

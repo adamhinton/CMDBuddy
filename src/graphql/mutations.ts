@@ -21,7 +21,6 @@ export const createUser = /* GraphQL */ `
           order
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -29,39 +28,6 @@ export const createUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
-      __typename
-    }
-  }
-`;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $input: DeleteUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    deleteUser(input: $input, condition: $condition) {
-      id
-      email
-      password
-      darkMode
-      commands {
-        items {
-          id
-          userID
-          baseCommand
-          title
-          order
-          createdAt
-          updatedAt
-          owner
-          __typename
-        }
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      owner
       __typename
     }
   }
@@ -85,7 +51,6 @@ export const updateUser = /* GraphQL */ `
           order
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -93,7 +58,36 @@ export const updateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
+      __typename
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      id
+      email
+      password
+      darkMode
+      commands {
+        items {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
       __typename
     }
   }
@@ -125,7 +119,6 @@ export const createCommand = /* GraphQL */ `
           allowedValues
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -142,12 +135,10 @@ export const createCommand = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -179,7 +170,6 @@ export const updateCommand = /* GraphQL */ `
           allowedValues
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -196,12 +186,10 @@ export const updateCommand = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -233,7 +221,6 @@ export const deleteCommand = /* GraphQL */ `
           allowedValues
           createdAt
           updatedAt
-          owner
           __typename
         }
         nextToken
@@ -250,12 +237,10 @@ export const deleteCommand = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -295,17 +280,14 @@ export const createParameter = /* GraphQL */ `
           darkMode
           createdAt
           updatedAt
-          owner
           __typename
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -345,17 +327,14 @@ export const updateParameter = /* GraphQL */ `
           darkMode
           createdAt
           updatedAt
-          owner
           __typename
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -395,17 +374,14 @@ export const deleteParameter = /* GraphQL */ `
           darkMode
           createdAt
           updatedAt
-          owner
           __typename
         }
         createdAt
         updatedAt
-        owner
         __typename
       }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
