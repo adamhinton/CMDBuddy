@@ -4,15 +4,14 @@ input AMPLIFY {
 	globalAuthRule: AuthRule = { allow: public }
 } # FOR TESTING ONLY!
 type User @model {
-	id: ID! @auth(rules: [{ allow: owner, operations: [read] }])
-	email: String! @auth(rules: [{ allow: owner, operations: [read] }])
-	password: String! @auth(rules: [{ allow: owner, operations: [read, update] }])
+	id: ID!
+	email: String!
+	password: String!
 	darkMode: Boolean!
-		@auth(rules: [{ allow: owner, operations: [read, update] }])
 	commands: [Command] @hasMany(fields: ["id"])
 }
 
-type Command @model @auth(rules: [{ allow: owner }]) {
+type Command @model {
 	id: ID!
 	userID: ID!
 	baseCommand: String!
@@ -29,7 +28,7 @@ enum ParameterType {
 	DROPDOWN
 }
 
-type Parameter @model @auth(rules: [{ allow: owner }]) {
+type Parameter @model {
 	id: ID!
 	commandID: ID!
 	type: ParameterType!
