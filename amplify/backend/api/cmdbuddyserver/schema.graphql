@@ -1,0 +1,41 @@
+type User @model {
+	id: ID! @auth(rules: [{ allow: owner, operations: [read] }])
+	email: String! @auth(rules: [{ allow: owner, operations: [read] }])
+	password: String! @auth(rules: [{ allow: owner, operations: [read, update] }])
+	darkMode: Boolean!
+		@auth(rules: [{ allow: owner, operations: [read, update] }])
+	commands: [Command] @hasMany(fields: ["id"])
+}
+
+type Command @model @auth(rules: [{ allow: owner }]) {
+	id: ID!
+	userID: ID!
+	baseCommand: String!
+	title: String!
+	order: Int!
+	parameters: [Parameter] @hasMany(fields: ["id"])
+	user: User @belongsTo(fields: ["userID"])
+}
+
+enum ParameterType {
+	STRING
+	INT
+	BOOLEAN
+	DROPDOWN
+}
+
+type Parameter @model @auth(rules: [{ allow: owner }]) {
+	id: ID!
+	commandID: ID!
+	type: ParameterType!
+	defaultValue: String
+	name: String!
+	order: Int!
+	validationRegex: String
+	length: Int
+	minValue: Int
+	maxValue: Int
+	isNullable: Boolean
+	allowedValues: [String]
+	command: Command @belongsTo(fields: ["commandID"])
+}
