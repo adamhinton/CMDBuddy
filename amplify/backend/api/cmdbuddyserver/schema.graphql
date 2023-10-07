@@ -1,8 +1,9 @@
 type User @model {
 	id: ID!
-	email: String!
-	password: String! @auth(rules: [{ allow: owner }])
+	email: String! @auth(rules: [{ allow: owner, operations: [read] }])
+	password: String! @auth(rules: [{ allow: owner, operations: [read, update] }])
 	darkMode: Boolean!
+		@auth(rules: [{ allow: owner, operations: [read, update] }])
 	commands: [Command] @hasMany(fields: ["id"])
 }
 
