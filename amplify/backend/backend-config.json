@@ -1,7 +1,15 @@
 {
   "api": {
     "cmdbuddyserver": {
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "cmdbuddyserver568927f0"
+        }
+      ],
       "output": {
         "authConfig": {
           "additionalAuthenticationProviders": [
@@ -14,9 +22,7 @@
           ],
           "defaultAuthentication": {
             "apiKeyConfig": {
-              "apiKeyExpirationDate": "2024-10-06T17:16:42.962Z",
-              "apiKeyExpirationDays": 365,
-              "description": "CmdBuddyServer API key"
+              "apiKeyExpirationDays": 7
             },
             "authenticationType": "API_KEY"
           }

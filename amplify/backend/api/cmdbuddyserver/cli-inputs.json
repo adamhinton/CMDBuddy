@@ -5,11 +5,8 @@
     "serviceName": "AppSync",
     "defaultAuthType": {
       "mode": "API_KEY",
-      "expirationTime": 365,
-      "apiKeyExpirationDate": "2024-10-06T17:16:42.962Z",
-      "keyDescription": "CmdBuddyServer API key"
+      "expirationTime": 7
     },
-    "conflictResolution": {},
     "additionalAuthTypes": [
       {
         "mode": "AMAZON_COGNITO_USER_POOLS",
