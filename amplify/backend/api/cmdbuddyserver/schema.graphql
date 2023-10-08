@@ -4,9 +4,8 @@ input AMPLIFY {
 	globalAuthRule: AuthRule = { allow: public }
 } # FOR TESTING ONLY!
 type User @model {
-	id: ID!
+	id: ID! # This will be the same as the cognitoID (sub value from Cognito JWT)
 	email: String!
-	password: String!
 	darkMode: Boolean!
 	commands: [Command] @hasMany(fields: ["id"])
 }
