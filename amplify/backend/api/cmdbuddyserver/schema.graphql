@@ -7,7 +7,7 @@ type User @model {
 	id: ID! # This will be the same as the cognitoID (sub value from Cognito JWT)
 	email: String!
 	darkMode: Boolean!
-	commands: [Command] @hasMany(fields: ["userID"])
+	commands: [Command] @hasMany(fields: ["id"])
 }
 
 type Command @model {
