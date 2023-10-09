@@ -15,7 +15,6 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
   createUser(input: $input, condition: $condition) {
     id
     email
-    password
     darkMode
     commands {
       nextToken
@@ -37,7 +36,6 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
   updateUser(input: $input, condition: $condition) {
     id
     email
-    password
     darkMode
     commands {
       nextToken
@@ -59,7 +57,6 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
   deleteUser(input: $input, condition: $condition) {
     id
     email
-    password
     darkMode
     commands {
       nextToken
@@ -91,7 +88,6 @@ export const createCommand = /* GraphQL */ `mutation CreateCommand(
     user {
       id
       email
-      password
       darkMode
       createdAt
       updatedAt
@@ -123,7 +119,6 @@ export const updateCommand = /* GraphQL */ `mutation UpdateCommand(
     user {
       id
       email
-      password
       darkMode
       createdAt
       updatedAt
@@ -155,7 +150,6 @@ export const deleteCommand = /* GraphQL */ `mutation DeleteCommand(
     user {
       id
       email
-      password
       darkMode
       createdAt
       updatedAt

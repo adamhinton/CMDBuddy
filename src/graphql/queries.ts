@@ -12,7 +12,6 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
     email
-    password
     darkMode
     commands {
       nextToken
@@ -33,7 +32,6 @@ export const listUsers = /* GraphQL */ `query ListUsers(
     items {
       id
       email
-      password
       darkMode
       createdAt
       updatedAt
@@ -58,7 +56,6 @@ export const getCommand = /* GraphQL */ `query GetCommand($id: ID!) {
     user {
       id
       email
-      password
       darkMode
       createdAt
       updatedAt

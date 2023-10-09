@@ -12,7 +12,6 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
   onCreateUser(filter: $filter) {
     id
     email
-    password
     darkMode
     commands {
       nextToken
@@ -31,7 +30,6 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
   onUpdateUser(filter: $filter) {
     id
     email
-    password
     darkMode
     commands {
       nextToken
@@ -50,7 +48,6 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
   onDeleteUser(filter: $filter) {
     id
     email
-    password
     darkMode
     commands {
       nextToken
@@ -79,7 +76,6 @@ export const onCreateCommand = /* GraphQL */ `subscription OnCreateCommand($filt
     user {
       id
       email
-      password
       darkMode
       createdAt
       updatedAt
@@ -108,7 +104,6 @@ export const onUpdateCommand = /* GraphQL */ `subscription OnUpdateCommand($filt
     user {
       id
       email
-      password
       darkMode
       createdAt
       updatedAt
@@ -137,7 +132,6 @@ export const onDeleteCommand = /* GraphQL */ `subscription OnDeleteCommand($filt
     user {
       id
       email
-      password
       darkMode
       createdAt
       updatedAt
