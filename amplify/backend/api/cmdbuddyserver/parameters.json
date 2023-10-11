@@ -1,6 +1,5 @@
 {
   "AppSyncApiName": "cmdbuddyserver",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2023-10-09T04:35:56.985Z"
+  "DynamoDBEnableServerSideEncryption": false
 }
