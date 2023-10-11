@@ -5,13 +5,11 @@
 export type CreateUserInput = {
   id?: string | null,
   email: string,
-  password: string,
   darkMode: boolean,
 };
 
 export type ModelUserConditionInput = {
   email?: ModelStringInput | null,
-  password?: ModelStringInput | null,
   darkMode?: ModelBooleanInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
@@ -69,7 +67,6 @@ export type User = {
   __typename: "User",
   id: string,
   email: string,
-  password: string,
   darkMode: boolean,
   commands?: ModelCommandConnection | null,
   createdAt: string,
@@ -131,7 +128,6 @@ export enum ParameterType {
 export type UpdateUserInput = {
   id: string,
   email?: string | null,
-  password?: string | null,
   darkMode?: boolean | null,
 };
 
@@ -256,7 +252,6 @@ export type DeleteParameterInput = {
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   email?: ModelStringInput | null,
-  password?: ModelStringInput | null,
   darkMode?: ModelBooleanInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
@@ -301,7 +296,6 @@ export type ModelParameterFilterInput = {
 export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   email?: ModelSubscriptionStringInput | null,
-  password?: ModelSubscriptionStringInput | null,
   darkMode?: ModelSubscriptionBooleanInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
@@ -391,7 +385,6 @@ export type CreateUserMutation = {
     __typename: "User",
     id: string,
     email: string,
-    password: string,
     darkMode: boolean,
     commands?:  {
       __typename: "ModelCommandConnection",
@@ -412,7 +405,6 @@ export type UpdateUserMutation = {
     __typename: "User",
     id: string,
     email: string,
-    password: string,
     darkMode: boolean,
     commands?:  {
       __typename: "ModelCommandConnection",
@@ -433,7 +425,6 @@ export type DeleteUserMutation = {
     __typename: "User",
     id: string,
     email: string,
-    password: string,
     darkMode: boolean,
     commands?:  {
       __typename: "ModelCommandConnection",
@@ -465,7 +456,6 @@ export type CreateCommandMutation = {
       __typename: "User",
       id: string,
       email: string,
-      password: string,
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
@@ -496,7 +486,6 @@ export type UpdateCommandMutation = {
       __typename: "User",
       id: string,
       email: string,
-      password: string,
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
@@ -527,7 +516,6 @@ export type DeleteCommandMutation = {
       __typename: "User",
       id: string,
       email: string,
-      password: string,
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
@@ -651,7 +639,6 @@ export type GetUserQuery = {
     __typename: "User",
     id: string,
     email: string,
-    password: string,
     darkMode: boolean,
     commands?:  {
       __typename: "ModelCommandConnection",
@@ -675,7 +662,6 @@ export type ListUsersQuery = {
       __typename: "User",
       id: string,
       email: string,
-      password: string,
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
@@ -704,7 +690,6 @@ export type GetCommandQuery = {
       __typename: "User",
       id: string,
       email: string,
-      password: string,
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
@@ -810,7 +795,6 @@ export type OnCreateUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
-    password: string,
     darkMode: boolean,
     commands?:  {
       __typename: "ModelCommandConnection",
@@ -830,7 +814,6 @@ export type OnUpdateUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
-    password: string,
     darkMode: boolean,
     commands?:  {
       __typename: "ModelCommandConnection",
@@ -850,7 +833,6 @@ export type OnDeleteUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
-    password: string,
     darkMode: boolean,
     commands?:  {
       __typename: "ModelCommandConnection",
@@ -881,7 +863,6 @@ export type OnCreateCommandSubscription = {
       __typename: "User",
       id: string,
       email: string,
-      password: string,
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
@@ -911,7 +892,6 @@ export type OnUpdateCommandSubscription = {
       __typename: "User",
       id: string,
       email: string,
-      password: string,
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
@@ -941,7 +921,6 @@ export type OnDeleteCommandSubscription = {
       __typename: "User",
       id: string,
       email: string,
-      password: string,
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,

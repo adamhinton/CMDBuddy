@@ -30,22 +30,18 @@ export default function UserCreateForm(props) {
   } = props;
   const initialValues = {
     email: "",
-    password: "",
     darkMode: false,
   };
   const [email, setEmail] = React.useState(initialValues.email);
-  const [password, setPassword] = React.useState(initialValues.password);
   const [darkMode, setDarkMode] = React.useState(initialValues.darkMode);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setEmail(initialValues.email);
-    setPassword(initialValues.password);
     setDarkMode(initialValues.darkMode);
     setErrors({});
   };
   const validations = {
     email: [{ type: "Required" }],
-    password: [{ type: "Required" }],
     darkMode: [{ type: "Required" }],
   };
   const runValidationTasks = async (
@@ -75,7 +71,6 @@ export default function UserCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           email,
-          password,
           darkMode,
         };
         const validationResponses = await Promise.all(
@@ -140,7 +135,6 @@ export default function UserCreateForm(props) {
           if (onChange) {
             const modelFields = {
               email: value,
-              password,
               darkMode,
             };
             const result = onChange(modelFields);
@@ -156,32 +150,6 @@ export default function UserCreateForm(props) {
         hasError={errors.email?.hasError}
         {...getOverrideProps(overrides, "email")}
       ></TextField>
-      <TextField
-        label="Password"
-        isRequired={true}
-        isReadOnly={false}
-        value={password}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              email,
-              password: value,
-              darkMode,
-            };
-            const result = onChange(modelFields);
-            value = result?.password ?? value;
-          }
-          if (errors.password?.hasError) {
-            runValidationTasks("password", value);
-          }
-          setPassword(value);
-        }}
-        onBlur={() => runValidationTasks("password", password)}
-        errorMessage={errors.password?.errorMessage}
-        hasError={errors.password?.hasError}
-        {...getOverrideProps(overrides, "password")}
-      ></TextField>
       <SwitchField
         label="Dark mode"
         defaultChecked={false}
@@ -192,7 +160,6 @@ export default function UserCreateForm(props) {
           if (onChange) {
             const modelFields = {
               email,
-              password,
               darkMode: value,
             };
             const result = onChange(modelFields);
