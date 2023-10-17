@@ -14,6 +14,28 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     email
     darkMode
     commands {
+      items {
+        id
+        userID
+        baseCommand
+        title
+        order
+        parameters {
+          nextToken
+          __typename
+        }
+        user {
+          id
+          email
+          darkMode
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -33,6 +55,20 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       id
       email
       darkMode
+      commands {
+        items {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -50,6 +86,33 @@ export const getCommand = /* GraphQL */ `query GetCommand($id: ID!) {
     title
     order
     parameters {
+      items {
+        id
+        commandID
+        type
+        defaultValue
+        name
+        order
+        validationRegex
+        length
+        minValue
+        maxValue
+        isNullable
+        allowedValues
+        command {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -57,6 +120,20 @@ export const getCommand = /* GraphQL */ `query GetCommand($id: ID!) {
       id
       email
       darkMode
+      commands {
+        items {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -82,6 +159,39 @@ export const listCommands = /* GraphQL */ `query ListCommands(
       baseCommand
       title
       order
+      parameters {
+        items {
+          id
+          commandID
+          type
+          defaultValue
+          name
+          order
+          validationRegex
+          length
+          minValue
+          maxValue
+          isNullable
+          allowedValues
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      user {
+        id
+        email
+        darkMode
+        commands {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -114,6 +224,39 @@ export const getParameter = /* GraphQL */ `query GetParameter($id: ID!) {
       baseCommand
       title
       order
+      parameters {
+        items {
+          id
+          commandID
+          type
+          defaultValue
+          name
+          order
+          validationRegex
+          length
+          minValue
+          maxValue
+          isNullable
+          allowedValues
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      user {
+        id
+        email
+        darkMode
+        commands {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -146,6 +289,28 @@ export const listParameters = /* GraphQL */ `query ListParameters(
       maxValue
       isNullable
       allowedValues
+      command {
+        id
+        userID
+        baseCommand
+        title
+        order
+        parameters {
+          nextToken
+          __typename
+        }
+        user {
+          id
+          email
+          darkMode
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename

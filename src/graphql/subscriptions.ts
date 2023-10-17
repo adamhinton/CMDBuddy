@@ -14,6 +14,28 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
     email
     darkMode
     commands {
+      items {
+        id
+        userID
+        baseCommand
+        title
+        order
+        parameters {
+          nextToken
+          __typename
+        }
+        user {
+          id
+          email
+          darkMode
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -32,6 +54,28 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
     email
     darkMode
     commands {
+      items {
+        id
+        userID
+        baseCommand
+        title
+        order
+        parameters {
+          nextToken
+          __typename
+        }
+        user {
+          id
+          email
+          darkMode
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -50,6 +94,28 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
     email
     darkMode
     commands {
+      items {
+        id
+        userID
+        baseCommand
+        title
+        order
+        parameters {
+          nextToken
+          __typename
+        }
+        user {
+          id
+          email
+          darkMode
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -70,6 +136,33 @@ export const onCreateCommand = /* GraphQL */ `subscription OnCreateCommand($filt
     title
     order
     parameters {
+      items {
+        id
+        commandID
+        type
+        defaultValue
+        name
+        order
+        validationRegex
+        length
+        minValue
+        maxValue
+        isNullable
+        allowedValues
+        command {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -77,6 +170,20 @@ export const onCreateCommand = /* GraphQL */ `subscription OnCreateCommand($filt
       id
       email
       darkMode
+      commands {
+        items {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -98,6 +205,33 @@ export const onUpdateCommand = /* GraphQL */ `subscription OnUpdateCommand($filt
     title
     order
     parameters {
+      items {
+        id
+        commandID
+        type
+        defaultValue
+        name
+        order
+        validationRegex
+        length
+        minValue
+        maxValue
+        isNullable
+        allowedValues
+        command {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -105,6 +239,20 @@ export const onUpdateCommand = /* GraphQL */ `subscription OnUpdateCommand($filt
       id
       email
       darkMode
+      commands {
+        items {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -126,6 +274,33 @@ export const onDeleteCommand = /* GraphQL */ `subscription OnDeleteCommand($filt
     title
     order
     parameters {
+      items {
+        id
+        commandID
+        type
+        defaultValue
+        name
+        order
+        validationRegex
+        length
+        minValue
+        maxValue
+        isNullable
+        allowedValues
+        command {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -133,6 +308,20 @@ export const onDeleteCommand = /* GraphQL */ `subscription OnDeleteCommand($filt
       id
       email
       darkMode
+      commands {
+        items {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -166,6 +355,39 @@ export const onCreateParameter = /* GraphQL */ `subscription OnCreateParameter($
       baseCommand
       title
       order
+      parameters {
+        items {
+          id
+          commandID
+          type
+          defaultValue
+          name
+          order
+          validationRegex
+          length
+          minValue
+          maxValue
+          isNullable
+          allowedValues
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      user {
+        id
+        email
+        darkMode
+        commands {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -199,6 +421,39 @@ export const onUpdateParameter = /* GraphQL */ `subscription OnUpdateParameter($
       baseCommand
       title
       order
+      parameters {
+        items {
+          id
+          commandID
+          type
+          defaultValue
+          name
+          order
+          validationRegex
+          length
+          minValue
+          maxValue
+          isNullable
+          allowedValues
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      user {
+        id
+        email
+        darkMode
+        commands {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -232,6 +487,39 @@ export const onDeleteParameter = /* GraphQL */ `subscription OnDeleteParameter($
       baseCommand
       title
       order
+      parameters {
+        items {
+          id
+          commandID
+          type
+          defaultValue
+          name
+          order
+          validationRegex
+          length
+          minValue
+          maxValue
+          isNullable
+          allowedValues
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      user {
+        id
+        email
+        darkMode
+        commands {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename

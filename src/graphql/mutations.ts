@@ -17,6 +17,28 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     email
     darkMode
     commands {
+      items {
+        id
+        userID
+        baseCommand
+        title
+        order
+        parameters {
+          nextToken
+          __typename
+        }
+        user {
+          id
+          email
+          darkMode
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -38,6 +60,28 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     email
     darkMode
     commands {
+      items {
+        id
+        userID
+        baseCommand
+        title
+        order
+        parameters {
+          nextToken
+          __typename
+        }
+        user {
+          id
+          email
+          darkMode
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -59,6 +103,28 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     email
     darkMode
     commands {
+      items {
+        id
+        userID
+        baseCommand
+        title
+        order
+        parameters {
+          nextToken
+          __typename
+        }
+        user {
+          id
+          email
+          darkMode
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -82,6 +148,33 @@ export const createCommand = /* GraphQL */ `mutation CreateCommand(
     title
     order
     parameters {
+      items {
+        id
+        commandID
+        type
+        defaultValue
+        name
+        order
+        validationRegex
+        length
+        minValue
+        maxValue
+        isNullable
+        allowedValues
+        command {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -89,6 +182,20 @@ export const createCommand = /* GraphQL */ `mutation CreateCommand(
       id
       email
       darkMode
+      commands {
+        items {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -113,6 +220,33 @@ export const updateCommand = /* GraphQL */ `mutation UpdateCommand(
     title
     order
     parameters {
+      items {
+        id
+        commandID
+        type
+        defaultValue
+        name
+        order
+        validationRegex
+        length
+        minValue
+        maxValue
+        isNullable
+        allowedValues
+        command {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -120,6 +254,20 @@ export const updateCommand = /* GraphQL */ `mutation UpdateCommand(
       id
       email
       darkMode
+      commands {
+        items {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -144,6 +292,33 @@ export const deleteCommand = /* GraphQL */ `mutation DeleteCommand(
     title
     order
     parameters {
+      items {
+        id
+        commandID
+        type
+        defaultValue
+        name
+        order
+        validationRegex
+        length
+        minValue
+        maxValue
+        isNullable
+        allowedValues
+        command {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -151,6 +326,20 @@ export const deleteCommand = /* GraphQL */ `mutation DeleteCommand(
       id
       email
       darkMode
+      commands {
+        items {
+          id
+          userID
+          baseCommand
+          title
+          order
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -187,6 +376,39 @@ export const createParameter = /* GraphQL */ `mutation CreateParameter(
       baseCommand
       title
       order
+      parameters {
+        items {
+          id
+          commandID
+          type
+          defaultValue
+          name
+          order
+          validationRegex
+          length
+          minValue
+          maxValue
+          isNullable
+          allowedValues
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      user {
+        id
+        email
+        darkMode
+        commands {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -223,6 +445,39 @@ export const updateParameter = /* GraphQL */ `mutation UpdateParameter(
       baseCommand
       title
       order
+      parameters {
+        items {
+          id
+          commandID
+          type
+          defaultValue
+          name
+          order
+          validationRegex
+          length
+          minValue
+          maxValue
+          isNullable
+          allowedValues
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      user {
+        id
+        email
+        darkMode
+        commands {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -259,6 +514,39 @@ export const deleteParameter = /* GraphQL */ `mutation DeleteParameter(
       baseCommand
       title
       order
+      parameters {
+        items {
+          id
+          commandID
+          type
+          defaultValue
+          name
+          order
+          validationRegex
+          length
+          minValue
+          maxValue
+          isNullable
+          allowedValues
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      user {
+        id
+        email
+        darkMode
+        commands {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename
