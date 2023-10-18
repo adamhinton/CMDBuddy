@@ -14,28 +14,6 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     email
     darkMode
     commands {
-      items {
-        id
-        userID
-        baseCommand
-        title
-        order
-        parameters {
-          nextToken
-          __typename
-        }
-        user {
-          id
-          email
-          darkMode
-          createdAt
-          updatedAt
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
       nextToken
       __typename
     }
@@ -55,20 +33,6 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       id
       email
       darkMode
-      commands {
-        items {
-          id
-          userID
-          baseCommand
-          title
-          order
-          createdAt
-          updatedAt
-          __typename
-        }
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -81,59 +45,14 @@ export const listUsers = /* GraphQL */ `query ListUsers(
 export const getCommand = /* GraphQL */ `query GetCommand($id: ID!) {
   getCommand(id: $id) {
     id
-    userID
     baseCommand
     title
     order
-    parameters {
-      items {
-        id
-        commandID
-        type
-        defaultValue
-        name
-        order
-        validationRegex
-        length
-        minValue
-        maxValue
-        isNullable
-        allowedValues
-        command {
-          id
-          userID
-          baseCommand
-          title
-          order
-          createdAt
-          updatedAt
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
+    userID
     user {
       id
       email
       darkMode
-      commands {
-        items {
-          id
-          userID
-          baseCommand
-          title
-          order
-          createdAt
-          updatedAt
-          __typename
-        }
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -155,43 +74,10 @@ export const listCommands = /* GraphQL */ `query ListCommands(
   listCommands(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      userID
       baseCommand
       title
       order
-      parameters {
-        items {
-          id
-          commandID
-          type
-          defaultValue
-          name
-          order
-          validationRegex
-          length
-          minValue
-          maxValue
-          isNullable
-          allowedValues
-          createdAt
-          updatedAt
-          __typename
-        }
-        nextToken
-        __typename
-      }
-      user {
-        id
-        email
-        darkMode
-        commands {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
+      userID
       createdAt
       updatedAt
       __typename
@@ -204,113 +90,26 @@ export const listCommands = /* GraphQL */ `query ListCommands(
   APITypes.ListCommandsQueryVariables,
   APITypes.ListCommandsQuery
 >;
-export const getParameter = /* GraphQL */ `query GetParameter($id: ID!) {
-  getParameter(id: $id) {
-    id
-    commandID
-    type
-    defaultValue
-    name
-    order
-    validationRegex
-    length
-    minValue
-    maxValue
-    isNullable
-    allowedValues
-    command {
-      id
-      userID
-      baseCommand
-      title
-      order
-      parameters {
-        items {
-          id
-          commandID
-          type
-          defaultValue
-          name
-          order
-          validationRegex
-          length
-          minValue
-          maxValue
-          isNullable
-          allowedValues
-          createdAt
-          updatedAt
-          __typename
-        }
-        nextToken
-        __typename
-      }
-      user {
-        id
-        email
-        darkMode
-        commands {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetParameterQueryVariables,
-  APITypes.GetParameterQuery
->;
-export const listParameters = /* GraphQL */ `query ListParameters(
-  $filter: ModelParameterFilterInput
+export const commandsByUserID = /* GraphQL */ `query CommandsByUserID(
+  $userID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelCommandFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listParameters(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  commandsByUserID(
+    userID: $userID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
     items {
       id
-      commandID
-      type
-      defaultValue
-      name
+      baseCommand
+      title
       order
-      validationRegex
-      length
-      minValue
-      maxValue
-      isNullable
-      allowedValues
-      command {
-        id
-        userID
-        baseCommand
-        title
-        order
-        parameters {
-          nextToken
-          __typename
-        }
-        user {
-          id
-          email
-          darkMode
-          createdAt
-          updatedAt
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
+      userID
       createdAt
       updatedAt
       __typename
@@ -320,6 +119,6 @@ export const listParameters = /* GraphQL */ `query ListParameters(
   }
 }
 ` as GeneratedQuery<
-  APITypes.ListParametersQueryVariables,
-  APITypes.ListParametersQuery
+  APITypes.CommandsByUserIDQueryVariables,
+  APITypes.CommandsByUserIDQuery
 >;

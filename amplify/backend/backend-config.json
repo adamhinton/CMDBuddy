@@ -1,6 +1,6 @@
 {
   "api": {
-    "cmdbuddyserver": {
+    "CMDBuddyServer2": {
       "dependsOn": [],
       "output": {
         "authConfig": {
