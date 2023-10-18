@@ -57,6 +57,10 @@ export const getCommand = /* GraphQL */ `query GetCommand($id: ID!) {
       updatedAt
       __typename
     }
+    parameters {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -121,4 +125,107 @@ export const commandsByUserID = /* GraphQL */ `query CommandsByUserID(
 ` as GeneratedQuery<
   APITypes.CommandsByUserIDQueryVariables,
   APITypes.CommandsByUserIDQuery
+>;
+export const getParameter = /* GraphQL */ `query GetParameter($id: ID!) {
+  getParameter(id: $id) {
+    id
+    type
+    defaultValue
+    name
+    order
+    validationRegex
+    length
+    minValue
+    maxValue
+    isNullable
+    allowedValues
+    commandID
+    command {
+      id
+      baseCommand
+      title
+      order
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetParameterQueryVariables,
+  APITypes.GetParameterQuery
+>;
+export const listParameters = /* GraphQL */ `query ListParameters(
+  $filter: ModelParameterFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listParameters(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      type
+      defaultValue
+      name
+      order
+      validationRegex
+      length
+      minValue
+      maxValue
+      isNullable
+      allowedValues
+      commandID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListParametersQueryVariables,
+  APITypes.ListParametersQuery
+>;
+export const parametersByCommandID = /* GraphQL */ `query ParametersByCommandID(
+  $commandID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelParameterFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  parametersByCommandID(
+    commandID: $commandID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      type
+      defaultValue
+      name
+      order
+      validationRegex
+      length
+      minValue
+      maxValue
+      isNullable
+      allowedValues
+      commandID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ParametersByCommandIDQueryVariables,
+  APITypes.ParametersByCommandIDQuery
 >;

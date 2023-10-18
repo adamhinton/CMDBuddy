@@ -89,6 +89,10 @@ export const createCommand = /* GraphQL */ `mutation CreateCommand(
       updatedAt
       __typename
     }
+    parameters {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -114,6 +118,10 @@ export const updateCommand = /* GraphQL */ `mutation UpdateCommand(
       darkMode
       createdAt
       updatedAt
+      __typename
+    }
+    parameters {
+      nextToken
       __typename
     }
     createdAt
@@ -143,6 +151,10 @@ export const deleteCommand = /* GraphQL */ `mutation DeleteCommand(
       updatedAt
       __typename
     }
+    parameters {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -151,4 +163,112 @@ export const deleteCommand = /* GraphQL */ `mutation DeleteCommand(
 ` as GeneratedMutation<
   APITypes.DeleteCommandMutationVariables,
   APITypes.DeleteCommandMutation
+>;
+export const createParameter = /* GraphQL */ `mutation CreateParameter(
+  $input: CreateParameterInput!
+  $condition: ModelParameterConditionInput
+) {
+  createParameter(input: $input, condition: $condition) {
+    id
+    type
+    defaultValue
+    name
+    order
+    validationRegex
+    length
+    minValue
+    maxValue
+    isNullable
+    allowedValues
+    commandID
+    command {
+      id
+      baseCommand
+      title
+      order
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateParameterMutationVariables,
+  APITypes.CreateParameterMutation
+>;
+export const updateParameter = /* GraphQL */ `mutation UpdateParameter(
+  $input: UpdateParameterInput!
+  $condition: ModelParameterConditionInput
+) {
+  updateParameter(input: $input, condition: $condition) {
+    id
+    type
+    defaultValue
+    name
+    order
+    validationRegex
+    length
+    minValue
+    maxValue
+    isNullable
+    allowedValues
+    commandID
+    command {
+      id
+      baseCommand
+      title
+      order
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateParameterMutationVariables,
+  APITypes.UpdateParameterMutation
+>;
+export const deleteParameter = /* GraphQL */ `mutation DeleteParameter(
+  $input: DeleteParameterInput!
+  $condition: ModelParameterConditionInput
+) {
+  deleteParameter(input: $input, condition: $condition) {
+    id
+    type
+    defaultValue
+    name
+    order
+    validationRegex
+    length
+    minValue
+    maxValue
+    isNullable
+    allowedValues
+    commandID
+    command {
+      id
+      baseCommand
+      title
+      order
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteParameterMutationVariables,
+  APITypes.DeleteParameterMutation
 >;

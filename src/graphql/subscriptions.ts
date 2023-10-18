@@ -77,6 +77,10 @@ export const onCreateCommand = /* GraphQL */ `subscription OnCreateCommand($filt
       updatedAt
       __typename
     }
+    parameters {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -99,6 +103,10 @@ export const onUpdateCommand = /* GraphQL */ `subscription OnUpdateCommand($filt
       darkMode
       createdAt
       updatedAt
+      __typename
+    }
+    parameters {
+      nextToken
       __typename
     }
     createdAt
@@ -125,6 +133,10 @@ export const onDeleteCommand = /* GraphQL */ `subscription OnDeleteCommand($filt
       updatedAt
       __typename
     }
+    parameters {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -133,4 +145,103 @@ export const onDeleteCommand = /* GraphQL */ `subscription OnDeleteCommand($filt
 ` as GeneratedSubscription<
   APITypes.OnDeleteCommandSubscriptionVariables,
   APITypes.OnDeleteCommandSubscription
+>;
+export const onCreateParameter = /* GraphQL */ `subscription OnCreateParameter($filter: ModelSubscriptionParameterFilterInput) {
+  onCreateParameter(filter: $filter) {
+    id
+    type
+    defaultValue
+    name
+    order
+    validationRegex
+    length
+    minValue
+    maxValue
+    isNullable
+    allowedValues
+    commandID
+    command {
+      id
+      baseCommand
+      title
+      order
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateParameterSubscriptionVariables,
+  APITypes.OnCreateParameterSubscription
+>;
+export const onUpdateParameter = /* GraphQL */ `subscription OnUpdateParameter($filter: ModelSubscriptionParameterFilterInput) {
+  onUpdateParameter(filter: $filter) {
+    id
+    type
+    defaultValue
+    name
+    order
+    validationRegex
+    length
+    minValue
+    maxValue
+    isNullable
+    allowedValues
+    commandID
+    command {
+      id
+      baseCommand
+      title
+      order
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateParameterSubscriptionVariables,
+  APITypes.OnUpdateParameterSubscription
+>;
+export const onDeleteParameter = /* GraphQL */ `subscription OnDeleteParameter($filter: ModelSubscriptionParameterFilterInput) {
+  onDeleteParameter(filter: $filter) {
+    id
+    type
+    defaultValue
+    name
+    order
+    validationRegex
+    length
+    minValue
+    maxValue
+    isNullable
+    allowedValues
+    commandID
+    command {
+      id
+      baseCommand
+      title
+      order
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteParameterSubscriptionVariables,
+  APITypes.OnDeleteParameterSubscription
 >;
