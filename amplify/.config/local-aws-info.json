@@ -1,0 +1,7 @@
+{
+  "dev": {
+    "configLevel": "project",
+    "useProfile": false,
+    "awsConfigFilePath": "C:\\Users\\adamd\\.amplify\\awscloudformation\\Kymc3lToRM"
+  }
+}

@@ -1,0 +1,428 @@
+type User @aws_iam @aws_api_key {
+  id: ID!
+  email: String!
+  darkMode: Boolean!
+  commands(filter: ModelCommandFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCommandConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Command @aws_iam @aws_api_key {
+  id: ID!
+  baseCommand: String!
+  title: String!
+  order: Int!
+  userID: ID!
+  user: User
+  parameters(filter: ModelParameterFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelParameterConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum ParameterType {
+  STRING
+  INT
+  BOOLEAN
+  DROPDOWN
+}
+
+type Parameter @aws_iam @aws_api_key {
+  id: ID!
+  type: ParameterType!
+  defaultValue: String
+  name: String!
+  order: Int!
+  validationRegex: String
+  length: Int
+  minValue: Int
+  maxValue: Int
+  isNullable: Boolean
+  allowedValues: [String]
+  commandID: ID!
+  command: Command
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelUserConnection @aws_api_key @aws_iam {
+  items: [User]!
+  nextToken: String
+}
+
+input ModelUserFilterInput {
+  id: ModelIDInput
+  email: ModelStringInput
+  darkMode: ModelBooleanInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+}
+
+type Query {
+  getUser(id: ID!): User @aws_api_key @aws_iam
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection @aws_api_key @aws_iam
+  getCommand(id: ID!): Command @aws_api_key @aws_iam
+  listCommands(filter: ModelCommandFilterInput, limit: Int, nextToken: String): ModelCommandConnection @aws_api_key @aws_iam
+  commandsByUserID(userID: ID!, sortDirection: ModelSortDirection, filter: ModelCommandFilterInput, limit: Int, nextToken: String): ModelCommandConnection @aws_api_key @aws_iam
+  getParameter(id: ID!): Parameter @aws_api_key @aws_iam
+  listParameters(filter: ModelParameterFilterInput, limit: Int, nextToken: String): ModelParameterConnection @aws_api_key @aws_iam
+  parametersByCommandID(commandID: ID!, sortDirection: ModelSortDirection, filter: ModelParameterFilterInput, limit: Int, nextToken: String): ModelParameterConnection @aws_api_key @aws_iam
+}
+
+input ModelUserConditionInput {
+  email: ModelStringInput
+  darkMode: ModelBooleanInput
+  and: [ModelUserConditionInput]
+  or: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+}
+
+input CreateUserInput {
+  id: ID
+  email: String!
+  darkMode: Boolean!
+}
+
+input UpdateUserInput {
+  id: ID!
+  email: String
+  darkMode: Boolean
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
+  createCommand(input: CreateCommandInput!, condition: ModelCommandConditionInput): Command @aws_api_key @aws_iam
+  updateCommand(input: UpdateCommandInput!, condition: ModelCommandConditionInput): Command @aws_api_key @aws_iam
+  deleteCommand(input: DeleteCommandInput!, condition: ModelCommandConditionInput): Command @aws_api_key @aws_iam
+  createParameter(input: CreateParameterInput!, condition: ModelParameterConditionInput): Parameter @aws_api_key @aws_iam
+  updateParameter(input: UpdateParameterInput!, condition: ModelParameterConditionInput): Parameter @aws_api_key @aws_iam
+  deleteParameter(input: DeleteParameterInput!, condition: ModelParameterConditionInput): Parameter @aws_api_key @aws_iam
+}
+
+input ModelSubscriptionUserFilterInput {
+  id: ModelSubscriptionIDInput
+  email: ModelSubscriptionStringInput
+  darkMode: ModelSubscriptionBooleanInput
+  and: [ModelSubscriptionUserFilterInput]
+  or: [ModelSubscriptionUserFilterInput]
+}
+
+type Subscription {
+  onCreateUser(filter: ModelSubscriptionUserFilterInput): User @aws_subscribe(mutations: ["createUser"]) @aws_api_key @aws_iam
+  onUpdateUser(filter: ModelSubscriptionUserFilterInput): User @aws_subscribe(mutations: ["updateUser"]) @aws_api_key @aws_iam
+  onDeleteUser(filter: ModelSubscriptionUserFilterInput): User @aws_subscribe(mutations: ["deleteUser"]) @aws_api_key @aws_iam
+  onCreateCommand(filter: ModelSubscriptionCommandFilterInput): Command @aws_subscribe(mutations: ["createCommand"]) @aws_api_key @aws_iam
+  onUpdateCommand(filter: ModelSubscriptionCommandFilterInput): Command @aws_subscribe(mutations: ["updateCommand"]) @aws_api_key @aws_iam
+  onDeleteCommand(filter: ModelSubscriptionCommandFilterInput): Command @aws_subscribe(mutations: ["deleteCommand"]) @aws_api_key @aws_iam
+  onCreateParameter(filter: ModelSubscriptionParameterFilterInput): Parameter @aws_subscribe(mutations: ["createParameter"]) @aws_api_key @aws_iam
+  onUpdateParameter(filter: ModelSubscriptionParameterFilterInput): Parameter @aws_subscribe(mutations: ["updateParameter"]) @aws_api_key @aws_iam
+  onDeleteParameter(filter: ModelSubscriptionParameterFilterInput): Parameter @aws_subscribe(mutations: ["deleteParameter"]) @aws_api_key @aws_iam
+}
+
+type ModelCommandConnection @aws_iam @aws_api_key {
+  items: [Command]!
+  nextToken: String
+}
+
+input ModelCommandFilterInput {
+  id: ModelIDInput
+  baseCommand: ModelStringInput
+  title: ModelStringInput
+  order: ModelIntInput
+  userID: ModelIDInput
+  and: [ModelCommandFilterInput]
+  or: [ModelCommandFilterInput]
+  not: ModelCommandFilterInput
+}
+
+input ModelCommandConditionInput {
+  baseCommand: ModelStringInput
+  title: ModelStringInput
+  order: ModelIntInput
+  userID: ModelIDInput
+  and: [ModelCommandConditionInput]
+  or: [ModelCommandConditionInput]
+  not: ModelCommandConditionInput
+}
+
+input CreateCommandInput {
+  id: ID
+  baseCommand: String!
+  title: String!
+  order: Int!
+  userID: ID!
+}
+
+input UpdateCommandInput {
+  id: ID!
+  baseCommand: String
+  title: String
+  order: Int
+  userID: ID
+}
+
+input DeleteCommandInput {
+  id: ID!
+}
+
+input ModelSubscriptionCommandFilterInput {
+  id: ModelSubscriptionIDInput
+  baseCommand: ModelSubscriptionStringInput
+  title: ModelSubscriptionStringInput
+  order: ModelSubscriptionIntInput
+  userID: ModelSubscriptionIDInput
+  and: [ModelSubscriptionCommandFilterInput]
+  or: [ModelSubscriptionCommandFilterInput]
+}
+
+type ModelParameterConnection @aws_iam @aws_api_key {
+  items: [Parameter]!
+  nextToken: String
+}
+
+input ModelParameterTypeInput {
+  eq: ParameterType
+  ne: ParameterType
+}
+
+input ModelParameterFilterInput {
+  id: ModelIDInput
+  type: ModelParameterTypeInput
+  defaultValue: ModelStringInput
+  name: ModelStringInput
+  order: ModelIntInput
+  validationRegex: ModelStringInput
+  length: ModelIntInput
+  minValue: ModelIntInput
+  maxValue: ModelIntInput
+  isNullable: ModelBooleanInput
+  allowedValues: ModelStringInput
+  commandID: ModelIDInput
+  and: [ModelParameterFilterInput]
+  or: [ModelParameterFilterInput]
+  not: ModelParameterFilterInput
+}
+
+input ModelParameterConditionInput {
+  type: ModelParameterTypeInput
+  defaultValue: ModelStringInput
+  name: ModelStringInput
+  order: ModelIntInput
+  validationRegex: ModelStringInput
+  length: ModelIntInput
+  minValue: ModelIntInput
+  maxValue: ModelIntInput
+  isNullable: ModelBooleanInput
+  allowedValues: ModelStringInput
+  commandID: ModelIDInput
+  and: [ModelParameterConditionInput]
+  or: [ModelParameterConditionInput]
+  not: ModelParameterConditionInput
+}
+
+input CreateParameterInput {
+  id: ID
+  type: ParameterType!
+  defaultValue: String
+  name: String!
+  order: Int!
+  validationRegex: String
+  length: Int
+  minValue: Int
+  maxValue: Int
+  isNullable: Boolean
+  allowedValues: [String]
+  commandID: ID!
+}
+
+input UpdateParameterInput {
+  id: ID!
+  type: ParameterType
+  defaultValue: String
+  name: String
+  order: Int
+  validationRegex: String
+  length: Int
+  minValue: Int
+  maxValue: Int
+  isNullable: Boolean
+  allowedValues: [String]
+  commandID: ID
+}
+
+input DeleteParameterInput {
+  id: ID!
+}
+
+input ModelSubscriptionParameterFilterInput {
+  id: ModelSubscriptionIDInput
+  type: ModelSubscriptionStringInput
+  defaultValue: ModelSubscriptionStringInput
+  name: ModelSubscriptionStringInput
+  order: ModelSubscriptionIntInput
+  validationRegex: ModelSubscriptionStringInput
+  length: ModelSubscriptionIntInput
+  minValue: ModelSubscriptionIntInput
+  maxValue: ModelSubscriptionIntInput
+  isNullable: ModelSubscriptionBooleanInput
+  allowedValues: ModelSubscriptionStringInput
+  commandID: ModelSubscriptionIDInput
+  and: [ModelSubscriptionParameterFilterInput]
+  or: [ModelSubscriptionParameterFilterInput]
+}

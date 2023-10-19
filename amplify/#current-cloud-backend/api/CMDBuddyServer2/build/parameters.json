@@ -1,0 +1,13 @@
+{
+    "AppSyncApiName": "CMDBuddyServer2",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "S3DeploymentBucket": "amplify-cmdbuddyserver-dev-130733-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/5eec7bcf57ced33fab43ea1b19f65572d40effb7"
+}
