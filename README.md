@@ -1,27 +1,46 @@
-# React + TypeScript + Vite
+# CMDBuddy
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
 
-Currently, two official plugins are available:
+## Introduction
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Update 10.18.2023**:  
+The project is in its early stages, with a basic API setup and plans for a dynamic frontend.
 
-## Expanding the ESLint configuration
+### What is CMDBuddy?
+CMDBuddy is a full-stack application designed to help users create, manage, and customize CLI commands and their associated parameters.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Backend
+The backend is built with **AWS Amplify** and **GraphQL**, offering a robust and scalable architecture for data management and user authentication.
 
-- Configure the top-level `parserOptions` property like this:
+### Frontend (In Planning)
+The frontend, currently in the planning stage, aims to provide a user-friendly interface built with **React** and **TypeScript**.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+### Who is this for?
+This application serves as a centralized hub for all your command-line needs, offering features like real-time command previews, drag-and-drop functionality, and much more.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+- [Technical Information](#technical-information)
+  - [Backend](#backend)
+  - [Frontend (Planned)](#frontend-planned)
+
+## Requirements
+
+For development, you will need Node.js and npm installed on your environment.
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/adamhinton/CMDBuddy.git
+# Navigate to the project directory
+cd CMDBuddy
+# Install dependencies
+npm install
