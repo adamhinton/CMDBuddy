@@ -2,8 +2,6 @@
 
 ## Introduction
 
-## Introduction
-
 **Update 10.18.2023**:  
 The project is in its early stages, with a basic API setup and plans for a dynamic frontend.
 
@@ -44,3 +42,22 @@ git clone https://github.com/adamhinton/CMDBuddy.git
 cd CMDBuddy
 # Install dependencies
 npm install
+```
+
+## Tech Stack
+
+### Backend
+
+- **AWS Amplify**: Used for hosting the backend and creating and deploying the GraphQL API.
+- **GraphQL**: Responsible for defining the data schema and creating resolvers to handle specific data requests and mutations.
+
+### Frontend (Planned)
+
+- **React with TypeScript**: To build a dynamic, component-based user interface.
+- **Styled-components**: For component-specific styles and theming.
+- **Vite**: As the build and development tool.
+- **Redux**: For state management, including the management of user-generated commands and parameters.
+- **Zod**: For frontend type validation.
+- **React-Router-Dom**: For application routing and navigation.
+
+
