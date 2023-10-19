@@ -61,3 +61,46 @@ npm install
 - **React-Router-Dom**: For application routing and navigation.
 
 
+
+## Features
+
+### Backend
+
+#### Data Management
+- Handle CRUD operations (Create, Read, Update, Delete) for commands and parameters.
+- Implement data validation logic, including user-defined regex patterns.
+
+#### User Authentication
+- Implement user registration and login functionalities using AWS Amplify and Amazon Cognito.
+- Security measures such as encrypted passwords and secure tokens.
+
+#### Data Storage
+- Store user data, commands, parameters, and potential saved commands.
+- Ensure data integrity and consistency.
+
+#### Guest User Features
+- Design allows for functionalities that don't strictly require authentication.
+
+### Frontend (Planned)
+
+#### User Interface
+- Dynamic command input and display modules.
+- Drag-and-drop functionality for reordering commands and parameters.
+- Dark mode toggle based on user preference.
+
+#### User Authentication
+- Combined login/registration page.
+- Profile management page for updating settings or details.
+- Guest user functionality with certain limitations.
+
+#### Data Interaction
+- Fetch and display user-specific commands and parameters.
+- CRUD operations for commands and parameters reflecting changes on the backend.
+
+#### Keyboard Shortcuts (Stretch)
+- Implement shortcuts for common actions like copying a command.
+
+#### How-to Guide & User Feedback (Stretch)
+- A basic how-to page to guide users.
+- A simple feedback or suggestions form.
+
