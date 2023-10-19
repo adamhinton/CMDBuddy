@@ -104,3 +104,46 @@ npm install
 - A basic how-to page to guide users.
 - A simple feedback or suggestions form.
 
+
+## Technical Information
+
+### Backend
+
+#### Tables and Relationships
+
+- **User Table**: The central table that holds user information.
+  - `id`: Unique identifier for each user.
+  - `email`: User's email address.
+  - `darkMode`: Boolean to store user's dark mode preference.
+  - **Relationships**:
+    - One-to-many relationship with the Command table via `commands`.
+
+- **Command Table**: Stores the base commands.
+  - `id`: Unique identifier for each command.
+  - `baseCommand`: The actual command string.
+  - `title`: A title to describe what the command does.
+  - `order`: An integer to maintain the order of commands.
+  - `userID`: Foreign key linking back to the User table.
+  - **Relationships**:
+    - Many-to-one relationship with the User table via `user`.
+    - One-to-many relationship with the Parameter table via `parameters`.
+
+- **Parameter Table**: Stores parameters for each command.
+  - `id`: Unique identifier for each parameter.
+  - `type`: The type of parameter (STRING, INT, BOOLEAN, DROPDOWN).
+  - `defaultValue`: The default value for the parameter.
+  - `name`: The name of the parameter.
+  - `order`: An integer to maintain the order of parameters.
+  - `commandID`: Foreign key linking back to the Command table.
+  - **Relationships**:
+    - Many-to-one relationship with the Command table via `command`.
+
+#### GraphQL
+
+- **Schema Definition**: The GraphQL schema defines the types and relationships between them.
+- **Resolvers**: Custom logic to handle specific data requests and mutations.
+- **Queries and Mutations**: GraphQL queries are used to fetch data, and mutations are used to modify data.
+- **Security**: Utilizes AWS Amplify's built-in authentication to secure GraphQL endpoints.
+
+
+
