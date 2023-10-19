@@ -77,20 +77,20 @@ export const createCommand = /* GraphQL */ `mutation CreateCommand(
 ) {
   createCommand(input: $input, condition: $condition) {
     id
-    userID
     baseCommand
     title
     order
-    parameters {
-      nextToken
-      __typename
-    }
+    userID
     user {
       id
       email
       darkMode
       createdAt
       updatedAt
+      __typename
+    }
+    parameters {
+      nextToken
       __typename
     }
     createdAt
@@ -108,20 +108,20 @@ export const updateCommand = /* GraphQL */ `mutation UpdateCommand(
 ) {
   updateCommand(input: $input, condition: $condition) {
     id
-    userID
     baseCommand
     title
     order
-    parameters {
-      nextToken
-      __typename
-    }
+    userID
     user {
       id
       email
       darkMode
       createdAt
       updatedAt
+      __typename
+    }
+    parameters {
+      nextToken
       __typename
     }
     createdAt
@@ -139,20 +139,20 @@ export const deleteCommand = /* GraphQL */ `mutation DeleteCommand(
 ) {
   deleteCommand(input: $input, condition: $condition) {
     id
-    userID
     baseCommand
     title
     order
-    parameters {
-      nextToken
-      __typename
-    }
+    userID
     user {
       id
       email
       darkMode
       createdAt
       updatedAt
+      __typename
+    }
+    parameters {
+      nextToken
       __typename
     }
     createdAt
@@ -170,7 +170,6 @@ export const createParameter = /* GraphQL */ `mutation CreateParameter(
 ) {
   createParameter(input: $input, condition: $condition) {
     id
-    commandID
     type
     defaultValue
     name
@@ -181,12 +180,13 @@ export const createParameter = /* GraphQL */ `mutation CreateParameter(
     maxValue
     isNullable
     allowedValues
+    commandID
     command {
       id
-      userID
       baseCommand
       title
       order
+      userID
       createdAt
       updatedAt
       __typename
@@ -206,7 +206,6 @@ export const updateParameter = /* GraphQL */ `mutation UpdateParameter(
 ) {
   updateParameter(input: $input, condition: $condition) {
     id
-    commandID
     type
     defaultValue
     name
@@ -217,12 +216,13 @@ export const updateParameter = /* GraphQL */ `mutation UpdateParameter(
     maxValue
     isNullable
     allowedValues
+    commandID
     command {
       id
-      userID
       baseCommand
       title
       order
+      userID
       createdAt
       updatedAt
       __typename
@@ -242,7 +242,6 @@ export const deleteParameter = /* GraphQL */ `mutation DeleteParameter(
 ) {
   deleteParameter(input: $input, condition: $condition) {
     id
-    commandID
     type
     defaultValue
     name
@@ -253,12 +252,13 @@ export const deleteParameter = /* GraphQL */ `mutation DeleteParameter(
     maxValue
     isNullable
     allowedValues
+    commandID
     command {
       id
-      userID
       baseCommand
       title
       order
+      userID
       createdAt
       updatedAt
       __typename

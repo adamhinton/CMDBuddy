@@ -82,12 +82,12 @@ export type ModelCommandConnection = {
 export type Command = {
   __typename: "Command",
   id: string,
-  userID: string,
   baseCommand: string,
   title: string,
   order: number,
-  parameters?: ModelParameterConnection | null,
+  userID: string,
   user?: User | null,
+  parameters?: ModelParameterConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -101,7 +101,6 @@ export type ModelParameterConnection = {
 export type Parameter = {
   __typename: "Parameter",
   id: string,
-  commandID: string,
   type: ParameterType,
   defaultValue?: string | null,
   name: string,
@@ -112,6 +111,7 @@ export type Parameter = {
   maxValue?: number | null,
   isNullable?: boolean | null,
   allowedValues?: Array< string | null > | null,
+  commandID: string,
   command?: Command | null,
   createdAt: string,
   updatedAt: string,
@@ -137,20 +137,32 @@ export type DeleteUserInput = {
 
 export type CreateCommandInput = {
   id?: string | null,
-  userID: string,
   baseCommand: string,
   title: string,
   order: number,
+  userID: string,
 };
 
 export type ModelCommandConditionInput = {
-  userID?: ModelIDInput | null,
   baseCommand?: ModelStringInput | null,
   title?: ModelStringInput | null,
   order?: ModelIntInput | null,
+  userID?: ModelIDInput | null,
   and?: Array< ModelCommandConditionInput | null > | null,
   or?: Array< ModelCommandConditionInput | null > | null,
   not?: ModelCommandConditionInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type ModelIDInput = {
@@ -169,24 +181,12 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
 export type UpdateCommandInput = {
   id: string,
-  userID?: string | null,
   baseCommand?: string | null,
   title?: string | null,
   order?: number | null,
+  userID?: string | null,
 };
 
 export type DeleteCommandInput = {
@@ -195,7 +195,6 @@ export type DeleteCommandInput = {
 
 export type CreateParameterInput = {
   id?: string | null,
-  commandID: string,
   type: ParameterType,
   defaultValue?: string | null,
   name: string,
@@ -206,10 +205,10 @@ export type CreateParameterInput = {
   maxValue?: number | null,
   isNullable?: boolean | null,
   allowedValues?: Array< string | null > | null,
+  commandID: string,
 };
 
 export type ModelParameterConditionInput = {
-  commandID?: ModelIDInput | null,
   type?: ModelParameterTypeInput | null,
   defaultValue?: ModelStringInput | null,
   name?: ModelStringInput | null,
@@ -220,6 +219,7 @@ export type ModelParameterConditionInput = {
   maxValue?: ModelIntInput | null,
   isNullable?: ModelBooleanInput | null,
   allowedValues?: ModelStringInput | null,
+  commandID?: ModelIDInput | null,
   and?: Array< ModelParameterConditionInput | null > | null,
   or?: Array< ModelParameterConditionInput | null > | null,
   not?: ModelParameterConditionInput | null,
@@ -232,7 +232,6 @@ export type ModelParameterTypeInput = {
 
 export type UpdateParameterInput = {
   id: string,
-  commandID?: string | null,
   type?: ParameterType | null,
   defaultValue?: string | null,
   name?: string | null,
@@ -243,6 +242,7 @@ export type UpdateParameterInput = {
   maxValue?: number | null,
   isNullable?: boolean | null,
   allowedValues?: Array< string | null > | null,
+  commandID?: string | null,
 };
 
 export type DeleteParameterInput = {
@@ -266,18 +266,23 @@ export type ModelUserConnection = {
 
 export type ModelCommandFilterInput = {
   id?: ModelIDInput | null,
-  userID?: ModelIDInput | null,
   baseCommand?: ModelStringInput | null,
   title?: ModelStringInput | null,
   order?: ModelIntInput | null,
+  userID?: ModelIDInput | null,
   and?: Array< ModelCommandFilterInput | null > | null,
   or?: Array< ModelCommandFilterInput | null > | null,
   not?: ModelCommandFilterInput | null,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type ModelParameterFilterInput = {
   id?: ModelIDInput | null,
-  commandID?: ModelIDInput | null,
   type?: ModelParameterTypeInput | null,
   defaultValue?: ModelStringInput | null,
   name?: ModelStringInput | null,
@@ -288,6 +293,7 @@ export type ModelParameterFilterInput = {
   maxValue?: ModelIntInput | null,
   isNullable?: ModelBooleanInput | null,
   allowedValues?: ModelStringInput | null,
+  commandID?: ModelIDInput | null,
   and?: Array< ModelParameterFilterInput | null > | null,
   or?: Array< ModelParameterFilterInput | null > | null,
   not?: ModelParameterFilterInput | null,
@@ -338,10 +344,10 @@ export type ModelSubscriptionBooleanInput = {
 
 export type ModelSubscriptionCommandFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  userID?: ModelSubscriptionIDInput | null,
   baseCommand?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   order?: ModelSubscriptionIntInput | null,
+  userID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionCommandFilterInput | null > | null,
   or?: Array< ModelSubscriptionCommandFilterInput | null > | null,
 };
@@ -360,7 +366,6 @@ export type ModelSubscriptionIntInput = {
 
 export type ModelSubscriptionParameterFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  commandID?: ModelSubscriptionIDInput | null,
   type?: ModelSubscriptionStringInput | null,
   defaultValue?: ModelSubscriptionStringInput | null,
   name?: ModelSubscriptionStringInput | null,
@@ -371,6 +376,7 @@ export type ModelSubscriptionParameterFilterInput = {
   maxValue?: ModelSubscriptionIntInput | null,
   isNullable?: ModelSubscriptionBooleanInput | null,
   allowedValues?: ModelSubscriptionStringInput | null,
+  commandID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionParameterFilterInput | null > | null,
   or?: Array< ModelSubscriptionParameterFilterInput | null > | null,
 };
@@ -444,14 +450,10 @@ export type CreateCommandMutation = {
   createCommand?:  {
     __typename: "Command",
     id: string,
-    userID: string,
     baseCommand: string,
     title: string,
     order: number,
-    parameters?:  {
-      __typename: "ModelParameterConnection",
-      nextToken?: string | null,
-    } | null,
+    userID: string,
     user?:  {
       __typename: "User",
       id: string,
@@ -459,6 +461,10 @@ export type CreateCommandMutation = {
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    parameters?:  {
+      __typename: "ModelParameterConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -474,14 +480,10 @@ export type UpdateCommandMutation = {
   updateCommand?:  {
     __typename: "Command",
     id: string,
-    userID: string,
     baseCommand: string,
     title: string,
     order: number,
-    parameters?:  {
-      __typename: "ModelParameterConnection",
-      nextToken?: string | null,
-    } | null,
+    userID: string,
     user?:  {
       __typename: "User",
       id: string,
@@ -489,6 +491,10 @@ export type UpdateCommandMutation = {
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    parameters?:  {
+      __typename: "ModelParameterConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -504,14 +510,10 @@ export type DeleteCommandMutation = {
   deleteCommand?:  {
     __typename: "Command",
     id: string,
-    userID: string,
     baseCommand: string,
     title: string,
     order: number,
-    parameters?:  {
-      __typename: "ModelParameterConnection",
-      nextToken?: string | null,
-    } | null,
+    userID: string,
     user?:  {
       __typename: "User",
       id: string,
@@ -519,6 +521,10 @@ export type DeleteCommandMutation = {
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    parameters?:  {
+      __typename: "ModelParameterConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -534,7 +540,6 @@ export type CreateParameterMutation = {
   createParameter?:  {
     __typename: "Parameter",
     id: string,
-    commandID: string,
     type: ParameterType,
     defaultValue?: string | null,
     name: string,
@@ -545,13 +550,14 @@ export type CreateParameterMutation = {
     maxValue?: number | null,
     isNullable?: boolean | null,
     allowedValues?: Array< string | null > | null,
+    commandID: string,
     command?:  {
       __typename: "Command",
       id: string,
-      userID: string,
       baseCommand: string,
       title: string,
       order: number,
+      userID: string,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -569,7 +575,6 @@ export type UpdateParameterMutation = {
   updateParameter?:  {
     __typename: "Parameter",
     id: string,
-    commandID: string,
     type: ParameterType,
     defaultValue?: string | null,
     name: string,
@@ -580,13 +585,14 @@ export type UpdateParameterMutation = {
     maxValue?: number | null,
     isNullable?: boolean | null,
     allowedValues?: Array< string | null > | null,
+    commandID: string,
     command?:  {
       __typename: "Command",
       id: string,
-      userID: string,
       baseCommand: string,
       title: string,
       order: number,
+      userID: string,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -604,7 +610,6 @@ export type DeleteParameterMutation = {
   deleteParameter?:  {
     __typename: "Parameter",
     id: string,
-    commandID: string,
     type: ParameterType,
     defaultValue?: string | null,
     name: string,
@@ -615,13 +620,14 @@ export type DeleteParameterMutation = {
     maxValue?: number | null,
     isNullable?: boolean | null,
     allowedValues?: Array< string | null > | null,
+    commandID: string,
     command?:  {
       __typename: "Command",
       id: string,
-      userID: string,
       baseCommand: string,
       title: string,
       order: number,
+      userID: string,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -678,14 +684,10 @@ export type GetCommandQuery = {
   getCommand?:  {
     __typename: "Command",
     id: string,
-    userID: string,
     baseCommand: string,
     title: string,
     order: number,
-    parameters?:  {
-      __typename: "ModelParameterConnection",
-      nextToken?: string | null,
-    } | null,
+    userID: string,
     user?:  {
       __typename: "User",
       id: string,
@@ -693,6 +695,10 @@ export type GetCommandQuery = {
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    parameters?:  {
+      __typename: "ModelParameterConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -711,10 +717,35 @@ export type ListCommandsQuery = {
     items:  Array< {
       __typename: "Command",
       id: string,
-      userID: string,
       baseCommand: string,
       title: string,
       order: number,
+      userID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CommandsByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCommandFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CommandsByUserIDQuery = {
+  commandsByUserID?:  {
+    __typename: "ModelCommandConnection",
+    items:  Array< {
+      __typename: "Command",
+      id: string,
+      baseCommand: string,
+      title: string,
+      order: number,
+      userID: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -730,7 +761,6 @@ export type GetParameterQuery = {
   getParameter?:  {
     __typename: "Parameter",
     id: string,
-    commandID: string,
     type: ParameterType,
     defaultValue?: string | null,
     name: string,
@@ -741,13 +771,14 @@ export type GetParameterQuery = {
     maxValue?: number | null,
     isNullable?: boolean | null,
     allowedValues?: Array< string | null > | null,
+    commandID: string,
     command?:  {
       __typename: "Command",
       id: string,
-      userID: string,
       baseCommand: string,
       title: string,
       order: number,
+      userID: string,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -768,7 +799,6 @@ export type ListParametersQuery = {
     items:  Array< {
       __typename: "Parameter",
       id: string,
-      commandID: string,
       type: ParameterType,
       defaultValue?: string | null,
       name: string,
@@ -779,6 +809,39 @@ export type ListParametersQuery = {
       maxValue?: number | null,
       isNullable?: boolean | null,
       allowedValues?: Array< string | null > | null,
+      commandID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ParametersByCommandIDQueryVariables = {
+  commandID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelParameterFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ParametersByCommandIDQuery = {
+  parametersByCommandID?:  {
+    __typename: "ModelParameterConnection",
+    items:  Array< {
+      __typename: "Parameter",
+      id: string,
+      type: ParameterType,
+      defaultValue?: string | null,
+      name: string,
+      order: number,
+      validationRegex?: string | null,
+      length?: number | null,
+      minValue?: number | null,
+      maxValue?: number | null,
+      isNullable?: boolean | null,
+      allowedValues?: Array< string | null > | null,
+      commandID: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -851,14 +914,10 @@ export type OnCreateCommandSubscription = {
   onCreateCommand?:  {
     __typename: "Command",
     id: string,
-    userID: string,
     baseCommand: string,
     title: string,
     order: number,
-    parameters?:  {
-      __typename: "ModelParameterConnection",
-      nextToken?: string | null,
-    } | null,
+    userID: string,
     user?:  {
       __typename: "User",
       id: string,
@@ -866,6 +925,10 @@ export type OnCreateCommandSubscription = {
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    parameters?:  {
+      __typename: "ModelParameterConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -880,14 +943,10 @@ export type OnUpdateCommandSubscription = {
   onUpdateCommand?:  {
     __typename: "Command",
     id: string,
-    userID: string,
     baseCommand: string,
     title: string,
     order: number,
-    parameters?:  {
-      __typename: "ModelParameterConnection",
-      nextToken?: string | null,
-    } | null,
+    userID: string,
     user?:  {
       __typename: "User",
       id: string,
@@ -895,6 +954,10 @@ export type OnUpdateCommandSubscription = {
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    parameters?:  {
+      __typename: "ModelParameterConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -909,14 +972,10 @@ export type OnDeleteCommandSubscription = {
   onDeleteCommand?:  {
     __typename: "Command",
     id: string,
-    userID: string,
     baseCommand: string,
     title: string,
     order: number,
-    parameters?:  {
-      __typename: "ModelParameterConnection",
-      nextToken?: string | null,
-    } | null,
+    userID: string,
     user?:  {
       __typename: "User",
       id: string,
@@ -924,6 +983,10 @@ export type OnDeleteCommandSubscription = {
       darkMode: boolean,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    parameters?:  {
+      __typename: "ModelParameterConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -938,7 +1001,6 @@ export type OnCreateParameterSubscription = {
   onCreateParameter?:  {
     __typename: "Parameter",
     id: string,
-    commandID: string,
     type: ParameterType,
     defaultValue?: string | null,
     name: string,
@@ -949,13 +1011,14 @@ export type OnCreateParameterSubscription = {
     maxValue?: number | null,
     isNullable?: boolean | null,
     allowedValues?: Array< string | null > | null,
+    commandID: string,
     command?:  {
       __typename: "Command",
       id: string,
-      userID: string,
       baseCommand: string,
       title: string,
       order: number,
+      userID: string,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -972,7 +1035,6 @@ export type OnUpdateParameterSubscription = {
   onUpdateParameter?:  {
     __typename: "Parameter",
     id: string,
-    commandID: string,
     type: ParameterType,
     defaultValue?: string | null,
     name: string,
@@ -983,13 +1045,14 @@ export type OnUpdateParameterSubscription = {
     maxValue?: number | null,
     isNullable?: boolean | null,
     allowedValues?: Array< string | null > | null,
+    commandID: string,
     command?:  {
       __typename: "Command",
       id: string,
-      userID: string,
       baseCommand: string,
       title: string,
       order: number,
+      userID: string,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1006,7 +1069,6 @@ export type OnDeleteParameterSubscription = {
   onDeleteParameter?:  {
     __typename: "Parameter",
     id: string,
-    commandID: string,
     type: ParameterType,
     defaultValue?: string | null,
     name: string,
@@ -1017,13 +1079,14 @@ export type OnDeleteParameterSubscription = {
     maxValue?: number | null,
     isNullable?: boolean | null,
     allowedValues?: Array< string | null > | null,
+    commandID: string,
     command?:  {
       __typename: "Command",
       id: string,
-      userID: string,
       baseCommand: string,
       title: string,
       order: number,
+      userID: string,
       createdAt: string,
       updatedAt: string,
     } | null,

@@ -65,20 +65,20 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
 export const onCreateCommand = /* GraphQL */ `subscription OnCreateCommand($filter: ModelSubscriptionCommandFilterInput) {
   onCreateCommand(filter: $filter) {
     id
-    userID
     baseCommand
     title
     order
-    parameters {
-      nextToken
-      __typename
-    }
+    userID
     user {
       id
       email
       darkMode
       createdAt
       updatedAt
+      __typename
+    }
+    parameters {
+      nextToken
       __typename
     }
     createdAt
@@ -93,20 +93,20 @@ export const onCreateCommand = /* GraphQL */ `subscription OnCreateCommand($filt
 export const onUpdateCommand = /* GraphQL */ `subscription OnUpdateCommand($filter: ModelSubscriptionCommandFilterInput) {
   onUpdateCommand(filter: $filter) {
     id
-    userID
     baseCommand
     title
     order
-    parameters {
-      nextToken
-      __typename
-    }
+    userID
     user {
       id
       email
       darkMode
       createdAt
       updatedAt
+      __typename
+    }
+    parameters {
+      nextToken
       __typename
     }
     createdAt
@@ -121,20 +121,20 @@ export const onUpdateCommand = /* GraphQL */ `subscription OnUpdateCommand($filt
 export const onDeleteCommand = /* GraphQL */ `subscription OnDeleteCommand($filter: ModelSubscriptionCommandFilterInput) {
   onDeleteCommand(filter: $filter) {
     id
-    userID
     baseCommand
     title
     order
-    parameters {
-      nextToken
-      __typename
-    }
+    userID
     user {
       id
       email
       darkMode
       createdAt
       updatedAt
+      __typename
+    }
+    parameters {
+      nextToken
       __typename
     }
     createdAt
@@ -149,7 +149,6 @@ export const onDeleteCommand = /* GraphQL */ `subscription OnDeleteCommand($filt
 export const onCreateParameter = /* GraphQL */ `subscription OnCreateParameter($filter: ModelSubscriptionParameterFilterInput) {
   onCreateParameter(filter: $filter) {
     id
-    commandID
     type
     defaultValue
     name
@@ -160,12 +159,13 @@ export const onCreateParameter = /* GraphQL */ `subscription OnCreateParameter($
     maxValue
     isNullable
     allowedValues
+    commandID
     command {
       id
-      userID
       baseCommand
       title
       order
+      userID
       createdAt
       updatedAt
       __typename
@@ -182,7 +182,6 @@ export const onCreateParameter = /* GraphQL */ `subscription OnCreateParameter($
 export const onUpdateParameter = /* GraphQL */ `subscription OnUpdateParameter($filter: ModelSubscriptionParameterFilterInput) {
   onUpdateParameter(filter: $filter) {
     id
-    commandID
     type
     defaultValue
     name
@@ -193,12 +192,13 @@ export const onUpdateParameter = /* GraphQL */ `subscription OnUpdateParameter($
     maxValue
     isNullable
     allowedValues
+    commandID
     command {
       id
-      userID
       baseCommand
       title
       order
+      userID
       createdAt
       updatedAt
       __typename
@@ -215,7 +215,6 @@ export const onUpdateParameter = /* GraphQL */ `subscription OnUpdateParameter($
 export const onDeleteParameter = /* GraphQL */ `subscription OnDeleteParameter($filter: ModelSubscriptionParameterFilterInput) {
   onDeleteParameter(filter: $filter) {
     id
-    commandID
     type
     defaultValue
     name
@@ -226,12 +225,13 @@ export const onDeleteParameter = /* GraphQL */ `subscription OnDeleteParameter($
     maxValue
     isNullable
     allowedValues
+    commandID
     command {
       id
-      userID
       baseCommand
       title
       order
+      userID
       createdAt
       updatedAt
       __typename

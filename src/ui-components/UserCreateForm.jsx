@@ -102,7 +102,7 @@ export default function UserCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createUser,
+            query: createUser.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,

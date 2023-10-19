@@ -45,20 +45,20 @@ export const listUsers = /* GraphQL */ `query ListUsers(
 export const getCommand = /* GraphQL */ `query GetCommand($id: ID!) {
   getCommand(id: $id) {
     id
-    userID
     baseCommand
     title
     order
-    parameters {
-      nextToken
-      __typename
-    }
+    userID
     user {
       id
       email
       darkMode
       createdAt
       updatedAt
+      __typename
+    }
+    parameters {
+      nextToken
       __typename
     }
     createdAt
@@ -78,10 +78,10 @@ export const listCommands = /* GraphQL */ `query ListCommands(
   listCommands(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      userID
       baseCommand
       title
       order
+      userID
       createdAt
       updatedAt
       __typename
@@ -94,10 +94,41 @@ export const listCommands = /* GraphQL */ `query ListCommands(
   APITypes.ListCommandsQueryVariables,
   APITypes.ListCommandsQuery
 >;
+export const commandsByUserID = /* GraphQL */ `query CommandsByUserID(
+  $userID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelCommandFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  commandsByUserID(
+    userID: $userID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      baseCommand
+      title
+      order
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.CommandsByUserIDQueryVariables,
+  APITypes.CommandsByUserIDQuery
+>;
 export const getParameter = /* GraphQL */ `query GetParameter($id: ID!) {
   getParameter(id: $id) {
     id
-    commandID
     type
     defaultValue
     name
@@ -108,12 +139,13 @@ export const getParameter = /* GraphQL */ `query GetParameter($id: ID!) {
     maxValue
     isNullable
     allowedValues
+    commandID
     command {
       id
-      userID
       baseCommand
       title
       order
+      userID
       createdAt
       updatedAt
       __typename
@@ -135,7 +167,6 @@ export const listParameters = /* GraphQL */ `query ListParameters(
   listParameters(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      commandID
       type
       defaultValue
       name
@@ -146,6 +177,7 @@ export const listParameters = /* GraphQL */ `query ListParameters(
       maxValue
       isNullable
       allowedValues
+      commandID
       createdAt
       updatedAt
       __typename
@@ -157,4 +189,43 @@ export const listParameters = /* GraphQL */ `query ListParameters(
 ` as GeneratedQuery<
   APITypes.ListParametersQueryVariables,
   APITypes.ListParametersQuery
+>;
+export const parametersByCommandID = /* GraphQL */ `query ParametersByCommandID(
+  $commandID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelParameterFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  parametersByCommandID(
+    commandID: $commandID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      type
+      defaultValue
+      name
+      order
+      validationRegex
+      length
+      minValue
+      maxValue
+      isNullable
+      allowedValues
+      commandID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ParametersByCommandIDQueryVariables,
+  APITypes.ParametersByCommandIDQuery
 >;
