@@ -147,3 +147,29 @@ npm install
 
 
 
+#### Frontend (Planned)
+
+##### Component Structure
+
+- `<App>`: The root component that houses all other components.
+  - `<Header>`: Contains navigation and user settings.
+    - `<Dropdown>`: Allows users to filter commands.
+  - `<CommandList>`: Displays a list of user commands.
+    - `<CommandItem>`: Individual command items within the list.
+      - `<ParameterList>`: Lists parameters for each command.
+        - `<ParameterItem>`: Individual parameters.
+
+##### State Management
+
+- **Redux**: Used for managing the state of user-generated commands and parameters.
+- **Local State**: React's useState and useContext for component-level state.
+
+##### Routing
+
+- **React-Router-Dom**: Manages application routing and navigation.
+
+##### Data Validation
+
+- **Zod**: Used for frontend type validation to ensure data integrity before sending to the backend.
+
+
