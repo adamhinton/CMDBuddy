@@ -173,3 +173,4 @@ npm install
 - **Zod**: Used for frontend type validation to ensure data integrity before sending to the backend.
 
 
+
