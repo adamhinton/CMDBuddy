@@ -6,20 +6,17 @@
 The project is in its early stages, with a basic API setup and plans for a dynamic frontend.
 
 ### What is CMDBuddy?
-
 CMDBuddy is a full-stack application designed to help users create, manage, and customize CLI commands and their associated parameters.
 
 ### Backend
-
 The backend is built with **AWS Amplify** and **GraphQL**, offering a robust and scalable architecture for data management and user authentication.
 
 ### Frontend (In Planning)
-
 The frontend, currently in the planning stage, aims to provide a user-friendly interface built with **React** and **TypeScript**.
 
 ### Who is this for?
-
 This application serves as a centralized hub for all your command-line needs, offering features like real-time command previews, drag-and-drop functionality, and much more.
+
 
 ## Table of Contents
 
@@ -63,56 +60,50 @@ npm install
 - **Zod**: For frontend type validation.
 - **React-Router-Dom**: For application routing and navigation.
 
+
+
 ## Features
 
 ### Backend
 
 #### Data Management
-
 - Handle CRUD operations (Create, Read, Update, Delete) for commands and parameters.
 - Implement data validation logic, including user-defined regex patterns.
 
 #### User Authentication
-
 - Implement user registration and login functionalities using AWS Amplify and Amazon Cognito.
 - Security measures such as encrypted passwords and secure tokens.
 
 #### Data Storage
-
 - Store user data, commands, parameters, and potential saved commands.
 - Ensure data integrity and consistency.
 
 #### Guest User Features
-
 - Design allows for functionalities that don't strictly require authentication.
 
 ### Frontend (Planned)
 
 #### User Interface
-
 - Dynamic command input and display modules.
 - Drag-and-drop functionality for reordering commands and parameters.
 - Dark mode toggle based on user preference.
 
 #### User Authentication
-
 - Combined login/registration page.
 - Profile management page for updating settings or details.
 - Guest user functionality with certain limitations.
 
 #### Data Interaction
-
 - Fetch and display user-specific commands and parameters.
 - CRUD operations for commands and parameters reflecting changes on the backend.
 
 #### Keyboard Shortcuts (Stretch)
-
 - Implement shortcuts for common actions like copying a command.
 
 #### How-to Guide & User Feedback (Stretch)
-
 - A basic how-to page to guide users.
 - A simple feedback or suggestions form.
+
 
 ## Technical Information
 
@@ -121,7 +112,6 @@ npm install
 #### Tables and Relationships
 
 - **User Table**: The central table that holds user information.
-
   - `id`: Unique identifier for each user.
   - `email`: User's email address.
   - `darkMode`: Boolean to store user's dark mode preference.
@@ -129,7 +119,6 @@ npm install
     - One-to-many relationship with the Command table via `commands`.
 
 - **Command Table**: Stores the base commands.
-
   - `id`: Unique identifier for each command.
   - `baseCommand`: The actual command string.
   - `title`: A title to describe what the command does.
@@ -156,6 +145,8 @@ npm install
 - **Queries and Mutations**: GraphQL queries are used to fetch data, and mutations are used to modify data.
 - **Security**: Utilizes AWS Amplify's built-in authentication to secure GraphQL endpoints.
 
+
+
 #### Frontend (Planned)
 
 ##### Component Structure
@@ -180,3 +171,6 @@ npm install
 ##### Data Validation
 
 - **Zod**: Used for frontend type validation to ensure data integrity before sending to the backend.
+
+
+
