@@ -1,12 +1,9 @@
 // prettier-ignore
 "use client";
-import { Amplify } from "aws-amplify";
-import config from "../aws-exports"; // adjust the path as needed
-import { Authenticator } from "@aws-amplify/ui-react";
+
+// Not sure I've done this right.
 import "@aws-amplify/ui-react/styles.css";
 //https://ui.docs.amplify.aws/react/connected-components/authenticator/configuration
-
-Amplify.configure(config);
 
 function Home() {
 	return (
