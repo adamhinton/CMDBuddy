@@ -6,15 +6,46 @@ import { useEffect } from "react";
 import config from "../../aws-exports";
 Amplify.configure(config);
 
+// Gets Commands by userID along with Commands' Parameters
+const customCommandsAndParametersByUserID = /* GraphQL */ `
+	query CommandsByUserID($userID: ID!) {
+		commandsByUserID(userID: $userID) {
+			items {
+				id
+				baseCommand
+				title
+				order
+				userID
+				parameters {
+					items {
+						id
+						type
+						defaultValue
+						name
+						order
+						validationRegex
+						length
+						minValue
+						maxValue
+						isNullable
+						allowedValues
+					}
+					nextToken
+				}
+			}
+			nextToken
+		}
+	}
+`;
+
 const Commands = () => {
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
 				const user = await Auth.currentAuthenticatedUser();
 				const userId = user.attributes.sub;
-				console.log("userId:", userId);
 				const result = await API.graphql(
-					graphqlOperation(commandsByUserID, {
+					graphqlOperation(customCommandsAndParametersByUserID, {
 						userID: userId,
 					})
 				);
@@ -26,7 +57,6 @@ const Commands = () => {
 
 		fetchUser();
 	}, []);
-
 	return <h1>Commands Placeholder</h1>;
 };
 
