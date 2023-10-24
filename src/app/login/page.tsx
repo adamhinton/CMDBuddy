@@ -13,7 +13,6 @@ const Login = () => {
 			<Authenticator>
 				{({ signOut, user }) => (
 					<div>
-						<h1>Adam Hinton</h1>
 						<button onClick={signOut}>Sign Out</button>
 					</div>
 				)}

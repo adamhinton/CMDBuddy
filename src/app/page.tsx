@@ -1,8 +1,7 @@
 // prettier-ignore
-"use client";
+// "use client";
 
 // Not sure I've done this right.
-import "@aws-amplify/ui-react/styles.css";
 //https://ui.docs.amplify.aws/react/connected-components/authenticator/configuration
 
 function Home() {
