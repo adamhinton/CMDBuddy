@@ -11,11 +11,14 @@ const Login = () => {
 		<>
 			<h1>Log In</h1>
 			<Authenticator>
-				{({ signOut, user }) => (
-					<div>
-						<button onClick={signOut}>Sign Out</button>
-					</div>
-				)}
+				{({ signOut, user }) => {
+					console.log("user:", user);
+					return (
+						<div>
+							<button onClick={signOut}>Sign Out</button>
+						</div>
+					);
+				}}
 			</Authenticator>
 		</>
 	);
