@@ -3,8 +3,10 @@ import { commandsByUserID, parametersByCommandID } from "@/graphql/queries";
 import { API, Amplify, graphqlOperation } from "aws-amplify";
 import { Auth } from "aws-amplify";
 import { useEffect } from "react";
-import config from "../../aws-exports";
-Amplify.configure(config);
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store"; // Adjust the import path as needed
+// import config from "../../aws-exports";
+// Amplify.configure(config);
 
 // Gets Commands by userID along with Commands' Parameters
 const customCommandsAndParametersByUserID = /* GraphQL */ `
@@ -39,6 +41,12 @@ const customCommandsAndParametersByUserID = /* GraphQL */ `
 `;
 
 const Commands = () => {
+	const currentUser = useSelector((state: RootState) => {
+		console.log("state:", state);
+		return state.auth.user;
+	});
+	console.log("currentUser redux in commands:", currentUser);
+
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
