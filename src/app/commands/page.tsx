@@ -5,8 +5,8 @@ import { Auth } from "aws-amplify";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store"; // Adjust the import path as needed
-// import config from "../../aws-exports";
-// Amplify.configure(config);
+import config from "../../aws-exports";
+Amplify.configure(config);
 
 // TODO: Move this function somewhere else
 // Gets Commands by userID along with Commands' Parameters
@@ -46,7 +46,9 @@ const Commands = () => {
 		console.log("state:", state);
 		return state.auth.user;
 	});
-	console.log("currentUser redux in commands:", currentUser);
+	console.log("currentUser in commands:", currentUser);
+	const commands = currentUser?.data.commandsByUserID.items;
+	console.log("commands:", commands);
 
 	// useEffect(() => {
 	// 	const fetchUser = async () => {

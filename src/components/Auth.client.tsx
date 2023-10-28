@@ -25,6 +25,7 @@ interface Bob {
 
 const getMyUser = async (): Promise<Bob | null> => {
 	const bob = await Auth.currentAuthenticatedUser();
+	console.log("bob:", bob);
 	return bob;
 };
 
@@ -36,12 +37,10 @@ export default function AuthClientComponent({ user }: AuthClientProps): any {
 		const fetchData = async () => {
 			const initUser = await getMyUser();
 			setBob(initUser);
-			console.log("bob:", bob);
-			console.log("bob.attributes.sub:", bob?.attributes.sub);
 
-			if (bob && bob?.attributes?.sub) {
+			if (bob?.attributes?.sub) {
 				try {
-					console.log("bob in Auth.client.ts try:", bob);
+					console.log("user in Auth.client.ts:", user);
 					const userId = bob.attributes.sub;
 					const result = await API.graphql(
 						graphqlOperation(customCommandsAndParametersByUserID, {
