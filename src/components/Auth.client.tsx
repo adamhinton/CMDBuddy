@@ -9,18 +9,12 @@ import { Auth } from "aws-amplify";
 
 Amplify.configure({ config, ssr: true });
 
-interface AuthClientProps {
-	user: { [key: string]: any } | null;
-}
-
 interface BobAttributes {
 	sub: string;
-	// add other attributes as needed
 }
 
 interface Bob {
 	attributes: BobAttributes;
-	// add other properties as needed
 }
 
 const getMyUser = async (): Promise<Bob | null> => {
