@@ -8,8 +8,9 @@ import { RootState } from "../../../redux/store"; // Adjust the import path as n
 // import config from "../../aws-exports";
 // Amplify.configure(config);
 
+// TODO: Move this function somewhere else
 // Gets Commands by userID along with Commands' Parameters
-const customCommandsAndParametersByUserID = /* GraphQL */ `
+export const customCommandsAndParametersByUserID = /* GraphQL */ `
 	query CommandsByUserID($userID: ID!) {
 		commandsByUserID(userID: $userID) {
 			items {
@@ -47,24 +48,24 @@ const Commands = () => {
 	});
 	console.log("currentUser redux in commands:", currentUser);
 
-	useEffect(() => {
-		const fetchUser = async () => {
-			try {
-				const user = await Auth.currentAuthenticatedUser();
-				const userId = user.attributes.sub;
-				const result = await API.graphql(
-					graphqlOperation(customCommandsAndParametersByUserID, {
-						userID: userId,
-					})
-				);
-				console.log("result:", result);
-			} catch (error) {
-				console.log("Not authenticated");
-			}
-		};
+	// useEffect(() => {
+	// 	const fetchUser = async () => {
+	// 		try {
+	// 			const user = await Auth.currentAuthenticatedUser();
+	// 			const userId = user.attributes.sub;
+	// 			const result = await API.graphql(
+	// 				graphqlOperation(customCommandsAndParametersByUserID, {
+	// 					userID: userId,
+	// 				})
+	// 			);
+	// 			console.log("result:", result);
+	// 		} catch (error) {
+	// 			console.log("Not authenticated");
+	// 		}
+	// 	};
 
-		fetchUser();
-	}, []);
+	// 	fetchUser();
+	// }, []);
 	return <h1>Commands Placeholder</h1>;
 };
 
