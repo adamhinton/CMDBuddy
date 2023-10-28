@@ -7,7 +7,6 @@ import { Amplify } from "aws-amplify";
 //https://ui.docs.amplify.aws/react/connected-components/authenticator/configuration
 
 import config from "../aws-exports";
-// Amplify.configure({ config, ssr: true });
 
 function Home() {
 	return (
@@ -17,16 +16,4 @@ function Home() {
 	);
 }
 
-// export default withAuthenticator(Home);
 export default Home;
-
-{
-	/* <Authenticator>
-	{({ signOut, user }) => (
-		<div>
-			<h1>Adam Hinton</h1>
-			<button onClick={signOut}>Sign Out</button>
-		</div>
-	)}
-</Authenticator>; */
-}

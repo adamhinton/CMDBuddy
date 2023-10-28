@@ -4,7 +4,7 @@ import { API, Amplify, graphqlOperation } from "aws-amplify";
 import { Auth } from "aws-amplify";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store"; // Adjust the import path as needed
+import { RootState } from "../../../redux/store";
 import config from "../../aws-exports";
 Amplify.configure(config);
 

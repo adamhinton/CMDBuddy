@@ -9,10 +9,7 @@ Amplify.configure({ ...config, ssr: true });
 
 Authenticator;
 const Login = () => {
-	// const dispatch = useDispatch();
 	const currentUser = useSelector((state: RootState) => state.auth.user);
-
-	console.log("currentUser redux in login/page:", currentUser);
 
 	return (
 		<>
