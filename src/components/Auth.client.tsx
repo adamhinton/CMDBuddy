@@ -29,7 +29,7 @@ const getMyUser = async (): Promise<Bob | null> => {
 	return bob;
 };
 
-export default function AuthClientComponent({ user }: AuthClientProps): any {
+export default function AuthClientComponent(): any {
 	const dispatch = useDispatch();
 	const [bob, setBob] = useState<Bob | null>(null);
 
@@ -40,7 +40,6 @@ export default function AuthClientComponent({ user }: AuthClientProps): any {
 
 			if (bob?.attributes?.sub) {
 				try {
-					console.log("user in Auth.client.ts:", user);
 					const userId = bob.attributes.sub;
 					const result = await API.graphql(
 						graphqlOperation(customCommandsAndParametersByUserID, {
@@ -55,7 +54,7 @@ export default function AuthClientComponent({ user }: AuthClientProps): any {
 			}
 		};
 		fetchData();
-	}, [user, dispatch, bob?.attributes?.sub]);
+	}, [dispatch, bob?.attributes?.sub]);
 
 	return <h1>Test auth.client</h1>;
 }

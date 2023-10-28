@@ -50,24 +50,6 @@ const Commands = () => {
 	const commands = currentUser?.data.commandsByUserID.items;
 	console.log("commands:", commands);
 
-	// useEffect(() => {
-	// 	const fetchUser = async () => {
-	// 		try {
-	// 			const user = await Auth.currentAuthenticatedUser();
-	// 			const userId = user.attributes.sub;
-	// 			const result = await API.graphql(
-	// 				graphqlOperation(customCommandsAndParametersByUserID, {
-	// 					userID: userId,
-	// 				})
-	// 			);
-	// 			console.log("result:", result);
-	// 		} catch (error) {
-	// 			console.log("Not authenticated");
-	// 		}
-	// 	};
-
-	// 	fetchUser();
-	// }, []);
 	return <h1>Commands Placeholder</h1>;
 };
 
