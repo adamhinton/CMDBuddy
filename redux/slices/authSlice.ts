@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { Amplify, Auth } from "aws-amplify";
 import config from "../../src/aws-exports";
-Amplify.configure(config);
+Amplify.configure({ config, ssr: true });
 
 interface AuthState {
 	user: null | { [key: string]: any };

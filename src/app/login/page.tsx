@@ -1,12 +1,11 @@
 "use client";
 // Not sure I've done this right.
 import { Authenticator } from "@aws-amplify/ui-react";
-// import { Amplify } from "aws-amplify";
-import config from "../../aws-exports";
+import { Amplify, Auth } from "aws-amplify";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-
-// Amplify.configure(config);
+import config from "../../../src/aws-exports";
+Amplify.configure({ ...config, ssr: true });
 
 Authenticator;
 const Login = () => {

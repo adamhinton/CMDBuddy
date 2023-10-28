@@ -7,7 +7,7 @@ import { Amplify } from "aws-amplify";
 //https://ui.docs.amplify.aws/react/connected-components/authenticator/configuration
 
 import config from "../aws-exports";
-Amplify.configure(config);
+// Amplify.configure({ config, ssr: true });
 
 function Home() {
 	return (
