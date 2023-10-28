@@ -56,7 +56,7 @@ export default function AuthClientComponent({ user }: AuthClientProps): any {
 			}
 		};
 		fetchData();
-	}, [user, dispatch, bob?.attributes?.sub]); // Added bob?.attributes?.sub to dependency array
+	}, [user, dispatch, bob?.attributes?.sub]);
 
 	return <h1>Test auth.client</h1>;
 }
