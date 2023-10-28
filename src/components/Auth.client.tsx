@@ -19,7 +19,6 @@ interface Bob {
 
 const getMyUser = async (): Promise<Bob | null> => {
 	const bob = await Auth.currentAuthenticatedUser();
-	console.log("bob:", bob);
 	return bob;
 };
 
@@ -41,9 +40,8 @@ export default function AuthClientComponent(): any {
 						})
 					);
 					dispatch(setUser(result));
-					console.log("result:", result);
 				} catch (error) {
-					console.log("Error:", error);
+					console.log("Error in customCommands query:", error);
 				}
 			}
 		};

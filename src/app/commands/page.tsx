@@ -43,7 +43,6 @@ export const customCommandsAndParametersByUserID = /* GraphQL */ `
 
 const Commands = () => {
 	const currentUser = useSelector((state: RootState) => {
-		console.log("state:", state);
 		return state.auth.user;
 	});
 	console.log("currentUser in commands:", currentUser);
