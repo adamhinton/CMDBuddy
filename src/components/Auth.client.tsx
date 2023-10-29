@@ -6,7 +6,6 @@ import { customCommandsAndParametersByUserID } from "@/app/commands/page";
 import { API, graphqlOperation, Amplify } from "aws-amplify";
 import config from "../aws-exports";
 import { Auth } from "aws-amplify";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
 
 Amplify.configure({ config, ssr: true });
 
@@ -27,6 +26,9 @@ const getMyUser = async (): Promise<CognitoLoggedInUser | null> => {
 	return cognitoLoggedInUser;
 };
 export default function AuthClientComponent(): any {
+	// This gets the Cognito logged in user (if there is one) in the first useEffect.
+	// But that returns a big, unwieldy object with unnecessary info.
+	// So then, the second useEffect calls to the API to get the user's Commands and returns a custom object with only the info we need for a user.
 	const dispatch = useDispatch();
 	const [cognitoLoggedInUser, setcognitoLoggedInUser] =
 		useState<CognitoLoggedInUser | null>(null);
@@ -39,7 +41,6 @@ export default function AuthClientComponent(): any {
 		fetchData();
 	}, [dispatch]);
 
-	// Second useEffect for logic depending on 'cognitoLoggedInUser'
 	useEffect(() => {
 		const fetchData = async () => {
 			if (cognitoLoggedInUser?.attributes?.sub) {
@@ -52,15 +53,16 @@ export default function AuthClientComponent(): any {
 					})
 				);
 
-				const experiment = {
+				// This is the object we're actually setting to redux state
+				const loggedInUserWithCommands = {
 					userID: cognitoLoggedInUser.attributes.sub,
 					email_verified: cognitoLoggedInUser.attributes.email_verified,
 					email: cognitoLoggedInUser.attributes.email,
 					commands: result.data.commandsByUserID.items,
 					isDarkMode: cognitoLoggedInUser.storage.store.isDarkMode,
 				};
-				dispatch(setUser(experiment));
-				console.log("experiment:", experiment);
+				dispatch(setUser(loggedInUserWithCommands));
+				console.log("loggedInUserWithCommands:", loggedInUserWithCommands);
 			}
 		};
 		fetchData();
