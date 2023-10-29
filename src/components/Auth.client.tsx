@@ -18,6 +18,7 @@ interface BobAttributes {
 }
 
 interface Bob {
+	storage: any;
 	attributes: BobAttributes;
 }
 
@@ -43,24 +44,26 @@ export default function AuthClientComponent(): any {
 		const fetchData = async () => {
 			if (bob?.attributes?.sub) {
 				const userId = bob.attributes.sub;
+				console.log("bob:", bob);
 				// TODO: Better typing for this
 				const result: any = await API.graphql(
 					graphqlOperation(customCommandsAndParametersByUserID, {
 						userID: userId,
 					})
 				);
-				dispatch(setUser(result));
 
 				const experiment = {
 					userID: bob.attributes.sub,
 					email_verified: bob.attributes.email_verified,
 					email: bob.attributes.email,
 					commands: result.data.commandsByUserID.items,
+					isDarkMode: bob.storage.store.isDarkMode,
 				};
+				dispatch(setUser(experiment));
 				console.log("experiment:", experiment);
 			}
 		};
 		fetchData();
-	}, [dispatch, bob?.attributes]);
+	}, [dispatch, bob?.attributes, bob?.storage]);
 	return <h1>Test auth.client</h1>;
 }
