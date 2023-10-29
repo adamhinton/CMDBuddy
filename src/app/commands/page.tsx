@@ -1,6 +1,7 @@
 "use client";
 import { commandsByUserID, parametersByCommandID } from "@/graphql/queries";
 import { API, Amplify, graphqlOperation } from "aws-amplify";
+import React from "react";
 import { Auth } from "aws-amplify";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -42,12 +43,14 @@ export const customCommandsAndParametersByUserID = /* GraphQL */ `
 `;
 
 const Commands = () => {
-	const currentUser = useSelector((state: RootState) => {
-		return state.auth.user;
-	});
+	const currentUser = useSelector((state: RootState) => state.auth.user);
 	console.log("currentUser in commands:", currentUser);
-	const commands = currentUser?.data.commandsByUserID.items;
-	console.log("commands:", commands);
+
+	const commands = currentUser?.data?.commands || null;
+
+	if (commands !== null) {
+		console.log("commands:", commands);
+	}
 
 	return <h1>Commands Placeholder</h1>;
 };
