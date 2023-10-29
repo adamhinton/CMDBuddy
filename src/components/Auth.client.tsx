@@ -10,41 +10,41 @@ import { GraphQLResult } from "@aws-amplify/api-graphql";
 
 Amplify.configure({ config, ssr: true });
 
-interface BobAttributes {
+interface CognitoLoggedInUserAttributes {
 	sub: string;
 	email_verified: boolean;
 	email: string;
 	data: [any];
 }
 
-interface Bob {
+interface CognitoLoggedInUser {
 	storage: any;
-	attributes: BobAttributes;
+	attributes: CognitoLoggedInUserAttributes;
 }
 
-const getMyUser = async (): Promise<Bob | null> => {
-	const bob = await Auth.currentAuthenticatedUser();
-	return bob;
+const getMyUser = async (): Promise<CognitoLoggedInUser | null> => {
+	const cognitoLoggedInUser = await Auth.currentAuthenticatedUser();
+	return cognitoLoggedInUser;
 };
 export default function AuthClientComponent(): any {
 	const dispatch = useDispatch();
-	const [bob, setBob] = useState<Bob | null>(null);
+	const [cognitoLoggedInUser, setcognitoLoggedInUser] =
+		useState<CognitoLoggedInUser | null>(null);
 
-	// First useEffect to initialize 'bob'
 	useEffect(() => {
 		const fetchData = async () => {
 			const initUser = await getMyUser();
-			setBob(initUser);
+			setcognitoLoggedInUser(initUser);
 		};
 		fetchData();
-	}, [dispatch]); // No dependency on 'bob' or 'bob?.attributes?.sub' here
+	}, [dispatch]);
 
-	// Second useEffect for logic depending on 'bob'
+	// Second useEffect for logic depending on 'cognitoLoggedInUser'
 	useEffect(() => {
 		const fetchData = async () => {
-			if (bob?.attributes?.sub) {
-				const userId = bob.attributes.sub;
-				console.log("bob:", bob);
+			if (cognitoLoggedInUser?.attributes?.sub) {
+				const userId = cognitoLoggedInUser.attributes.sub;
+				console.log("cognitoLoggedInUser:", cognitoLoggedInUser);
 				// TODO: Better typing for this
 				const result: any = await API.graphql(
 					graphqlOperation(customCommandsAndParametersByUserID, {
@@ -53,17 +53,22 @@ export default function AuthClientComponent(): any {
 				);
 
 				const experiment = {
-					userID: bob.attributes.sub,
-					email_verified: bob.attributes.email_verified,
-					email: bob.attributes.email,
+					userID: cognitoLoggedInUser.attributes.sub,
+					email_verified: cognitoLoggedInUser.attributes.email_verified,
+					email: cognitoLoggedInUser.attributes.email,
 					commands: result.data.commandsByUserID.items,
-					isDarkMode: bob.storage.store.isDarkMode,
+					isDarkMode: cognitoLoggedInUser.storage.store.isDarkMode,
 				};
 				dispatch(setUser(experiment));
 				console.log("experiment:", experiment);
 			}
 		};
 		fetchData();
-	}, [dispatch, bob?.attributes, bob?.storage]);
+	}, [
+		dispatch,
+		cognitoLoggedInUser?.attributes,
+		cognitoLoggedInUser?.storage,
+		cognitoLoggedInUser,
+	]);
 	return <h1>Test auth.client</h1>;
 }
