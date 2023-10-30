@@ -1,9 +1,6 @@
 "use client";
-import { commandsByUserID, parametersByCommandID } from "@/graphql/queries";
-import { API, Amplify, graphqlOperation } from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import React from "react";
-import { Auth } from "aws-amplify";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import config from "../../aws-exports";
