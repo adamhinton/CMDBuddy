@@ -1,6 +1,7 @@
 // redux/store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
+import commandsReducer from "./slices/commandsSlice";
 
 if (typeof authReducer !== "function") {
 	console.error("authReducer is not a valid reducer function");
@@ -9,6 +10,7 @@ if (typeof authReducer !== "function") {
 export const store = configureStore({
 	reducer: {
 		auth: authReducer,
+		commands: commandsReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
