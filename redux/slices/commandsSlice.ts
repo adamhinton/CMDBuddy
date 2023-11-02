@@ -1,13 +1,8 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { Amplify, Auth } from "aws-amplify";
-import config from "../../src/aws-exports";
-import { CMDBuddyUser } from "../../utils/zod/UserSchema";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CMDBuddyCommand } from "../../utils/zod/CommandSchema";
-Amplify.configure({ config, ssr: true });
-console.log("TODO: Account for logout in auth/commands reducers");
 
 interface CommandsState {
-	commands: null | CMDBuddyCommand[];
+	commands: CMDBuddyCommand[] | null;
 }
 
 const initialState: CommandsState = {
@@ -21,8 +16,11 @@ export const commandsSlice = createSlice({
 		setCommands: (state, action: PayloadAction<CMDBuddyCommand[]>) => {
 			state.commands = action.payload;
 		},
+		logOut: (state) => {
+			state.commands = null;
+		},
 	},
 });
 
-export const { setCommands } = commandsSlice.actions;
+export const { setCommands, logOut } = commandsSlice.actions;
 export default commandsSlice.reducer;

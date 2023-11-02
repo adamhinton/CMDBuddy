@@ -1,9 +1,9 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { Amplify, Auth } from "aws-amplify";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Amplify } from "aws-amplify";
 import config from "../../src/aws-exports";
 import { CMDBuddyUser } from "../../utils/zod/UserSchema";
+
 Amplify.configure({ config, ssr: true });
-console.log("TODO: Account for logout in auth reducer");
 
 interface AuthState {
 	user: null | CMDBuddyUser;
@@ -20,8 +20,11 @@ export const authSlice = createSlice({
 		setUser: (state, action: PayloadAction<CMDBuddyUser>) => {
 			state.user = action.payload;
 		},
+		logOut: (state) => {
+			state.user = null;
+		},
 	},
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, logOut } = authSlice.actions;
 export default authSlice.reducer;
