@@ -7,6 +7,8 @@ import { API, graphqlOperation, Amplify } from "aws-amplify";
 import config from "../aws-exports";
 import { Auth } from "aws-amplify";
 import { CMDBuddyUser } from "../../utils/zod/UserSchema";
+import { CMDBuddyCommand } from "../../utils/zod/CommandSchema";
+import { setCommands } from "../../redux/slices/commandsSlice";
 
 Amplify.configure({ config, ssr: true });
 
@@ -55,15 +57,21 @@ export default function AuthClientComponent(): any {
 				);
 
 				// This is the object we're actually setting to redux state
-				const loggedInUserWithCommands: CMDBuddyUser = {
+				const loggedInUser: CMDBuddyUser = {
 					id: cognitoLoggedInUser.attributes.sub,
 					email_verified: cognitoLoggedInUser.attributes.email_verified,
 					email: cognitoLoggedInUser.attributes.email,
 					commands: result.data.commandsByUserID.items,
 					darkMode: cognitoLoggedInUser.storage.store.isDarkMode,
 				};
-				dispatch(setUser(loggedInUserWithCommands));
-				console.log("loggedInUserWithCommands:", loggedInUserWithCommands);
+				dispatch(setUser(loggedInUser));
+
+				const userCommands: CMDBuddyCommand[] =
+					result.data.commandsByUserID.items;
+				dispatch(setCommands(userCommands));
+
+				console.log("loggedInUser:", loggedInUser);
+				console.log("userCommands in auth.slice:", userCommands);
 			}
 		};
 		fetchData();
