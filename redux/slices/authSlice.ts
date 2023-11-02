@@ -20,11 +20,11 @@ export const authSlice = createSlice({
 		setUser: (state, action: PayloadAction<CMDBuddyUser>) => {
 			state.user = action.payload;
 		},
-		logOut: (state) => {
+		logOutUser: (state) => {
 			state.user = null;
 		},
 	},
 });
 
-export const { setUser, logOut } = authSlice.actions;
+export const { setUser, logOutUser } = authSlice.actions;
 export default authSlice.reducer;

@@ -16,11 +16,11 @@ export const commandsSlice = createSlice({
 		setCommands: (state, action: PayloadAction<CMDBuddyCommand[]>) => {
 			state.commands = action.payload;
 		},
-		logOut: (state) => {
+		logOutCommands: (state) => {
 			state.commands = null;
 		},
 	},
 });
 
-export const { setCommands, logOut } = commandsSlice.actions;
+export const { setCommands, logOutCommands } = commandsSlice.actions;
 export default commandsSlice.reducer;
