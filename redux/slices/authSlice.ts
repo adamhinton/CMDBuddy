@@ -22,6 +22,7 @@ export const authSlice = createSlice({
 		},
 		logOutUser: (state) => {
 			state.user = null;
+			console.log("state.user in authSlice:", state.user);
 		},
 	},
 });
