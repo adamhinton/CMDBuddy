@@ -5,21 +5,62 @@ import { Amplify, Auth } from "aws-amplify";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import config from "../../../src/aws-exports";
+import Link from "next/link";
 Amplify.configure({ ...config, ssr: true });
+import { useAuthActions } from "../../../utils/authUtils";
+import { useEffect } from "react";
 
-Authenticator;
 const Login = () => {
 	const currentUser = useSelector((state: RootState) => state.auth.user);
+	const { setUserAndCommandsToState, logOut } = useAuthActions();
+
+	useEffect(() => {
+		const checkUser = async () => {
+			const amplifyUser = await Auth.currentAuthenticatedUser().catch(
+				() => null
+			);
+			if (!amplifyUser && currentUser) {
+				logOut();
+			}
+		};
+
+		checkUser();
+	}, [currentUser, logOut]);
+
+	const handleLogin = async (user: any) => {
+		if (user) {
+			await setUserAndCommandsToState(user);
+		}
+	};
+
+	//TODO: Fix this any type
+	const handleSignOut = async (signOut?: any) => {
+		try {
+			if (signOut) {
+				await signOut();
+			}
+			logOut();
+		} catch (error) {
+			console.error("Error signing out: ", error);
+		}
+	};
 
 	return (
 		<>
 			<h1>Log In</h1>
+			<Link href="/commands">Commands</Link>
 			<Authenticator>
 				{({ signOut, user }) => {
-					console.log("user:", user);
+					if (user && !currentUser) {
+						handleLogin(user);
+					}
 					return (
 						<div>
-							<button onClick={signOut}>Sign Out</button>
+							{currentUser ? (
+								<button onClick={() => handleSignOut(signOut)}>Sign Out</button>
+							) : (
+								"Please sign in"
+							)}
 						</div>
 					);
 				}}
