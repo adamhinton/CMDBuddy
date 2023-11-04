@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import config from "../../aws-exports";
 import { CMDBuddyUser } from "../../../utils/zod/UserSchema";
-import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import Link from "next/link";
 Amplify.configure(config);
 
