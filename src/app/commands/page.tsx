@@ -47,7 +47,6 @@ const Commands = () => {
 		(state: RootState) => state.auth.user
 	);
 	console.log("currentUser in commands:", currentUser);
-	// const commands = currentUser?.commands;
 	const commands = useSelector((state: RootState) => state.commands.commands);
 	console.log("commands in /commands/page:", commands);
 
