@@ -31,7 +31,7 @@ const getMyUser = async (): Promise<CognitoLoggedInUser | null> => {
 	}
 };
 
-export default function AuthClientComponent(): JSX.Element {
+export default function AuthClientComponent(): null {
 	const [cognitoLoggedInUser, setCognitoLoggedInUser] =
 		useState<CognitoLoggedInUser | null>(null);
 	const { setUserAndCommandsToState } = useAuthActions();
@@ -62,5 +62,5 @@ export default function AuthClientComponent(): JSX.Element {
 		updateState();
 	}, [cognitoLoggedInUser, setUserAndCommandsToState]);
 
-	return <h1>Test auth.client</h1>;
+	return null;
 }
