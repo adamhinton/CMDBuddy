@@ -10,9 +10,6 @@ const Header = () => {
 
 	console.log("isDarkMode in Header:", isDarkMode);
 
-	const commands = useSelector((state: RootState) => state.commands.commands);
-	console.log("commands in Header:", commands);
-
 	return <header>Header</header>;
 };
 
