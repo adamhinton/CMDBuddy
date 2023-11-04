@@ -31,14 +31,12 @@ export const useAuthActions = () => {
 					userID: cognitoLoggedInUser.attributes.sub,
 				})
 			)) as { data: { commandsByUserID: { items: CMDBuddyCommand[] } } };
-			console.log("result in auth.client:", result);
 
 			// This is the object we're actually setting to redux state
 			const loggedInUser: CMDBuddyUser = {
 				id: cognitoLoggedInUser.attributes.sub,
 				email_verified: cognitoLoggedInUser.attributes.email_verified,
 				email: cognitoLoggedInUser.attributes.email,
-				// commands: result.data.commandsByUserID.items,
 				darkMode: cognitoLoggedInUser.storage.store.isDarkMode,
 			};
 			dispatch(setUser(loggedInUser));
@@ -50,12 +48,10 @@ export const useAuthActions = () => {
 
 	const logOut = () => {
 		try {
-			console.log("logOut running sin authUtils");
 			dispatch(logOutCommands());
 			dispatch(logOutUser());
 		} catch (error) {
 			console.error("Error logging out:", error);
-			// Handle error appropriately
 		}
 	};
 

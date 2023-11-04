@@ -1,15 +1,9 @@
-import { Provider } from "react-redux";
-import { store } from "../../redux/store";
 import { Amplify } from "aws-amplify";
 import { Providers } from "../../redux/provider";
 import AuthClientComponent from "../components/Auth.client";
 import config from "../aws-exports";
 import Header from "@/components/Header";
 Amplify.configure({ config, ssr: true });
-
-console.log(
-	"TODO: Getting logged in user in home page; this is temporary, delete it"
-);
 
 export const metadata = {
 	title: "Next.js",

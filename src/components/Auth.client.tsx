@@ -39,7 +39,6 @@ export default function AuthClientComponent(): null {
 	useEffect(() => {
 		const fetchData = async () => {
 			const initUser = await getMyUser();
-			console.log("initUser in auth.client:", initUser);
 			setCognitoLoggedInUser(initUser);
 		};
 		fetchData();
@@ -49,10 +48,6 @@ export default function AuthClientComponent(): null {
 		const updateState = async () => {
 			if (cognitoLoggedInUser) {
 				try {
-					console.log(
-						"cognitoLoggedInUser in happy path auth.client:",
-						cognitoLoggedInUser
-					);
 					await setUserAndCommandsToState(cognitoLoggedInUser);
 				} catch (error) {
 					console.error("Error setting user and commands to state:", error);
