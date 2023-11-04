@@ -2,7 +2,7 @@ import { Amplify } from "aws-amplify";
 import { Providers } from "../../redux/provider";
 import AuthClientComponent from "../components/Auth.client";
 import config from "../aws-exports";
-import Header from "@/components/Header";
+import Header from "../components/Header";
 Amplify.configure({ config, ssr: true });
 
 export const metadata = {
