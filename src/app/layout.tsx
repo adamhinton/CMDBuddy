@@ -4,7 +4,7 @@ import AuthClientComponent from "../components/Auth.client";
 import config from "../aws-exports";
 import Header from "../components/Header";
 Amplify.configure({ config, ssr: true });
-import { ThemeProvider } from "styled-components";
+import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 import { lightTheme, darkTheme } from "../../utils/styles/themes";
 
 export const metadata = {
@@ -21,11 +21,11 @@ export default async function RootLayout({
 		<html lang="en">
 			<body>
 				<Providers>
-					<AuthClientComponent />
-					<ThemeProvider theme={lightTheme}>
+					<ThemeProviderWrapper theme={lightTheme}>
+						<AuthClientComponent />
 						<Header />
 						{children}
-					</ThemeProvider>
+					</ThemeProviderWrapper>
 				</Providers>
 			</body>
 		</html>
