@@ -4,6 +4,8 @@ import AuthClientComponent from "../components/Auth.client";
 import config from "../aws-exports";
 import Header from "../components/Header";
 Amplify.configure({ config, ssr: true });
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "../../utils/styles/themes";
 
 export const metadata = {
 	title: "Next.js",
@@ -19,9 +21,11 @@ export default async function RootLayout({
 		<html lang="en">
 			<body>
 				<Providers>
-					<AuthClientComponent />
-					<Header />
-					{children}
+					<ThemeProvider theme={lightTheme}>
+						<AuthClientComponent />
+						<Header />
+						{children}
+					</ThemeProvider>
 				</Providers>
 			</body>
 		</html>
