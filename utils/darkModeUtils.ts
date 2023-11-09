@@ -1,5 +1,4 @@
 import { CMDBuddyUser } from "./zod/UserSchema";
-import { useDispatch } from "react-redux";
 
 export function getUserDarkModePreference(
 	user: CMDBuddyUser | null = null
@@ -22,7 +21,7 @@ export function getUserDarkModePreference(
 }
 
 function getSystemDarkModePreference(): boolean {
-	if (window) {
+	if (typeof window !== "undefined") {
 		return (
 			window.matchMedia &&
 			window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -31,6 +30,5 @@ function getSystemDarkModePreference(): boolean {
 	// This app will be dark mode by default if no preference
 	return true;
 }
-
 // The Redux dispatch can be done where this function is invoked
 // dispatch(setDarkModePreference(getUserDarkModePreference(user)));
