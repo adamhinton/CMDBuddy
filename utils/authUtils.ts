@@ -5,6 +5,8 @@ import { setCommands, logOutCommands } from "../redux/slices/commandsSlice";
 import { customCommandsAndParametersByUserID } from "@/app/commands/page";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
 import { CMDBuddyUser } from "./zod/UserSchema";
+import { getUserDarkModePreference } from "./darkModeUtils";
+import { setIsDarkMode } from "../redux/slices/darkModeSlice";
 
 // TODO: These two cognito types are defined in two spots; merge them and export them.
 interface CognitoLoggedInUserAttributes {
@@ -31,18 +33,19 @@ export const useAuthActions = () => {
 					userID: cognitoLoggedInUser.attributes.sub,
 				})
 			)) as { data: { commandsByUserID: { items: CMDBuddyCommand[] } } };
-			console.log("result in auth.client:", result);
 
 			// This is the object we're actually setting to redux state
 			const loggedInUser: CMDBuddyUser = {
 				id: cognitoLoggedInUser.attributes.sub,
 				email_verified: cognitoLoggedInUser.attributes.email_verified,
 				email: cognitoLoggedInUser.attributes.email,
-				// commands: result.data.commandsByUserID.items,
-				darkMode: cognitoLoggedInUser.storage.store.isDarkMode,
+				darkMode: Boolean(cognitoLoggedInUser.storage.store.isDarkMode),
 			};
+			console.log("loggedInUser:", loggedInUser);
 			dispatch(setUser(loggedInUser));
 			dispatch(setCommands(result.data.commandsByUserID.items));
+			const darkModePreference = getUserDarkModePreference(loggedInUser);
+			dispatch(setIsDarkMode(darkModePreference));
 		} catch (error) {
 			console.error("Error setting user and commands to state:", error);
 		}
@@ -50,12 +53,10 @@ export const useAuthActions = () => {
 
 	const logOut = () => {
 		try {
-			console.log("logOut running sin authUtils");
 			dispatch(logOutCommands());
 			dispatch(logOutUser());
 		} catch (error) {
 			console.error("Error logging out:", error);
-			// Handle error appropriately
 		}
 	};
 

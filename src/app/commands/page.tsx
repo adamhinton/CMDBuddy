@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import config from "../../aws-exports";
 import { CMDBuddyUser } from "../../../utils/zod/UserSchema";
-import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import Link from "next/link";
 Amplify.configure(config);
 
@@ -43,14 +42,10 @@ export const customCommandsAndParametersByUserID = /* GraphQL */ `
 `;
 
 const Commands = () => {
-	console.log("commands refreshing");
 	const currentUser: CMDBuddyUser | null = useSelector(
 		(state: RootState) => state.auth.user
 	);
-	console.log("currentUser in commands:", currentUser);
-	// const commands = currentUser?.commands;
 	const commands = useSelector((state: RootState) => state.commands.commands);
-	console.log("commands in /commands/page:", commands);
 
 	return (
 		<>

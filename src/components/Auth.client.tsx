@@ -5,6 +5,9 @@ import { Amplify } from "aws-amplify";
 import config from "../aws-exports";
 import { Auth } from "aws-amplify";
 import { useAuthActions } from "../../utils/authUtils";
+import { useDispatch } from "react-redux";
+import { setIsDarkMode } from "../../redux/slices/darkModeSlice";
+import { getUserDarkModePreference } from "../../utils/darkModeUtils";
 
 Amplify.configure({ config, ssr: true });
 
@@ -31,7 +34,9 @@ const getMyUser = async (): Promise<CognitoLoggedInUser | null> => {
 	}
 };
 
-export default function AuthClientComponent(): JSX.Element {
+export default function AuthClientComponent(): null {
+	const dispatch = useDispatch();
+
 	const [cognitoLoggedInUser, setCognitoLoggedInUser] =
 		useState<CognitoLoggedInUser | null>(null);
 	const { setUserAndCommandsToState } = useAuthActions();
@@ -39,7 +44,6 @@ export default function AuthClientComponent(): JSX.Element {
 	useEffect(() => {
 		const fetchData = async () => {
 			const initUser = await getMyUser();
-			console.log("initUser in auth.client:", initUser);
 			setCognitoLoggedInUser(initUser);
 		};
 		fetchData();
@@ -49,18 +53,17 @@ export default function AuthClientComponent(): JSX.Element {
 		const updateState = async () => {
 			if (cognitoLoggedInUser) {
 				try {
-					console.log(
-						"cognitoLoggedInUser in happy path auth.client:",
-						cognitoLoggedInUser
-					);
 					await setUserAndCommandsToState(cognitoLoggedInUser);
 				} catch (error) {
 					console.error("Error setting user and commands to state:", error);
 				}
+			} else {
+				const darkModePreference = getUserDarkModePreference();
+				dispatch(setIsDarkMode(darkModePreference));
 			}
 		};
 		updateState();
-	}, [cognitoLoggedInUser, setUserAndCommandsToState]);
+	}, [cognitoLoggedInUser, dispatch, setUserAndCommandsToState]);
 
-	return <h1>Test auth.client</h1>;
+	return null;
 }
