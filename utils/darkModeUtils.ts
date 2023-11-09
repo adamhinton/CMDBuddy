@@ -34,3 +34,11 @@ function getSystemDarkModePreference(): boolean {
 }
 // The Redux dispatch can be done where this function is invoked
 // dispatch(setDarkModePreference(getUserDarkModePreference(user)));
+
+export function setDarkModeLocalStorage(isDarkMode: boolean): void {
+	try {
+		localStorage.setItem("isDarkMode", JSON.stringify(isDarkMode));
+	} catch (error) {
+		console.error("Could not save dark mode preference to localStorage", error);
+	}
+}
