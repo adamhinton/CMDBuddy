@@ -1,34 +1,31 @@
 import { CMDBuddyUser } from "./zod/UserSchema";
 
 function resolveDarkModePreference(user: CMDBuddyUser | null = null): boolean {
-	let darkModePreference: boolean = true;
-
-	console.log(
-		"TODO: Set darkmode localStorage and system preference functionality. "
-	);
-
-	if (user && user.darkMode) {
-		darkModePreference = user.darkMode;
-	} else {
-		// Need to actually write the logic in Header toggle button for setting this to localStorage. Right now the localStorage part of this does nothing
-		darkModePreference =
-			localStorage.getItem("isDarkMode") === "true"
-				? true
-				: localStorage.getItem("isDarkMode") === "false"
-				? false
-				: getSystemDarkModePreference();
+	// Check user preference in db first
+	if (user?.darkMode !== undefined) {
+		return user.darkMode;
 	}
 
-	// Dispatch action to Redux store to set dark mode
-	// dispatch(setDarkModePreference(darkModePreference));
+	// If there's no user or user has no preference, check local storage
+	const localStorageDarkMode = localStorage.getItem("isDarkMode");
+	if (localStorageDarkMode) {
+		return localStorageDarkMode === "true";
+	}
 
-	return darkModePreference;
+	// Default to system preference if no user preference or local storage value is set
+	return getSystemDarkModePreference();
 }
 
-function getSystemDarkModePreference() {
-	// Access system preference here (e.g., via window.matchMedia)
-	return (
-		window.matchMedia &&
-		window.matchMedia("(prefers-color-scheme: dark)").matches
-	);
+function getSystemDarkModePreference(): boolean {
+	if (window) {
+		return (
+			window.matchMedia &&
+			window.matchMedia("(prefers-color-scheme: dark)").matches
+		);
+	}
+	// This app will be dark mode by default if no preference
+	return true;
 }
+
+// The Redux dispatch can be done where this function is invoked
+// dispatch(setDarkModePreference(resolveDarkModePreference(user)));
