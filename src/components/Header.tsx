@@ -5,6 +5,7 @@ import { RootState } from "../../redux/store";
 import { setIsDarkMode } from "../../redux/slices/darkModeSlice";
 import { useDispatch } from "react-redux";
 import { SyntheticEvent } from "react";
+import { setDarkModeLocalStorage } from "../../utils/darkModeUtils";
 
 const Header = () => {
 	const dispatch = useDispatch();
@@ -13,11 +14,24 @@ const Header = () => {
 		(state: RootState) => state.darkMode.isDarkMode
 	);
 
+	console.log("isDarkMode in Header:", isDarkMode);
+
+	const isLoggedIn = useSelector((state: RootState) => {
+		return state.auth.user ? true : false;
+	});
+
 	const darkModeOnClick = (
 		e: SyntheticEvent<HTMLButtonElement, MouseEvent>
 	) => {
 		e.preventDefault();
-		dispatch(setIsDarkMode(!isDarkMode));
+
+		const newDarkModeValue = !isDarkMode;
+		dispatch(setIsDarkMode(newDarkModeValue));
+
+		// USER NOT LOGGED IN PATH
+		if (!isLoggedIn) {
+			setDarkModeLocalStorage(newDarkModeValue);
+		}
 	};
 
 	return (
