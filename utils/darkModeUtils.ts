@@ -1,5 +1,7 @@
 import { CMDBuddyUser } from "./zod/UserSchema";
 
+const localStorageDarkModeKey = "isDarkMode";
+
 export function getUserDarkModePreference(
 	user: CMDBuddyUser | null = null
 ): boolean {
@@ -11,7 +13,7 @@ export function getUserDarkModePreference(
 	}
 
 	// If there's no user or user has no preference, check local storage
-	const localStorageDarkMode = localStorage.getItem("isDarkMode");
+	const localStorageDarkMode = localStorage.getItem(localStorageDarkModeKey);
 	if (localStorageDarkMode) {
 		return localStorageDarkMode === "true";
 	}
