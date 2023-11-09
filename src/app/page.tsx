@@ -11,11 +11,11 @@ import config from "../aws-exports";
 
 function Home() {
 	return (
-		<main>
+		<section>
 			<h1>Main page</h1>
 			<Link href="/login">Login</Link>
 			<Link href="/commands">Commands</Link>
-		</main>
+		</section>
 	);
 }
 
