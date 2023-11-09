@@ -1,6 +1,11 @@
 import { CMDBuddyUser } from "./zod/UserSchema";
+import { useDispatch } from "react-redux";
 
-function resolveDarkModePreference(user: CMDBuddyUser | null = null): boolean {
+export function getUserDarkModePreference(
+	user: CMDBuddyUser | null = null
+): boolean {
+	let darkModePreference: boolean;
+
 	// Check user preference in db first
 	if (user?.darkMode !== undefined) {
 		return user.darkMode;
@@ -28,4 +33,4 @@ function getSystemDarkModePreference(): boolean {
 }
 
 // The Redux dispatch can be done where this function is invoked
-// dispatch(setDarkModePreference(resolveDarkModePreference(user)));
+// dispatch(setDarkModePreference(getUserDarkModePreference(user)));

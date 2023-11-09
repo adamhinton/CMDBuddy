@@ -5,6 +5,9 @@ import { Amplify } from "aws-amplify";
 import config from "../aws-exports";
 import { Auth } from "aws-amplify";
 import { useAuthActions } from "../../utils/authUtils";
+import { useDispatch } from "react-redux";
+import { setIsDarkMode } from "../../redux/slices/darkModeSlice";
+import { getUserDarkModePreference } from "../../utils/darkModeUtils";
 
 Amplify.configure({ config, ssr: true });
 
@@ -32,6 +35,8 @@ const getMyUser = async (): Promise<CognitoLoggedInUser | null> => {
 };
 
 export default function AuthClientComponent(): null {
+	const dispatch = useDispatch();
+
 	const [cognitoLoggedInUser, setCognitoLoggedInUser] =
 		useState<CognitoLoggedInUser | null>(null);
 	const { setUserAndCommandsToState } = useAuthActions();
@@ -52,10 +57,13 @@ export default function AuthClientComponent(): null {
 				} catch (error) {
 					console.error("Error setting user and commands to state:", error);
 				}
+			} else {
+				const darkModePreference = getUserDarkModePreference();
+				dispatch(setIsDarkMode(darkModePreference));
 			}
 		};
 		updateState();
-	}, [cognitoLoggedInUser, setUserAndCommandsToState]);
+	}, [cognitoLoggedInUser, dispatch, setUserAndCommandsToState]);
 
 	return null;
 }
