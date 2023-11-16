@@ -1,4 +1,6 @@
 import { CMDBuddyUser } from "./zod/UserSchema";
+import { graphqlOperation, API } from "aws-amplify";
+import { updateUser } from "@/graphql/mutations";
 
 const localStorageDarkModeKey = "isDarkMode";
 
@@ -42,3 +44,22 @@ export function setDarkModeLocalStorage(isDarkMode: boolean): void {
 		console.error("Could not save dark mode preference to localStorage", error);
 	}
 }
+
+export const toggleUserDarkModeInDB = async (
+	userId: string,
+	newDarkModeValue: boolean
+) => {
+	try {
+		const input = {
+			id: userId,
+			darkMode: newDarkModeValue,
+		};
+
+		await API.graphql(graphqlOperation(updateUser, { input }));
+
+		// TODO: Implement a Toast notification for success and failure cases
+	} catch (error) {
+		console.error("Failed to update dark mode setting:", error);
+		// TODO: Show error toast once Toastify is set up
+	}
+};
