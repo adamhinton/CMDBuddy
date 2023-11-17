@@ -27,6 +27,7 @@ interface CognitoLoggedInUser {
 const getMyUser = async (): Promise<CognitoLoggedInUser | null> => {
 	try {
 		const cognitoLoggedInUser = await Auth.currentAuthenticatedUser();
+		console.log("cognitoLoggedInUser:", cognitoLoggedInUser);
 		return cognitoLoggedInUser;
 	} catch (error) {
 		console.error("Error fetching Cognito user:", error);

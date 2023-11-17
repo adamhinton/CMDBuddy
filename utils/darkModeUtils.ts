@@ -1,6 +1,7 @@
 import { CMDBuddyUser } from "./zod/UserSchema";
 import { graphqlOperation, API } from "aws-amplify";
 import { updateUser } from "@/graphql/mutations";
+import { getUser } from "@/graphql/queries";
 
 const localStorageDarkModeKey = "isDarkMode";
 
@@ -49,6 +50,11 @@ export const toggleUserDarkModeInDB = async (
 	userId: string,
 	newDarkModeValue: boolean
 ) => {
+	const user = await API.graphql(
+		graphqlOperation(getUser, { id: "e75148e1-7fbe-4c5f-bd5d-03f55ae6ce24" })
+	);
+	console.log("user in Header:", user);
+
 	try {
 		const input = {
 			id: userId,

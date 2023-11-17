@@ -41,7 +41,6 @@ export const useAuthActions = () => {
 				email: cognitoLoggedInUser.attributes.email,
 				darkMode: Boolean(cognitoLoggedInUser.storage.store.isDarkMode),
 			};
-			console.log("loggedInUser:", loggedInUser);
 			dispatch(setUser(loggedInUser));
 			dispatch(setCommands(result.data.commandsByUserID.items));
 			const darkModePreference = getUserDarkModePreference(loggedInUser);
