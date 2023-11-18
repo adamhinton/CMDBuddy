@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { API, graphqlOperation } from "aws-amplify";
 import { setUser, logOutUser } from "../redux/slices/authSlice";
 import { setCommands, logOutCommands } from "../redux/slices/commandsSlice";
-import { customCommandsAndParametersByUserID } from "@/app/commands/page";
+import { customCommandsAndParametersByUserID } from "./customGraphQLQueries";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
 import { CMDBuddyUser } from "./zod/UserSchema";
 
