@@ -8,39 +8,6 @@ import { CMDBuddyUser } from "../../../utils/zod/UserSchema";
 import Link from "next/link";
 Amplify.configure(config);
 
-// TODO: Move this function somewhere else
-// Gets Commands by userID along with Commands' Parameters
-export const customCommandsAndParametersByUserID = /* GraphQL */ `
-	query CommandsByUserID($userID: ID!) {
-		commandsByUserID(userID: $userID) {
-			items {
-				id
-				baseCommand
-				title
-				order
-				userID
-				parameters {
-					items {
-						id
-						type
-						defaultValue
-						name
-						order
-						validationRegex
-						length
-						minValue
-						maxValue
-						isNullable
-						allowedValues
-					}
-					nextToken
-				}
-			}
-			nextToken
-		}
-	}
-`;
-
 const Commands = () => {
 	const currentUser: CMDBuddyUser | null = useSelector(
 		(state: RootState) => state.auth.user
