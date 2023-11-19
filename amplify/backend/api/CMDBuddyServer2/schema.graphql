@@ -3,8 +3,8 @@ input AMPLIFY {
 }
 
 type User @model @auth(rules: [{ allow: public }]) {
-	id: ID!
-	email: String!
+	id: ID! @primaryKey
+	email: String! @index(name: "byEmail", queryField: "userByEmail")
 	darkMode: Boolean!
 	commands: [Command] @hasMany(indexName: "byUser", fields: ["id"])
 }
