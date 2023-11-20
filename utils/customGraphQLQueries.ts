@@ -29,3 +29,41 @@ export const customCommandsAndParametersByUserID = /* GraphQL */ `
 		}
 	}
 `;
+
+export const customUserByEmail = /* GraphQL */ `
+	query UserByEmail($email: String!) {
+		userByEmail(email: $email) {
+			items {
+				id
+				email
+				darkMode
+				commands {
+					items {
+						id
+						baseCommand
+						title
+						order
+						parameters {
+							items {
+								id
+								type
+								defaultValue
+								name
+								order
+								validationRegex
+								length
+								minValue
+								maxValue
+								isNullable
+								allowedValues
+							}
+							nextToken
+						}
+					}
+					nextToken
+				}
+			}
+			nextToken
+		}
+	}
+`;

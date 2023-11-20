@@ -2,11 +2,14 @@ import { useDispatch } from "react-redux";
 import { API, graphqlOperation } from "aws-amplify";
 import { setUser, logOutUser } from "../redux/slices/authSlice";
 import { setCommands, logOutCommands } from "../redux/slices/commandsSlice";
-import { customCommandsAndParametersByUserID } from "./customGraphQLQueries";
-import { CMDBuddyCommand } from "./zod/CommandSchema";
+import {
+	customCommandsAndParametersByUserID,
+	customUserByEmail,
+} from "./customGraphQLQueries";
 import { CMDBuddyUser } from "./zod/UserSchema";
 import { getUserDarkModePreference } from "./darkModeUtils";
 import { setIsDarkMode } from "../redux/slices/darkModeSlice";
+import { GraphQLResult } from "@aws-amplify/api";
 
 // TODO: These two cognito types are defined in two spots; merge them and export them.
 interface CognitoLoggedInUserAttributes {
@@ -28,22 +31,27 @@ export const useAuthActions = () => {
 		cognitoLoggedInUser: CognitoLoggedInUser
 	) => {
 		try {
-			const result = (await API.graphql(
-				graphqlOperation(customCommandsAndParametersByUserID, {
-					userID: cognitoLoggedInUser.attributes.sub,
+			const userFromDB: GraphQLResult<any> = await API.graphql(
+				graphqlOperation(customUserByEmail, {
+					email: cognitoLoggedInUser.attributes.email,
 				})
-			)) as { data: { commandsByUserID: { items: CMDBuddyCommand[] } } };
+			);
 
-			// This is the object we're actually setting to redux state
+			// Set user info (except Commands) to User state
 			const loggedInUser: CMDBuddyUser = {
-				id: cognitoLoggedInUser.attributes.sub,
+				id: userFromDB.data.userByEmail.items[0].id,
 				email_verified: cognitoLoggedInUser.attributes.email_verified,
-				email: cognitoLoggedInUser.attributes.email,
-				darkMode: Boolean(cognitoLoggedInUser.storage.store.isDarkMode),
+				email: userFromDB.data.userByEmail.items[0].email,
+				darkMode: userFromDB.data.userByEmail.items[0].darkMode,
 			};
-			console.log("loggedInUser:", loggedInUser);
 			dispatch(setUser(loggedInUser));
-			dispatch(setCommands(result.data.commandsByUserID.items));
+
+			// Now set Commands (and their Parameters) to Commands state
+			const userCommandsFromDB =
+				userFromDB.data.userByEmail.items[0].commands.items;
+			dispatch(setCommands(userCommandsFromDB));
+
+			// Now set dark mode pref to state
 			const darkModePreference = getUserDarkModePreference(loggedInUser);
 			dispatch(setIsDarkMode(darkModePreference));
 		} catch (error) {

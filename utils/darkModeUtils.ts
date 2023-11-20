@@ -1,4 +1,7 @@
 import { CMDBuddyUser } from "./zod/UserSchema";
+import { graphqlOperation, API } from "aws-amplify";
+import { updateUser } from "@/graphql/mutations";
+import { getUser } from "@/graphql/queries";
 
 const localStorageDarkModeKey = "isDarkMode";
 
@@ -34,3 +37,35 @@ function getSystemDarkModePreference(): boolean {
 }
 // The Redux dispatch can be done where this function is invoked
 // dispatch(setDarkModePreference(getUserDarkModePreference(user)));
+
+export function setDarkModeLocalStorage(isDarkMode: boolean): void {
+	try {
+		localStorage.setItem("isDarkMode", JSON.stringify(isDarkMode));
+	} catch (error) {
+		console.error("Could not save dark mode preference to localStorage", error);
+	}
+}
+
+export const toggleUserDarkModeInDB = async (
+	userId: string,
+	newDarkModeValue: boolean
+) => {
+	const user = await API.graphql(
+		graphqlOperation(getUser, { id: "e75148e1-7fbe-4c5f-bd5d-03f55ae6ce24" })
+	);
+	console.log("user in Header:", user);
+
+	try {
+		const input = {
+			id: userId,
+			darkMode: newDarkModeValue,
+		};
+
+		await API.graphql(graphqlOperation(updateUser, { input }));
+
+		// TODO: Implement a Toast notification for success and failure cases
+	} catch (error) {
+		console.error("Failed to update dark mode setting:", error);
+		// TODO: Show error toast once Toastify is set up
+	}
+};
