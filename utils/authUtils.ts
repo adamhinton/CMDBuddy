@@ -6,7 +6,6 @@ import {
 	customCommandsAndParametersByUserID,
 	customUserByEmail,
 } from "./customGraphQLQueries";
-import { CMDBuddyCommand } from "./zod/CommandSchema";
 import { CMDBuddyUser } from "./zod/UserSchema";
 import { getUserDarkModePreference } from "./darkModeUtils";
 import { setIsDarkMode } from "../redux/slices/darkModeSlice";
@@ -32,32 +31,27 @@ export const useAuthActions = () => {
 		cognitoLoggedInUser: CognitoLoggedInUser
 	) => {
 		try {
-			const result = (await API.graphql(
-				graphqlOperation(customCommandsAndParametersByUserID, {
-					userID: cognitoLoggedInUser.attributes.sub,
-				})
-			)) as { data: { commandsByUserID: { items: CMDBuddyCommand[] } } };
-
 			const userFromDB: GraphQLResult<any> = await API.graphql(
 				graphqlOperation(customUserByEmail, {
 					email: cognitoLoggedInUser.attributes.email,
 				})
 			);
-			console.log("userFromDB:", userFromDB);
 
-			// This is the object we're actually setting to redux state
+			// Set user info (except Commands) to User state
 			const loggedInUser: CMDBuddyUser = {
 				id: userFromDB.data.userByEmail.items[0].id,
 				email_verified: cognitoLoggedInUser.attributes.email_verified,
 				email: userFromDB.data.userByEmail.items[0].email,
 				darkMode: userFromDB.data.userByEmail.items[0].darkMode,
 			};
-			console.log("loggedInUser:", loggedInUser);
 			dispatch(setUser(loggedInUser));
+
+			// Now set Commands (and their Parameters) to Commands state
 			const userCommandsFromDB =
 				userFromDB.data.userByEmail.items[0].commands.items;
-			console.log("userCommandsFromDB:", userCommandsFromDB);
 			dispatch(setCommands(userCommandsFromDB));
+
+			// Now set dark mode pref to state
 			const darkModePreference = getUserDarkModePreference(loggedInUser);
 			dispatch(setIsDarkMode(darkModePreference));
 		} catch (error) {
