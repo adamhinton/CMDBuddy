@@ -2,7 +2,10 @@ import { useDispatch } from "react-redux";
 import { API, graphqlOperation } from "aws-amplify";
 import { setUser, logOutUser } from "../redux/slices/authSlice";
 import { setCommands, logOutCommands } from "../redux/slices/commandsSlice";
-import { customCommandsAndParametersByUserID } from "./customGraphQLQueries";
+import {
+	customCommandsAndParametersByUserID,
+	customUserByEmail,
+} from "./customGraphQLQueries";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
 import { CMDBuddyUser } from "./zod/UserSchema";
 import { getUserDarkModePreference } from "./darkModeUtils";
@@ -33,6 +36,13 @@ export const useAuthActions = () => {
 					userID: cognitoLoggedInUser.attributes.sub,
 				})
 			)) as { data: { commandsByUserID: { items: CMDBuddyCommand[] } } };
+
+			const myTestObject = await API.graphql(
+				graphqlOperation(customUserByEmail, {
+					email: cognitoLoggedInUser.attributes.email,
+				})
+			);
+			console.log("myTestObject:", myTestObject);
 
 			// This is the object we're actually setting to redux state
 			const loggedInUser: CMDBuddyUser = {
