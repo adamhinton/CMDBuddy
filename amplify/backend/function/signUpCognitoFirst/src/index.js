@@ -54,6 +54,8 @@ exports.handler = async (event, context) => {
 		};
 	}
 
+	context.done(null, event);
+
 	return {
 		...response,
 		body: JSON.stringify(response.body),
