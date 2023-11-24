@@ -19,7 +19,7 @@
         "CMDBuddyServer2": {}
       },
       "function": {
-        "cognitosignupsynctest": {}
+        "signUpSyncCognitoFirst": {}
       }
     }
   }
