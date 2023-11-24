@@ -1,4 +1,8 @@
 /* Amplify Params - DO NOT EDIT
+	API_CMDBUDDYSERVER2_GRAPHQLAPIENDPOINTOUTPUT
+	API_CMDBUDDYSERVER2_GRAPHQLAPIIDOUTPUT
+	API_CMDBUDDYSERVER2_GRAPHQLAPIKEYOUTPUT
+	AUTH_CMDBUDDYSERVER568927F0_USERPOOLID
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
@@ -10,8 +14,11 @@ Amplify Params - DO NOT EDIT */
 const fetch = require("node-fetch");
 
 exports.handler = async (event, context) => {
-	const GRAPHQL_ENDPOINT = process.env.API_CMDBUDDY_GRAPHQLAPIENDPOINTOUTPUT;
-	const GRAPHQL_API_KEY = process.env.API_CMDBUDDY_GRAPHQLAPIKEYOUTPUT;
+	const GRAPHQL_ENDPOINT =
+		process.env.API_CMDBUDDYSERVER2_GRAPHQLAPIENDPOINTOUTPUT;
+	const GRAPHQL_API_KEY = process.env.API_CMDBUDDYSERVER2_GRAPHQLAPIKEYOUTPUT;
+	console.log("GRAPHQL_ENDPOINT:", GRAPHQL_ENDPOINT);
+	console.log("GRAPHQL_API_KEY:", GRAPHQL_API_KEY);
 
 	const query = /* GraphQL */ `
 		mutation CREATE_USER($input: CreateUserInput!) {
@@ -55,6 +62,7 @@ exports.handler = async (event, context) => {
 	}
 
 	context.done(null, event);
+	console.log("This should trigger after context.done");
 
 	return {
 		...response,

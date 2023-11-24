@@ -11,7 +11,8 @@
           ],
           "defaultAuthentication": {
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 30,
+              "apiKeyExpirationDate": "2024-11-23T20:49:02.825Z",
+              "apiKeyExpirationDays": 365,
               "description": "api key description"
             },
             "authenticationType": "API_KEY"
@@ -54,29 +55,44 @@
     }
   },
   "function": {
-    "signUpCognitoFirst": {
+    "cognitosignupsynctest": {
       "build": true,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "CMDBuddyServer2"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "cmdbuddyserver568927f0"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_signUpCognitoFirst_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "signUpCognitoFirst"
-        }
-      ]
     },
-    "AMPLIFY_function_signUpCognitoFirst_s3Key": {
-      "usedBy": [
+    "signUpSyncCognitoFirst": {
+      "build": true,
+      "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "signUpCognitoFirst"
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "CMDBuddyServer2"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   }
 }

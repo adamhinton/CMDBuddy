@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "api": {
+      "CMDBuddyServer2": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
