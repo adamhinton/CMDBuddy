@@ -52,5 +52,30 @@
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
     }
+  },
+  "function": {
+    "signUpCognitoFirst": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_signUpCognitoFirst_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "signUpCognitoFirst"
+        }
+      ]
+    },
+    "AMPLIFY_function_signUpCognitoFirst_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "signUpCognitoFirst"
+        }
+      ]
+    }
   }
 }

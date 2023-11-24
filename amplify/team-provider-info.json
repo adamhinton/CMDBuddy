@@ -17,6 +17,12 @@
       },
       "api": {
         "CMDBuddyServer2": {}
+      },
+      "function": {
+        "signUpCognitoFirst": {
+          "deploymentBucketName": "amplify-cmdbuddyserver-dev-130733-deployment",
+          "s3Key": "amplify-builds/signUpCognitoFirst-63686564666d6d33746d-build.zip"
+        }
       }
     }
   }
