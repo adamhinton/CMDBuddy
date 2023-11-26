@@ -71,9 +71,6 @@ exports.handler = async (event, context) => {
 		};
 	}
 
-	context.done(null, event);
-	console.log("This should trigger after context.done");
-
 	return {
 		...response,
 		body: JSON.stringify(response.body),
