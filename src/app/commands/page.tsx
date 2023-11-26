@@ -13,12 +13,13 @@ const Commands = () => {
 		(state: RootState) => state.auth.user
 	);
 	const commands = useSelector((state: RootState) => state.commands.commands);
+	console.log("commands:", commands);
 
 	return (
 		<>
 			<h1>Commands Placeholder</h1>
 			<Link href="/login">Login page</Link>
-			<div>{commands && commands[0].baseCommand}</div>
+			<div>{commands && commands[0] && commands[0].baseCommand}</div>
 		</>
 	);
 };
