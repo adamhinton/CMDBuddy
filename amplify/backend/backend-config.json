@@ -94,5 +94,23 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
+  },
+  "parameters": {
+    "AMPLIFY_function_signUpSyncCognitoFirst_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "signUpSyncCognitoFirst"
+        }
+      ]
+    },
+    "AMPLIFY_function_signUpSyncCognitoFirst_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "signUpSyncCognitoFirst"
+        }
+      ]
+    }
   }
 }
