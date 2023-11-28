@@ -7,15 +7,15 @@ import { RootState } from "../../../redux/store";
 import config from "../../../src/aws-exports";
 import Link from "next/link";
 import { useAuthActions } from "../../../utils/authUtils";
-// import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { API, graphqlOperation } from "aws-amplify";
+import { deleteUser as deleteUserMutation } from "@/graphql/mutations";
 
 Amplify.configure({ ...config, ssr: true });
 
 const Login = () => {
 	const currentUser = useSelector((state: RootState) => state.auth.user);
 	const { setUserAndCommandsToState, logOut } = useAuthActions();
-	// These two states are UIs that show when a user clicks the change password button or delete account button
 	const [showChangePassword, setShowChangePassword] = useState(false);
 	const [showDeleteAccount, setShowDeleteAccount] = useState(false);
 	const router = useRouter();
@@ -64,6 +64,22 @@ const Login = () => {
 		setShowChangePassword(false);
 	};
 
+	const handleDeleteAccount = async () => {
+		try {
+			if (currentUser && currentUser.id) {
+				await API.graphql(
+					graphqlOperation(deleteUserMutation, {
+						input: { id: currentUser.id },
+					})
+				);
+			}
+			logOut();
+			router.push("/");
+		} catch (error) {
+			console.error("Error deleting user from database: ", error);
+		}
+	};
+
 	return (
 		<>
 			<h1>Log In</h1>
@@ -88,7 +104,11 @@ const Login = () => {
 									{showChangePassword && (
 										<AccountSettings.ChangePassword onSuccess={handleSuccess} />
 									)}
-									{showDeleteAccount && <AccountSettings.DeleteUser />}
+									{showDeleteAccount && (
+										<AccountSettings.DeleteUser
+											onSuccess={handleDeleteAccount}
+										/>
+									)}
 								</>
 							) : (
 								"Please sign in"

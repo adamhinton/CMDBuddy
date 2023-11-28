@@ -55,29 +55,6 @@
     }
   },
   "function": {
-    "deleteUserSyncCognitoFirst": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ],
-          "category": "api",
-          "resourceName": "CMDBuddyServer2"
-        },
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "cmdbuddyserver568927f0"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "signUpSyncCognitoFirst": {
       "build": true,
       "dependsOn": [
