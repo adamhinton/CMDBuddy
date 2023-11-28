@@ -70,24 +70,29 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_signUpSyncCognitoFirst_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "signUpSyncCognitoFirst"
-        }
-      ]
     },
-    "AMPLIFY_function_signUpSyncCognitoFirst_s3Key": {
-      "usedBy": [
+    "signUpSyncDBFirst": {
+      "build": true,
+      "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "signUpSyncCognitoFirst"
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "CMDBuddyServer2"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "cmdbuddyserver568927f0"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   }
 }
