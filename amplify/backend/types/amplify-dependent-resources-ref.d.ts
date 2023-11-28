@@ -18,6 +18,13 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "deleteUserSyncCognitoFirst": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "signUpSyncCognitoFirst": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
