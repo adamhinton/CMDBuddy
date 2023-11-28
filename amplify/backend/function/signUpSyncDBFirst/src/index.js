@@ -30,11 +30,14 @@ exports.handler = async (event) => {
 			try {
 				// Check if user already exists in Cognito
 				const email = newUser.email.S;
+				console.log("email:", email);
 				const userExists = await checkIfUserExists(email);
+				console.log("userExists in Cognito:", userExists);
 
 				if (!userExists) {
 					// Create user in Cognito
-					await createUserInCognito(email);
+					// TODO: Uncomment this
+					// await createUserInCognito(email);
 					console.log("User created in Cognito:", email);
 				} else {
 					console.log("User already exists in Cognito:", email);

@@ -21,9 +21,12 @@
       "function": {
         "signUpSyncCognitoFirst": {
           "deploymentBucketName": "amplify-cmdbuddyserver-dev-130733-deployment",
-          "s3Key": "amplify-builds/signUpSyncCognitoFirst-6832396239692f4d6270-build.zip"
+          "s3Key": "amplify-builds/signUpSyncCognitoFirst-353667584f6d6b6e3254-build.zip"
         },
-        "signUpSyncDBFirst": {}
+        "signUpSyncDBFirst": {
+          "deploymentBucketName": "amplify-cmdbuddyserver-dev-130733-deployment",
+          "s3Key": "amplify-builds/signUpSyncDBFirst-415a7a77496c6c4f4b73-build.zip"
+        }
       }
     }
   }
