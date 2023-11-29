@@ -6,6 +6,7 @@ import { RootState } from "../../../redux/store";
 import config from "../../aws-exports";
 import { CMDBuddyUser } from "../../../utils/zod/UserSchema";
 import Link from "next/link";
+import CommandCreationForm from "@/components/CommandCreationForm";
 Amplify.configure(config);
 
 const Commands = () => {
@@ -20,6 +21,7 @@ const Commands = () => {
 			<h1>Commands Placeholder</h1>
 			<Link href="/login">Login page</Link>
 			<div>{commands && commands[0] && commands[0].baseCommand}</div>
+			<CommandCreationForm />
 		</>
 	);
 };
