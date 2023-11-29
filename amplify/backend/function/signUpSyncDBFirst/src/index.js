@@ -68,7 +68,7 @@ async function checkIfUserExists(email) {
 async function createUserInCognito(email) {
 	const params = {
 		UserPoolId: USER_POOL_ID,
-		email: email,
+		Username: email, // Corrected line
 		UserAttributes: [
 			{
 				Name: "email",
@@ -79,7 +79,7 @@ async function createUserInCognito(email) {
 				Value: "false",
 			},
 		],
-		// Set other attributes as required
+		// Additional parameters as required
 	};
 
 	const command = new AdminCreateUserCommand(params);
