@@ -21,7 +21,6 @@ const CommandCreationForm: React.FC = () => {
 
 	const onSubmit = (data: CMDBuddyCommand) => {
 		console.log(data);
-		// Handle command creation logic here
 	};
 
 	return (
