@@ -23,6 +23,7 @@ exports.handler = async (event) => {
 
 	try {
 		for (const record of event.Records) {
+			console.log("event.Records:", event.Records);
 			console.log("Stream record: ", JSON.stringify(record, null, 2));
 
 			if (record.eventName === "INSERT") {
@@ -92,4 +93,8 @@ async function createUserInCognito(email) {
 	const command = new AdminCreateUserCommand(params);
 	const cognitoAddUserResponse = await cognitoClient.send(command);
 	console.log("cognitoAddUserResponse:", cognitoAddUserResponse);
+	console.log(
+		"TODO: Delete empty createUserInCognito return statement if it doesnt help"
+	);
+	return "";
 }
