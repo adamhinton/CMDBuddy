@@ -35,30 +35,30 @@ exports.handler = async (event) => {
 				console.log("userExists in Cognito:", userExists);
 
 				if (!userExists) {
-					console.log("TODO: Uncomment await createUserInCognito(email)");
-					// await createUserInCognito(email);
+					console.log("user doesnt exist in cognito");
 					await createUserInCognito(email);
-					console.log(
-						"createUserInCognitoResults:",
-						createUserInCognitoResults
-					);
-					console.log("happy path - user created should go here");
 				} else {
 					console.log("User already exists in Cognito:", email);
 				}
 			}
 		}
 
-		return {
+		// return {
+		// 	statusCode: 200,
+		// 	body: JSON.stringify({ message: "Lambda executed successfully!" }),
+		// };
+		console.log("Should return 200 now");
+		return JSON.stringify({
 			statusCode: 200,
-			body: JSON.stringify({ message: "Lambda executed successfully!" }),
-		};
+			message: "Lambda executed successfully!",
+		});
 	} catch (error) {
 		console.error("Error processing event:", error);
-		return {
-			statusCode: 500,
-			body: JSON.stringify({ error: error.message }),
-		};
+		// return {
+		// 	statusCode: 500,
+		// 	body: JSON.stringify({ error: error.message }),
+		// };
+		return JSON.stringify({ statusCode: 500, error: error.message });
 	}
 };
 
@@ -87,10 +87,9 @@ async function createUserInCognito(email) {
 				Value: "true",
 			},
 		],
-		// Additional parameters as required
 	};
 
 	const command = new AdminCreateUserCommand(params);
-	const cognitoClientSendResults = await cognitoClient.send(command);
-	console.log("cognitoClientSendResults:", cognitoClientSendResults);
+	const cognitoAddUserResponse = await cognitoClient.send(command);
+	console.log("cognitoAddUserResponse:", cognitoAddUserResponse);
 }
