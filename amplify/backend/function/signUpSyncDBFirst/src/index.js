@@ -37,11 +37,11 @@ exports.handler = async (event) => {
 				if (!userExists) {
 					console.log("TODO: Uncomment await createUserInCognito(email)");
 					// await createUserInCognito(email);
-					// const createUserInCognitoResults = await createUserInCognito(email);
-					// console.log(
-					// 	"createUserInCognitoResults:",
-					// 	createUserInCognitoResults
-					// );
+					await createUserInCognito(email);
+					console.log(
+						"createUserInCognitoResults:",
+						createUserInCognitoResults
+					);
 					console.log("happy path - user created should go here");
 				} else {
 					console.log("User already exists in Cognito:", email);
@@ -91,5 +91,6 @@ async function createUserInCognito(email) {
 	};
 
 	const command = new AdminCreateUserCommand(params);
-	await cognitoClient.send(command);
+	const cognitoClientSendResults = await cognitoClient.send(command);
+	console.log("cognitoClientSendResults:", cognitoClientSendResults);
 }
