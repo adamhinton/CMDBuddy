@@ -111,6 +111,22 @@
           "resourceName": "signUpSyncCognitoFirst"
         }
       ]
+    },
+    "AMPLIFY_function_signUpSyncDBFirst_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "signUpSyncDBFirst"
+        }
+      ]
+    },
+    "AMPLIFY_function_signUpSyncDBFirst_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "signUpSyncDBFirst"
+        }
+      ]
     }
   }
 }

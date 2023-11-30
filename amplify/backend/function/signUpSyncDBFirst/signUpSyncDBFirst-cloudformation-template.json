@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Lambda Function resource stack creation using Amplify CLI",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.6.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -117,12 +117,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "cmdbuddyserverLambdaRole422a2d58",
+            "cmdbuddyserverLambdaRole895eea20",
             {
               "Fn::Join": [
                 "",
                 [
-                  "cmdbuddyserverLambdaRole422a2d58",
+                  "cmdbuddyserverLambdaRole895eea20",
                   "-",
                   {
                     "Ref": "env"
@@ -329,17 +329,7 @@
                 "cognito-idp:UpdateGroup",
                 "cognito-idp:AdminUpdateAuthEventFeedback",
                 "cognito-idp:UpdateDeviceStatus",
-                "cognito-idp:UpdateUserPool",
-                "cognito-idp:DeleteUserPoolDomain",
-                "cognito-idp:DeleteResourceServer",
-                "cognito-idp:DeleteGroup",
-                "cognito-idp:AdminDeleteUserAttributes",
-                "cognito-idp:DeleteUserPoolClient",
-                "cognito-idp:DeleteUserAttributes",
-                "cognito-idp:DeleteUserPool",
-                "cognito-idp:AdminDeleteUser",
-                "cognito-idp:DeleteIdentityProvider",
-                "cognito-idp:DeleteUser"
+                "cognito-idp:UpdateUserPool"
               ],
               "Resource": [
                 {
