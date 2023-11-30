@@ -10,7 +10,8 @@
       "cmdbuddyserver568927f0": [
         "create",
         "read",
-        "update"
+        "update",
+        "delete"
       ]
     }
   },

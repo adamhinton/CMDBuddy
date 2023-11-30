@@ -76,7 +76,7 @@ async function createUserInCognito(email) {
 			},
 			{
 				Name: "email_verified",
-				Value: "truex",
+				Value: "true",
 			},
 		],
 		// Additional parameters as required
