@@ -8,6 +8,7 @@ import { ParameterSchema } from "../../utils/zod/ParameterSchema";
 const CommandCreationForm: React.FC = () => {
 	const {
 		register,
+		watch,
 		control,
 		handleSubmit,
 		formState: { errors },
@@ -32,7 +33,7 @@ const CommandCreationForm: React.FC = () => {
 		),
 	});
 
-	const { fields, append } = useFieldArray({
+	const { fields, append, remove } = useFieldArray({
 		control,
 		name: "parameters",
 	});
@@ -58,36 +59,55 @@ const CommandCreationForm: React.FC = () => {
 			</div>
 
 			{/* Parameters Fields */}
-			{fields.map((field, index) => (
-				<div key={field.id}>
-					<label htmlFor={`parameters.${index}.type`}>Type</label>
-					<select {...register(`parameters.${index}.type`)}>
-						<option value="STRING">String</option>
-						<option value="INT">Int</option>
-						<option value="BOOLEAN">Boolean</option>
-						<option value="DROPDOWN">Dropdown</option>
-					</select>
+			{fields.map((field, index) => {
+				const name = watch(`parameters.${index}.name`);
 
-					<label htmlFor={`parameters.${index}.defaultValue`}>
-						Default Value
-					</label>
-					<input
-						{...register(`parameters.${index}.defaultValue`)}
-						placeholder="Default Value"
-					/>
+				return (
+					<section key={field.id}>
+						<h3>{field.name || `Parameter ${index + 1}`}</h3>
 
-					<label htmlFor={`parameters.${index}.name`}>Name</label>
-					<input {...register(`parameters.${index}.name`)} placeholder="Name" />
+						<label htmlFor={`parameters.${index}.type`}>Type</label>
+						<select {...register(`parameters.${index}.type`)}>
+							<option value="STRING">String</option>
+							<option value="INT">Int</option>
+							<option value="BOOLEAN">Boolean</option>
+							<option value="DROPDOWN">Dropdown</option>
+						</select>
 
-					<input
-						type="checkbox"
-						{...register(`parameters.${index}.isNullable`)}
-					/>
-					<label htmlFor={`parameters.${index}.isNullable`}>Is Nullable</label>
-				</div>
-			))}
+						<label htmlFor={`parameters.${index}.defaultValue`}>
+							Default Value
+						</label>
+						<input
+							{...register(`parameters.${index}.defaultValue`)}
+							placeholder="Default Value"
+						/>
 
-			<button type="button" onClick={() => append(defaultParameterValues)}>
+						<label htmlFor={`parameters.${index}.name`}>Name</label>
+						<input
+							{...register(`parameters.${index}.name`)}
+							placeholder="Name"
+						/>
+
+						<input
+							type="checkbox"
+							{...register(`parameters.${index}.isNullable`)}
+						/>
+						<label htmlFor={`parameters.${index}.isNullable`}>
+							Is Nullable
+						</label>
+
+						<button type="button" onClick={() => remove(index)}>
+							Delete Parameter
+						</button>
+					</section>
+				);
+			})}
+
+			<button
+				type="button"
+				// TODO: Fix this as any. It wanted a full Parameter and we're just passing a partial one.
+				onClick={() => append(defaultParameterValues as any)}
+			>
 				Add Parameter
 			</button>
 
