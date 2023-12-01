@@ -104,8 +104,8 @@ type DefaultParameterValues = Omit<
 
 // Define default values for a new parameter
 const defaultParameterValues: DefaultParameterValues = {
-	type: "STRING", // Default type
-	name: "", // Empty default name
-	isNullable: false, // Default isNullable value
-	defaultValue: "", // Empty default value
+	type: "STRING",
+	name: "",
+	isNullable: false,
+	defaultValue: "",
 };
