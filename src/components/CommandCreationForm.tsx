@@ -1,28 +1,36 @@
 import React from "react";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
 import { CommandSchema, CMDBuddyCommand } from "../../utils/zod/CommandSchema";
 import ParameterCreationForm from "./ParameterCreationForm"; // Assuming this is the correct path
 import { ParameterSchema } from "../../utils/zod/ParameterSchema";
 
+// Creating a specific schema for the Command Creation Form
+// This is because the user doesn't define things like `id` or `order`
+const CommandCreationFormSchema = CommandSchema.omit({
+	id: true,
+	order: true,
+	userID: true,
+}).extend({
+	// Adjust parameters validation to be more lenient for the form
+	// Same reasons we adjusted the Command schema - the user doesn't define all fields that the db needs in this schema
+	parameters: ParameterSchema.pick({
+		type: true,
+		name: true,
+	})
+		.array()
+		.optional(),
+});
+
+type CMDBuddyCommandFormValidation = z.infer<typeof CommandCreationFormSchema>;
+
 const CommandCreationForm: React.FC = () => {
-	const methods = useForm<CMDBuddyCommand>({
-		resolver: zodResolver(
-			CommandSchema.omit({
-				id: true,
-				order: true,
-				userID: true,
-			}).extend({
-				// Adjust parameters validation to be more lenient
-				parameters: ParameterSchema.pick({
-					type: true,
-					name: true,
-				})
-					.array()
-					.optional(),
-			})
-		),
+	const methods = useForm<CMDBuddyCommandFormValidation>({
+		resolver: zodResolver(CommandCreationFormSchema),
 	});
+
+	// ... (rest of the component remains the same)
 
 	const { fields, append, remove } = useFieldArray({
 		control: methods.control,
