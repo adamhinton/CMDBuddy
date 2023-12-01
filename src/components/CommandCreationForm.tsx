@@ -30,8 +30,6 @@ const CommandCreationForm: React.FC = () => {
 		resolver: zodResolver(CommandCreationFormSchema),
 	});
 
-	// ... (rest of the component remains the same)
-
 	const { fields, append, remove } = useFieldArray({
 		control: methods.control,
 		name: "parameters",
