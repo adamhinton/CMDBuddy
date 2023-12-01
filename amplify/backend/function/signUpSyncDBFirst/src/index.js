@@ -44,22 +44,20 @@ exports.handler = async (event) => {
 			}
 		}
 
-		// return {
-		// 	statusCode: 200,
-		// 	body: JSON.stringify({ message: "Lambda executed successfully!" }),
-		// };
-		console.log("Should return 200 now");
-		return JSON.stringify({
+		return {
 			statusCode: 200,
-			message: "Lambda executed successfully!",
-		});
+			body: JSON.stringify({ message: "Lambda executed successfully!" }),
+		};
+		// return JSON.stringify({
+		// 	statusCode: 200,
+		// 	message: "Lambda executed successfully!",
+		// });
 	} catch (error) {
 		console.error("Error processing event:", error);
-		// return {
-		// 	statusCode: 500,
-		// 	body: JSON.stringify({ error: error.message }),
-		// };
-		return JSON.stringify({ statusCode: 500, error: error.message });
+		return {
+			statusCode: 500,
+			body: JSON.stringify({ error: error.message }),
+		};
 	}
 };
 
@@ -93,8 +91,4 @@ async function createUserInCognito(email) {
 	const command = new AdminCreateUserCommand(params);
 	const cognitoAddUserResponse = await cognitoClient.send(command);
 	console.log("cognitoAddUserResponse:", cognitoAddUserResponse);
-	console.log(
-		"TODO: Delete empty createUserInCognito return statement if it doesnt help"
-	);
-	return "";
 }
