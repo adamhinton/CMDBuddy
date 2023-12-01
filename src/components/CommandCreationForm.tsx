@@ -29,9 +29,6 @@ const CommandCreationForm: React.FC = () => {
 		name: "parameters",
 	});
 
-	console.log("fields:", fields);
-	console.log("methods.getValues():", methods.getValues());
-
 	const onSubmit = (data) => {
 		console.log("submitting");
 		console.log(data);
