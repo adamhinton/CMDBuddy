@@ -59,8 +59,9 @@ const StringParameterFields = ({ index }: { index: number }) => {
 		<>
 			{/* String specific fields */}
 			<input
-				{...register(`parameters.${index}.stringValue`)}
-				placeholder="String Value"
+				type="string"
+				{...register(`parameters.${index}.name`)}
+				placeholder="Name"
 			/>
 		</>
 	);
@@ -72,9 +73,9 @@ const IntParameterFields = ({ index }: { index: number }) => {
 		<>
 			{/* Integer specific fields */}
 			<input
-				type="number"
-				{...register(`parameters.${index}.intValue`)}
-				placeholder="Int Value"
+				type="string"
+				{...register(`parameters.${index}.name`)}
+				placeholder="Name"
 			/>
 		</>
 	);

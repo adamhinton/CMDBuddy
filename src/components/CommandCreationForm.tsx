@@ -3,6 +3,7 @@ import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CommandSchema, CMDBuddyCommand } from "../../utils/zod/CommandSchema";
 import ParameterCreationForm from "./ParameterCreationForm"; // Assuming this is the correct path
+import { ParameterSchema } from "../../utils/zod/ParameterSchema";
 
 const CommandCreationForm: React.FC = () => {
 	const methods = useForm<CMDBuddyCommand>({
@@ -11,6 +12,14 @@ const CommandCreationForm: React.FC = () => {
 				id: true,
 				order: true,
 				userID: true,
+			}).extend({
+				// Adjust parameters validation to be more lenient
+				parameters: ParameterSchema.pick({
+					type: true,
+					name: true,
+				})
+					.array()
+					.optional(),
 			})
 		),
 	});
