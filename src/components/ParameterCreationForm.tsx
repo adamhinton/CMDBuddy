@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { CMDBuddyParameter } from "../../utils/zod/ParameterSchema";
 
 type FormProps = {
 	index: number;
@@ -8,7 +7,7 @@ type FormProps = {
 };
 
 const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
-	const { register, watch, setValue } = useFormContext();
+	const { register, watch } = useFormContext();
 	const [parameterType, setParameterType] = useState("STRING");
 
 	useEffect(() => {
@@ -20,13 +19,16 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 		return () => subscription.unsubscribe();
 	}, [watch, index]);
 
-	const renderParameterFields = () => {
+	const renderParameterSpecificFields = () => {
 		switch (parameterType) {
 			case "STRING":
 				return <StringParameterFields index={index} />;
 			case "INT":
 				return <IntParameterFields index={index} />;
-			// Add cases for other types
+			case "BOOLEAN":
+				return <BooleanParameterFields index={index} />;
+			case "DROPDOWN":
+				return <DropdownParameterFields index={index} />;
 			default:
 				return null;
 		}
@@ -41,10 +43,14 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 			>
 				<option value="STRING">String</option>
 				<option value="INT">Int</option>
-				{/* Other types */}
+				<option value="BOOLEAN">Boolean</option>
+				<option value="DROPDOWN">Dropdown</option>
 			</select>
 
-			{renderParameterFields()}
+			{/* Shared Name field */}
+			<input {...register(`parameters.${index}.name`)} placeholder="Name" />
+
+			{renderParameterSpecificFields()}
 
 			<button type="button" onClick={() => removeParameter(index)}>
 				Delete Parameter
@@ -54,31 +60,23 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 };
 
 const StringParameterFields = ({ index }: { index: number }) => {
-	const { register } = useFormContext();
-	return (
-		<>
-			{/* String specific fields */}
-			<input
-				type="string"
-				{...register(`parameters.${index}.name`)}
-				placeholder="Name"
-			/>
-		</>
-	);
+	// String specific fields (if any)
+	return <></>;
 };
 
 const IntParameterFields = ({ index }: { index: number }) => {
-	const { register } = useFormContext();
-	return (
-		<>
-			{/* Integer specific fields */}
-			<input
-				type="string"
-				{...register(`parameters.${index}.name`)}
-				placeholder="Name"
-			/>
-		</>
-	);
+	// Integer specific fields (if any)
+	return <></>;
+};
+
+const BooleanParameterFields = ({ index }: { index: number }) => {
+	// Boolean specific fields (if any)
+	return <></>;
+};
+
+const DropdownParameterFields = ({ index }: { index: number }) => {
+	// Dropdown specific fields (if any)
+	return <></>;
 };
 
 export default ParameterCreationForm;
