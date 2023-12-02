@@ -5,24 +5,32 @@ import z from "zod";
 import { CommandSchema, CMDBuddyCommand } from "../../utils/zod/CommandSchema";
 import ParameterCreationForm from "./ParameterCreationForm"; // Assuming this is the correct path
 import { ParameterSchema } from "../../utils/zod/ParameterSchema";
+import {
+	StringParameterSchema,
+	IntParameterSchema,
+	BooleanParameterSchema,
+	DropdownParameterSchema,
+} from "./ParameterCreationForm";
 
 // Creating a specific schema for the Command Creation Form
 // This is because the user doesn't define things like `id` or `order`
-const CommandCreationFormSchema = CommandSchema.omit({
+export const CommandCreationFormSchema = CommandSchema.omit({
 	id: true,
 	order: true,
 	userID: true,
 }).extend({
-	// Adjust parameters validation to be more lenient for the form
-	// Same reasons we adjusted the Command schema - the user doesn't define all fields that the db needs in this schema
-	parameters: ParameterSchema.pick({
-		type: true,
-		name: true,
-	})
-		.array()
+	// Each Parameter can be one of four types
+	parameters: z
+		.array(
+			z.union([
+				StringParameterSchema,
+				IntParameterSchema,
+				BooleanParameterSchema,
+				DropdownParameterSchema,
+			])
+		)
 		.optional(),
 });
-
 type CMDBuddyCommandFormValidation = z.infer<typeof CommandCreationFormSchema>;
 
 const CommandCreationForm: React.FC = () => {
@@ -35,7 +43,7 @@ const CommandCreationForm: React.FC = () => {
 		name: "parameters",
 	});
 
-	const onSubmit = (data) => {
+	const onSubmit = (data: CMDBuddyCommandFormValidation) => {
 		console.log("submitting");
 		console.log(data);
 		// Handle command creation logic here
