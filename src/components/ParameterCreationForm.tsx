@@ -329,7 +329,12 @@ const DropdownParameterFields = ({
 
 	// Helper function to convert string to array
 	const stringToArray = (value: string) => {
-		return value.split(",").map((val) => val.trim());
+		console.log("value:", value);
+		// Value might already be an array if it's been submitted before
+		// Because submitting converted it to an array already
+		return typeof value === "string"
+			? value.split(",").map((val) => val.trim())
+			: value;
 	};
 
 	return (
