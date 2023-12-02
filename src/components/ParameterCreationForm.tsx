@@ -129,7 +129,12 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 					/>
 				);
 			case "INT":
-				return <IntParameterFields index={index} />;
+				return (
+					<IntParameterFields
+						index={index}
+						parameterErrors={parameterErrors as IntParameterErrors}
+					/>
+				);
 			case "BOOLEAN":
 				return <BooleanParameterFields index={index} />;
 			case "DROPDOWN":
@@ -253,9 +258,63 @@ const StringParameterFields = ({
 	);
 };
 
-const IntParameterFields = ({ index }: { index: number }) => {
-	// Integer specific fields (if any)
-	return <></>;
+type IntParameterErrors = {
+	defaultValue?: {
+		message: string;
+	};
+	minValue?: {
+		message: string;
+	};
+	maxValue?: {
+		message: string;
+	};
+};
+
+const IntParameterFields = ({
+	index,
+	parameterErrors,
+}: {
+	index: number;
+	parameterErrors: IntParameterErrors;
+}) => {
+	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
+
+	return (
+		<>
+			{/* Default Value Field */}
+			<label>Default Value</label>
+			<input
+				type="string"
+				{...register(`parameters.${index}.defaultValue`)}
+				placeholder="Default Value"
+			/>
+			{parameterErrors?.defaultValue && (
+				<p>{parameterErrors.defaultValue.message}</p>
+			)}
+
+			{/* Min Value Field */}
+			<label>Min Value</label>
+			<input
+				type="number"
+				{...register(`parameters.${index}.minValue`, {
+					setValueAs: toNumberOrNullOrUndefined,
+				})}
+				placeholder="Min Value"
+			/>
+			{parameterErrors?.minValue && <p>{parameterErrors.minValue.message}</p>}
+
+			{/* Max Value Field */}
+			<label>Max Value</label>
+			<input
+				type="number"
+				{...register(`parameters.${index}.maxValue`, {
+					setValueAs: toNumberOrNullOrUndefined,
+				})}
+				placeholder="Max Value"
+			/>
+			{parameterErrors?.maxValue && <p>{parameterErrors.maxValue.message}</p>}
+		</>
+	);
 };
 
 const BooleanParameterFields = ({ index }: { index: number }) => {

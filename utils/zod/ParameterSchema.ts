@@ -3,6 +3,7 @@ import { z } from "zod";
 export const ParameterSchema = z.object({
 	id: z.string().uuid(),
 	type: z.enum(["STRING", "INT", "BOOLEAN", "DROPDOWN"]),
+	// Easier to leave this as string and convert it
 	defaultValue: z.string().optional(),
 	name: z.string(),
 	order: z.number().int(),
