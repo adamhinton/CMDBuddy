@@ -93,16 +93,22 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 
 	const parameterErrors = errors.parameters?.[index];
 
+	// This updates the necessary fields when user clicks a different parameter type
+	// Name here refers to the name of the field, not the `name` key in Parameters
 	useEffect(() => {
 		const subscription = watch((value, { name, type }) => {
 			if (type === "change" && name?.includes(`parameters.${index}.type`)) {
-				setParameterType(value.parameters[index].type);
+				const parameter = value.parameters ? value.parameters[index] : null;
+				if (parameter) {
+					setParameterType(parameter.type!);
+				}
 			}
 		});
 		return () => subscription.unsubscribe();
 	}, [watch, index]);
 
 	const renderParameterSpecificFields = () => {
+		console.log("parameterType:", parameterType);
 		switch (parameterType) {
 			case "STRING":
 				return <StringParameterFields index={index} />;
@@ -119,6 +125,7 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 
 	return (
 		<div>
+			{/* Parameter Type Selector */}
 			<label>Type</label>
 			<select
 				{...register(`parameters.${index}.type`)}
@@ -130,11 +137,37 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 				<option value="DROPDOWN">Dropdown</option>
 			</select>
 
-			{/* Shared Name field */}
-			<input {...register(`parameters.${index}.name`)} placeholder="Name" />
+			{/* Shared Name Field */}
+			<label>Name</label>
+			<input
+				{...register(`parameters.${index}.name`)}
+				placeholder="Name"
+				required={true}
+			/>
+			{parameterErrors?.name && <p>{parameterErrors.name.message}</p>}
+
+			{/* Default Value Field */}
+			<label>Default Value</label>
+			<input
+				{...register(`parameters.${index}.defaultValue`)}
+				placeholder="Default Value"
+			/>
+			{parameterErrors?.defaultValue && (
+				<p>{parameterErrors.defaultValue.message}</p>
+			)}
+
+			{/* IsNullable (Optional) Checkbox */}
+			<label>
+				<input
+					type="checkbox"
+					{...register(`parameters.${index}.isNullable`)}
+				/>
+				Optional
+			</label>
 
 			{renderParameterSpecificFields()}
 
+			{/* Delete Parameter Button */}
 			<button type="button" onClick={() => removeParameter(index)}>
 				Delete Parameter
 			</button>
