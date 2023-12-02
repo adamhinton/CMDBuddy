@@ -23,54 +23,46 @@ import z from "zod";
 // export type CMDBuddyParameter = z.infer<typeof ParameterSchema>;
 
 // Subtypes for each parameter type
-export const StringParameterSchema = ParameterSchema.extend({
+export const StringParameterSchema = ParameterSchema.pick({
+	type: true,
+	defaultValue: true,
+	name: true,
+	validationRegex: true,
+	minLength: true,
+	maxLength: true,
+	isNullable: true,
+}).extend({
 	type: z.literal("STRING"),
-}).omit({
-	id: true,
-	order: true,
-	commandID: true,
-	minValue: true,
-	maxValue: true,
-	allowedValues: true,
 });
 
-export const IntParameterSchema = ParameterSchema.extend({
+export const IntParameterSchema = ParameterSchema.pick({
+	type: true,
+	defaultValue: true,
+	name: true,
+	minValue: true,
+	maxValue: true,
+	isNullable: true,
+}).extend({
 	type: z.literal("INT"),
-}).omit({
-	id: true,
-	order: true,
-	commandID: true,
-	minLength: true,
-	maxLength: true,
-	validationRegex: true,
-	allowedValues: true,
 });
 
-export const BooleanParameterSchema = ParameterSchema.extend({
+export const BooleanParameterSchema = ParameterSchema.pick({
+	type: true,
+	defaultValue: true,
+	name: true,
+	isNullable: true,
+}).extend({
 	type: z.literal("BOOLEAN"),
-}).omit({
-	id: true,
-	order: true,
-	commandID: true,
-	minLength: true,
-	maxLength: true,
-	minValue: true,
-	maxValue: true,
-	validationRegex: true,
-	allowedValues: true,
 });
 
-export const DropdownParameterSchema = ParameterSchema.extend({
+export const DropdownParameterSchema = ParameterSchema.pick({
+	type: true,
+	defaultValue: true,
+	name: true,
+	allowedValues: true,
+	isNullable: true,
+}).extend({
 	type: z.literal("DROPDOWN"),
-}).omit({
-	id: true,
-	order: true,
-	commandID: true,
-	minLength: true,
-	maxLength: true,
-	minValue: true,
-	maxValue: true,
-	validationRegex: true,
 });
 
 export type StringParameter = z.infer<typeof StringParameterSchema>;
