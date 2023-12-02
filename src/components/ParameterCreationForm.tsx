@@ -138,7 +138,12 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 			case "BOOLEAN":
 				return <BooleanParameterFields index={index} />;
 			case "DROPDOWN":
-				return <DropdownParameterFields index={index} />;
+				return (
+					<DropdownParameterFields
+						index={index}
+						parameterErrors={parameterErrors as DropdownParameterErrors}
+					/>
+				);
 			default:
 				return null;
 		}
@@ -321,9 +326,46 @@ type DropdownParameterErrors = {
 	};
 };
 
-const DropdownParameterFields = ({ index }: { index: number }) => {
-	// Dropdown specific fields (if any)
-	return <></>;
+const DropdownParameterFields = ({
+	index,
+	parameterErrors,
+}: {
+	index: number;
+	parameterErrors: DropdownParameterErrors;
+}) => {
+	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
+
+	// Helper function to convert string to array
+	const stringToArray = (value: string) => {
+		return value.split(",").map((val) => val.trim());
+	};
+
+	return (
+		<>
+			{/* Default Value Field */}
+			<label>Default Value</label>
+			<input
+				{...register(`parameters.${index}.defaultValue`)}
+				placeholder="Default Value"
+			/>
+			{parameterErrors?.defaultValue && (
+				<p>{parameterErrors.defaultValue.message}</p>
+			)}
+
+			{/* Allowed Values Field */}
+			<label>Allowed Values</label>
+			<textarea
+				{...register(`parameters.${index}.allowedValues`, {
+					setValueAs: stringToArray,
+				})}
+				placeholder="Enter values separated by commas"
+				rows={4}
+			/>
+			{parameterErrors?.allowedValues && (
+				<p>{parameterErrors.allowedValues.message}</p>
+			)}
+		</>
+	);
 };
 
 export default ParameterCreationForm;
