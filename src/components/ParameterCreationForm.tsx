@@ -89,6 +89,10 @@ type FormProps = {
 	removeParameter: Function;
 };
 
+// Helper function to convert empty string to null
+const toNumberOrNullOrUndefined = (value: string) =>
+	value === "" ? undefined : Number(value);
+
 const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 	const {
 		register,
@@ -210,23 +214,27 @@ const StringParameterFields = ({
 
 	return (
 		<>
-			{/* Length Field */}
+			{/* Min Length Field */}
 			<label>Min Length</label>
 			<input
 				type="number"
-				{...register(`parameters.${index}.minLength`)}
+				{...register(`parameters.${index}.minLength`, {
+					setValueAs: toNumberOrNullOrUndefined,
+				})}
 				placeholder="Min Length"
 			/>
-			{parameterErrors.minLength && <p>{parameterErrors.minLength.message}</p>}
+			{parameterErrors?.minLength && <p>{parameterErrors.minLength.message}</p>}
 
 			{/* Max Length Field */}
 			<label>Max Length</label>
 			<input
 				type="number"
-				{...register(`parameters.${index}.maxLength`)}
+				{...register(`parameters.${index}.maxLength`, {
+					setValueAs: toNumberOrNullOrUndefined,
+				})}
 				placeholder="Max Length"
 			/>
-			{parameterErrors.maxLength && <p>{parameterErrors.maxLength.message}</p>}
+			{parameterErrors?.maxLength && <p>{parameterErrors.maxLength.message}</p>}
 
 			{/* Validation Regex Field */}
 			<label>Validation Regex</label>
@@ -234,7 +242,7 @@ const StringParameterFields = ({
 				{...register(`parameters.${index}.validationRegex`)}
 				placeholder="Validation Regex"
 			/>
-			{parameterErrors.validationRegex && (
+			{parameterErrors?.validationRegex && (
 				<p>{parameterErrors.validationRegex.message}</p>
 			)}
 		</>
