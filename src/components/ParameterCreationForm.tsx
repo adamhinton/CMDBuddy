@@ -167,6 +167,17 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 			/>
 			{parameterErrors?.name && <p>{parameterErrors.name.message}</p>}
 
+			{/* Default Value Field */}
+			<label>Default Value</label>
+			<input
+				type="string"
+				{...register(`parameters.${index}.defaultValue`)}
+				placeholder="Default Value"
+			/>
+			{parameterErrors?.defaultValue && (
+				<p>{parameterErrors.defaultValue.message}</p>
+			)}
+
 			{/* IsNullable (Optional) Checkbox */}
 			<label>
 				<input
@@ -212,17 +223,6 @@ const StringParameterFields = ({
 
 	return (
 		<>
-			{/* Default Value Field */}
-			<label>Default Value</label>
-			<input
-				{...register(`parameters.${index}.defaultValue`)}
-				placeholder="Default Value"
-				type="string"
-			/>
-			{parameterErrors?.defaultValue && (
-				<p>{parameterErrors.defaultValue.message}</p>
-			)}
-
 			{/* Min Length Field */}
 			<label>Min Length</label>
 			<input
@@ -281,17 +281,6 @@ const IntParameterFields = ({
 
 	return (
 		<>
-			{/* Default Value Field */}
-			<label>Default Value</label>
-			<input
-				type="string"
-				{...register(`parameters.${index}.defaultValue`)}
-				placeholder="Default Value"
-			/>
-			{parameterErrors?.defaultValue && (
-				<p>{parameterErrors.defaultValue.message}</p>
-			)}
-
 			{/* Min Value Field */}
 			<label>Min Value</label>
 			<input
