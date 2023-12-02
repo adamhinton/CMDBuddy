@@ -65,14 +65,33 @@ export const DropdownParameterSchema = ParameterSchema.extend({
 	maxValue: true,
 	validationRegex: true,
 });
+
+export type StringParameter = z.infer<typeof StringParameterSchema>;
+export type IntParameter = z.infer<typeof IntParameterSchema>;
+export type BooleanParameter = z.infer<typeof BooleanParameterSchema>;
+export type DropdownParameter = z.infer<typeof DropdownParameterSchema>;
+
+export type AnyParameter =
+	| StringParameter
+	| IntParameter
+	| BooleanParameter
+	| DropdownParameter;
+
 type FormProps = {
 	index: number;
 	removeParameter: Function;
 };
 
 const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
-	const { register, watch } = useFormContext();
+	const {
+		register,
+		watch,
+		formState: { errors },
+	} = useFormContext<{ parameters: AnyParameter[] }>();
+
 	const [parameterType, setParameterType] = useState("STRING");
+
+	const parameterErrors = errors.parameters?.[index];
 
 	useEffect(() => {
 		const subscription = watch((value, { name, type }) => {
