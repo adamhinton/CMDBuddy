@@ -306,6 +306,7 @@ const IntParameterFields = ({
 	);
 };
 
+// Leaving this here for documentation, but we don't actually need any custom fields for Boolean right now.
 const BooleanParameterFields = ({ index }: { index: number }) => {
 	// Boolean specific fields (if any)
 	return <></>;
