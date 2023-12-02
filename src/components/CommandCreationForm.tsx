@@ -11,6 +11,7 @@ import {
 	BooleanParameterSchema,
 	DropdownParameterSchema,
 } from "./ParameterCreationForm";
+import { cwd } from "process";
 
 // Creating a specific schema for the Command Creation Form
 // This is because the user doesn't define things like `id` or `order`
@@ -42,6 +43,11 @@ const CommandCreationForm: React.FC = () => {
 		control: methods.control,
 		name: "parameters",
 	});
+
+	console.log(
+		"methods.getValues().parameters:",
+		methods.getValues().parameters
+	);
 
 	const onSubmit = (data: CMDBuddyCommandFormValidation) => {
 		console.log("submitting");
@@ -85,7 +91,7 @@ const CommandCreationForm: React.FC = () => {
 							type: "STRING",
 							name: "",
 							isNullable: false,
-							defaultValue: null,
+							defaultValue: "",
 							// TODO: Fix this as any
 						} as any)
 					}
