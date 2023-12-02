@@ -212,6 +212,7 @@ const StringParameterFields = ({
 			<input
 				{...register(`parameters.${index}.defaultValue`)}
 				placeholder="Default Value"
+				type="string"
 			/>
 			{parameterErrors?.defaultValue && (
 				<p>{parameterErrors.defaultValue.message}</p>
