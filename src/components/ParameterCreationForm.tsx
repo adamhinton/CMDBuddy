@@ -1,6 +1,70 @@
 import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { ParameterSchema } from "../../utils/zod/ParameterSchema";
+import z from "zod";
 
+// export const ParameterSchema = z.object({
+// 	id: z.string().uuid(),
+// 	type: z.enum(["STRING", "INT", "BOOLEAN", "DROPDOWN"]),
+// 	defaultValue: z.string().optional(),
+// 	name: z.string(),
+// 	order: z.number().int(),
+// 	validationRegex: z.string().optional(),
+// 	length: z.number().int().optional(),
+// 	minValue: z.number().int().optional(),
+// 	maxValue: z.number().int().optional(),
+// 	isNullable: z.boolean(),
+// 	allowedValues: z.array(z.string()).optional(),
+// 	commandID: z.string().uuid(),
+// });
+
+// Subtypes for each parameter type
+export const StringParameterSchema = ParameterSchema.extend({
+	type: z.literal("STRING"),
+}).omit({
+	id: true,
+	order: true,
+	commandID: true,
+	minValue: true,
+	maxValue: true,
+	allowedValues: true,
+});
+
+export const IntParameterSchema = ParameterSchema.extend({
+	type: z.literal("INT"),
+}).omit({
+	id: true,
+	order: true,
+	commandID: true,
+	length: true,
+	validationRegex: true,
+	allowedValues: true,
+});
+
+export const BooleanParameterSchema = ParameterSchema.extend({
+	type: z.literal("BOOLEAN"),
+}).omit({
+	id: true,
+	order: true,
+	commandID: true,
+	length: true,
+	minValue: true,
+	maxValue: true,
+	validationRegex: true,
+	allowedValues: true,
+});
+
+export const DropdownParameterSchema = ParameterSchema.extend({
+	type: z.literal("DROPDOWN"),
+}).omit({
+	id: true,
+	order: true,
+	commandID: true,
+	length: true,
+	minValue: true,
+	maxValue: true,
+	validationRegex: true,
+});
 type FormProps = {
 	index: number;
 	removeParameter: Function;
