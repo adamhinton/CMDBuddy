@@ -312,6 +312,15 @@ const BooleanParameterFields = ({ index }: { index: number }) => {
 	return <></>;
 };
 
+type DropdownParameterErrors = {
+	defaultValue?: {
+		message: string;
+	};
+	allowedValues?: {
+		message: string;
+	};
+};
+
 const DropdownParameterFields = ({ index }: { index: number }) => {
 	// Dropdown specific fields (if any)
 	return <></>;
