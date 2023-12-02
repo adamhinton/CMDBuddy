@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { ParameterSchema } from "../../utils/zod/ParameterSchema";
 import z from "zod";
 
+// THIS IS WHAT I IMPORTED FROM PARAMETERSCHEMA, copying it here, commented out, for quick reference.
 // export const ParameterSchema = z.object({
 // 	id: z.string().uuid(),
 // 	type: z.enum(["STRING", "INT", "BOOLEAN", "DROPDOWN"]),
@@ -10,13 +11,16 @@ import z from "zod";
 // 	name: z.string(),
 // 	order: z.number().int(),
 // 	validationRegex: z.string().optional(),
-// 	length: z.number().int().optional(),
+// 	minLength: z.number().int().optional(),
+// 	maxLength: z.number().int().optional(),
 // 	minValue: z.number().int().optional(),
 // 	maxValue: z.number().int().optional(),
 // 	isNullable: z.boolean(),
 // 	allowedValues: z.array(z.string()).optional(),
 // 	commandID: z.string().uuid(),
 // });
+
+// export type CMDBuddyParameter = z.infer<typeof ParameterSchema>;
 
 // Subtypes for each parameter type
 export const StringParameterSchema = ParameterSchema.extend({
@@ -36,7 +40,8 @@ export const IntParameterSchema = ParameterSchema.extend({
 	id: true,
 	order: true,
 	commandID: true,
-	length: true,
+	minLength: true,
+	maxLength: true,
 	validationRegex: true,
 	allowedValues: true,
 });
@@ -47,7 +52,8 @@ export const BooleanParameterSchema = ParameterSchema.extend({
 	id: true,
 	order: true,
 	commandID: true,
-	length: true,
+	minLength: true,
+	maxLength: true,
 	minValue: true,
 	maxValue: true,
 	validationRegex: true,
@@ -60,7 +66,8 @@ export const DropdownParameterSchema = ParameterSchema.extend({
 	id: true,
 	order: true,
 	commandID: true,
-	length: true,
+	minLength: true,
+	maxLength: true,
 	minValue: true,
 	maxValue: true,
 	validationRegex: true,
@@ -111,7 +118,12 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 		console.log("parameterType:", parameterType);
 		switch (parameterType) {
 			case "STRING":
-				return <StringParameterFields index={index} />;
+				return (
+					<StringParameterFields
+						index={index}
+						parameterErrors={parameterErrors as StringParameterErrors}
+					/>
+				);
 			case "INT":
 				return <IntParameterFields index={index} />;
 			case "BOOLEAN":
@@ -175,9 +187,58 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 	);
 };
 
-const StringParameterFields = ({ index }: { index: number }) => {
-	// String specific fields (if any)
-	return <></>;
+type StringParameterErrors = {
+	minLength?: {
+		message: string;
+	};
+	maxLength?: {
+		message: string;
+	};
+	validationRegex?: {
+		message: string;
+	};
+};
+
+const StringParameterFields = ({
+	index,
+	parameterErrors,
+}: {
+	index: number;
+	parameterErrors: StringParameterErrors;
+}) => {
+	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
+
+	return (
+		<>
+			{/* Length Field */}
+			<label>Min Length</label>
+			<input
+				type="number"
+				{...register(`parameters.${index}.minLength`)}
+				placeholder="Min Length"
+			/>
+			{parameterErrors.minLength && <p>{parameterErrors.minLength.message}</p>}
+
+			{/* Max Length Field */}
+			<label>Max Length</label>
+			<input
+				type="number"
+				{...register(`parameters.${index}.maxLength`)}
+				placeholder="Max Length"
+			/>
+			{parameterErrors.maxLength && <p>{parameterErrors.maxLength.message}</p>}
+
+			{/* Validation Regex Field */}
+			<label>Validation Regex</label>
+			<input
+				{...register(`parameters.${index}.validationRegex`)}
+				placeholder="Validation Regex"
+			/>
+			{parameterErrors.validationRegex && (
+				<p>{parameterErrors.validationRegex.message}</p>
+			)}
+		</>
+	);
 };
 
 const IntParameterFields = ({ index }: { index: number }) => {
