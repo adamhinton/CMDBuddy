@@ -5,7 +5,7 @@
 
 // TODO:
 // Also clear form on submit - but instate submit logic first and get that squared away
-// Param type for FLAG like --headed) that doesn't need a value, it's just there or not.
+// Collapse Params && Collapse All && Expand All
 // Also, disappear "isNullable" if FLAG type
 // Order before or after baseCommand
 // Move defaultValue back to individual Params
@@ -17,7 +17,7 @@ import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { CommandSchema, CMDBuddyCommand } from "../../utils/zod/CommandSchema";
-import ParameterCreationForm from "./ParameterCreationForm"; // Assuming this is the correct path
+import ParameterCreationForm from "./ParameterCreationForm";
 import { CommandCreationUtils } from "../../utils/CommandCreationUtils";
 
 const {
