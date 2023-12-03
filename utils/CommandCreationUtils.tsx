@@ -249,6 +249,28 @@ const DropdownParameterFields = ({
 	);
 };
 
+type FlagParameterErrors = {
+	defaultValue?: {
+		message: string;
+	};
+};
+
+const FlagParameterFields = ({
+	index,
+	parameterErrors,
+}: {
+	index: number;
+	parameterErrors: FlagParameterErrors;
+}) => {
+	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
+
+	return (
+		<>
+			{/* Right now there are no extra fields, but soon we will add a defaultValue here */}
+		</>
+	);
+};
+
 // Utils object
 const CommandCreationUtils = {
 	StringParameterFields,
@@ -259,6 +281,7 @@ const CommandCreationUtils = {
 	IntParameterSchema,
 	BooleanParameterSchema,
 	DropdownParameterSchema,
+	FlagParameterSchema,
 };
 
 // Exporting utils and types
