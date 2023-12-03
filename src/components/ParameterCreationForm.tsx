@@ -100,7 +100,6 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 	} = useFormContext<{ parameters: AnyParameter[] }>();
 
 	const [parameterType, setParameterType] = useState("STRING");
-
 	const parameterErrors = errors.parameters?.[index];
 
 	// This updates the necessary fields when user clicks a different parameter type
