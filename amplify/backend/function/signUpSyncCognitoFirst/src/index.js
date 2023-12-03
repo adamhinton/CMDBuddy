@@ -1,34 +1,27 @@
-/* Amplify Params - DO NOT EDIT
-	API_CMDBUDDYSERVER2_GRAPHQLAPIENDPOINTOUTPUT
-	API_CMDBUDDYSERVER2_GRAPHQLAPIIDOUTPUT
-	API_CMDBUDDYSERVER2_GRAPHQLAPIKEYOUTPUT
-	ENV
-	REGION
-Amplify Params - DO NOT EDIT */
-
-/* Amplify Params - DO NOT EDIT
-	API_CMDBUDDYSERVER2_GRAPHQLAPIENDPOINTOUTPUT
-	API_CMDBUDDYSERVER2_GRAPHQLAPIIDOUTPUT
-	API_CMDBUDDYSERVER2_GRAPHQLAPIKEYOUTPUT
-	AUTH_CMDBUDDYSERVER568927F0_USERPOOLID
-	ENV
-	REGION
-Amplify Params - DO NOT EDIT */
-
-/**
- * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
- */
-
 const fetch = require("node-fetch");
 
 exports.handler = async (event, context) => {
 	const GRAPHQL_ENDPOINT =
 		process.env.API_CMDBUDDYSERVER2_GRAPHQLAPIENDPOINTOUTPUT;
 	const GRAPHQL_API_KEY = process.env.API_CMDBUDDYSERVER2_GRAPHQLAPIKEYOUTPUT;
+
 	console.log("GRAPHQL_ENDPOINT:", GRAPHQL_ENDPOINT);
 	console.log("GRAPHQL_API_KEY:", GRAPHQL_API_KEY);
 
-	const query = /* GraphQL */ `
+	const userEmail = event.request.userAttributes.email;
+
+	// Check if user already exists in DynamoDB
+	const userExists = await checkIfUserExistsInDynamoDB(
+		userEmail,
+		GRAPHQL_ENDPOINT,
+		GRAPHQL_API_KEY
+	);
+	if (userExists) {
+		console.log("User already exists in DynamoDB:", userEmail);
+		return;
+	}
+
+	const mutation = /* GraphQL */ `
 		mutation CREATE_USER($input: CreateUserInput!) {
 			createUser(input: $input) {
 				email
@@ -39,7 +32,7 @@ exports.handler = async (event, context) => {
 
 	const variables = {
 		input: {
-			email: event.request.userAttributes.email,
+			email: userEmail,
 			darkMode: true,
 		},
 	};
@@ -50,29 +43,55 @@ exports.handler = async (event, context) => {
 			"x-api-key": GRAPHQL_API_KEY,
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ query, variables }),
+		body: JSON.stringify({ query: mutation, variables }),
 	};
-
-	const response = {};
 
 	try {
 		const res = await fetch(GRAPHQL_ENDPOINT, options);
-		response.data = await res.json();
-		if (response.data.errors) response.statusCode = 400;
+		const response = await res.json();
+		if (response.errors) {
+			console.error("Error creating user in DynamoDB:", response.errors);
+			throw new Error("Error creating user in DynamoDB");
+		}
+		console.log("User created in DynamoDB:", userEmail);
 	} catch (error) {
-		response.statusCode = 400;
-		response.body = {
-			errors: [
-				{
-					message: error.message,
-					stack: error.stack,
-				},
-			],
-		};
+		console.error("Error processing event:", error);
+		throw error;
 	}
-
-	return {
-		...response,
-		body: JSON.stringify(response.body),
-	};
 };
+
+async function checkIfUserExistsInDynamoDB(email, endpoint, apiKey) {
+	const query = /* GraphQL */ `
+		query UserByEmail($email: String!) {
+			userByEmail(email: $email) {
+				items {
+					email
+				}
+			}
+		}
+	`;
+
+	const variables = { email };
+
+	const options = {
+		method: "POST",
+		headers: {
+			"x-api-key": apiKey,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ query, variables }),
+	};
+
+	try {
+		const res = await fetch(endpoint, options);
+		const response = await res.json();
+		return (
+			response.data &&
+			response.data.userByEmail &&
+			response.data.userByEmail.items.length > 0
+		);
+	} catch (error) {
+		console.error("Error checking user in DynamoDB:", error);
+		throw error;
+	}
+}

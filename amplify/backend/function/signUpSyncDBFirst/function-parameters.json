@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "api": {
+      "CMDBuddyServer2": [
+        "Query",
+        "Mutation"
+      ]
+    },
+    "auth": {
+      "cmdbuddyserver568927f0": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
