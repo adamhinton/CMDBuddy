@@ -1,22 +1,53 @@
 import { z } from "zod";
-// ... other necessary imports ...
+import { ParameterSchema } from "./zod/ParameterSchema";
+import { useFormContext } from "react-hook-form";
 
-// Subtypes and Schemas
-const StringParameterSchema = z.object({
-	// ... StringParameterSchema fields ...
+// Subtypes for each parameter type
+const StringParameterSchema = ParameterSchema.pick({
+	type: true,
+	defaultValue: true,
+	name: true,
+	validationRegex: true,
+	minLength: true,
+	maxLength: true,
+	isNullable: true,
+}).extend({
+	type: z.literal("STRING"),
 });
 
-const IntParameterSchema = z.object({
-	// ... IntParameterSchema fields ...
+const IntParameterSchema = ParameterSchema.pick({
+	type: true,
+	defaultValue: true,
+	name: true,
+	minValue: true,
+	maxValue: true,
+	isNullable: true,
+}).extend({
+	type: z.literal("INT"),
 });
 
-const BooleanParameterSchema = z.object({
-	// ... BooleanParameterSchema fields ...
+const BooleanParameterSchema = ParameterSchema.pick({
+	type: true,
+	defaultValue: true,
+	name: true,
+	isNullable: true,
+}).extend({
+	type: z.literal("BOOLEAN"),
 });
 
-const DropdownParameterSchema = z.object({
-	// ... DropdownParameterSchema fields ...
+const DropdownParameterSchema = ParameterSchema.pick({
+	type: true,
+	defaultValue: true,
+	name: true,
+	allowedValues: true,
+	isNullable: true,
+}).extend({
+	type: z.literal("DROPDOWN"),
 });
+
+// Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
+const toNumberOrNullOrUndefined = (value: string) =>
+	value === "" ? undefined : Number(value);
 
 type StringParameter = z.infer<typeof StringParameterSchema>;
 type IntParameter = z.infer<typeof IntParameterSchema>;
@@ -30,17 +61,176 @@ type AnyParameter =
 	| DropdownParameter;
 
 // Parameter Field Functions
-const StringParameterFields = (/* parameters */) => {
-	/* ... implementation ... */
+type StringParameterErrors = {
+	minLength?: {
+		message: string;
+	};
+	defaultValue?: {
+		message: string;
+	};
+	maxLength?: {
+		message: string;
+	};
+	validationRegex?: {
+		message: string;
+	};
 };
-const IntParameterFields = (/* parameters */) => {
-	/* ... implementation ... */
+
+const StringParameterFields = ({
+	index,
+	parameterErrors,
+}: {
+	index: number;
+	parameterErrors: StringParameterErrors;
+}) => {
+	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
+
+	return (
+		<>
+			{/* Min Length Field */}
+			<label>Min Length</label>
+			<input
+				type="number"
+				{...register(`parameters.${index}.minLength`, {
+					setValueAs: toNumberOrNullOrUndefined,
+				})}
+				placeholder="Min Length"
+			/>
+			{parameterErrors?.minLength && <p>{parameterErrors.minLength.message}</p>}
+
+			{/* Max Length Field */}
+			<label>Max Length</label>
+			<input
+				type="number"
+				{...register(`parameters.${index}.maxLength`, {
+					setValueAs: toNumberOrNullOrUndefined,
+				})}
+				placeholder="Max Length"
+			/>
+			{parameterErrors?.maxLength && <p>{parameterErrors.maxLength.message}</p>}
+
+			{/* Validation Regex Field */}
+			<label>Validation Regex</label>
+			<input
+				{...register(`parameters.${index}.validationRegex`)}
+				placeholder="Validation Regex"
+			/>
+			{parameterErrors?.validationRegex && (
+				<p>{parameterErrors.validationRegex.message}</p>
+			)}
+		</>
+	);
 };
-const BooleanParameterFields = (/* parameters */) => {
-	/* ... implementation ... */
+
+type IntParameterErrors = {
+	defaultValue?: {
+		message: string;
+	};
+	minValue?: {
+		message: string;
+	};
+	maxValue?: {
+		message: string;
+	};
 };
-const DropdownParameterFields = (/* parameters */) => {
-	/* ... implementation ... */
+
+const IntParameterFields = ({
+	index,
+	parameterErrors,
+}: {
+	index: number;
+	parameterErrors: IntParameterErrors;
+}) => {
+	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
+
+	return (
+		<>
+			{/* Min Value Field */}
+			<label>Min Value</label>
+			<input
+				type="number"
+				{...register(`parameters.${index}.minValue`, {
+					setValueAs: toNumberOrNullOrUndefined,
+				})}
+				placeholder="Min Value"
+			/>
+			{parameterErrors?.minValue && <p>{parameterErrors.minValue.message}</p>}
+
+			{/* Max Value Field */}
+			<label>Max Value</label>
+			<input
+				type="number"
+				{...register(`parameters.${index}.maxValue`, {
+					setValueAs: toNumberOrNullOrUndefined,
+				})}
+				placeholder="Max Value"
+			/>
+			{parameterErrors?.maxValue && <p>{parameterErrors.maxValue.message}</p>}
+		</>
+	);
+};
+
+// Leaving this here for reference and organization, but we don't actually need any custom fields for Boolean right now.
+const BooleanParameterFields = ({ index }: { index: number }) => {
+	// Boolean specific fields (if any)
+	return <></>;
+};
+
+type DropdownParameterErrors = {
+	defaultValue?: {
+		message: string;
+	};
+	allowedValues?: {
+		message: string;
+	};
+};
+
+const DropdownParameterFields = ({
+	index,
+	parameterErrors,
+}: {
+	index: number;
+	parameterErrors: DropdownParameterErrors;
+}) => {
+	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
+
+	// Helper function to convert string to array
+	const stringToArray = (value: string) => {
+		console.log("value:", value);
+		// Value might already be an array if it's been submitted before
+		// Because submitting converted it to an array already
+		return typeof value === "string"
+			? value.split(",").map((val) => val.trim())
+			: value;
+	};
+
+	return (
+		<>
+			{/* Default Value Field */}
+			<label>Default Value</label>
+			<input
+				{...register(`parameters.${index}.defaultValue`)}
+				placeholder="Default Value"
+			/>
+			{parameterErrors?.defaultValue && (
+				<p>{parameterErrors.defaultValue.message}</p>
+			)}
+
+			{/* Allowed Values Field */}
+			{/* Enter as many allowed values as they want, separated by commas */}
+			<label>Allowed Values</label>
+			<textarea
+				{...register(`parameters.${index}.allowedValues`, {
+					setValueAs: stringToArray,
+				})}
+				placeholder="Enter values separated by commas"
+				rows={4}
+			/>
+			{parameterErrors?.allowedValues && (
+				<p>{parameterErrors.allowedValues.message}</p>
+			)}
+		</>
+	);
 };
 
 // Utils object
@@ -49,6 +239,10 @@ const CommandCreationUtils = {
 	IntParameterFields,
 	BooleanParameterFields,
 	DropdownParameterFields,
+	StringParameterSchema,
+	IntParameterSchema,
+	BooleanParameterSchema,
+	DropdownParameterSchema,
 };
 
 // Exporting utils and types
@@ -59,4 +253,7 @@ export type {
 	BooleanParameter,
 	DropdownParameter,
 	AnyParameter,
+	StringParameterErrors,
+	IntParameterErrors,
+	DropdownParameterErrors,
 };

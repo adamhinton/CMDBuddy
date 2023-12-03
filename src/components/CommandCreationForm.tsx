@@ -10,13 +10,15 @@ import z from "zod";
 import { CommandSchema, CMDBuddyCommand } from "../../utils/zod/CommandSchema";
 import ParameterCreationForm from "./ParameterCreationForm"; // Assuming this is the correct path
 import { ParameterSchema } from "../../utils/zod/ParameterSchema";
-import {
+import { CommandCreationUtils } from "../../utils/CommandCreationUtils";
+import { cwd } from "process";
+
+const {
 	StringParameterSchema,
 	IntParameterSchema,
 	BooleanParameterSchema,
 	DropdownParameterSchema,
-} from "./ParameterCreationForm";
-import { cwd } from "process";
+} = CommandCreationUtils;
 
 const AnyParameterSchema = z.union([
 	StringParameterSchema,
