@@ -54,7 +54,6 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 
 	// User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN
 	const renderParameterSpecificFields = () => {
-		console.log("parameterType:", parameterType);
 		switch (parameterType) {
 			case "STRING":
 				return (

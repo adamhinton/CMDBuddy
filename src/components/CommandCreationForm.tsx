@@ -50,7 +50,6 @@ const CommandCreationForm: React.FC = () => {
 	});
 
 	const onSubmit = (data: CMDBuddyCommandFormValidation) => {
-		console.log("submitting");
 		console.log(data);
 		// Handle command creation logic here
 	};
