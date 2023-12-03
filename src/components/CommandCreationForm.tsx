@@ -10,6 +10,7 @@
 // Order before or after baseCommand
 // Move defaultValue back to individual Params
 // Final validation on submit. Like make sure defaultValue meets other criteria, that minLength is less than maxLength.
+// Example code at bottom of command creation form
 
 import React from "react";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
