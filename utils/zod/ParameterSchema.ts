@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+// FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
+// BOOLEAN is a true/false variable, like `isLookingForJob=true`
+
 export const ParameterSchema = z.object({
 	id: z.string().uuid(),
 	type: z.enum(["STRING", "INT", "BOOLEAN", "DROPDOWN", "FLAG"]),

@@ -3,6 +3,8 @@
 // Param can be STRING, INT, BOOLEAN or DROPDOWN
 // Different fields in form for each type
 // User can add as many Parameters as they want; they fill out this form once per Parameter
+// FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
+// BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
 import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
