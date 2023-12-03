@@ -8,7 +8,10 @@
 
 import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { CommandCreationUtils } from "../../utils/CommandCreationUtils";
+import {
+	CommandCreationUtils,
+	FlagParameterErrors,
+} from "../../utils/CommandCreationUtils";
 import {
 	AnyParameter,
 	StringParameterErrors,
@@ -26,7 +29,10 @@ const {
 	IntParameterFields,
 	BooleanParameterFields,
 	DropdownParameterFields,
+	FlagParameterFields,
 } = CommandCreationUtils;
+
+type ParameterType = "STRING" | "INT" | "BOOLEAN" | "DROPDOWN" | "FLAG";
 
 // User fills this out once for every Parameter they create
 const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
@@ -36,7 +42,7 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 		formState: { errors },
 	} = useFormContext<{ parameters: AnyParameter[] }>();
 
-	const [parameterType, setParameterType] = useState("STRING");
+	const [parameterType, setParameterType] = useState<ParameterType>("STRING");
 	const parameterErrors = errors.parameters?.[index];
 
 	// This updates the necessary fields when user clicks a different parameter type
@@ -79,6 +85,13 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 						parameterErrors={parameterErrors as DropdownParameterErrors}
 					/>
 				);
+			case "FLAG":
+				return (
+					<FlagParameterFields
+						index={index}
+						parameterErrors={parameterErrors as FlagParameterErrors}
+					/>
+				);
 			default:
 				return null;
 		}
@@ -91,12 +104,13 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 			<label>Type</label>
 			<select
 				{...register(`parameters.${index}.type`)}
-				onChange={(e) => setParameterType(e.target.value)}
+				onChange={(e) => setParameterType(e.target.value as ParameterType)}
 			>
 				<option value="STRING">String</option>
 				<option value="INT">Integer</option>
 				<option value="BOOLEAN">Boolean</option>
 				<option value="DROPDOWN">Dropdown</option>
+				<option value="FLAG">Flag</option>
 			</select>
 
 			{/* Shared Name Field */}

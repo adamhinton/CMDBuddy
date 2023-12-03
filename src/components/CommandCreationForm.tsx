@@ -25,6 +25,7 @@ const {
 	IntParameterSchema,
 	BooleanParameterSchema,
 	DropdownParameterSchema,
+	FlagParameterSchema,
 } = CommandCreationUtils;
 
 const AnyParameterSchema = z.union([
@@ -32,6 +33,7 @@ const AnyParameterSchema = z.union([
 	IntParameterSchema,
 	BooleanParameterSchema,
 	DropdownParameterSchema,
+	FlagParameterSchema,
 ]);
 
 // Creating a specific schema for the Command Creation Form

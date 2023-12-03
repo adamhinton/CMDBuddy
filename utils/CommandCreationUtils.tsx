@@ -277,6 +277,7 @@ const CommandCreationUtils = {
 	IntParameterFields,
 	BooleanParameterFields,
 	DropdownParameterFields,
+	FlagParameterFields,
 	StringParameterSchema,
 	IntParameterSchema,
 	BooleanParameterSchema,
@@ -291,8 +292,10 @@ export type {
 	IntParameter,
 	BooleanParameter,
 	DropdownParameter,
+	FlagParameter,
 	AnyParameter,
 	StringParameterErrors,
 	IntParameterErrors,
 	DropdownParameterErrors,
+	FlagParameterErrors,
 };
