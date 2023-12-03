@@ -122,6 +122,7 @@ export enum ParameterType {
   INT = "INT",
   BOOLEAN = "BOOLEAN",
   DROPDOWN = "DROPDOWN",
+  FLAG = "FLAG",
 }
 
 
