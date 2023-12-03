@@ -3,6 +3,12 @@
 // Each Command has multiple Parameters; they fill out ParameterCreationForm once per Parameter
 // Parameters can be of type STRING, INT, BOOLEAN or DROPDOWN; there will be different fields for each
 
+// TODO:
+// Also clear form on submit - but instate submit logic first and get that squared away
+// Param type for Declaration (like --headed) that doesn't need a value, it's just there or not
+// Order before or after baseCommand
+// Final validation on submit. Like make sure defaultValue meets other criteria, that minLength is less than maxLength.
+
 import React from "react";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,6 +58,15 @@ const CommandCreationForm: React.FC = () => {
 		// Handle command creation logic here
 	};
 
+	// Maybe refactor this to also clear form on submit. Wouldn't need the user conf then.
+	const clearForm = () => {
+		if (
+			window.confirm("Are you sure you want to DELETE all values in this form?")
+		) {
+			methods.reset(); // Resets the form to default values
+		}
+	};
+
 	return (
 		<FormProvider {...methods}>
 			<form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -94,6 +109,10 @@ const CommandCreationForm: React.FC = () => {
 					}
 				>
 					Add Parameter
+				</button>
+
+				<button type="button" onClick={clearForm}>
+					Clear Form
 				</button>
 
 				<button type="submit">Create Command</button>
