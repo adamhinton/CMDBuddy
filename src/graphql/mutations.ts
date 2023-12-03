@@ -175,7 +175,8 @@ export const createParameter = /* GraphQL */ `mutation CreateParameter(
     name
     order
     validationRegex
-    length
+    minLength
+    maxLength
     minValue
     maxValue
     isNullable
@@ -211,7 +212,8 @@ export const updateParameter = /* GraphQL */ `mutation UpdateParameter(
     name
     order
     validationRegex
-    length
+    minLength
+    maxLength
     minValue
     maxValue
     isNullable
@@ -247,7 +249,8 @@ export const deleteParameter = /* GraphQL */ `mutation DeleteParameter(
     name
     order
     validationRegex
-    length
+    minLength
+    maxLength
     minValue
     maxValue
     isNullable

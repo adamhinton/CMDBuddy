@@ -154,7 +154,8 @@ export const onCreateParameter = /* GraphQL */ `subscription OnCreateParameter($
     name
     order
     validationRegex
-    length
+    minLength
+    maxLength
     minValue
     maxValue
     isNullable
@@ -187,7 +188,8 @@ export const onUpdateParameter = /* GraphQL */ `subscription OnUpdateParameter($
     name
     order
     validationRegex
-    length
+    minLength
+    maxLength
     minValue
     maxValue
     isNullable
@@ -220,7 +222,8 @@ export const onDeleteParameter = /* GraphQL */ `subscription OnDeleteParameter($
     name
     order
     validationRegex
-    length
+    minLength
+    maxLength
     minValue
     maxValue
     isNullable

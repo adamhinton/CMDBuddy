@@ -172,7 +172,8 @@ export const getParameter = /* GraphQL */ `query GetParameter($id: ID!) {
     name
     order
     validationRegex
-    length
+    minLength
+    maxLength
     minValue
     maxValue
     isNullable
@@ -210,7 +211,8 @@ export const listParameters = /* GraphQL */ `query ListParameters(
       name
       order
       validationRegex
-      length
+      minLength
+      maxLength
       minValue
       maxValue
       isNullable
@@ -249,7 +251,8 @@ export const parametersByCommandID = /* GraphQL */ `query ParametersByCommandID(
       name
       order
       validationRegex
-      length
+      minLength
+      maxLength
       minValue
       maxValue
       isNullable
