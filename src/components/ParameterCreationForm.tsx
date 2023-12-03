@@ -1,9 +1,15 @@
+// README:
+// User fills this form out to make a Parameter
+// Param can be STRING, INT, BOOLEAN or DROPDOWN
+// Different fields in form for each type
+// User can add as many Parameters as they want; they fill out this form once per Parameter
+
 import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { ParameterSchema } from "../../utils/zod/ParameterSchema";
 import z from "zod";
 
-// THIS IS WHAT I IMPORTED FROM PARAMETERSCHEMA, copying it here, commented out, for quick reference.
+// THIS IS WHAT I IMPORTED FROM PARAMETERSCHEMA; copying it here, commented out, for quick reference.
 // export const ParameterSchema = z.object({
 // 	id: z.string().uuid(),
 // 	type: z.enum(["STRING", "INT", "BOOLEAN", "DROPDOWN"]),
@@ -81,10 +87,11 @@ type FormProps = {
 	removeParameter: Function;
 };
 
-// Helper function to convert empty string to null
+// Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
 	value === "" ? undefined : Number(value);
 
+// User fills this out once for every Parameter they create
 const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 	const {
 		register,
@@ -110,6 +117,7 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 		return () => subscription.unsubscribe();
 	}, [watch, index]);
 
+	// User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN
 	const renderParameterSpecificFields = () => {
 		console.log("parameterType:", parameterType);
 		switch (parameterType) {
@@ -141,6 +149,7 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 		}
 	};
 
+	// Every Parameter has these fields, regardless of type
 	return (
 		<div>
 			{/* Parameter Type Selector */}
@@ -303,7 +312,7 @@ const IntParameterFields = ({
 	);
 };
 
-// Leaving this here for documentation, but we don't actually need any custom fields for Boolean right now.
+// Leaving this here for reference and organization, but we don't actually need any custom fields for Boolean right now.
 const BooleanParameterFields = ({ index }: { index: number }) => {
 	// Boolean specific fields (if any)
 	return <></>;
@@ -350,6 +359,7 @@ const DropdownParameterFields = ({
 			)}
 
 			{/* Allowed Values Field */}
+			{/* Enter as many allowed values as they want, separated by commas */}
 			<label>Allowed Values</label>
 			<textarea
 				{...register(`parameters.${index}.allowedValues`, {

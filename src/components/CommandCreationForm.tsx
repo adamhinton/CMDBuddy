@@ -1,3 +1,8 @@
+// README:
+// User fills out this form to create a Command
+// Each Command has multiple Parameters; they fill out ParameterCreationForm once per Parameter
+// Parameters can be of type STRING, INT, BOOLEAN or DROPDOWN; there will be different fields for each
+
 import React from "react";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +18,13 @@ import {
 } from "./ParameterCreationForm";
 import { cwd } from "process";
 
+const AnyParameterSchema = z.union([
+	StringParameterSchema,
+	IntParameterSchema,
+	BooleanParameterSchema,
+	DropdownParameterSchema,
+]);
+
 // Creating a specific schema for the Command Creation Form
 // This is because the user doesn't define things like `id` or `order`
 export const CommandCreationFormSchema = CommandSchema.omit({
@@ -21,16 +33,7 @@ export const CommandCreationFormSchema = CommandSchema.omit({
 	userID: true,
 }).extend({
 	// Each Parameter can be one of four types
-	parameters: z
-		.array(
-			z.union([
-				StringParameterSchema,
-				IntParameterSchema,
-				BooleanParameterSchema,
-				DropdownParameterSchema,
-			])
-		)
-		.optional(),
+	parameters: z.array(AnyParameterSchema).optional(),
 });
 type CMDBuddyCommandFormValidation = z.infer<typeof CommandCreationFormSchema>;
 
@@ -43,11 +46,6 @@ const CommandCreationForm: React.FC = () => {
 		control: methods.control,
 		name: "parameters",
 	});
-
-	console.log(
-		"methods.getValues().parameters:",
-		methods.getValues().parameters
-	);
 
 	const onSubmit = (data: CMDBuddyCommandFormValidation) => {
 		console.log("submitting");
@@ -75,7 +73,7 @@ const CommandCreationForm: React.FC = () => {
 					)}
 				</div>
 
-				{/* Parameters Fields */}
+				{/* As many parameter creation forms as user wants */}
 				{fields.map((field, index) => (
 					<ParameterCreationForm
 						key={field.id}
