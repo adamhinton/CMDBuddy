@@ -37,6 +37,8 @@ const BooleanParameterSchema = ParameterSchema.pick({
 	isNullable: true,
 }).extend({
 	type: z.literal("BOOLEAN"),
+	// Needs to be string for validation purposes, can convert later
+	defaultValue: z.enum(["true", "false"]),
 });
 
 const DropdownParameterSchema = ParameterSchema.pick({
