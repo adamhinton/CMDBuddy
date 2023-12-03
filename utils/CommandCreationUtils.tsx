@@ -63,12 +63,14 @@ type StringParameter = z.infer<typeof StringParameterSchema>;
 type IntParameter = z.infer<typeof IntParameterSchema>;
 type BooleanParameter = z.infer<typeof BooleanParameterSchema>;
 type DropdownParameter = z.infer<typeof DropdownParameterSchema>;
+type FlagParameter = z.infer<typeof FlagParameterSchema>;
 
 type AnyParameter =
 	| StringParameter
 	| IntParameter
 	| BooleanParameter
-	| DropdownParameter;
+	| DropdownParameter
+	| FlagParameter;
 
 // Parameter Field Functions
 type StringParameterErrors = {
