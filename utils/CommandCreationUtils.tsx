@@ -53,6 +53,9 @@ const FlagParameterSchema = ParameterSchema.pick({
 	type: true,
 	defaultValue: true,
 	name: true,
+}).extend({
+	type: z.literal("FLAG"),
+	defaultValue: z.enum(["on", "off"]),
 });
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
