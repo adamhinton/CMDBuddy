@@ -5,8 +5,10 @@
 
 // TODO:
 // Also clear form on submit - but instate submit logic first and get that squared away
-// Param type for Declaration (like --headed) that doesn't need a value, it's just there or not
+// Param type for FLAG like --headed) that doesn't need a value, it's just there or not.
+// Also, disappear "isNullable" if FLAG type
 // Order before or after baseCommand
+// Move defaultValue back to individual Params
 // Final validation on submit. Like make sure defaultValue meets other criteria, that minLength is less than maxLength.
 
 import React from "react";

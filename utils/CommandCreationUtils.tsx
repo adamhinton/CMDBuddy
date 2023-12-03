@@ -49,6 +49,12 @@ const DropdownParameterSchema = ParameterSchema.pick({
 	type: z.literal("DROPDOWN"),
 });
 
+const FlagParameterSchema = ParameterSchema.pick({
+	type: true,
+	defaultValue: true,
+	name: true,
+});
+
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
 	value === "" ? undefined : Number(value);
