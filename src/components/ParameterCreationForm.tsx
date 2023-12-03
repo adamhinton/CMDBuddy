@@ -92,7 +92,7 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 				onChange={(e) => setParameterType(e.target.value)}
 			>
 				<option value="STRING">String</option>
-				<option value="INT">Int</option>
+				<option value="INT">Integer</option>
 				<option value="BOOLEAN">Boolean</option>
 				<option value="DROPDOWN">Dropdown</option>
 			</select>
