@@ -1,3 +1,7 @@
+// README:
+// This is the utils file for initial creation of user's Commands and each Command's Parameters to save to the db
+// Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
+
 import { z } from "zod";
 import { ParameterSchema } from "./zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
