@@ -9,9 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { CommandSchema, CMDBuddyCommand } from "../../utils/zod/CommandSchema";
 import ParameterCreationForm from "./ParameterCreationForm"; // Assuming this is the correct path
-import { ParameterSchema } from "../../utils/zod/ParameterSchema";
 import { CommandCreationUtils } from "../../utils/CommandCreationUtils";
-import { cwd } from "process";
 
 const {
 	StringParameterSchema,

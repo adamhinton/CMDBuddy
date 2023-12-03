@@ -6,7 +6,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { ParameterSchema } from "../../utils/zod/ParameterSchema";
 import { CommandCreationUtils } from "../../utils/CommandCreationUtils";
 import {
 	AnyParameter,
