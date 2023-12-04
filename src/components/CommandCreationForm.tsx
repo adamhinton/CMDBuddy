@@ -17,6 +17,7 @@ import z from "zod";
 import { CommandSchema } from "../../utils/zod/CommandSchema";
 import ParameterCreationForm from "./ParameterCreationForm";
 import { CommandCreationUtils } from "../../utils/CommandCreationUtils";
+import LiveCommandPreview from "./LiveCommandPreview";
 
 const {
 	StringParameterSchema,
@@ -120,6 +121,11 @@ const CommandCreationForm: React.FC = () => {
 				</button>
 
 				<button type="submit">Create Command</button>
+
+				<LiveCommandPreview
+					baseCommand={methods.getValues().baseCommand}
+					parameters={methods.getValues().parameters}
+				/>
 			</form>
 		</FormProvider>
 	);
