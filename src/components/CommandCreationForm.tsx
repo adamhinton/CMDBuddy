@@ -69,6 +69,7 @@ const CommandCreationForm: React.FC = () => {
 			window.confirm("Are you sure you want to DELETE all values in this form?")
 		) {
 			methods.reset(); // Resets the form to default values
+			remove(); // Removes all parameter fields
 		}
 	};
 
