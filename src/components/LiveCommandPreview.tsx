@@ -1,39 +1,33 @@
 import { AnyParameter } from "../../utils/CommandCreationUtils";
-import { useEffect, useState } from "react";
 
 type LiveCommandPreviewProps = {
 	baseCommand: string;
 	parameters?: AnyParameter[];
+	watch: Function;
 };
 
 const LiveCommandPreview = ({
 	baseCommand,
 	parameters,
+	watch,
 }: LiveCommandPreviewProps) => {
-	const [nonFlagParams, setNonFlagParams] = useState("");
-	const [flagParams, setFlagParams] = useState("");
+	// Use watch to get real-time updates of form values
+	const watchedParameters = watch("parameters");
+	console.log("watchedParameters:", watchedParameters);
 
-	useEffect(() => {
-		let tempNonFlag = "";
-		let tempFlag = "";
+	// Build the command preview
+	let nonFlagParams = "";
+	let flagParams = "";
 
-		parameters?.forEach((param) => {
-			// Check the type of parameter
-			if (param.type === "FLAG") {
-				// Append to flag string
-				param.name && (tempFlag += ` ${param.name}`);
-			} else {
-				// Append to non-flag string
-				param.name &&
-					(tempNonFlag += `${param.name}=${param.defaultValue || " "}`);
-			}
-		});
+	watchedParameters?.forEach((param: AnyParameter) => {
+		if (param.type === "FLAG") {
+			param.name && (flagParams += ` ${param.name}`);
+		} else {
+			param.name &&
+				(nonFlagParams += `${param.name}=${param.defaultValue || " "}`);
+		}
+	});
 
-		setNonFlagParams(tempNonFlag);
-		setFlagParams(tempFlag);
-	}, [parameters, baseCommand]);
-
-	// Concatenate parts to form the command
 	const commandPreview = `${nonFlagParams} ${baseCommand} ${flagParams}`.trim();
 
 	return parameters?.length && <div>{commandPreview}</div>;

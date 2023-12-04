@@ -52,6 +52,8 @@ const CommandCreationForm: React.FC = () => {
 		resolver: zodResolver(CommandCreationFormSchema),
 	});
 
+	const { watch } = useForm();
+
 	const { fields, append, remove } = useFieldArray({
 		control: methods.control,
 		name: "parameters",
@@ -125,6 +127,7 @@ const CommandCreationForm: React.FC = () => {
 				<LiveCommandPreview
 					baseCommand={methods.getValues().baseCommand}
 					parameters={methods.getValues().parameters}
+					watch={watch}
 				/>
 			</form>
 		</FormProvider>
