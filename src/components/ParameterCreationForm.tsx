@@ -1,6 +1,6 @@
 // README:
 // User fills this form out to make a Parameter
-// Param can be STRING, INT, BOOLEAN or DROPDOWN
+// Param can be STRING, INT, BOOLEAN, DROPDOWN or FLAG
 // Different fields in form for each type
 // User can add as many Parameters as they want; they fill out this form once per Parameter
 // FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
@@ -19,7 +19,6 @@ import {
 	IntParameterErrors,
 	DropdownParameterErrors,
 } from "../../utils/CommandCreationUtils";
-import { ParameterType } from "@/API";
 
 type FormProps = {
 	index: number;

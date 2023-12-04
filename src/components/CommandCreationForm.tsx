@@ -1,7 +1,7 @@
 // README:
 // User fills out this form to create a Command
 // Each Command has multiple Parameters; they fill out ParameterCreationForm once per Parameter
-// Parameters can be of type STRING, INT, BOOLEAN or DROPDOWN; there will be different fields for each
+// Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different fields for each
 
 // TODO:
 // Also clear form on submit - but instate submit logic first and get that squared away
