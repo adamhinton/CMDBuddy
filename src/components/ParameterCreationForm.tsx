@@ -140,13 +140,16 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 			></DefaultValueInput>
 
 			{/* IsNullable (Optional) Checkbox */}
-			<label>
-				<input
-					type="checkbox"
-					{...register(`parameters.${index}.isNullable`)}
-				/>
-				Optional
-			</label>
+			{/* This isn't needed in FLAG type */}
+			{parameterType !== "FLAG" && (
+				<label>
+					<input
+						type="checkbox"
+						{...register(`parameters.${index}.isNullable`)}
+					/>
+					Optional
+				</label>
+			)}
 
 			{renderParameterSpecificFields()}
 

@@ -8,7 +8,6 @@
 // Collapse Params && Collapse All && Expand All
 // Also, disappear "isNullable" if FLAG type
 // Order before or after baseCommand
-// Move defaultValue back to individual Params
 // Final validation on submit. Like make sure defaultValue meets other criteria, that minLength is less than maxLength.
 // Example code at bottom of command creation form
 
