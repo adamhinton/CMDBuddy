@@ -10,13 +10,21 @@
 // Final validation on submit. Like make sure defaultValue meets other criteria, that minLength is less than maxLength.
 // Example code at bottom of command creation form
 
-import React from "react";
-import { useForm, useFieldArray, FormProvider } from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import {
+	useForm,
+	useFieldArray,
+	FormProvider,
+	useFormContext,
+} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { CommandSchema } from "../../utils/zod/CommandSchema";
 import ParameterCreationForm from "./ParameterCreationForm";
-import { CommandCreationUtils } from "../../utils/CommandCreationUtils";
+import {
+	CommandCreationUtils,
+	AnyParameter,
+} from "../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandPreview";
 
 const {
@@ -52,7 +60,34 @@ const CommandCreationForm: React.FC = () => {
 		resolver: zodResolver(CommandCreationFormSchema),
 	});
 
-	const { watch } = useForm();
+	// const { watch } = useForm<CMDBuddyCommandFormValidation>();
+	// const allFormValues = watch();
+	// console.log("allFormValues:", allFormValues);
+
+	const { watch } = methods;
+
+	type FilteredParameter = {
+		name?: string;
+		defaultValue?: string;
+	};
+
+	const [filteredParameters, setFilteredParameters] = useState<
+		FilteredParameter[]
+	>([]);
+
+	useEffect(() => {
+		const subscription = watch((value, { name }) => {
+			if (name?.startsWith("parameters")) {
+				// Extract name and defaultValue from each parameter and update state
+				const updatedParameters = value.parameters?.map((param) => ({
+					name: param?.name,
+					defaultValue: param?.defaultValue,
+				}));
+				setFilteredParameters(updatedParameters || []);
+			}
+		});
+		return () => subscription.unsubscribe();
+	}, [watch]);
 
 	const { fields, append, remove } = useFieldArray({
 		control: methods.control,
