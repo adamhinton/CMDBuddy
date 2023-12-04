@@ -5,6 +5,8 @@
 import { z } from "zod";
 import { ParameterSchema } from "./zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
+import { ParameterCreationType } from "@/components/ParameterCreationForm";
+import { UseFormRegister, FieldErrors } from "react-hook-form";
 
 // Subtypes for each parameter type
 const StringParameterSchema = ParameterSchema.pick({
@@ -57,7 +59,7 @@ const FlagParameterSchema = ParameterSchema.pick({
 	name: true,
 }).extend({
 	type: z.literal("FLAG"),
-	defaultValue: z.enum(["on", "off"]),
+	defaultValue: z.enum(["On", "Off"]),
 });
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
@@ -222,16 +224,6 @@ const DropdownParameterFields = ({
 
 	return (
 		<>
-			{/* Default Value Field */}
-			<label>Default Value</label>
-			<input
-				{...register(`parameters.${index}.defaultValue`)}
-				placeholder="Default Value"
-			/>
-			{parameterErrors?.defaultValue && (
-				<p>{parameterErrors.defaultValue.message}</p>
-			)}
-
 			{/* Allowed Values Field */}
 			{/* Enter as many allowed values as they want, separated by commas */}
 			<label>Allowed Values</label>
@@ -264,11 +256,109 @@ const FlagParameterFields = ({
 }) => {
 	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
 
-	return (
-		<>
-			{/* Right now there are no extra fields, but soon we will add a defaultValue here */}
-		</>
-	);
+	// Nothing to put here right now but leaving this because I might have something soon
+	return <></>;
+};
+
+// "Default Value" input fields will be a little different depending on Parameter type.
+export const DefaultValueInput = ({
+	type,
+	register,
+	index,
+	parameterErrors,
+}: {
+	type: ParameterCreationType;
+	register: UseFormRegister<any>;
+	index: number;
+	parameterErrors: any; // TODO: Specify the correct type here
+}) => {
+	switch (type) {
+		case "STRING":
+		case "DROPDOWN":
+			return (
+				<>
+					<label>Default Value</label>
+					<input
+						type="text"
+						{...register(`parameters.${index}.defaultValue`)}
+						placeholder="Default Value"
+					/>
+					{parameterErrors?.defaultValue && (
+						<p>{parameterErrors.defaultValue.message}</p>
+					)}
+				</>
+			);
+
+		case "INT":
+			return (
+				<>
+					<label>Default Value</label>
+					<input
+						type="number"
+						{...register(`parameters.${index}.defaultValue`)}
+						placeholder="Number"
+					/>
+					{parameterErrors?.defaultValue && (
+						<p>{parameterErrors.defaultValue.message}</p>
+					)}
+				</>
+			);
+
+		case "BOOLEAN":
+			return (
+				<>
+					<label>Default Value</label>
+					<label>
+						<input
+							type="radio"
+							value="true"
+							{...register(`parameters.${index}.defaultValue`)}
+						/>{" "}
+						True
+					</label>
+					<label>
+						<input
+							type="radio"
+							value="false"
+							{...register(`parameters.${index}.defaultValue`)}
+						/>{" "}
+						False
+					</label>
+					{parameterErrors?.defaultValue && (
+						<p>{parameterErrors.defaultValue.message}</p>
+					)}
+				</>
+			);
+
+		case "FLAG":
+			return (
+				<>
+					<label>Default Value</label>
+					<label>
+						<input
+							type="radio"
+							value="On"
+							{...register(`parameters.${index}.defaultValue`)}
+						/>{" "}
+						On
+					</label>
+					<label>
+						<input
+							type="radio"
+							value="Off"
+							{...register(`parameters.${index}.defaultValue`)}
+						/>{" "}
+						Off
+					</label>
+					{parameterErrors?.defaultValue && (
+						<p>{parameterErrors.defaultValue.message}</p>
+					)}
+				</>
+			);
+
+		default:
+			return <></>;
+	}
 };
 
 // Utils object

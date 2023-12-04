@@ -10,6 +10,7 @@ import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import {
 	CommandCreationUtils,
+	DefaultValueInput,
 	FlagParameterErrors,
 } from "../../utils/CommandCreationUtils";
 import {
@@ -18,6 +19,7 @@ import {
 	IntParameterErrors,
 	DropdownParameterErrors,
 } from "../../utils/CommandCreationUtils";
+import { ParameterType } from "@/API";
 
 type FormProps = {
 	index: number;
@@ -32,7 +34,12 @@ const {
 	FlagParameterFields,
 } = CommandCreationUtils;
 
-type ParameterType = "STRING" | "INT" | "BOOLEAN" | "DROPDOWN" | "FLAG";
+export type ParameterCreationType =
+	| "STRING"
+	| "INT"
+	| "BOOLEAN"
+	| "DROPDOWN"
+	| "FLAG";
 
 // User fills this out once for every Parameter they create
 const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
@@ -42,7 +49,8 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 		formState: { errors },
 	} = useFormContext<{ parameters: AnyParameter[] }>();
 
-	const [parameterType, setParameterType] = useState<ParameterType>("STRING");
+	const [parameterType, setParameterType] =
+		useState<ParameterCreationType>("STRING");
 	const parameterErrors = errors.parameters?.[index];
 
 	// This updates the necessary fields when user clicks a different parameter type
@@ -104,7 +112,9 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 			<label>Type</label>
 			<select
 				{...register(`parameters.${index}.type`)}
-				onChange={(e) => setParameterType(e.target.value as ParameterType)}
+				onChange={(e) =>
+					setParameterType(e.target.value as ParameterCreationType)
+				}
 			>
 				<option value="STRING">String</option>
 				<option value="INT">Integer</option>
@@ -122,16 +132,12 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 			/>
 			{parameterErrors?.name && <p>{parameterErrors.name.message}</p>}
 
-			{/* Default Value Field */}
-			<label>Default Value</label>
-			<input
-				type="string"
-				{...register(`parameters.${index}.defaultValue`)}
-				placeholder="Default Value"
-			/>
-			{parameterErrors?.defaultValue && (
-				<p>{parameterErrors.defaultValue.message}</p>
-			)}
+			<DefaultValueInput
+				type={parameterType}
+				register={register}
+				index={index}
+				parameterErrors={parameterErrors}
+			></DefaultValueInput>
 
 			{/* IsNullable (Optional) Checkbox */}
 			<label>
