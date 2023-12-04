@@ -6,8 +6,7 @@
 // TODO:
 // Also clear form on submit - but instate submit logic first and get that squared away
 // Collapse Params && Collapse All && Expand All
-// Also, disappear "isNullable" if FLAG type
-// Order before or after baseCommand
+// Order before or after baseCommand. FLAG comes after, everything else comes first?
 // Final validation on submit. Like make sure defaultValue meets other criteria, that minLength is less than maxLength.
 // Example code at bottom of command creation form
 
@@ -15,7 +14,7 @@ import React from "react";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { CommandSchema, CMDBuddyCommand } from "../../utils/zod/CommandSchema";
+import { CommandSchema } from "../../utils/zod/CommandSchema";
 import ParameterCreationForm from "./ParameterCreationForm";
 import { CommandCreationUtils } from "../../utils/CommandCreationUtils";
 
