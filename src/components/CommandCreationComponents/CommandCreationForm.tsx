@@ -26,8 +26,10 @@ import ParameterCreationForm from "./ParameterCreationForm";
 import {
 	CommandCreationUtils,
 	AnyParameter,
+	submitNewCommandAndParamsToDB,
 } from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandPreview";
+import { toast } from "react-toastify";
 
 const {
 	StringParameterSchema,
@@ -57,7 +59,9 @@ export const CommandCreationFormSchema = CommandSchema.omit({
 	// Each Parameter can be one of four types
 	parameters: z.array(AnyParameterSchema).optional(),
 });
-type CMDBuddyCommandFormValidation = z.infer<typeof CommandCreationFormSchema>;
+export type CMDBuddyCommandFormValidation = z.infer<
+	typeof CommandCreationFormSchema
+>;
 
 const CommandCreationForm: React.FC = () => {
 	const methods = useForm<CMDBuddyCommandFormValidation>({
@@ -104,9 +108,19 @@ const CommandCreationForm: React.FC = () => {
 		name: "parameters",
 	});
 
-	const onSubmit = (data: CMDBuddyCommandFormValidation) => {
+	const onSubmit = async (data: CMDBuddyCommandFormValidation) => {
+		// TODO:
+		// Toast at beginning and end
+		// 2 part db request - time this for curiosity
+		// Notify if command title or baseCommand already exists
+		// Set the returned CMD with its Parameters from the db to redux state
+		// Clear form on successful submission
+
+		console.time("start submit");
 		const { id, email } = loggedInUser!;
 		console.log(data);
+
+		data.order = 1;
 
 		const parameters: AnyParameter[] | undefined = data.parameters;
 		let nonFlagOrder = 1;
@@ -139,6 +153,9 @@ const CommandCreationForm: React.FC = () => {
 		}
 
 		console.log("TRANSFORMED data:", data.parameters);
+
+		await submitNewCommandAndParamsToDB(data, loggedInUser!.id);
+		console.timeEnd("start submit");
 	};
 
 	// Maybe refactor this to also clear form on submit. Wouldn't need the user conf then.
@@ -161,6 +178,7 @@ const CommandCreationForm: React.FC = () => {
 						{...methods.register("baseCommand")}
 						placeholder="npm test myTestName"
 						maxLength={200}
+						required={true}
 					/>
 					{methods.formState.errors.baseCommand && (
 						<p>{methods.formState.errors.baseCommand.message}</p>
@@ -169,7 +187,11 @@ const CommandCreationForm: React.FC = () => {
 
 				<div>
 					<label htmlFor="title">Title</label>
-					<input {...methods.register("title")} maxLength={60} />
+					<input
+						{...methods.register("title")}
+						maxLength={60}
+						required={true}
+					/>
 					{methods.formState.errors.title && (
 						<p>{methods.formState.errors.title.message}</p>
 					)}

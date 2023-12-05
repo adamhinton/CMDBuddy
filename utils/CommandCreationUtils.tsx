@@ -7,6 +7,10 @@ import { ParameterSchema } from "./zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationForm";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { API, graphqlOperation } from "aws-amplify";
+import { createCommand, createParameter } from "@/graphql/mutations";
+import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationForm";
+import { customGetCommandWithParameters } from "./customGraphQLQueries";
 
 // Subtypes for each parameter type
 const StringParameterSchema = ParameterSchema.pick({
@@ -423,6 +427,80 @@ const validateParameterOnSubmit = (
 		// Couldn't think of any additional FLAG validations
 	}
 	return isValid;
+};
+
+export const submitNewCommandAndParamsToDB = async (
+	formData: CMDBuddyCommandFormValidation,
+	userID: string
+) => {
+	// Disable submit button and show toast
+	// disableSubmitButton();
+	// showToast("Submitting... Please do not close the page.");
+
+	try {
+		// Construct command input for GraphQL mutation
+		const commandInput = {
+			baseCommand: formData.baseCommand,
+			title: formData.title,
+			order: formData.order,
+			userID: userID,
+		};
+
+		// Submit Command and get the new command's ID
+		const commandResponse = await API.graphql(
+			graphqlOperation(createCommand, { input: commandInput })
+		);
+		// @ts-ignore
+		const newCommandID = commandResponse.data.createCommand.id;
+		console.log("commandResponse:", commandResponse);
+
+		// Submit each Parameter with the new command's ID
+		const parameters = formData.parameters || [];
+		for (const parameter of parameters) {
+			const parameterInput = {
+				...parameter,
+				commandID: newCommandID,
+			};
+			await API.graphql(
+				graphqlOperation(createParameter, { input: parameterInput })
+			);
+		}
+
+		// Fetch the complete command with parameters from the database
+		// Replace this with your actual fetch command function
+		const completeCommand = await fetchCommandWithParameters(newCommandID);
+
+		console.log("completeCommand:", completeCommand);
+
+		// Print the complete Command for now (later, you will update Redux state)
+		console.log("Fetched Command with Parameters:", completeCommand);
+	} catch (error) {
+		// Handle any errors
+		console.error("Error submitting command and parameters:", error);
+		// showToast("Error in submission. Please try again.");
+	} finally {
+		// Re-enable submit button
+		// enableSubmitButton();
+	}
+};
+
+// Placeholder function for fetching Command with Parameters
+// Replace this with your actual function to fetch command with parameters
+const fetchCommandWithParameters = async (commandID: string) => {
+	try {
+		const response = await API.graphql(
+			graphqlOperation(customGetCommandWithParameters, {
+				id: commandID,
+			})
+		);
+		// @ts-ignore
+		const commandWithParameters = response.data?.getCommand;
+
+		return commandWithParameters;
+	} catch (error) {
+		console.error("Error fetching command with parameters:", error);
+		return null; // or handle the error as appropriate for your application
+	}
 };
 
 // export objects
