@@ -146,6 +146,7 @@ const CommandCreationForm: React.FC = () => {
 					<input
 						{...methods.register("baseCommand")}
 						placeholder="npm test myTestName"
+						maxLength={200}
 					/>
 					{methods.formState.errors.baseCommand && (
 						<p>{methods.formState.errors.baseCommand.message}</p>
@@ -154,7 +155,7 @@ const CommandCreationForm: React.FC = () => {
 
 				<div>
 					<label htmlFor="title">Title</label>
-					<input {...methods.register("title")} />
+					<input {...methods.register("title")} maxLength={60} />
 					{methods.formState.errors.title && (
 						<p>{methods.formState.errors.title.message}</p>
 					)}
