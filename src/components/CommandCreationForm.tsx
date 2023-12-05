@@ -123,7 +123,6 @@ const CommandCreationForm: React.FC = () => {
 		// Handle command creation logic here
 
 		// TODO:
-		// Add Order
 		// Any leftover validation
 		// Submit CMD, get id back, submit Params with id
 	};
