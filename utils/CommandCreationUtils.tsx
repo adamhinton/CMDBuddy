@@ -143,6 +143,7 @@ const StringParameterFields = ({
 			<input
 				{...register(`parameters.${index}.validationRegex`)}
 				placeholder="Validation Regex"
+				maxLength={100}
 			/>
 			{parameterErrors?.validationRegex && (
 				<p>{parameterErrors.validationRegex.message}</p>
@@ -243,6 +244,7 @@ const DropdownParameterFields = ({
 				})}
 				placeholder="Enter values separated by commas"
 				rows={4}
+				maxLength={5000}
 			/>
 			{parameterErrors?.allowedValues && (
 				<p>{parameterErrors.allowedValues.message}</p>
@@ -264,8 +266,6 @@ const FlagParameterFields = ({
 	index: number;
 	parameterErrors: FlagParameterErrors;
 }) => {
-	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
-
 	// Nothing to put here right now but leaving this because I might have something soon
 	return <></>;
 };
@@ -292,6 +292,7 @@ export const DefaultValueInput = ({
 						type="text"
 						{...register(`parameters.${index}.defaultValue`)}
 						placeholder="Default Value"
+						maxLength={1000}
 					/>
 					{parameterErrors?.defaultValue && (
 						<p>{parameterErrors.defaultValue.message}</p>

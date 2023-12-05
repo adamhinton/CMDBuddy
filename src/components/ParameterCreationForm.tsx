@@ -128,6 +128,7 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 				{...register(`parameters.${index}.name`)}
 				placeholder="Name"
 				required={true}
+				maxLength={30}
 			/>
 			{parameterErrors?.name && <p>{parameterErrors.name.message}</p>}
 
