@@ -380,6 +380,7 @@ const validateParameterOnSubmit = (
 	isValid: boolean
 ): boolean => {
 	const { setError } = methods;
+
 	if (parameter.type === "STRING") {
 		// TODO: Validate defaultValue against regex
 		if (
@@ -406,7 +407,8 @@ const validateParameterOnSubmit = (
 			});
 			isValid = false;
 		}
-		// Add other INT validations here
+
+		// Couldn't think of any additional BOOLEAN validations
 	} else if (parameter.type === "DROPDOWN") {
 		if (
 			parameter.defaultValue &&
@@ -418,12 +420,12 @@ const validateParameterOnSubmit = (
 			});
 			isValid = false;
 		}
-		// Add other DROPDOWN validations here
+		// Couldn't think of any additional FLAG validations
 	}
 	return isValid;
 };
 
-// Utils object
+// export objects
 const CommandCreationUtils = {
 	StringParameterFields,
 	IntParameterFields,
@@ -438,8 +440,9 @@ const CommandCreationUtils = {
 	validateParameterOnSubmit,
 };
 
-// Exporting utils and types
 export { CommandCreationUtils };
+
+// export types
 export type {
 	StringParameter,
 	IntParameter,
