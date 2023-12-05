@@ -6,8 +6,6 @@
 // TODO:
 // Also clear form on submit - but instate submit logic first and get that squared away
 // Collapse Params && Collapse All && Expand All
-// Order before or after baseCommand. FLAG comes after, everything else comes first?
-// Final validation on submit. Like make sure defaultValue meets other criteria, that minLength is less than maxLength.
 
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
