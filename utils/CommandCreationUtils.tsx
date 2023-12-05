@@ -372,6 +372,55 @@ export const DefaultValueInput = ({
 	}
 };
 
+// This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
+const validateParameterOnSubmit = (
+	parameter: AnyParameter,
+	index: number,
+	methods: any,
+	isValid: boolean
+): boolean => {
+	const { setError } = methods;
+	if (parameter.type === "STRING") {
+		if (
+			parameter.minLength &&
+			parameter.maxLength &&
+			parameter.minLength > parameter.maxLength
+		) {
+			setError(`parameters.${index}.minLength`, {
+				type: "manual",
+				message: "Min length cannot be greater than max length.",
+			});
+			isValid = false;
+		}
+	} else if (parameter.type === "INT") {
+		if (
+			parameter.minValue &&
+			parameter.maxValue &&
+			parameter.minValue > parameter.maxValue
+		) {
+			setError(`parameters.${index}.minValue`, {
+				type: "manual",
+				message: "Min value cannot be greater than max value.",
+			});
+			isValid = false;
+		}
+		// Add other INT validations here
+	} else if (parameter.type === "DROPDOWN") {
+		if (
+			parameter.defaultValue &&
+			!parameter.allowedValues?.includes(parameter.defaultValue)
+		) {
+			setError(`parameters.${index}.defaultValue`, {
+				type: "manual",
+				message: "Default value must be in allowed values.",
+			});
+			isValid = false;
+		}
+		// Add other DROPDOWN validations here
+	}
+	return isValid;
+};
+
 // Utils object
 const CommandCreationUtils = {
 	StringParameterFields,
@@ -384,6 +433,7 @@ const CommandCreationUtils = {
 	BooleanParameterSchema,
 	DropdownParameterSchema,
 	FlagParameterSchema,
+	validateParameterOnSubmit,
 };
 
 // Exporting utils and types

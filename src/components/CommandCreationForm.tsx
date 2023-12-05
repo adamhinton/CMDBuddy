@@ -36,6 +36,7 @@ const {
 	BooleanParameterSchema,
 	DropdownParameterSchema,
 	FlagParameterSchema,
+	validateParameterOnSubmit,
 } = CommandCreationUtils;
 
 const AnyParameterSchema = z.union([
@@ -110,21 +111,34 @@ const CommandCreationForm: React.FC = () => {
 		const parameters: AnyParameter[] | undefined = data.parameters;
 		let nonFlagOrder = 1;
 		let flagOrder = 1;
+		let isFormValuesValid = true;
 
-		parameters?.forEach((parameter) => {
+		// Loop over parameters, adding an `order` to each and doing final validation
+		parameters?.forEach((parameter, index) => {
 			if (parameter.type === "FLAG") {
 				parameter.order = flagOrder++;
 			} else {
 				parameter.order = nonFlagOrder++;
 			}
+
+			// This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
+			const isParameterValid = validateParameterOnSubmit(
+				parameter,
+				index,
+				methods,
+				isFormValuesValid
+			);
+			if (!isParameterValid) {
+				isFormValuesValid = false;
+			}
 		});
 
-		console.log("TRANSFORMED data:", data.parameters);
-		// Handle command creation logic here
+		if (!isFormValuesValid) {
+			console.error("Validation failed");
+			return; // Stop submission if validation fails
+		}
 
-		// TODO:
-		// Any leftover validation
-		// Submit CMD, get id back, submit Params with id
+		console.log("TRANSFORMED data:", data.parameters);
 	};
 
 	// Maybe refactor this to also clear form on submit. Wouldn't need the user conf then.
