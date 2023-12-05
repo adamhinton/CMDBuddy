@@ -1,3 +1,9 @@
+// README:
+// This component shows a preview of the Command you've created. Like it'll show `companyName= zipCode= npx playwright test createCompany --headed`
+// It's updated every time a user inputs a value in baseCommand, or a parameter's name or defaultValue.
+// NOTE: This is when the user initially CREATING a Command, like when the user fills out a form with parameters' names, baseCommand etc.
+// Dynamic Command generation will be another component.
+
 import { AnyParameter } from "../../utils/CommandCreationUtils";
 
 type LiveCommandPreviewProps = {

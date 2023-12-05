@@ -60,10 +60,6 @@ const CommandCreationForm: React.FC = () => {
 		resolver: zodResolver(CommandCreationFormSchema),
 	});
 
-	// const { watch } = useForm<CMDBuddyCommandFormValidation>();
-	// const allFormValues = watch();
-	// console.log("allFormValues:", allFormValues);
-
 	const { watch } = methods;
 
 	type FilteredParameter = {
@@ -71,6 +67,7 @@ const CommandCreationForm: React.FC = () => {
 		defaultValue?: string;
 	};
 
+	// This state and useEffect are for the sake of LiveCommandPreview which shows a preview of the Command you've created. Like it'll show `companyName= zipCode= npx playwright test testName --headed`
 	const [filteredParameters, setFilteredParameters] = useState<
 		FilteredParameter[]
 	>([]);
@@ -159,6 +156,8 @@ const CommandCreationForm: React.FC = () => {
 
 				<button type="submit">Create Command</button>
 
+				{/* This shows an example of the Command the user has created. */}
+				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}
 				<LiveCommandPreview
 					baseCommand={methods.getValues().baseCommand}
 					parameters={methods.getValues().parameters}
