@@ -5,7 +5,7 @@
 import { z } from "zod";
 import { ParameterSchema } from "./zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
-import { ParameterCreationType } from "@/components/ParameterCreationForm";
+import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationForm";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
 
 // Subtypes for each parameter type

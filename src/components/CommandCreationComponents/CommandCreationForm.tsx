@@ -10,7 +10,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { RootState } from "../../redux/store";
+import { RootState } from "../../../redux/store";
 import { useRouter } from "next/navigation";
 
 import {
@@ -21,12 +21,12 @@ import {
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { CommandSchema } from "../../utils/zod/CommandSchema";
+import { CommandSchema } from "../../../utils/zod/CommandSchema";
 import ParameterCreationForm from "./ParameterCreationForm";
 import {
 	CommandCreationUtils,
 	AnyParameter,
-} from "../../utils/CommandCreationUtils";
+} from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandPreview";
 
 const {
@@ -76,13 +76,13 @@ const CommandCreationForm: React.FC = () => {
 		FilteredParameter[]
 	>([]);
 
-	const isLoggedIn = useSelector((state: RootState) => {
-		return state.auth.user ? true : false;
+	const loggedInUser = useSelector((state: RootState) => {
+		return state.auth.user;
 	});
 	const router = useRouter();
 
 	useEffect(() => {
-		!isLoggedIn && router.push("login");
+		!loggedInUser && router.push("login");
 	});
 
 	useEffect(() => {
@@ -105,6 +105,7 @@ const CommandCreationForm: React.FC = () => {
 	});
 
 	const onSubmit = (data: CMDBuddyCommandFormValidation) => {
+		const { id, email } = loggedInUser!;
 		console.log(data);
 
 		const parameters: AnyParameter[] | undefined = data.parameters;

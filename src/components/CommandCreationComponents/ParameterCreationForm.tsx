@@ -12,13 +12,13 @@ import {
 	CommandCreationUtils,
 	DefaultValueInput,
 	FlagParameterErrors,
-} from "../../utils/CommandCreationUtils";
+} from "../../../utils/CommandCreationUtils";
 import {
 	AnyParameter,
 	StringParameterErrors,
 	IntParameterErrors,
 	DropdownParameterErrors,
-} from "../../utils/CommandCreationUtils";
+} from "../../../utils/CommandCreationUtils";
 
 type FormProps = {
 	index: number;
