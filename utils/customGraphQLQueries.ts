@@ -16,7 +16,8 @@ export const customCommandsAndParametersByUserID = /* GraphQL */ `
 						name
 						order
 						validationRegex
-						length
+						minLength
+						maxLength
 						minValue
 						maxValue
 						isNullable
@@ -51,7 +52,8 @@ export const customUserByEmail = /* GraphQL */ `
 								name
 								order
 								validationRegex
-								length
+								minLength
+								maxLength
 								minValue
 								maxValue
 								isNullable

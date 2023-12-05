@@ -10,6 +10,10 @@
 // Final validation on submit. Like make sure defaultValue meets other criteria, that minLength is less than maxLength.
 
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { RootState } from "../../redux/store";
+import { useRouter } from "next/navigation";
+
 import {
 	useForm,
 	useFieldArray,
@@ -72,6 +76,15 @@ const CommandCreationForm: React.FC = () => {
 		FilteredParameter[]
 	>([]);
 
+	const isLoggedIn = useSelector((state: RootState) => {
+		return state.auth.user ? true : false;
+	});
+	const router = useRouter();
+
+	useEffect(() => {
+		!isLoggedIn && router.push("login");
+	});
+
 	useEffect(() => {
 		const subscription = watch((value, { name }) => {
 			if (name?.startsWith("parameters")) {
@@ -131,7 +144,10 @@ const CommandCreationForm: React.FC = () => {
 				{/* Command Fields */}
 				<div>
 					<label htmlFor="baseCommand">Base Command</label>
-					<input {...methods.register("baseCommand")} />
+					<input
+						{...methods.register("baseCommand")}
+						placeholder="npm test myTestName"
+					/>
 					{methods.formState.errors.baseCommand && (
 						<p>{methods.formState.errors.baseCommand.message}</p>
 					)}
