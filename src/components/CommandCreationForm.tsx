@@ -46,9 +46,10 @@ const AnyParameterSchema = z.union([
 // This is because the user doesn't define things like `id` or `order`
 export const CommandCreationFormSchema = CommandSchema.omit({
 	id: true,
-	order: true,
 	userID: true,
 }).extend({
+	// Making Order optional because we only add it on submit
+	order: z.number().int().optional(),
 	// Each Parameter can be one of four types
 	parameters: z.array(AnyParameterSchema).optional(),
 });

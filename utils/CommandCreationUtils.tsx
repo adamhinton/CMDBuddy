@@ -19,6 +19,8 @@ const StringParameterSchema = ParameterSchema.pick({
 	isNullable: true,
 }).extend({
 	type: z.literal("STRING"),
+	// Making Order optional because we only add it on submit
+	order: z.number().int().optional(),
 });
 
 const IntParameterSchema = ParameterSchema.pick({
@@ -30,6 +32,8 @@ const IntParameterSchema = ParameterSchema.pick({
 	isNullable: true,
 }).extend({
 	type: z.literal("INT"),
+	// Making Order optional because we only add it on submit
+	order: z.number().int().optional(),
 });
 
 const BooleanParameterSchema = ParameterSchema.pick({
@@ -39,6 +43,8 @@ const BooleanParameterSchema = ParameterSchema.pick({
 	isNullable: true,
 }).extend({
 	type: z.literal("BOOLEAN"),
+	// Making Order optional because we only add it on submit
+	order: z.number().int().optional(),
 	// Needs to be string for validation purposes, can convert later
 	defaultValue: z.enum(["true", "false"]),
 });
@@ -51,6 +57,8 @@ const DropdownParameterSchema = ParameterSchema.pick({
 	isNullable: true,
 }).extend({
 	type: z.literal("DROPDOWN"),
+	// Making Order optional because we only add it on submit
+	order: z.number().int().optional(),
 });
 
 const FlagParameterSchema = ParameterSchema.pick({
@@ -59,6 +67,8 @@ const FlagParameterSchema = ParameterSchema.pick({
 	name: true,
 }).extend({
 	type: z.literal("FLAG"),
+	// Making Order optional because we only add it on submit
+	order: z.number().int().optional(),
 	defaultValue: z.enum(["On", "Off"]),
 });
 
