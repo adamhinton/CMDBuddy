@@ -8,7 +8,6 @@
 // Collapse Params && Collapse All && Expand All
 // Order before or after baseCommand. FLAG comes after, everything else comes first?
 // Final validation on submit. Like make sure defaultValue meets other criteria, that minLength is less than maxLength.
-// Example code at bottom of command creation form
 
 import React, { useState, useEffect } from "react";
 import {
@@ -94,6 +93,11 @@ const CommandCreationForm: React.FC = () => {
 	const onSubmit = (data: CMDBuddyCommandFormValidation) => {
 		console.log(data);
 		// Handle command creation logic here
+
+		// TODO:
+		// Add Order
+		// Any leftover validation
+		// Submit CMD, get id back, submit Params with id
 	};
 
 	// Maybe refactor this to also clear form on submit. Wouldn't need the user conf then.
