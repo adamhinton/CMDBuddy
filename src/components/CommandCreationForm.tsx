@@ -93,6 +93,20 @@ const CommandCreationForm: React.FC = () => {
 
 	const onSubmit = (data: CMDBuddyCommandFormValidation) => {
 		console.log(data);
+
+		const parameters: AnyParameter[] | undefined = data.parameters;
+		let nonFlagOrder = 1;
+		let flagOrder = 1;
+
+		parameters?.forEach((parameter) => {
+			if (parameter.type === "FLAG") {
+				parameter.order = flagOrder++;
+			} else {
+				parameter.order = nonFlagOrder++;
+			}
+		});
+
+		console.log("TRANSFORMED data:", data.parameters);
 		// Handle command creation logic here
 
 		// TODO:

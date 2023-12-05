@@ -19,7 +19,6 @@ const LiveCommandPreview = ({
 }: LiveCommandPreviewProps) => {
 	// Use watch to get real-time updates of form values
 	const watchedParameters = watch("parameters");
-	console.log("watchedParameters:", watchedParameters);
 
 	// Build the command preview
 	let nonFlagParams = "";
