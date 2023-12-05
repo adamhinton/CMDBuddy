@@ -5,6 +5,7 @@
 
 // TODO:
 // Also clear form on submit - but instate submit logic first and get that squared away
+// DB submit logic
 // Collapse Params && Collapse All && Expand All
 
 import React, { useState, useEffect } from "react";
