@@ -1,6 +1,12 @@
 "use client";
 
-import React from "react";
+// TODO:
+// Edit field shows up, now instate submit logic
+// Delete logic
+// DnD
+// Horizontal issue
+
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -26,20 +32,6 @@ const CommandItem = styled.div`
 	}
 `;
 
-const SideBar = () => {
-	const commands = useSelector((state: RootState) => state.commands.commands);
-
-	return (
-		<SideBarContainer>
-			{commands?.map((command, index) => (
-				<Command key={index} title={command.title} />
-			))}
-		</SideBarContainer>
-	);
-};
-
-export default SideBar;
-
 const CommandContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -48,6 +40,15 @@ const CommandContainer = styled.div`
 
 const Title = styled.span`
 	flex-grow: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+`;
+
+const EditInput = styled.input`
+	flex-grow: 1;
+	border: none;
+	padding: 4px;
 `;
 
 const EditButton = styled.button`
@@ -64,11 +65,35 @@ const DeleteButton = styled.button`
 `;
 
 const Command = ({ title }: { title: string }) => {
+	const [isEditing, setIsEditing] = useState(false);
+	const [editedTitle, setEditedTitle] = useState(title);
+
 	return (
 		<CommandContainer>
-			<Title>{title}</Title>
-			<EditButton>✏️</EditButton>
+			{isEditing ? (
+				<EditInput
+					value={editedTitle}
+					onChange={(e) => setEditedTitle(e.target.value)}
+				/>
+			) : (
+				<Title>{title}</Title>
+			)}
+			<EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
 			<DeleteButton>🗑️</DeleteButton>
 		</CommandContainer>
 	);
 };
+
+const SideBar = () => {
+	const commands = useSelector((state: RootState) => state.commands.commands);
+
+	return (
+		<SideBarContainer>
+			{commands?.map((command, index) => (
+				<Command key={index} title={command.title} />
+			))}
+		</SideBarContainer>
+	);
+};
+
+export default SideBar;
