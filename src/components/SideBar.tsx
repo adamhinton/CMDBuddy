@@ -27,7 +27,7 @@ const CommandItem = styled.div`
 `;
 
 const SideBar = () => {
-	const commands = useSelector((state: RootState) => state.commands.commands); // Mock selector
+	const commands = useSelector((state: RootState) => state.commands.commands);
 
 	return (
 		<SideBarContainer>
