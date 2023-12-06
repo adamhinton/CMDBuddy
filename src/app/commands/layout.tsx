@@ -1,4 +1,4 @@
-import CommandsSideBar from "@/components/CommandsSideBar";
+import CommandsSideBar from "@/components/SideBar";
 
 export default function CommandsLayout({
 	children,
