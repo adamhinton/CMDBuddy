@@ -12,6 +12,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../../../redux/store";
 import { useRouter } from "next/navigation";
+import { addCommand } from "../../../redux/slices/commandsSlice";
+import { useDispatch } from "react-redux";
 
 import {
 	useForm,
@@ -64,6 +66,8 @@ export type CMDBuddyCommandFormValidation = z.infer<
 >;
 
 const CommandCreationForm: React.FC = () => {
+	const dispatch = useDispatch();
+
 	const methods = useForm<CMDBuddyCommandFormValidation>({
 		resolver: zodResolver(CommandCreationFormSchema),
 	});
@@ -111,7 +115,6 @@ const CommandCreationForm: React.FC = () => {
 	const onSubmit = async (data: CMDBuddyCommandFormValidation) => {
 		// TODO:
 		// Toast at beginning and end
-		// 2 part db request - time this for curiosity
 		// Notify if command title or baseCommand already exists
 		// Set the returned CMD with its Parameters from the db to redux state
 		// Clear form on successful submission
@@ -154,8 +157,12 @@ const CommandCreationForm: React.FC = () => {
 
 		console.log("TRANSFORMED data:", data.parameters);
 
-		await submitNewCommandAndParamsToDB(data, loggedInUser!.id);
-		console.timeEnd("start submit");
+		const completedCommandFromDB = await submitNewCommandAndParamsToDB(
+			data,
+			loggedInUser!.id
+		);
+
+		dispatch(addCommand(completedCommandFromDB));
 	};
 
 	// Maybe refactor this to also clear form on submit. Wouldn't need the user conf then.

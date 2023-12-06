@@ -19,8 +19,16 @@ export const commandsSlice = createSlice({
 		logOutCommands: (state) => {
 			state.commands = null;
 		},
+		addCommand: (state, action: PayloadAction<CMDBuddyCommand>) => {
+			if (state.commands) {
+				state.commands = [action.payload, ...state.commands];
+			} else {
+				state.commands = [action.payload];
+			}
+		},
 	},
 });
 
-export const { setCommands, logOutCommands } = commandsSlice.actions;
+export const { setCommands, logOutCommands, addCommand } =
+	commandsSlice.actions;
 export default commandsSlice.reducer;

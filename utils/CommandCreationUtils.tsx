@@ -11,6 +11,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { createCommand, createParameter } from "@/graphql/mutations";
 import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationForm";
 import { customGetCommandWithParameters } from "./customGraphQLQueries";
+import { CMDBuddyCommand } from "./zod/CommandSchema";
 
 // Subtypes for each parameter type
 const StringParameterSchema = ParameterSchema.pick({
@@ -432,10 +433,11 @@ const validateParameterOnSubmit = (
 export const submitNewCommandAndParamsToDB = async (
 	formData: CMDBuddyCommandFormValidation,
 	userID: string
-) => {
+): Promise<CMDBuddyCommand> => {
 	// Disable submit button and show toast
 	// disableSubmitButton();
 	// showToast("Submitting... Please do not close the page.");
+	let completeCommand: CMDBuddyCommand | null = null;
 
 	try {
 		// Construct command input for GraphQL mutation
@@ -468,7 +470,7 @@ export const submitNewCommandAndParamsToDB = async (
 
 		// Fetch the complete command with parameters from the database
 		// Replace this with your actual fetch command function
-		const completeCommand = await fetchCommandWithParameters(newCommandID);
+		completeCommand = await fetchCommandWithParameters(newCommandID);
 
 		console.log("completeCommand:", completeCommand);
 
@@ -481,6 +483,7 @@ export const submitNewCommandAndParamsToDB = async (
 	} finally {
 		// Re-enable submit button
 		// enableSubmitButton();
+		return completeCommand!;
 	}
 };
 
