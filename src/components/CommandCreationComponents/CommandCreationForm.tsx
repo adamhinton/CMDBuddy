@@ -163,6 +163,10 @@ const CommandCreationForm: React.FC = () => {
 		);
 
 		dispatch(addCommand(completedCommandFromDB));
+		// Finally, clear form values
+		remove();
+		methods.reset();
+		console.timeEnd("start submit");
 	};
 
 	// Maybe refactor this to also clear form on submit. Wouldn't need the user conf then.
@@ -170,8 +174,9 @@ const CommandCreationForm: React.FC = () => {
 		if (
 			window.confirm("Are you sure you want to DELETE all values in this form?")
 		) {
-			methods.reset(); // Resets the form to default values
+			// TODO: This seems to delete the parameter inputs, but when you click Add Parameter again, it goes back to however many Param inputs there were plus your new one.
 			remove(); // Removes all parameter fields
+			methods.reset(); // Resets the form to default values
 		}
 	};
 
