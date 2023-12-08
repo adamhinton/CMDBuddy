@@ -44,6 +44,7 @@ export const commandsSlice = createSlice({
 			}
 		},
 
+		// pass in command
 		deleteCommand: (state, action: PayloadAction<string>) => {
 			const commandId = action.payload;
 			state.commands =
