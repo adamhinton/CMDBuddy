@@ -15,7 +15,12 @@ import {
 	deleteParameter,
 } from "@/graphql/mutations";
 import { CMDBuddyCommand } from "../../utils/zod/CommandSchema";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {
+	DragDropContext,
+	Droppable,
+	Draggable,
+	DroppableProps,
+} from "react-beautiful-dnd";
 
 const SideBarContainer = styled.div`
 	width: 250px;
@@ -86,6 +91,27 @@ const ConfirmIcon = styled.span`
 	margin-left: 5px;
 	cursor: pointer;
 `;
+
+// This is a fix for an issue where DnD didn't play nice with Strict Mode. plays a quick animation before performing the action.
+// Don't ask me why this is necessary, I just got an error and copied the solution off of Google.
+export const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
+	const [enabled, setEnabled] = useState(false);
+
+	useEffect(() => {
+		const animation = requestAnimationFrame(() => setEnabled(true));
+
+		return () => {
+			cancelAnimationFrame(animation);
+			setEnabled(false);
+		};
+	}, []);
+
+	if (!enabled) {
+		return null;
+	}
+
+	return <Droppable {...props}>{children}</Droppable>;
+};
 
 const Command = ({
 	command,
@@ -209,7 +235,7 @@ const SideBar = () => {
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
-			<Droppable droppableId="commands">
+			<StrictModeDroppable droppableId="commands">
 				{(provided) => (
 					<SideBarContainer
 						{...provided.droppableProps}
@@ -240,7 +266,7 @@ const SideBar = () => {
 						{provided.placeholder}
 					</SideBarContainer>
 				)}
-			</Droppable>
+			</StrictModeDroppable>
 		</DragDropContext>
 	);
 };
