@@ -52,6 +52,11 @@ export const commandsSlice = createSlice({
 	},
 });
 
-export const { setCommands, logOutCommands, addCommand } =
-	commandsSlice.actions;
+export const {
+	setCommands,
+	logOutCommands,
+	addCommand,
+	deleteCommand,
+	editCommandTitle,
+} = commandsSlice.actions;
 export default commandsSlice.reducer;
