@@ -72,5 +72,6 @@ export const {
 	addCommand,
 	deleteCommand,
 	editCommandTitle,
+	reorderCommands,
 } = commandsSlice.actions;
 export default commandsSlice.reducer;
