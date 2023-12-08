@@ -15,6 +15,7 @@ import { RootState } from "../../redux/store";
 import {
 	editCommandTitle,
 	deleteCommand,
+	reorderCommands,
 } from "../../redux/slices/commandsSlice";
 import { API, graphqlOperation } from "aws-amplify";
 import {
@@ -238,7 +239,9 @@ const SideBar = () => {
 		items.splice(result.destination.index, 0, reorderedItem);
 
 		setLocalCommands(items);
+
 		// Dispatch action to update order in Redux and DB here
+		dispatch(reorderCommands(items));
 	};
 
 	return (
