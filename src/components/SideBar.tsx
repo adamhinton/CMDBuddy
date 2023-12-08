@@ -81,10 +81,12 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 		setIsEditing(false);
 	};
 
-	const handleCommandDelete = async () => {
+	const handleCommandDelete = async (command: CMDBuddyCommand) => {
 		// Delete each parameter
+		console.log("parameters.length:", parameters?.length);
 		if (parameters && parameters.length > 0) {
 			for (const parameter of parameters) {
+				console.log("parameter deleting:", parameter);
 				await API.graphql(
 					graphqlOperation(deleteParameter, {
 						input: { id: parameter.id },
@@ -95,11 +97,11 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 
 		// Delete the command from the database
 		await API.graphql(
-			graphqlOperation(deleteCommandMutation, { input: { id: commandID } })
+			graphqlOperation(deleteCommandMutation, { input: { id: command.id } })
 		);
 
 		// Optimistic UI update
-		dispatch(deleteCommand(commandID));
+		dispatch(deleteCommand(command.id));
 	};
 
 	useEffect(() => {
@@ -140,7 +142,7 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 			<EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
 			<DeleteButton
 				onClick={() =>
-					showConfirm ? handleCommandDelete() : setShowConfirm(true)
+					showConfirm ? handleCommandDelete(command) : setShowConfirm(true)
 				}
 			>
 				🗑️
