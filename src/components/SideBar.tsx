@@ -25,6 +25,23 @@ const SideBarContainer = styled.div`
 	padding: 10px;
 `;
 
+// The little handle on left side of command that you hold down to drag and drop
+const DragHandle = styled.div`
+	width: 20px;
+	height: 20px;
+	background-color: #ccc;
+	border-radius: 4px;
+	margin-right: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: grab;
+
+	&:active {
+		cursor: grabbing;
+	}
+`;
+
 const CommandContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -67,10 +84,16 @@ const DeleteButton = styled.button`
 
 const ConfirmIcon = styled.span`
 	margin-left: 5px;
-	cursor: pointer; /* Change cursor to pointer on hover */
+	cursor: pointer;
 `;
 
-const Command = ({ command }: { command: CMDBuddyCommand }) => {
+const Command = ({
+	command,
+	dragHandleProps,
+}: {
+	command: CMDBuddyCommand;
+	dragHandleProps: any;
+}) => {
 	const { title, id: commandID, parameters } = command;
 	const dispatch = useDispatch();
 	const [isEditing, setIsEditing] = useState(false);
@@ -123,8 +146,8 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 				!editInputRef.current.contains(e.target as Node)
 			) {
 				setIsEditing(false);
-				setEditedTitle(title); // Reset title
-				setShowConfirm(false); // Reset showConfirm for delete
+				setEditedTitle(title);
+				setShowConfirm(false);
 			}
 		};
 
@@ -139,6 +162,7 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 
 	return (
 		<CommandContainer>
+			<DragHandle {...dragHandleProps}>⋮⋮</DragHandle>
 			{isEditing ? (
 				<EditInput
 					ref={editInputRef}
@@ -172,6 +196,7 @@ const SideBar = () => {
 	const [localCommands, setLocalCommands] = useState(commands || []);
 
 	const onDragEnd = (result: any) => {
+		console.log("onDragEnd");
 		if (!result.destination) return;
 
 		const items = Array.from(localCommands || []);
@@ -190,26 +215,28 @@ const SideBar = () => {
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
-						{localCommands?.map((command, index) => {
-							console.log("command in localCommands.map", command);
-							return (
-								<Draggable
-									key={command.id}
-									draggableId={String(command.id)}
-									index={index}
-								>
-									{(provided) => (
-										<div
-											ref={provided.innerRef}
-											{...provided.draggableProps}
-											{...provided.dragHandleProps}
-										>
-											<Command command={command} />
+						{localCommands?.map((command, index) => (
+							<Draggable
+								key={String(command.id)}
+								draggableId={String(command.id)}
+								index={index}
+							>
+								{(provided) => {
+									console.log("provided:", provided);
+									if (!provided) {
+										console.log("provided doesn't exist");
+									}
+									return (
+										<div ref={provided.innerRef} {...provided.draggableProps}>
+											<Command
+												command={command}
+												dragHandleProps={provided.dragHandleProps}
+											/>
 										</div>
-									)}
-								</Draggable>
-							);
-						})}
+									);
+								}}
+							</Draggable>
+						))}
 						{provided.placeholder}
 					</SideBarContainer>
 				)}
