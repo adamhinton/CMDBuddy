@@ -248,10 +248,6 @@ const SideBar = () => {
 								index={index}
 							>
 								{(provided) => {
-									console.log("provided:", provided);
-									if (!provided) {
-										console.log("provided doesn't exist");
-									}
 									return (
 										<div ref={provided.innerRef} {...provided.draggableProps}>
 											<Command
