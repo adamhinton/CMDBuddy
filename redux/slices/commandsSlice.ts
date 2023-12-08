@@ -50,6 +50,19 @@ export const commandsSlice = createSlice({
 			state.commands =
 				state.commands?.filter((cmd) => cmd.id !== commandId) || null;
 		},
+
+		// Each command has an `order` property that determines what order they appear in the UI
+		// When user drag and drops commands in the Sidebar that changes their order; this is the logic for that update.
+		reorderCommands: (state, action: PayloadAction<CMDBuddyCommand[]>) => {
+			const reorderedCommands = action.payload;
+
+			// Update the 'order' property for each command based on its place in the new array
+			reorderedCommands.forEach((command, index) => {
+				command.order = index + 1; // +1 because 'order' is 1-indexed
+			});
+
+			state.commands = reorderedCommands;
+		},
 	},
 });
 
