@@ -30,17 +30,25 @@ const CommandContainer = styled.div`
 	align-items: center;
 `;
 
+const IconContainer = styled.div`
+	display: flex;
+	align-items: center;
+`;
+
+const EditInput = styled.input`
+	flex-grow: 1;
+	border: 2px solid blue; /* Example outline style */
+	padding: 4px;
+	&:focus {
+		outline: 3px solid green; /* More prominent outline when focused */
+	}
+`;
+
 const Title = styled.span`
 	flex-grow: 1;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-`;
-
-const EditInput = styled.input`
-	flex-grow: 1;
-	border: none;
-	padding: 4px;
 `;
 
 const EditButton = styled.button`
@@ -58,6 +66,7 @@ const DeleteButton = styled.button`
 
 const ConfirmIcon = styled.span`
 	margin-left: 5px;
+	cursor: pointer; /* Change cursor to pointer on hover */
 `;
 
 const Command = ({ command }: { command: CMDBuddyCommand }) => {
@@ -142,15 +151,16 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 			) : (
 				<Title>{title}</Title>
 			)}
-			<EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
-			<DeleteButton
-				onClick={() =>
-					showConfirm ? handleCommandDelete(command) : setShowConfirm(true)
-				}
-			>
-				🗑️
-			</DeleteButton>
-			{showConfirm && <ConfirmIcon>✅</ConfirmIcon>}
+			<IconContainer>
+				<EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
+				{showConfirm ? (
+					<ConfirmIcon onClick={() => handleCommandDelete(command)}>
+						✅
+					</ConfirmIcon>
+				) : (
+					<DeleteButton onClick={() => setShowConfirm(true)}>🗑️</DeleteButton>
+				)}
+			</IconContainer>
 		</CommandContainer>
 	);
 };
