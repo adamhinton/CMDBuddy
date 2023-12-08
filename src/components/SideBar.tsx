@@ -92,6 +92,10 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 	};
 
 	const handleCommandDelete = async (command: CMDBuddyCommand) => {
+		// Optimistic UI update
+		dispatch(deleteCommand(command.id));
+		setShowConfirm(false);
+
 		// Delete each parameter
 		console.log("parameters.length:", parameters?.length);
 		if (parameters && parameters.length > 0) {
@@ -109,10 +113,6 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 		await API.graphql(
 			graphqlOperation(deleteCommandMutation, { input: { id: command.id } })
 		);
-
-		// Optimistic UI update
-		dispatch(deleteCommand(command.id));
-		setShowConfirm(false);
 	};
 
 	useEffect(() => {
