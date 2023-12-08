@@ -1,3 +1,11 @@
+// README:
+// This is a sidebar component that displays the list of the user's saved Commands by their Title.
+// Features:
+// Edit command title
+// Delete whole command
+// Clicking a command brings it up in the main UI (TODO)
+// Drag and Drop: Can re-order commands in Sidebar. This updates their order in redux state and the db.
+
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
