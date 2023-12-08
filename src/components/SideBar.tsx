@@ -79,6 +79,7 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 		);
 
 		setIsEditing(false);
+		setEditedTitle(editedTitle);
 	};
 
 	const handleCommandDelete = async (command: CMDBuddyCommand) => {
@@ -102,6 +103,7 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 
 		// Optimistic UI update
 		dispatch(deleteCommand(command.id));
+		setShowConfirm(false);
 	};
 
 	useEffect(() => {
@@ -111,18 +113,19 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 				!editInputRef.current.contains(e.target as Node)
 			) {
 				setIsEditing(false);
-				setEditedTitle(title);
+				setEditedTitle(title); // Reset title
+				setShowConfirm(false); // Reset showConfirm for delete
 			}
 		};
 
-		if (isEditing) {
+		if (isEditing || showConfirm) {
 			document.addEventListener("click", handleOutsideClick);
 		}
 
 		return () => {
 			document.removeEventListener("click", handleOutsideClick);
 		};
-	}, [isEditing, title]);
+	}, [isEditing, showConfirm, title]);
 
 	return (
 		<CommandContainer>
