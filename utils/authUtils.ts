@@ -49,6 +49,14 @@ export const useAuthActions = () => {
 			// Now set Commands (and their Parameters) to Commands state
 			const userCommandsFromDB =
 				userFromDB.data.userByEmail.items[0].commands.items;
+
+			// "parameters" is returned from the db here as an object with an "items" key, but we want it to just be an array of parameters.
+			// So we mutate parameters from object to array.
+			for (const command of userCommandsFromDB) {
+				command.parameters = command.parameters.items;
+			}
+			console.log("userCommandsFromDB", userCommandsFromDB);
+
 			dispatch(setCommands(userCommandsFromDB));
 
 			// Now set dark mode pref to state
