@@ -15,6 +15,7 @@ import {
 	deleteParameter,
 } from "@/graphql/mutations";
 import { CMDBuddyCommand } from "../../utils/zod/CommandSchema";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const SideBarContainer = styled.div`
 	width: 250px;
@@ -166,14 +167,54 @@ const Command = ({ command }: { command: CMDBuddyCommand }) => {
 };
 
 const SideBar = () => {
+	const dispatch = useDispatch();
 	const commands = useSelector((state: RootState) => state.commands.commands);
+	const [localCommands, setLocalCommands] = useState(commands || []);
+
+	const onDragEnd = (result: any) => {
+		if (!result.destination) return;
+
+		const items = Array.from(localCommands || []);
+		const [reorderedItem] = items.splice(result.source.index, 1);
+		items.splice(result.destination.index, 0, reorderedItem);
+
+		setLocalCommands(items);
+		// Dispatch action to update order in Redux and DB here
+	};
 
 	return (
-		<SideBarContainer>
-			{commands?.map((command, index) => (
-				<Command key={index} command={command} />
-			))}
-		</SideBarContainer>
+		<DragDropContext onDragEnd={onDragEnd}>
+			<Droppable droppableId="commands">
+				{(provided) => (
+					<SideBarContainer
+						{...provided.droppableProps}
+						ref={provided.innerRef}
+					>
+						{localCommands?.map((command, index) => {
+							console.log("command in localCommands.map", command);
+							return (
+								<Draggable
+									key={command.id}
+									draggableId={String(command.id)}
+									index={index}
+								>
+									{(provided) => (
+										<div
+											ref={provided.innerRef}
+											{...provided.draggableProps}
+											{...provided.dragHandleProps}
+										>
+											<Command command={command} />
+										</div>
+									)}
+								</Draggable>
+							);
+						})}
+						{provided.placeholder}
+					</SideBarContainer>
+				)}
+			</Droppable>
+		</DragDropContext>
 	);
 };
 
