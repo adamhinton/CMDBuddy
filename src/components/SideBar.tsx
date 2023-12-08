@@ -4,133 +4,162 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-import { editCommandTitle, deleteCommand } from "../../redux/slices/commandsSlice";
-import { API, graphqlOperation } from 'aws-amplify';
-import { updateCommand, deleteCommand as deleteCommandMutation } from '@/graphql/mutations';
-
+import {
+	editCommandTitle,
+	deleteCommand,
+} from "../../redux/slices/commandsSlice";
+import { API, graphqlOperation } from "aws-amplify";
+import {
+	updateCommand,
+	deleteCommand as deleteCommandMutation,
+	deleteParameter,
+} from "@/graphql/mutations";
+import { CMDBuddyCommand } from "../../utils/zod/CommandSchema";
 
 const SideBarContainer = styled.div`
-  width: 250px;
-  color: ${({ theme }) => theme.text};
-  height: 100vh;
-  overflow-y: auto;
-  padding: 10px;
+	width: 250px;
+	color: ${({ theme }) => theme.text};
+	height: 100vh;
+	overflow-y: auto;
+	padding: 10px;
 `;
 
 const CommandContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 `;
 
 const Title = styled.span`
-  flex-grow: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+	flex-grow: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 `;
 
 const EditInput = styled.input`
-  flex-grow: 1;
-  border: none;
-  padding: 4px;
+	flex-grow: 1;
+	border: none;
+	padding: 4px;
 `;
 
 const EditButton = styled.button`
-  margin-right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
+	margin-right: 10px;
+	background: none;
+	border: none;
+	cursor: pointer;
 `;
 
 const DeleteButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
+	background: none;
+	border: none;
+	cursor: pointer;
 `;
 
 const ConfirmIcon = styled.span`
-  margin-left: 5px;
+	margin-left: 5px;
 `;
 
-const Command = ({ title, commandID }: { title: string; commandID: string }) => {
-  const dispatch = useDispatch();
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(title);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const editInputRef = useRef<HTMLInputElement>(null);
+const Command = ({ command }: { command: CMDBuddyCommand }) => {
+	const { title, id: commandID, parameters } = command;
+	const dispatch = useDispatch();
+	const [isEditing, setIsEditing] = useState(false);
+	const [editedTitle, setEditedTitle] = useState(title);
+	const [showConfirm, setShowConfirm] = useState(false);
+	const editInputRef = useRef<HTMLInputElement>(null);
 
-  const handleCommandTitlesEditSubmit = async () => {
-    // Optimistic UI update
-    dispatch(editCommandTitle({ commandId: commandID, newTitle: editedTitle }));
+	const handleCommandTitlesEditSubmit = async () => {
+		// Optimistic UI update
+		dispatch(editCommandTitle({ commandId: commandID, newTitle: editedTitle }));
 
-    // Update the database
-    const commandDetails = { id: commandID, title: editedTitle };
-    await API.graphql(graphqlOperation(updateCommand, { input: commandDetails }));
+		// Update the database
+		const commandDetails = { id: commandID, title: editedTitle };
+		await API.graphql(
+			graphqlOperation(updateCommand, { input: commandDetails })
+		);
 
-    setIsEditing(false);
-  };
+		setIsEditing(false);
+	};
 
-  const handleCommandDelete = async () => {
-    // Delete the command from the database
-    await API.graphql(graphqlOperation(deleteCommandMutation, { input: { id: commandID } }));
+	const handleCommandDelete = async () => {
+		// Delete each parameter
+		if (parameters && parameters.length > 0) {
+			for (const parameter of parameters) {
+				await API.graphql(
+					graphqlOperation(deleteParameter, {
+						input: { id: parameter.id },
+					})
+				);
+			}
+		}
 
-    // Optimistic UI update
-    dispatch(deleteCommand(commandID));
-  };
+		// Delete the command from the database
+		await API.graphql(
+			graphqlOperation(deleteCommandMutation, { input: { id: commandID } })
+		);
 
-  useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      if (
-        editInputRef.current &&
-        !editInputRef.current.contains(e.target as Node)
-      ) {
-        setIsEditing(false);
-        setEditedTitle(title);
-      }
-    };
+		// Optimistic UI update
+		dispatch(deleteCommand(commandID));
+	};
 
-    if (isEditing) {
-      document.addEventListener("click", handleOutsideClick);
-    }
+	useEffect(() => {
+		const handleOutsideClick = (e: MouseEvent) => {
+			if (
+				editInputRef.current &&
+				!editInputRef.current.contains(e.target as Node)
+			) {
+				setIsEditing(false);
+				setEditedTitle(title);
+			}
+		};
 
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
-  }, [isEditing, title]);
+		if (isEditing) {
+			document.addEventListener("click", handleOutsideClick);
+		}
 
-  return (
-    <CommandContainer>
-      {isEditing ? (
-        <EditInput
-          ref={editInputRef}
-          value={editedTitle}
-          onChange={(e) => setEditedTitle(e.target.value)}
-          onBlur={handleCommandTitlesEditSubmit}
-          onKeyDown={(e) => e.key === "Enter" && handleCommandTitlesEditSubmit()}
-        />
-      ) : (
-        <Title>{title}</Title>
-      )}
-      <EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
-      <DeleteButton onClick={() => showConfirm ? handleCommandDelete() : setShowConfirm(true)}>
-        🗑️
-      </DeleteButton>
-      {showConfirm && <ConfirmIcon>✅</ConfirmIcon>}
-    </CommandContainer>
-  );
+		return () => {
+			document.removeEventListener("click", handleOutsideClick);
+		};
+	}, [isEditing, title]);
+
+	return (
+		<CommandContainer>
+			{isEditing ? (
+				<EditInput
+					ref={editInputRef}
+					value={editedTitle}
+					onChange={(e) => setEditedTitle(e.target.value)}
+					onBlur={handleCommandTitlesEditSubmit}
+					onKeyDown={(e) =>
+						e.key === "Enter" && handleCommandTitlesEditSubmit()
+					}
+				/>
+			) : (
+				<Title>{title}</Title>
+			)}
+			<EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
+			<DeleteButton
+				onClick={() =>
+					showConfirm ? handleCommandDelete() : setShowConfirm(true)
+				}
+			>
+				🗑️
+			</DeleteButton>
+			{showConfirm && <ConfirmIcon>✅</ConfirmIcon>}
+		</CommandContainer>
+	);
 };
 
 const SideBar = () => {
-  const commands = useSelector((state: RootState) => state.commands.commands);
+	const commands = useSelector((state: RootState) => state.commands.commands);
 
-  return (
-    <SideBarContainer>
-      {commands?.map((command, index) => (
-        <Command key={index} title={command.title} commandID={command.id} />
-      ))}
-    </SideBarContainer>
-  );
+	return (
+		<SideBarContainer>
+			{commands?.map((command, index) => (
+				<Command key={index} command={command} />
+			))}
+		</SideBarContainer>
+	);
 };
 
 export default SideBar;
