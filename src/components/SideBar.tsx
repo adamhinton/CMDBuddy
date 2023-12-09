@@ -126,6 +126,7 @@ export const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
 	return <Droppable {...props}>{children}</Droppable>;
 };
 
+// A single Command. Just displays its title, DnD grabber, edit and delete button
 const Command = ({
 	command,
 	dragHandleProps,
@@ -179,6 +180,7 @@ const Command = ({
 	};
 
 	useEffect(() => {
+		// Cancel title editing if user clicks away
 		const handleOutsideClick = (e: MouseEvent) => {
 			if (
 				editInputRef.current &&
@@ -201,6 +203,7 @@ const Command = ({
 
 	return (
 		<CommandContainer>
+			{/* Handle that user holds down to DnD */}
 			<DragHandle {...dragHandleProps}>⋮⋮</DragHandle>
 			{isEditing ? (
 				<EditInput
@@ -215,6 +218,7 @@ const Command = ({
 			) : (
 				<Title>{title}</Title>
 			)}
+			{/* container of edit and delete buttons */}
 			<IconContainer>
 				<EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
 				{showConfirm ? (
@@ -233,7 +237,7 @@ const SideBar = () => {
 	const dispatch = useDispatch();
 	const commands = useSelector((state: RootState) => state.commands.commands);
 
-	// localCommands is used for drag and drop changes of the commands' order
+	// localCommands is used to locally track drag and drop changes of the commands' order, before the user hits Save
 	const [localCommands, setLocalCommands] = useState(commands || []);
 	// Track if user is currently editing order with DnD.
 	const [hasChanges, setHasChanges] = useState(false);
@@ -248,9 +252,6 @@ const SideBar = () => {
 
 		setLocalCommands(items);
 		setHasChanges(true); // tracks if user is currently changing order of commands with DnD
-
-		// Dispatch action to update order in Redux and DB here
-		// dispatch(reorderCommands(items));
 	};
 
 	// User has saved their DnD changes to command order, so save that to redux state and db
