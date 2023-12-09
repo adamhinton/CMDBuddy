@@ -279,12 +279,15 @@ const SideBar = () => {
 
 		console.log("commandsToUpdate:", commandsToUpdate);
 
+		// Dispatch the updatedCommands array to Redux
+		dispatch(reorderCommands(updatedCommands));
+		setHasChanges(false);
+
 		// Update each changed command in the database
 		for (const command of commandsToUpdate) {
 			const input = {
 				id: command.id,
 				order: command.order,
-				// ... include other necessary fields from the command object
 			};
 
 			try {
@@ -292,16 +295,10 @@ const SideBar = () => {
 					graphqlOperation(updateCommand, { input })
 				);
 				console.log("newCommandWithOrder:", newCommandWithOrder);
-				// Handle successful update if needed
 			} catch (error) {
 				console.error("Error updating command:", error);
-				// Handle error, potentially show a notification to the user
 			}
 		}
-
-		// Dispatch the updatedCommands array to Redux
-		dispatch(reorderCommands(updatedCommands));
-		setHasChanges(false);
 	};
 
 	// Cancel command order edits and revert the localCommands to match Redux state
