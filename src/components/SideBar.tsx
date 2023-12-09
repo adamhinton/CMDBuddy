@@ -5,6 +5,10 @@
 // Delete whole command
 // Clicking a command brings it up in the main UI (TODO)
 // Drag and Drop: Can re-order commands in Sidebar. This updates their order in redux state and the db.
+// The DnD is the reason for `localCommands` state. localCommands reflects the unsaved changes to commands order. We only pass those to redux state (and the db) when they hit Save.
+
+// TODO: Getting this error because of DnD somewhere. Look in to it.
+// VM1313:3 Symbol.observable as defined by Redux and Redux DevTools do not match. This could cause your app to behave differently if the DevTools are not loaded. Consider polyfilling Symbol.observable before Redux is imported or avoid polyfilling Symbol.observable altogether.
 
 "use client";
 
@@ -228,7 +232,11 @@ const Command = ({
 const SideBar = () => {
 	const dispatch = useDispatch();
 	const commands = useSelector((state: RootState) => state.commands.commands);
+
+	// localCommands is used for drag and drop changes of the commands' order
 	const [localCommands, setLocalCommands] = useState(commands || []);
+	// Track if user is currently editing order with DnD.
+	const [hasChanges, setHasChanges] = useState(false);
 
 	const onDragEnd = (result: any) => {
 		console.log("onDragEnd");
@@ -239,13 +247,34 @@ const SideBar = () => {
 		items.splice(result.destination.index, 0, reorderedItem);
 
 		setLocalCommands(items);
+		setHasChanges(true); // tracks if user is currently changing order of commands with DnD
 
 		// Dispatch action to update order in Redux and DB here
-		dispatch(reorderCommands(items));
+		// dispatch(reorderCommands(items));
+	};
+
+	// User has saved their DnD changes to command order, so save that to redux state and db
+	const handleDnDSave = () => {
+		// Dispatch the update to Redux
+		dispatch(reorderCommands(localCommands));
+		setHasChanges(false);
+		// TODO: Save changes to db as well
+	};
+
+	// Cancel command order edits and revert the localCommands to match Redux state
+	const handleDnDCancel = () => {
+		setLocalCommands(commands!);
+		setHasChanges(false);
 	};
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
+			{hasChanges && (
+				<div>
+					<button onClick={handleDnDSave}>Save</button>
+					<button onClick={handleDnDCancel}>Cancel</button>
+				</div>
+			)}
 			<StrictModeDroppable droppableId="commands">
 				{(provided) => (
 					<SideBarContainer
