@@ -255,11 +255,48 @@ const SideBar = () => {
 	};
 
 	// User has saved their DnD changes to command order, so save that to redux state and db
-	const handleDnDSave = () => {
-		// Dispatch the update to Redux
-		dispatch(reorderCommands(localCommands));
+	const handleDnDSave = async () => {
+		// Assign new order based on the current index in localCommands
+		const updatedCommands = localCommands.map((cmd, index) => ({
+			...cmd,
+			order: index + 1,
+		}));
+
+		// Create a map of the original order for quick lookup
+		const originalOrderMap = new Map(
+			commands!.map((cmd) => [cmd.id, cmd.order])
+		);
+
+		// Find commands whose order has changed
+		const commandsToUpdate = updatedCommands.filter(
+			(cmd) => originalOrderMap.get(cmd.id) !== cmd.order
+		);
+
+		console.log("commandsToUpdate:", commandsToUpdate);
+
+		// Update each changed command in the database
+		for (const command of commandsToUpdate) {
+			const input = {
+				id: command.id,
+				order: command.order,
+				// ... include other necessary fields from the command object
+			};
+
+			try {
+				const newCommandWithOrder = await API.graphql(
+					graphqlOperation(updateCommand, { input })
+				);
+				console.log("newCommandWithOrder:", newCommandWithOrder);
+				// Handle successful update if needed
+			} catch (error) {
+				console.error("Error updating command:", error);
+				// Handle error, potentially show a notification to the user
+			}
+		}
+
+		// Dispatch the updatedCommands array to Redux
+		dispatch(reorderCommands(updatedCommands));
 		setHasChanges(false);
-		// TODO: Save changes to db as well
 	};
 
 	// Cancel command order edits and revert the localCommands to match Redux state
@@ -272,7 +309,7 @@ const SideBar = () => {
 		<DragDropContext onDragEnd={onDragEnd}>
 			{hasChanges && (
 				<div>
-					<button onClick={handleDnDSave}>Save</button>
+					<button onClick={async () => await handleDnDSave()}>Save</button>
 					<button onClick={handleDnDCancel}>Cancel</button>
 				</div>
 			)}
