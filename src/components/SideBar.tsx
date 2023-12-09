@@ -242,6 +242,11 @@ const SideBar = () => {
 	// Track if user is currently editing order with DnD.
 	const [hasChanges, setHasChanges] = useState(false);
 
+	// UseEffect to synchronize localCommands with Redux state
+	useEffect(() => {
+		commands && commands.length > 0 && setLocalCommands(commands);
+	}, [commands]); // Dependency array includes 'commands' from Redux state
+
 	const onDragEnd = (result: any) => {
 		console.log("onDragEnd");
 		if (!result.destination) return;
