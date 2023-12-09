@@ -7,7 +7,7 @@
 // Drag and Drop: Can re-order commands in Sidebar. This updates their order in redux state and the db.
 // The DnD is the reason for `localCommands` state. localCommands reflects the unsaved changes to commands order. We only pass those to redux state (and the db) when they hit Save.
 
-// TODO: Getting this error because of DnD somewhere. Look in to it.
+// TODO: Getting this error because of DnD somewhere. Look in to it. It doesn't seem to affect functionality.
 // VM1313:3 Symbol.observable as defined by Redux and Redux DevTools do not match. This could cause your app to behave differently if the DevTools are not loaded. Consider polyfilling Symbol.observable before Redux is imported or avoid polyfilling Symbol.observable altogether.
 
 "use client";
