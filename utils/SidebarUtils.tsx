@@ -8,7 +8,6 @@ import {
 	deleteParameter,
 	deleteCommand as deleteCommandMutation,
 } from "@/graphql/mutations";
-import { useDispatch } from "react-redux";
 import { editCommandTitle, deleteCommand } from "../redux/slices/commandsSlice";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
 import { reorderCommands } from "../redux/slices/commandsSlice";
