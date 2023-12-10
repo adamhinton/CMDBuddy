@@ -48,6 +48,7 @@ export const IconContainer = styled.div`
 	align-items: center;
 `;
 
+// Input for editing command's title
 export const EditInput = styled.input`
 	flex-grow: 1;
 	border: 2px solid blue;
@@ -57,6 +58,7 @@ export const EditInput = styled.input`
 	}
 `;
 
+// Command's Title
 export const Title = styled.span`
 	flex-grow: 1;
 	overflow: hidden;
@@ -71,12 +73,14 @@ export const EditButton = styled.button`
 	cursor: pointer;
 `;
 
+// Trash icon to delete Command
 export const DeleteButton = styled.button`
 	background: none;
 	border: none;
 	cursor: pointer;
 `;
 
+// Confirm deleting Command
 export const ConfirmIcon = styled.span`
 	margin-left: 5px;
 	cursor: pointer;
