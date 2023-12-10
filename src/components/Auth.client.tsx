@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Amplify } from "aws-amplify";
-import config from "../aws-exports";
 import { Auth } from "aws-amplify";
 import { useAuthActions } from "../../utils/authUtils";
 import { useDispatch } from "react-redux";
 import { setIsDarkMode } from "../../redux/slices/darkModeSlice";
 import { getUserDarkModePreference } from "../../utils/darkModeUtils";
-
+import config from "../../src/aws-exports";
 // Amplify.configure({ config, ssr: true });
+
+// >>New - Configuring Auth Module
+Auth.configure(config);
 
 // TODO: These two cognito types are defined in two spots; merge them and export them.
 interface CognitoLoggedInUserAttributes {
