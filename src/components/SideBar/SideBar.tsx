@@ -15,19 +15,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/store";
+import { RootState } from "../../../redux/store";
 import {
 	editCommandTitle,
 	deleteCommand,
 	reorderCommands,
-} from "../../redux/slices/commandsSlice";
+} from "../../../redux/slices/commandsSlice";
 import { API, graphqlOperation } from "aws-amplify";
 import {
 	updateCommand,
 	deleteCommand as deleteCommandMutation,
 	deleteParameter,
 } from "@/graphql/mutations";
-import { CMDBuddyCommand } from "../../utils/zod/CommandSchema";
+import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import {
 	DragDropContext,
 	Droppable,
