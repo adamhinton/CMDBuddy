@@ -33,7 +33,7 @@ import {
 	Droppable,
 	Draggable,
 	DroppableProps,
-} from "react-beautiful-dnd";
+} from "@hello-pangea/dnd";
 
 const SideBarContainer = styled.div`
 	width: 250px;
