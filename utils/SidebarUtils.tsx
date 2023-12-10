@@ -11,6 +11,7 @@ import {
 import { useDispatch } from "react-redux";
 import { editCommandTitle, deleteCommand } from "../redux/slices/commandsSlice";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
+import { reorderCommands } from "../redux/slices/commandsSlice";
 
 // Styled components
 export const SideBarContainer = styled.div`
@@ -83,6 +84,55 @@ export const ConfirmIcon = styled.span`
 `;
 
 // Utility functions
+
+// User has saved their DnD changes to command order, so save that to redux state and db
+const handleDnDSave = async (
+	localCommands: CMDBuddyCommand[],
+	dispatch: Function,
+	originalCommands: CMDBuddyCommand[],
+	setHasChanges: Function,
+	setLocalCommands: Function
+) => {
+	// Assign new order based on the current index in localCommands
+	const updatedCommands = localCommands.map((cmd, index) => ({
+		...cmd,
+		order: index + 1,
+	}));
+
+	// Create a map of the original order for quick lookup
+	const originalOrderMap = new Map(
+		originalCommands!.map((cmd) => [cmd.id, cmd.order])
+	);
+
+	// Find commands whose order has changed
+	const commandsToUpdate = updatedCommands.filter(
+		(cmd) => originalOrderMap.get(cmd.id) !== cmd.order
+	);
+
+	console.log("commandsToUpdate:", commandsToUpdate);
+
+	// Dispatch the updatedCommands array to Redux
+	dispatch(reorderCommands(updatedCommands));
+	setHasChanges(false);
+
+	// Update each changed command in the database
+	for (const command of commandsToUpdate) {
+		const input = {
+			id: command.id,
+			order: command.order,
+		};
+
+		try {
+			const newCommandWithOrder = await API.graphql(
+				graphqlOperation(updateCommand, { input })
+			);
+			console.log("newCommandWithOrder:", newCommandWithOrder);
+		} catch (error) {
+			console.error("Error updating command:", error);
+		}
+	}
+};
+
 const handleCommandTitlesEditSubmit = async (
 	commandID: string,
 	editedTitle: string,
@@ -123,4 +173,5 @@ const handleCommandDelete = async (
 export const SideBarUtils = {
 	handleCommandTitlesEditSubmit,
 	handleCommandDelete,
+	handleDnDSave,
 };

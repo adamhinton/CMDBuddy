@@ -16,17 +16,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
-import {
-	editCommandTitle,
-	deleteCommand,
-	reorderCommands,
-} from "../../../redux/slices/commandsSlice";
 import { SideBarUtils } from "../../../utils/SidebarUtils";
-import { API, graphqlOperation } from "aws-amplify";
-import {
-	updateCommand,
-	deleteCommand as deleteCommandMutation,
-} from "@/graphql/mutations";
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import {
 	DragDropContext,
@@ -35,6 +25,7 @@ import {
 	DroppableProps,
 } from "@hello-pangea/dnd";
 
+// Styled components
 import {
 	CommandContainer,
 	DragHandle,
@@ -47,7 +38,8 @@ import {
 	SideBarContainer,
 } from "../../../utils/SidebarUtils";
 
-const { handleCommandTitlesEditSubmit, handleCommandDelete } = SideBarUtils;
+const { handleCommandTitlesEditSubmit, handleCommandDelete, handleDnDSave } =
+	SideBarUtils;
 
 // This is a fix for an issue where DnD didn't play nice with Strict Mode. plays a quick animation before performing the action.
 // Don't ask me why this is necessary, I just got an error and copied the solution off of Google.
@@ -166,48 +158,6 @@ const SideBar = () => {
 		setHasChanges(true); // tracks if user is currently changing order of commands with DnD
 	};
 
-	// User has saved their DnD changes to command order, so save that to redux state and db
-	const handleDnDSave = async () => {
-		// Assign new order based on the current index in localCommands
-		const updatedCommands = localCommands.map((cmd, index) => ({
-			...cmd,
-			order: index + 1,
-		}));
-
-		// Create a map of the original order for quick lookup
-		const originalOrderMap = new Map(
-			commands!.map((cmd) => [cmd.id, cmd.order])
-		);
-
-		// Find commands whose order has changed
-		const commandsToUpdate = updatedCommands.filter(
-			(cmd) => originalOrderMap.get(cmd.id) !== cmd.order
-		);
-
-		console.log("commandsToUpdate:", commandsToUpdate);
-
-		// Dispatch the updatedCommands array to Redux
-		dispatch(reorderCommands(updatedCommands));
-		setHasChanges(false);
-
-		// Update each changed command in the database
-		for (const command of commandsToUpdate) {
-			const input = {
-				id: command.id,
-				order: command.order,
-			};
-
-			try {
-				const newCommandWithOrder = await API.graphql(
-					graphqlOperation(updateCommand, { input })
-				);
-				console.log("newCommandWithOrder:", newCommandWithOrder);
-			} catch (error) {
-				console.error("Error updating command:", error);
-			}
-		}
-	};
-
 	// Cancel command order edits and revert the localCommands to match Redux state
 	const handleDnDCancel = () => {
 		setLocalCommands(commands!);
@@ -218,7 +168,19 @@ const SideBar = () => {
 		<DragDropContext onDragEnd={onDragEnd}>
 			{hasChanges && (
 				<div>
-					<button onClick={async () => await handleDnDSave()}>Save</button>
+					<button
+						onClick={async () =>
+							await handleDnDSave(
+								localCommands,
+								dispatch,
+								commands!,
+								setHasChanges,
+								setLocalCommands
+							)
+						}
+					>
+						Save
+					</button>
 					<button onClick={handleDnDCancel}>Cancel</button>
 				</div>
 			)}
