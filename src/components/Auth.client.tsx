@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { setIsDarkMode } from "../../redux/slices/darkModeSlice";
 import { getUserDarkModePreference } from "../../utils/darkModeUtils";
 
-Amplify.configure({ config, ssr: true });
+// Amplify.configure({ config, ssr: true });
 
 // TODO: These two cognito types are defined in two spots; merge them and export them.
 interface CognitoLoggedInUserAttributes {

@@ -3,7 +3,7 @@ import { Amplify } from "aws-amplify";
 import config from "../../src/aws-exports";
 import { CMDBuddyUser } from "../../utils/zod/UserSchema";
 
-Amplify.configure({ config, ssr: true });
+// Amplify.configure({ config, ssr: true });
 
 interface AuthState {
 	user: null | CMDBuddyUser;

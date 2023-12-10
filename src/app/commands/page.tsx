@@ -7,7 +7,7 @@ import config from "../../aws-exports";
 import { CMDBuddyUser } from "../../../utils/zod/UserSchema";
 import Link from "next/link";
 import CommandCreationForm from "@/components/CommandCreationComponents/CommandCreationForm";
-Amplify.configure(config);
+// Amplify.configure(config);
 
 const Commands = () => {
 	const currentUser: CMDBuddyUser | null = useSelector(
