@@ -36,6 +36,7 @@ import {
 	DeleteButton,
 	SideBarContainer,
 } from "../../../utils/SidebarUtils";
+import CommandInSideBar from "./CommandInSideBar";
 
 const { handleCommandTitlesEditSubmit, handleCommandDelete, handleDnDSave } =
 	SideBarUtils;
@@ -62,74 +63,6 @@ export const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
 };
 
 // A single Command. Just displays its title, DnD grabber, edit and delete button
-const Command = ({
-	command,
-	dragHandleProps,
-}: {
-	command: CMDBuddyCommand;
-	dragHandleProps: any;
-}) => {
-	const { title, id: commandID, parameters } = command;
-	const dispatch = useDispatch();
-	const [isEditing, setIsEditing] = useState(false);
-	const [editedTitle, setEditedTitle] = useState(title);
-	const [showConfirm, setShowConfirm] = useState(false);
-	const editInputRef = useRef<HTMLInputElement>(null);
-
-	useEffect(() => {
-		// Cancel title editing or deletion confirmation if user clicks away
-		const handleOutsideClick = (e: MouseEvent) => {
-			// Check if the click is outside the command container
-			if (!editInputRef.current?.contains(e.target as Node)) {
-				setIsEditing(false);
-				setEditedTitle(title);
-				setShowConfirm(false);
-			}
-		};
-
-		// Attach the event listener
-		document.addEventListener("click", handleOutsideClick);
-
-		return () => {
-			// Clean up the event listener
-			document.removeEventListener("click", handleOutsideClick);
-		};
-	}, [isEditing, showConfirm, title]);
-
-	return (
-		<CommandContainer>
-			{/* Handle that user holds down to DnD */}
-			<DragHandle {...dragHandleProps}>⋮⋮</DragHandle>
-			{isEditing ? (
-				<EditInput
-					ref={editInputRef}
-					value={editedTitle}
-					onChange={(e) => setEditedTitle(e.target.value)}
-					onBlur={(e) => {
-						handleCommandTitlesEditSubmit(command.id, editedTitle, dispatch);
-					}}
-					onKeyDown={(e) =>
-						e.key === "Enter" &&
-						handleCommandTitlesEditSubmit(command.id, editedTitle, dispatch)
-					}
-				/>
-			) : (
-				<Title>{title}</Title>
-			)}
-			{/* container of edit and delete buttons */}
-			<IconContainer>
-				<EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
-				{showConfirm ? (
-					<ConfirmIcon onClick={() => handleCommandDelete(command, dispatch)}>
-						✅
-					</ConfirmIcon>
-				) : (
-					<DeleteButton onClick={() => setShowConfirm(true)}>🗑️</DeleteButton>
-				)}
-			</IconContainer>
-		</CommandContainer>
-	);
-};
 
 const SideBar = () => {
 	const dispatch = useDispatch();
@@ -198,7 +131,7 @@ const SideBar = () => {
 								{(provided) => {
 									return (
 										<div ref={provided.innerRef} {...provided.draggableProps}>
-											<Command
+											<CommandInSideBar
 												command={command}
 												dragHandleProps={provided.dragHandleProps}
 											/>

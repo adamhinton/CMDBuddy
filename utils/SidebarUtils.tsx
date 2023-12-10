@@ -50,10 +50,10 @@ export const IconContainer = styled.div`
 
 export const EditInput = styled.input`
 	flex-grow: 1;
-	border: 2px solid blue; /* Example outline style */
+	border: 2px solid blue;
 	padding: 4px;
 	&:focus {
-		outline: 3px solid green; /* More prominent outline when focused */
+		outline: 3px solid green;
 	}
 `;
 
