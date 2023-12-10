@@ -181,23 +181,21 @@ const Command = ({
 	};
 
 	useEffect(() => {
-		// Cancel title editing if user clicks away
+		// Cancel title editing or deletion confirmation if user clicks away
 		const handleOutsideClick = (e: MouseEvent) => {
-			if (
-				editInputRef.current &&
-				!editInputRef.current.contains(e.target as Node)
-			) {
+			// Check if the click is outside the command container
+			if (!editInputRef.current?.contains(e.target as Node)) {
 				setIsEditing(false);
 				setEditedTitle(title);
 				setShowConfirm(false);
 			}
 		};
 
-		if (isEditing || showConfirm) {
-			document.addEventListener("click", handleOutsideClick);
-		}
+		// Attach the event listener
+		document.addEventListener("click", handleOutsideClick);
 
 		return () => {
+			// Clean up the event listener
 			document.removeEventListener("click", handleOutsideClick);
 		};
 	}, [isEditing, showConfirm, title]);
