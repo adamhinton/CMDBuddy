@@ -1,4 +1,7 @@
-import CommandsSideBar from "@/components/SideBar";
+// Sidebar is the list of user's Commands
+// They can edit the Command's title, rearrange their order or delete commands
+// Clicking a Command brings it up in the main UI
+import SideBar from "@/components/SideBar";
 
 export default function CommandsLayout({
 	children,
@@ -7,7 +10,7 @@ export default function CommandsLayout({
 }) {
 	return (
 		<>
-			<CommandsSideBar />
+			<SideBar />
 			{children}
 		</>
 	);
