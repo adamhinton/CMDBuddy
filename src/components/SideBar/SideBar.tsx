@@ -26,7 +26,6 @@ import { API, graphqlOperation } from "aws-amplify";
 import {
 	updateCommand,
 	deleteCommand as deleteCommandMutation,
-	deleteParameter,
 } from "@/graphql/mutations";
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import {
