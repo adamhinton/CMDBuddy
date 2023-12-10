@@ -46,6 +46,7 @@ const SideBarContainer = styled.div`
 // The little handle on left side of command that you hold down to drag and drop
 const DragHandle = styled.div`
 	width: 20px;
+	min-width: 20px;
 	height: 20px;
 	background-color: #ccc;
 	border-radius: 4px;
