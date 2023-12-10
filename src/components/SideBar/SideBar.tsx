@@ -21,6 +21,7 @@ import {
 	deleteCommand,
 	reorderCommands,
 } from "../../../redux/slices/commandsSlice";
+import { SideBarUtils } from "../../../utils/SidebarUtils";
 import { API, graphqlOperation } from "aws-amplify";
 import {
 	updateCommand,
@@ -35,76 +36,19 @@ import {
 	DroppableProps,
 } from "@hello-pangea/dnd";
 
-const SideBarContainer = styled.div`
-	width: 250px;
-	color: ${({ theme }) => theme.text};
-	height: 100vh;
-	overflow-y: auto;
-	padding: 10px;
-`;
+import {
+	CommandContainer,
+	DragHandle,
+	EditInput,
+	Title,
+	IconContainer,
+	EditButton,
+	ConfirmIcon,
+	DeleteButton,
+	SideBarContainer,
+} from "../../../utils/SidebarUtils";
 
-// The little handle on left side of command that you hold down to drag and drop
-const DragHandle = styled.div`
-	width: 20px;
-	min-width: 20px;
-	height: 20px;
-	background-color: #ccc;
-	border-radius: 4px;
-	margin-right: 10px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: grab;
-
-	&:active {
-		cursor: grabbing;
-	}
-`;
-
-const CommandContainer = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-`;
-
-const IconContainer = styled.div`
-	display: flex;
-	align-items: center;
-`;
-
-const EditInput = styled.input`
-	flex-grow: 1;
-	border: 2px solid blue;
-	padding: 4px;
-	&:focus {
-		outline: 3px solid green;
-	}
-`;
-
-const Title = styled.span`
-	flex-grow: 1;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-`;
-
-const EditButton = styled.button`
-	margin-right: 10px;
-	background: none;
-	border: none;
-	cursor: pointer;
-`;
-
-const DeleteButton = styled.button`
-	background: none;
-	border: none;
-	cursor: pointer;
-`;
-
-const ConfirmIcon = styled.span`
-	margin-left: 5px;
-	cursor: pointer;
-`;
+const { handleCommandTitlesEditSubmit, handleCommandDelete } = SideBarUtils;
 
 // This is a fix for an issue where DnD didn't play nice with Strict Mode. plays a quick animation before performing the action.
 // Don't ask me why this is necessary, I just got an error and copied the solution off of Google.
@@ -142,44 +86,6 @@ const Command = ({
 	const [showConfirm, setShowConfirm] = useState(false);
 	const editInputRef = useRef<HTMLInputElement>(null);
 
-	const handleCommandTitlesEditSubmit = async () => {
-		// Optimistic UI update
-		dispatch(editCommandTitle({ commandId: commandID, newTitle: editedTitle }));
-
-		// Update the database
-		const commandDetails = { id: commandID, title: editedTitle };
-		await API.graphql(
-			graphqlOperation(updateCommand, { input: commandDetails })
-		);
-
-		setIsEditing(false);
-		setEditedTitle(editedTitle);
-	};
-
-	const handleCommandDelete = async (command: CMDBuddyCommand) => {
-		// Optimistic UI update
-		dispatch(deleteCommand(command.id));
-		setShowConfirm(false);
-
-		// Delete each parameter
-		console.log("parameters.length:", parameters?.length);
-		if (parameters && parameters.length > 0) {
-			for (const parameter of parameters) {
-				console.log("parameter deleting:", parameter);
-				await API.graphql(
-					graphqlOperation(deleteParameter, {
-						input: { id: parameter.id },
-					})
-				);
-			}
-		}
-
-		// Delete the command from the database
-		await API.graphql(
-			graphqlOperation(deleteCommandMutation, { input: { id: command.id } })
-		);
-	};
-
 	useEffect(() => {
 		// Cancel title editing or deletion confirmation if user clicks away
 		const handleOutsideClick = (e: MouseEvent) => {
@@ -209,9 +115,12 @@ const Command = ({
 					ref={editInputRef}
 					value={editedTitle}
 					onChange={(e) => setEditedTitle(e.target.value)}
-					onBlur={handleCommandTitlesEditSubmit}
+					onBlur={(e) => {
+						handleCommandTitlesEditSubmit(command.id, editedTitle, dispatch);
+					}}
 					onKeyDown={(e) =>
-						e.key === "Enter" && handleCommandTitlesEditSubmit()
+						e.key === "Enter" &&
+						handleCommandTitlesEditSubmit(command.id, editedTitle, dispatch)
 					}
 				/>
 			) : (
@@ -221,7 +130,7 @@ const Command = ({
 			<IconContainer>
 				<EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
 				{showConfirm ? (
-					<ConfirmIcon onClick={() => handleCommandDelete(command)}>
+					<ConfirmIcon onClick={() => handleCommandDelete(command, dispatch)}>
 						✅
 					</ConfirmIcon>
 				) : (
