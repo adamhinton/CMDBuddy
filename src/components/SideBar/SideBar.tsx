@@ -16,7 +16,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { SideBarUtils } from "../../../utils/SidebarUtils";
-import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import {
 	DragDropContext,
 	Droppable,
@@ -25,17 +24,7 @@ import {
 } from "@hello-pangea/dnd";
 
 // Styled components
-import {
-	CommandContainer,
-	DragHandle,
-	EditInput,
-	Title,
-	IconContainer,
-	EditButton,
-	ConfirmIcon,
-	DeleteButton,
-	SideBarContainer,
-} from "../../../utils/SidebarUtils";
+import { SideBarContainer } from "../../../utils/SidebarUtils";
 import CommandInSideBar from "./CommandInSideBar";
 
 const { handleCommandTitlesEditSubmit, handleCommandDelete, handleDnDSave } =
@@ -79,7 +68,6 @@ const SideBar = () => {
 	}, [commands]); // Dependency array includes 'commands' from Redux state
 
 	const onDragEnd = (result: any) => {
-		console.log("onDragEnd");
 		if (!result.destination) return;
 
 		const items = Array.from(localCommands || []);

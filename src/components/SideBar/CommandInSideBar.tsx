@@ -1,13 +1,11 @@
+// README:
 // This is an individual Command - its title, DnD button, delete/edit icons
 // This is looped over in SideBar to display each Command
 
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
-// import {
-// 	SideBarUtils,
 
-// } from "./SideBarUtils"; // Adjust the path as needed
 import {
 	// Functions
 	SideBarUtils,
