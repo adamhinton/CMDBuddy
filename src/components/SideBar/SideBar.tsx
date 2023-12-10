@@ -55,17 +55,22 @@ export const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
 
 const SideBar = () => {
 	const dispatch = useDispatch();
-	const commands = useSelector((state: RootState) => state.commands.commands);
+	// The user will be editing the order of commands locally; this tracks original redux state commands
+	const reduxStateCommands = useSelector(
+		(state: RootState) => state.commands.commands
+	);
 
 	// localCommands is used to locally track drag and drop changes of the commands' order, before the user hits Save
-	const [localCommands, setLocalCommands] = useState(commands || []);
+	const [localCommands, setLocalCommands] = useState(reduxStateCommands || []);
 	// Track if user is currently editing order with DnD.
 	const [hasChanges, setHasChanges] = useState(false);
 
 	// UseEffect to synchronize localCommands with Redux state
 	useEffect(() => {
-		commands && commands.length > 0 && setLocalCommands(commands);
-	}, [commands]); // Dependency array includes 'commands' from Redux state
+		reduxStateCommands &&
+			reduxStateCommands.length > 0 &&
+			setLocalCommands(reduxStateCommands);
+	}, [reduxStateCommands]);
 
 	const onDragEnd = (result: any) => {
 		if (!result.destination) return;
@@ -80,7 +85,7 @@ const SideBar = () => {
 
 	// Cancel command order edits and revert the localCommands to match Redux state
 	const handleDnDCancel = () => {
-		setLocalCommands(commands!);
+		setLocalCommands(reduxStateCommands!);
 		setHasChanges(false);
 	};
 
@@ -93,7 +98,7 @@ const SideBar = () => {
 							await handleDnDSave(
 								localCommands,
 								dispatch,
-								commands!,
+								reduxStateCommands!,
 								setHasChanges,
 								setLocalCommands
 							)
