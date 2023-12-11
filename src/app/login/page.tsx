@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { API, graphqlOperation } from "aws-amplify";
 import { deleteUser as deleteUserMutation } from "@/graphql/mutations";
 
-Amplify.configure({ ...config });
+Amplify.configure({ ...config, ssr: true });
 Auth.configure(config);
 
 const Login = () => {
