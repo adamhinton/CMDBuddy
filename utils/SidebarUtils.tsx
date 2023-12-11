@@ -129,7 +129,6 @@ const handleDnDSave = async (
 			const newCommandWithOrder = await API.graphql(
 				graphqlOperation(updateCommand, { input })
 			);
-			console.log("newCommandWithOrder:", newCommandWithOrder);
 		} catch (error) {
 			console.error("Error updating command:", error);
 		}
