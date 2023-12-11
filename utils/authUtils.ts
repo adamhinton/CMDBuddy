@@ -63,7 +63,10 @@ export const useAuthActions = () => {
 			const darkModePreference = getUserDarkModePreference(loggedInUser);
 			dispatch(setIsDarkMode(darkModePreference));
 		} catch (error) {
-			console.error("Error setting user and commands to state:", error);
+			console.error(
+				"authUtils Error setting user and commands to state:",
+				error
+			);
 		}
 	};
 
