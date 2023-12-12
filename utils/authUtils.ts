@@ -36,6 +36,7 @@ export const useAuthActions = () => {
 					email: cognitoLoggedInUser.attributes.email,
 				})
 			);
+			console.log("userFromDB:", userFromDB);
 
 			// Set user info (except Commands) to User state
 			const loggedInUser: CMDBuddyUser = {

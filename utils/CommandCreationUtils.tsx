@@ -487,8 +487,6 @@ export const submitNewCommandAndParamsToDB = async (
 	}
 };
 
-// Placeholder function for fetching Command with Parameters
-// Replace this with your actual function to fetch command with parameters
 const fetchCommandWithParameters = async (commandID: string) => {
 	try {
 		const response = await API.graphql(
@@ -502,7 +500,7 @@ const fetchCommandWithParameters = async (commandID: string) => {
 		return commandWithParameters;
 	} catch (error) {
 		console.error("Error fetching command with parameters:", error);
-		return null; // or handle the error as appropriate for your application
+		return null;
 	}
 };
 
