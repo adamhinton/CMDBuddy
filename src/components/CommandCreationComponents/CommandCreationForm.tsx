@@ -9,7 +9,7 @@
 // Collapse Params && Collapse All && Expand All
 
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useRouter } from "next/navigation";
 import { addCommand } from "../../../redux/slices/commandsSlice";
