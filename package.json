@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@aws-amplify/ui-react": "^5.3.1",
+		"@hello-pangea/dnd": "^16.5.0",
 		"@hookform/resolvers": "^3.3.2",
 		"@reduxjs/toolkit": "^1.9.7",
 		"@types/styled-components": "^5.1.29",
