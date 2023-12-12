@@ -18,7 +18,7 @@ import {
 	ConfirmIcon,
 	CommandContainer,
 	DragHandle,
-} from "../../../utils/SidebarUtils";
+} from "../../../utils/SideBarUtils";
 
 const CommandInSideBar = ({
 	command,

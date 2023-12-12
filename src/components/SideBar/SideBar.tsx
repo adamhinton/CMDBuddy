@@ -15,7 +15,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { SideBarUtils } from "../../../utils/SidebarUtils";
 import {
 	DragDropContext,
 	Droppable,
@@ -24,7 +23,7 @@ import {
 } from "@hello-pangea/dnd";
 
 // Styled components
-import { SideBarContainer } from "../../../utils/SidebarUtils";
+import { SideBarContainer, SideBarUtils } from "../../../utils/SideBarUtils";
 import CommandInSideBar from "./CommandInSideBar";
 
 const { handleCommandTitlesEditSubmit, handleCommandDelete, handleDnDSave } =
