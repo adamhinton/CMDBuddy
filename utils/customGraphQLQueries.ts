@@ -1,6 +1,7 @@
 import { graphqlOperation } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
+import { CMDBuddyUser } from "./zod/UserSchema";
 
 // Gets Commands by userID along with Commands' Parameters
 export const customCommandsAndParametersByUserID = /* GraphQL */ `
@@ -124,7 +125,7 @@ const getSortedCommandsAndParameters = async (
 	// The user's Commands is data.userByEmail.items[0].commands
 
 	// Fetch data using the appropriate query
-	const data: any =
+	const userFromDB: any =
 		fetchBy === "email"
 			? graphqlOperation(customUserByEmail, {
 					email: identifier,
@@ -133,12 +134,19 @@ const getSortedCommandsAndParameters = async (
 					id: identifier,
 			  });
 
-	data.userByEmail.items.commands[0].sort(
+	const loggedInUser: CMDBuddyUser = {
+		id: userFromDB.data.userByEmail.items[0].id,
+		email_verified: true,
+		email: userFromDB.data.userByEmail.items[0].email,
+		darkMode: userFromDB.data.userByEmail.items[0].darkMode,
+	};
+
+	userFromDB.userByEmail.items.commands[0].sort(
 		(a: CMDBuddyCommand, b: CMDBuddyCommand) => a.order - b.order
 	);
 
 	// Sort Parameters within each Command
-	data.userByEmail.items.forEach((command: CMDBuddyCommand) => {
+	userFromDB.userByEmail.items.forEach((command: CMDBuddyCommand) => {
 		if (command.parameters && command.parameters.items) {
 			command.parameters.items.sort((a, b) => a.order - b.order);
 		}
