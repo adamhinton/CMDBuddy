@@ -1,4 +1,5 @@
 import CommandsSideBar from "@/components/CommandsSideBar";
+import SideBar from "@/components/SideBar/SideBar";
 
 export default function CommandsLayout({
 	children,
@@ -7,7 +8,7 @@ export default function CommandsLayout({
 }) {
 	return (
 		<>
-			<CommandsSideBar />
+			<SideBar />
 			{children}
 		</>
 	);
