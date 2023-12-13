@@ -5,6 +5,7 @@ import { setCommands, logOutCommands } from "../redux/slices/commandsSlice";
 import {
 	customCommandsAndParametersByUserID,
 	customUserByEmail,
+	getSortedCommandsAndParameters,
 } from "./customGraphQLQueries";
 import { CMDBuddyUser } from "./zod/UserSchema";
 import { getUserDarkModePreference } from "./darkModeUtils";
@@ -31,28 +32,21 @@ export const useAuthActions = () => {
 		cognitoLoggedInUser: CognitoLoggedInUser
 	) => {
 		try {
-			const userFromDB: GraphQLResult<any> = await API.graphql(
-				graphqlOperation(customUserByEmail, {
-					email: cognitoLoggedInUser.attributes.email,
-				})
+			// Get user's Commands (with each Command's Parameters) from db. Commands and parameters are sorted by their `order` property.
+			const userFromDB = await getSortedCommandsAndParameters(
+				"email",
+				cognitoLoggedInUser.attributes.email
 			);
+			console.log("userFromDB in authutils:", userFromDB);
 
-			// Set user info (except Commands) to User state
-			const loggedInUser: CMDBuddyUser = {
-				id: userFromDB.data.userByEmail.items[0].id,
-				email_verified: cognitoLoggedInUser.attributes.email_verified,
-				email: userFromDB.data.userByEmail.items[0].email,
-				darkMode: userFromDB.data.userByEmail.items[0].darkMode,
-			};
-			dispatch(setUser(loggedInUser));
+			// Set user info to auth state
+			dispatch(setUser(userFromDB));
 
-			// Now set Commands (and their Parameters) to Commands state
-			const userCommandsFromDB =
-				userFromDB.data.userByEmail.items[0].commands.items;
-			dispatch(setCommands(userCommandsFromDB));
+			// Now set Commands (and their Parameters) to Commands state, if they exist
+			userFromDB.commands && dispatch(setCommands(userFromDB.commands));
 
 			// Now set dark mode pref to state
-			const darkModePreference = getUserDarkModePreference(loggedInUser);
+			const darkModePreference = getUserDarkModePreference(userFromDB);
 			dispatch(setIsDarkMode(darkModePreference));
 		} catch (error) {
 			console.error("Error setting user and commands to state:", error);

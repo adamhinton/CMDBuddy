@@ -27,7 +27,6 @@ interface CognitoLoggedInUser {
 const getMyUser = async (): Promise<CognitoLoggedInUser | null> => {
 	try {
 		const cognitoLoggedInUser = await Auth.currentAuthenticatedUser();
-		console.log("cognitoLoggedInUser:", cognitoLoggedInUser);
 		return cognitoLoggedInUser;
 	} catch (error) {
 		console.error("Error fetching Cognito user:", error);
@@ -51,8 +50,14 @@ export default function AuthClientComponent(): null {
 	}, []);
 
 	useEffect(() => {
+		console.log("useEffect triggering in Auth.client");
+		console.log(
+			"cognitoLoggedInUser in auth.client useEffect:",
+			cognitoLoggedInUser
+		);
 		const updateState = async () => {
-			if (cognitoLoggedInUser) {
+			if (cognitoLoggedInUser !== null) {
+				console.log("updating state");
 				try {
 					await setUserAndCommandsToState(cognitoLoggedInUser);
 				} catch (error) {

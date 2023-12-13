@@ -53,7 +53,6 @@ export const toggleUserDarkModeInDB = async (
 	const user = await API.graphql(
 		graphqlOperation(getUser, { id: "e75148e1-7fbe-4c5f-bd5d-03f55ae6ce24" })
 	);
-	console.log("user in Header:", user);
 
 	try {
 		const input = {

@@ -454,7 +454,6 @@ export const submitNewCommandAndParamsToDB = async (
 		);
 		// @ts-ignore
 		const newCommandID = commandResponse.data.createCommand.id;
-		console.log("commandResponse:", commandResponse);
 
 		// Submit each Parameter with the new command's ID
 		const parameters = formData.parameters || [];
@@ -471,24 +470,13 @@ export const submitNewCommandAndParamsToDB = async (
 		// Fetch the complete command with parameters from the database
 		// Replace this with your actual fetch command function
 		completeCommand = await fetchCommandWithParameters(newCommandID);
-
-		console.log("completeCommand:", completeCommand);
-
-		// Print the complete Command for now (later, you will update Redux state)
-		console.log("Fetched Command with Parameters:", completeCommand);
 	} catch (error) {
-		// Handle any errors
 		console.error("Error submitting command and parameters:", error);
-		// showToast("Error in submission. Please try again.");
 	} finally {
-		// Re-enable submit button
-		// enableSubmitButton();
 		return completeCommand!;
 	}
 };
 
-// Placeholder function for fetching Command with Parameters
-// Replace this with your actual function to fetch command with parameters
 const fetchCommandWithParameters = async (commandID: string) => {
 	try {
 		const response = await API.graphql(
@@ -502,7 +490,7 @@ const fetchCommandWithParameters = async (commandID: string) => {
 		return commandWithParameters;
 	} catch (error) {
 		console.error("Error fetching command with parameters:", error);
-		return null; // or handle the error as appropriate for your application
+		return null;
 	}
 };
 
