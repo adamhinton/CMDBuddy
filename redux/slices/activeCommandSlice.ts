@@ -20,15 +20,16 @@ export const activeCommandSlice = createSlice({
 	name: "activeCommand",
 	initialState,
 	reducers: {
-		setactiveCommand: (state, action: PayloadAction<CMDBuddyCommand>) => {
+		setActiveCommand: (state, action: PayloadAction<CMDBuddyCommand>) => {
 			state.activeCommand = action.payload;
 		},
 
-		deleteactiveCommand: (state) => {
+		deleteActiveCommand: (state) => {
 			state.activeCommand = null;
 		},
 	},
 });
 
-export const { setactiveCommand } = activeCommandSlice.actions;
+export const { setActiveCommand, deleteActiveCommand } =
+	activeCommandSlice.actions;
 export default activeCommandSlice.reducer;
