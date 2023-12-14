@@ -16,6 +16,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { SideBarUtils } from "../../../utils/SideBarUtils";
+import Link from "next/link";
 import {
 	DragDropContext,
 	Droppable,
@@ -91,6 +92,7 @@ const SideBar = () => {
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
+			<Link href="/commands/1">Commands/1</Link>
 			{hasChanges && (
 				<div>
 					<button
