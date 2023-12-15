@@ -454,7 +454,6 @@ export const submitNewCommandAndParamsToDB = async (
 		);
 		// @ts-ignore
 		const newCommandID = commandResponse.data.createCommand.id;
-		console.log("commandResponse:", commandResponse);
 
 		// Submit each Parameter with the new command's ID
 		const parameters = formData.parameters || [];
@@ -471,18 +470,9 @@ export const submitNewCommandAndParamsToDB = async (
 		// Fetch the complete command with parameters from the database
 		// Replace this with your actual fetch command function
 		completeCommand = await fetchCommandWithParameters(newCommandID);
-
-		console.log("completeCommand:", completeCommand);
-
-		// Print the complete Command for now (later, you will update Redux state)
-		console.log("Fetched Command with Parameters:", completeCommand);
 	} catch (error) {
-		// Handle any errors
 		console.error("Error submitting command and parameters:", error);
-		// showToast("Error in submission. Please try again.");
 	} finally {
-		// Re-enable submit button
-		// enableSubmitButton();
 		return completeCommand!;
 	}
 };

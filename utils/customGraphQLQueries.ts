@@ -140,7 +140,6 @@ export const getSortedCommandsAndParameters = async (
 					})
 			  );
 
-	console.log("userFromDB right after customuserby:", userFromDB);
 	// Mutating the db response to look like we want
 	const loggedInUser: CMDBuddyUser = {
 		id: userFromDB.data.userByEmail.items[0].id,
@@ -171,6 +170,5 @@ export const getSortedCommandsAndParameters = async (
 		}
 	});
 
-	console.log("loggedInUser: return object of fetch", loggedInUser);
 	return loggedInUser;
 };

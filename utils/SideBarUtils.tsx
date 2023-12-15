@@ -112,8 +112,6 @@ const handleDnDSave = async (
 		(cmd) => originalOrderMap.get(cmd.id) !== cmd.order
 	);
 
-	console.log("commandsToUpdate:", commandsToUpdate);
-
 	// Dispatch the updatedCommands array to Redux
 	dispatch(reorderCommands(updatedCommands));
 	setHasChanges(false);

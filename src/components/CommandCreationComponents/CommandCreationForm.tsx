@@ -121,7 +121,6 @@ const CommandCreationForm: React.FC = () => {
 
 		console.time("start submit");
 		const { id, email } = loggedInUser!;
-		console.log(data);
 
 		data.order = 1;
 
@@ -154,8 +153,6 @@ const CommandCreationForm: React.FC = () => {
 			console.error("Validation failed");
 			return; // Stop submission if validation fails
 		}
-
-		console.log("TRANSFORMED data:", data.parameters);
 
 		const completedCommandFromDB = await submitNewCommandAndParamsToDB(
 			data,
