@@ -5,7 +5,7 @@ import config from "../../../aws-exports";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { CMDBuddyCommand } from "../../../../utils/zod/CommandSchema";
-import CommandExecutionForm from "@/components/CommandExecutionForm";
+import CommandExecutionForm from "@/components/CommandExecutionComponents/CommandExecutionForm";
 Amplify.configure(config);
 
 console.log(
