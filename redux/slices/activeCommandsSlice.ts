@@ -26,7 +26,12 @@ export const activeCommandsSlice = createSlice({
 			state.activeCommands = action.payload;
 		},
 		addNewActiveCommand: (state, action: PayloadAction<ActiveCommandID>) => {
-			state.activeCommands.unshift(action.payload);
+			// Check if the command ID already exists in the activeCommands array
+			if (!state.activeCommands.includes(action.payload)) {
+				// If it doesn't exist, add the new commandID
+				state.activeCommands.unshift(action.payload);
+			}
+			// If the ID already exists, do nothing
 		},
 		removeSingleActiveCommand: (
 			state,
