@@ -5,6 +5,7 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
+import { addNewActiveCommand } from "../../../redux/slices/activeCommandsSlice";
 
 import {
 	// Functions
@@ -60,7 +61,12 @@ const CommandInSideBar = ({
 	};
 
 	return (
-		<CommandContainer>
+		<CommandContainer
+			onClick={(e) => {
+				e.preventDefault();
+				dispatch(addNewActiveCommand(command.id));
+			}}
+		>
 			<DragHandle {...dragHandleProps}>⋮⋮</DragHandle>
 			{isEditing ? (
 				<EditInput
