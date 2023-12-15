@@ -120,9 +120,10 @@ export const customGetCommandWithParameters = /* GraphQL */ `
 const getSortedCommandsAndParameters = async (
 	fetchBy: "email" | "userID",
 	identifier: string
-) => {
+): Promise<CMDBuddyUser> => {
 	// NOTE: The user in question is data.userByEmail.items[0]
 	// The user's Commands is data.userByEmail.items[0].commands
+	// The GraphQL response has some funny formats like that so we mutate it a bit below.
 
 	// Fetch data using the appropriate query
 	const userFromDB: any =
@@ -134,23 +135,37 @@ const getSortedCommandsAndParameters = async (
 					id: identifier,
 			  });
 
+	// Mutating the db response to look like we want
 	const loggedInUser: CMDBuddyUser = {
 		id: userFromDB.data.userByEmail.items[0].id,
 		email_verified: true,
 		email: userFromDB.data.userByEmail.items[0].email,
 		darkMode: userFromDB.data.userByEmail.items[0].darkMode,
+		commands: userFromDB.userByEmail.items[0].commands,
 	};
 
+	// The graphQL response returns parameters as `items`, but we just want an array so we mutate like so.
+	loggedInUser.commands?.forEach((cmd, index, array) => {
+		const incorrectlyFormattedParameters = cmd.parameters;
+		// @ts-ignore
+		cmd.parameters = incorrectlyFormattedParameters.items;
+	});
+
+	// Now to sort Commands by their `order` property
+	// if they have the same order that's fine, they'll just appear in the order they came from the db
 	userFromDB.userByEmail.items.commands[0].sort(
 		(a: CMDBuddyCommand, b: CMDBuddyCommand) => a.order - b.order
 	);
 
-	// Sort Parameters within each Command
-	userFromDB.userByEmail.items.forEach((command: CMDBuddyCommand) => {
-		if (command.parameters && command.parameters.items) {
-			command.parameters.items.sort((a, b) => a.order - b.order);
+	// Now sort Parameters by Order as well.
+	// if they have the same order that's fine, they'll just appear in the order they came from the db
+	loggedInUser.commands?.forEach((command: CMDBuddyCommand) => {
+		if (command.parameters) {
+			command.parameters.sort((a, b) => a.order - b.order);
 		}
 	});
 
-	return data;
+	console.log("userFromDB at end:", userFromDB);
+
+	return userFromDB;
 };
