@@ -7,6 +7,7 @@
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import { removeSingleActiveCommand } from "../../../redux/slices/activeCommandsSlice";
 import { useDispatch } from "react-redux";
+import ParameterExecutionForm from "./ParameterExecutionForm";
 
 const removeCommandOnClick = (
 	e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -19,10 +20,14 @@ const removeCommandOnClick = (
 
 const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 	const dispatch = useDispatch();
+	const parameters = command.parameters;
 
 	return (
 		<section>
 			<h3>{command.title}</h3>
+			{parameters?.map((param) => {
+				return <ParameterExecutionForm parameter={param} key={param.id} />;
+			})}
 			<button
 				onClick={(e) => {
 					removeCommandOnClick(e, command.id, dispatch);
