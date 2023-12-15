@@ -25,11 +25,15 @@ const LiveCommandExecutionPreview = ({
 	parameters?.forEach((param) => {
 		const value = watch(param.name);
 		if (param.type === "FLAG") {
-			commandPreview += value ? ` ${param.name}` : "";
+			if (value === "On") {
+				// Append flag only if value is "On"
+				commandPreview += ` ${param.name}`;
+			}
 		} else {
 			commandPreview += ` ${param.name}=${value || ""}`;
 		}
 	});
+	// NOTE: FLAG type Parameters go *after* the baseCommand; everything else goes *before* the baseCommand.
 
 	return <div>{commandPreview}</div>;
 };
