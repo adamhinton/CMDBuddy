@@ -2,8 +2,6 @@ import React from "react";
 import { FieldValues, RegisterOptions, useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
 
-const bob: RegisterOptions<FieldValues, string>;
-
 const ParameterExecutionForm = ({
 	parameter,
 }: {
@@ -25,7 +23,6 @@ const ParameterExecutionForm = ({
 							pattern: parameter.validationRegex
 								? new RegExp(parameter.validationRegex)
 								: undefined,
-							value: parameter.defaultValue,
 						})}
 					/>
 				);
@@ -37,7 +34,6 @@ const ParameterExecutionForm = ({
 							required: !parameter.isNullable,
 							max: parameter.maxValue,
 							min: parameter.minValue,
-							value: parameter.defaultValue,
 						})}
 					/>
 				);
@@ -51,7 +47,6 @@ const ParameterExecutionForm = ({
 								value="true"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
-									value: parameter.defaultValue === "true",
 								})}
 							/>
 							True
@@ -62,7 +57,6 @@ const ParameterExecutionForm = ({
 								value="false"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
-									defaultValue: parameter.defaultValue === "false",
 								})}
 							/>
 							False
@@ -94,7 +88,6 @@ const ParameterExecutionForm = ({
 								value="On"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
-									defaultValue: parameter.defaultValue === "On",
 								})}
 							/>
 							On
@@ -105,7 +98,6 @@ const ParameterExecutionForm = ({
 								value="Off"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
-									defaultValue: parameter.defaultValue === "Off",
 								})}
 							/>
 							Off

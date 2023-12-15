@@ -19,19 +19,22 @@ const removeCommandOnClick = (
 	e.preventDefault();
 	dispatch(removeSingleActiveCommand(commandID));
 };
+type DefaultValues = Record<string, any>;
 
 const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 	const methods = useForm({
-		defaultValues: {
-			// We'll integrate parameters here later
-		},
+		// This looks weird but it just sets each parameter's initial value to its defaultValue (if any)
+		defaultValues: command.parameters?.reduce((acc: DefaultValues, param) => {
+			acc[param.name] = param.defaultValue || ""; // Set default value or fallback to empty string
+			return acc;
+		}, {} as DefaultValues),
 	});
 
 	const dispatch = useDispatch();
 	const parameters = command.parameters;
 
 	const { watch } = methods;
-	const parameterValues = watch(); // Tracks all parameter values
+	const parameterValues = watch(); // Tracks allinputted parameter values
 	console.log("parameterValues:", parameterValues);
 
 	return (
