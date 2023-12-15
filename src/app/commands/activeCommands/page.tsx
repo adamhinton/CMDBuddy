@@ -5,7 +5,12 @@ import config from "../../../aws-exports";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { CMDBuddyCommand } from "../../../../utils/zod/CommandSchema";
+import CommandExecutionForm from "@/components/CommandExecutionForm";
 Amplify.configure(config);
+
+console.log(
+	"TODO: Make sidebar onClick adding active not work on edit/delete/drag. Maybe add a plus button?"
+);
 
 export default function ActiveCommandsPage() {
 	// This is all the ids of the commands the user has selected
@@ -31,7 +36,7 @@ export default function ActiveCommandsPage() {
 		<div>
 			{activeCommands.map((command) => (
 				// Render each active command here
-				<div key={command.id}>Command Title: {command.title}</div>
+				<CommandExecutionForm key={command.id} command={command} />
 			))}
 		</div>
 	);

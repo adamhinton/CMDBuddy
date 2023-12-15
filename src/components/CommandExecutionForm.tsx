@@ -6,7 +6,7 @@
 
 import { CMDBuddyCommand } from "../../utils/zod/CommandSchema";
 
-const CommandExecutionForm = (command: CMDBuddyCommand) => {
+const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 	return <div>Command: {command.title}</div>;
 };
 
