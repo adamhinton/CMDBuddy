@@ -1,4 +1,5 @@
-import { graphqlOperation } from "aws-amplify";
+import { graphqlOperation, API } from "aws-amplify";
+
 import { GraphQLResult } from "@aws-amplify/api";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
 import { CMDBuddyUser } from "./zod/UserSchema";
@@ -117,7 +118,7 @@ export const customGetCommandWithParameters = /* GraphQL */ `
 	}
 `;
 
-const getSortedCommandsAndParameters = async (
+export const getSortedCommandsAndParameters = async (
 	fetchBy: "email" | "userID",
 	identifier: string
 ): Promise<CMDBuddyUser> => {
@@ -128,20 +129,25 @@ const getSortedCommandsAndParameters = async (
 	// Fetch data using the appropriate query
 	const userFromDB: any =
 		fetchBy === "email"
-			? graphqlOperation(customUserByEmail, {
-					email: identifier,
-			  })
-			: graphqlOperation(customCommandsAndParametersByUserID, {
-					id: identifier,
-			  });
+			? await API.graphql(
+					graphqlOperation(customUserByEmail, {
+						email: identifier,
+					})
+			  )
+			: await API.graphql(
+					graphqlOperation(customCommandsAndParametersByUserID, {
+						id: identifier,
+					})
+			  );
 
+	console.log("userFromDB right after customuserby:", userFromDB);
 	// Mutating the db response to look like we want
 	const loggedInUser: CMDBuddyUser = {
 		id: userFromDB.data.userByEmail.items[0].id,
 		email_verified: true,
 		email: userFromDB.data.userByEmail.items[0].email,
 		darkMode: userFromDB.data.userByEmail.items[0].darkMode,
-		commands: userFromDB.userByEmail.items[0].commands,
+		commands: userFromDB.data.userByEmail.items[0].commands.items,
 	};
 
 	// The graphQL response returns parameters as `items`, but we just want an array so we mutate like so.
@@ -153,7 +159,7 @@ const getSortedCommandsAndParameters = async (
 
 	// Now to sort Commands by their `order` property
 	// if they have the same order that's fine, they'll just appear in the order they came from the db
-	userFromDB.userByEmail.items.commands[0].sort(
+	loggedInUser.commands?.sort(
 		(a: CMDBuddyCommand, b: CMDBuddyCommand) => a.order - b.order
 	);
 
@@ -165,7 +171,6 @@ const getSortedCommandsAndParameters = async (
 		}
 	});
 
-	console.log("userFromDB at end:", userFromDB);
-
-	return userFromDB;
+	console.log("loggedInUser: return object of fetch", loggedInUser);
+	return loggedInUser;
 };
