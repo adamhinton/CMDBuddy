@@ -34,7 +34,7 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 	const parameters = command.parameters;
 
 	const { watch } = methods;
-	const parameterValues = watch(); // Tracks allinputted parameter values
+	const parameterValues = watch(); // Tracks all inputted parameter values
 	console.log("parameterValues:", parameterValues);
 
 	return (
