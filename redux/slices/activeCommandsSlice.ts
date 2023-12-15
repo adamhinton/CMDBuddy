@@ -8,28 +8,28 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CMDBuddyCommand } from "../../utils/zod/CommandSchema";
 
-interface activeCommandState {
-	activeCommand: null | CMDBuddyCommand;
+interface activeCommandsState {
+	activeCommands: null | CMDBuddyCommand;
 }
 
-const initialState: activeCommandState = {
-	activeCommand: null,
+const initialState: activeCommandsState = {
+	activeCommands: null,
 };
 
-export const activeCommandSlice = createSlice({
-	name: "activeCommand",
+export const activeCommandsSlice = createSlice({
+	name: "activeCommands",
 	initialState,
 	reducers: {
-		setActiveCommand: (state, action: PayloadAction<CMDBuddyCommand>) => {
-			state.activeCommand = action.payload;
+		setActiveCommands: (state, action: PayloadAction<CMDBuddyCommand>) => {
+			state.activeCommands = action.payload;
 		},
 
-		deleteActiveCommand: (state) => {
-			state.activeCommand = null;
+		deleteActiveCommands: (state) => {
+			state.activeCommands = null;
 		},
 	},
 });
 
-export const { setActiveCommand, deleteActiveCommand } =
-	activeCommandSlice.actions;
-export default activeCommandSlice.reducer;
+export const { setActiveCommands, deleteActiveCommands } =
+	activeCommandsSlice.actions;
+export default activeCommandsSlice.reducer;
