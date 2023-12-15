@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import ParameterExecutionForm from "./ParameterExecutionForm";
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import LiveCommandExecutionPreview from "./LiveCommandExecutionPreview";
 
 const removeCommandOnClick = (
 	e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -44,6 +45,10 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 					<header>
 						<h3>{command.title}</h3>
 					</header>
+					<LiveCommandExecutionPreview
+						baseCommand={command.baseCommand}
+						parameters={command.parameters}
+					/>
 					{parameters?.map((param) => {
 						return <ParameterExecutionForm parameter={param} key={param.id} />;
 					})}
