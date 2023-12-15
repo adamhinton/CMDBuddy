@@ -7,6 +7,7 @@
 // NOTE: This is for Commands that already exist in the DB; they are filling out values for the Parameter keys.
 // If they want to make a new Command with new Parameter keys, they should be filling out CommandCreationForm.tsx
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 
 type ActiveCommandID = string;
 
@@ -23,13 +24,16 @@ export const activeCommandsSlice = createSlice({
 	initialState,
 	reducers: {
 		setActiveCommands: (state, action: PayloadAction<ActiveCommandID[]>) => {
-			state.activeCommands = action.payload;
+			const newActiveCommandsList = action.payload;
+			state.activeCommands = newActiveCommandsList;
 		},
 		addNewActiveCommand: (state, action: PayloadAction<ActiveCommandID>) => {
+			const commandIDToAdd = action.payload;
+
 			// Check if the command ID already exists in the activeCommands array
-			if (!state.activeCommands.includes(action.payload)) {
+			if (!state.activeCommands.includes(commandIDToAdd)) {
 				// If it doesn't exist, add the new commandID
-				state.activeCommands.unshift(action.payload);
+				state.activeCommands.unshift(commandIDToAdd);
 			}
 			// If the ID already exists, do nothing
 		},
@@ -37,9 +41,10 @@ export const activeCommandsSlice = createSlice({
 			state,
 			action: PayloadAction<ActiveCommandID>
 		) => {
+			const commandIDToRemove = action.payload;
 			// Remove a command ID from the array
 			state.activeCommands = state.activeCommands.filter(
-				(id) => id !== action.payload
+				(id) => id !== commandIDToRemove
 			);
 		},
 		deleteAllActiveCommands: (state) => {
