@@ -83,6 +83,7 @@ const CommandInSideBar = ({
 		<CommandContainer>
 			{/* Drag and drop stuff */}
 			<DragHandle {...dragHandleProps}>⋮⋮</DragHandle>
+			{/* Here the user can input a new Title */}
 			{isEditing ? (
 				<EditInput
 					ref={editInputRef}
@@ -96,6 +97,7 @@ const CommandInSideBar = ({
 			) : (
 				<Title>{title}</Title>
 			)}
+			{/* Buttons  to edit the command's Title or delete the Command */}
 			<IconContainer>
 				<EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
 				{showConfirm ? (
