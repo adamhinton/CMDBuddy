@@ -3,7 +3,7 @@
 // This is looped over in SideBar to display each Command.
 // Clicking the 'Activate Command' button will add the command to activeCommands and redirect to /commands/generate.
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
@@ -37,13 +37,26 @@ const CommandInSideBar = ({
 	const [showConfirm, setShowConfirm] = useState(false);
 	const editInputRef = useRef<HTMLInputElement>(null);
 
-	const handleOutsideClick = (e: MouseEvent) => {
-		if (!editInputRef.current?.contains(e.target as Node)) {
-			setIsEditing(false);
-			setEditedTitle(title);
-			setShowConfirm(false);
-		}
-	};
+	// This useEffect handles the user clicking the `edit` or `delete` buttons then clicking away to cancel.
+	useEffect(() => {
+		// Clicking away cancels the `edit` or `delete` state.
+		const handleOutsideClick = (e: any) => {
+			if (editInputRef.current && !editInputRef.current.contains(e.target)) {
+				setIsEditing(false);
+				setEditedTitle(title);
+			}
+
+			// Correctly reset showConfirm state when clicking outside
+			if (showConfirm && !editInputRef.current?.contains(e.target)) {
+				setShowConfirm(false);
+			}
+		};
+
+		document.addEventListener("mousedown", handleOutsideClick);
+		return () => {
+			document.removeEventListener("mousedown", handleOutsideClick);
+		};
+	}, [command, showConfirm, title]);
 
 	const handleCommandTitlesEditSubmit = async () => {
 		SideBarUtils.handleCommandTitlesEditSubmit(
@@ -60,6 +73,7 @@ const CommandInSideBar = ({
 		setShowConfirm(false);
 	};
 
+	// Activates command generation form for this command
 	const activateCommand = () => {
 		dispatch(addNewActiveCommand(command.id));
 		router.push("/commands/generate");
@@ -67,6 +81,7 @@ const CommandInSideBar = ({
 
 	return (
 		<CommandContainer>
+			{/* Drag and drop stuff */}
 			<DragHandle {...dragHandleProps}>⋮⋮</DragHandle>
 			{isEditing ? (
 				<EditInput
