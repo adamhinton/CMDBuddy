@@ -4,6 +4,8 @@
 // This page dynamically generates the Command and its Parameters with the inputted values
 // And displays the completed command on the page.
 
+// TODO: Persist CEF state when navigating away
+
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import { removeSingleActiveCommand } from "../../../redux/slices/activeCommandsSlice";
 import { useDispatch } from "react-redux";
