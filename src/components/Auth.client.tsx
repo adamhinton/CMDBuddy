@@ -50,8 +50,14 @@ export default function AuthClientComponent(): null {
 	}, []);
 
 	useEffect(() => {
+		console.log("useEffect triggering in Auth.client");
+		console.log(
+			"cognitoLoggedInUser in auth.client useEffect:",
+			cognitoLoggedInUser
+		);
 		const updateState = async () => {
-			if (cognitoLoggedInUser) {
+			if (cognitoLoggedInUser !== null) {
+				console.log("updating state");
 				try {
 					await setUserAndCommandsToState(cognitoLoggedInUser);
 				} catch (error) {

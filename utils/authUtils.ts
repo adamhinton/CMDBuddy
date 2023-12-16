@@ -33,6 +33,7 @@ export const useAuthActions = () => {
 	) => {
 		try {
 			// Get user's Commands (with each Command's Parameters) from db. Commands and parameters are sorted by their `order` property.
+			console.log("TODO: Implement getSorted... in Login as well.");
 			const userFromDB = await getSortedCommandsAndParameters(
 				"email",
 				cognitoLoggedInUser.attributes.email
