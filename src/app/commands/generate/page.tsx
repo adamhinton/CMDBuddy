@@ -8,10 +8,6 @@ import { CMDBuddyCommand } from "../../../../utils/zod/CommandSchema";
 import CommandExecutionForm from "@/components/CommandExecutionComponents/CommandExecutionForm";
 Amplify.configure(config);
 
-console.log(
-	"TODO: Make sidebar onClick adding active not work on edit/delete/drag. Maybe add a plus button?"
-);
-
 export default function ActiveCommandsPage() {
 	// This is all the ids of the commands the user has selected
 	const activeCommandIDs = useSelector((state: RootState) => {
@@ -29,8 +25,6 @@ export default function ActiveCommandsPage() {
 	const activeCommands: CMDBuddyCommand[] =
 		allCommands?.filter((command) => activeCommandIDs.includes(command.id)) ||
 		[];
-
-	console.log("activeCommands:", activeCommands);
 
 	return (
 		<div>
