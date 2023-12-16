@@ -38,7 +38,7 @@ const LiveCommandExecutionPreview = ({
 	return (
 		<div>
 			<div>{commandPreview}</div>
-			<button onClick={(e) => copyToClipboard(e, commandPreview)}>
+			<button onClick={(e) => copyCommandToClipboard(e, commandPreview)}>
 				Copy <i className="icon-to-represent-copy"></i>{" "}
 			</button>
 		</div>
@@ -47,7 +47,7 @@ const LiveCommandExecutionPreview = ({
 
 export default LiveCommandExecutionPreview;
 
-const copyToClipboard = async (
+const copyCommandToClipboard = async (
 	e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	commandText: string
 ) => {
