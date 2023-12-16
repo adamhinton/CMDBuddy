@@ -1,5 +1,5 @@
 import React from "react";
-import { FieldValues, RegisterOptions, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
 
 const ParameterExecutionForm = ({
@@ -80,7 +80,6 @@ const ParameterExecutionForm = ({
 				);
 			case "FLAG":
 				return (
-					// Assuming "On" and "Off" are the values to be used
 					<div>
 						<label>
 							<input
