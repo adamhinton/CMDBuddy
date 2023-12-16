@@ -35,7 +35,27 @@ const LiveCommandExecutionPreview = ({
 	const commandPreview =
 		`${preCommandParams.trim()} ${baseCommand} ${postCommandFlags.trim()}`.trim();
 
-	return <div>{commandPreview}</div>;
+	return (
+		<div>
+			<div>{commandPreview}</div>
+			<button onClick={(e) => copyToClipboard(e, commandPreview)}>
+				Copy <i className="icon-to-represent-copy"></i>{" "}
+			</button>
+		</div>
+	);
 };
 
 export default LiveCommandExecutionPreview;
+
+const copyToClipboard = async (
+	e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+	commandText: string
+) => {
+	e.preventDefault();
+	try {
+		await navigator.clipboard.writeText(commandText);
+		alert("Command copied to clipboard!");
+	} catch (err) {
+		alert(`Failed to copy command to clipboard: ${err}`);
+	}
+};
