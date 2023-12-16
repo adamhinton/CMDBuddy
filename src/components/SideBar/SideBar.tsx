@@ -92,7 +92,6 @@ const SideBar = () => {
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
-			<Link href="/commands/1">Commands/1</Link>
 			{hasChanges && (
 				<div>
 					<button
