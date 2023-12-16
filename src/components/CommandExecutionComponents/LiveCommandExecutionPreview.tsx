@@ -32,13 +32,16 @@ const LiveCommandExecutionPreview = ({
 		}
 	});
 
+	// This is the preview of the generated Command
 	const commandPreview =
 		`${preCommandParams.trim()} ${baseCommand} ${postCommandFlags.trim()}`.trim();
 
 	return (
 		<div>
 			<div>{commandPreview}</div>
+			{/* Clicking this button copies generated Command to clipboard */}
 			<button onClick={(e) => copyCommandToClipboard(e, commandPreview)}>
+				{/* TODO: Put an icon here instead of a button saying "Copy" */}
 				Copy <i className="icon-to-represent-copy"></i>{" "}
 			</button>
 		</div>
@@ -47,6 +50,7 @@ const LiveCommandExecutionPreview = ({
 
 export default LiveCommandExecutionPreview;
 
+// Onclick to copy generated Command to clipboard
 const copyCommandToClipboard = async (
 	e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	commandText: string
