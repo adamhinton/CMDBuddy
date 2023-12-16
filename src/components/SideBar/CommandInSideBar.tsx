@@ -1,16 +1,16 @@
 // README:
-// This is an individual Command - its title, DnD button, delete/edit icons
-// This is looped over in SideBar to display each Command
+// This is an individual Command - its title, DnD button, delete/edit icons.
+// This is looped over in SideBar to display each Command.
+// Clicking the 'Activate Command' button will add the command to activeCommands and redirect to /commands/generate.
 
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import { addNewActiveCommand } from "../../../redux/slices/activeCommandsSlice";
 
 import {
-	// Functions
 	SideBarUtils,
-	// Styled components
 	EditInput,
 	Title,
 	IconContainer,
@@ -20,6 +20,7 @@ import {
 	CommandContainer,
 	DragHandle,
 } from "../../../utils/SideBarUtils";
+import styled from "styled-components";
 
 const CommandInSideBar = ({
 	command,
@@ -30,14 +31,13 @@ const CommandInSideBar = ({
 }) => {
 	const { title, id: commandID } = command;
 	const dispatch = useDispatch();
+	const router = useRouter();
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedTitle, setEditedTitle] = useState(title);
 	const [showConfirm, setShowConfirm] = useState(false);
 	const editInputRef = useRef<HTMLInputElement>(null);
 
-	// Cancel title editing or deletion confirmation if user clicks away
 	const handleOutsideClick = (e: MouseEvent) => {
-		// Check if the click is outside the command container
 		if (!editInputRef.current?.contains(e.target as Node)) {
 			setIsEditing(false);
 			setEditedTitle(title);
@@ -60,13 +60,13 @@ const CommandInSideBar = ({
 		setShowConfirm(false);
 	};
 
+	const activateCommand = () => {
+		dispatch(addNewActiveCommand(command.id));
+		router.push("/commands/generate");
+	};
+
 	return (
-		<CommandContainer
-			onClick={(e) => {
-				e.preventDefault();
-				dispatch(addNewActiveCommand(command.id));
-			}}
-		>
+		<CommandContainer>
 			<DragHandle {...dragHandleProps}>⋮⋮</DragHandle>
 			{isEditing ? (
 				<EditInput
@@ -89,8 +89,11 @@ const CommandInSideBar = ({
 					<DeleteButton onClick={() => setShowConfirm(true)}>🗑️</DeleteButton>
 				)}
 			</IconContainer>
+			<ActivateCommandButton onClick={activateCommand}>+</ActivateCommandButton>
 		</CommandContainer>
 	);
 };
 
 export default CommandInSideBar;
+
+const ActivateCommandButton = styled.button``;
