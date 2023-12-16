@@ -5,6 +5,7 @@
 // And displays the completed command on the page.
 
 // TODO: Persist CEF state when navigating away
+// TODO: Custom input in dropdown
 
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import { removeSingleActiveCommand } from "../../../redux/slices/activeCommandsSlice";
@@ -38,7 +39,6 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 
 	const { watch } = methods;
 	const parameterValues = watch(); // Tracks all inputted parameter values
-	console.log("parameterValues:", parameterValues);
 
 	return (
 		<FormProvider {...methods}>
