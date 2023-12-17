@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import styled, { useTheme } from "styled-components";
 
@@ -10,7 +10,12 @@ const TabContainer = styled.div`
 	padding: 10px 0;
 `;
 
-const Tab = styled.button`
+// Define a type for the custom props
+type TabProps = {
+	active?: boolean;
+};
+
+const Tab = styled.button<TabProps>`
 	background: ${({ theme, active }) =>
 		active ? theme.colors.activeTabBackground : "transparent"};
 	color: ${({ theme }) => theme.colors.text};
@@ -23,8 +28,8 @@ const Tab = styled.button`
 `;
 
 const SubTabContainer = styled.div`
-	display: none; // Default to not display
-	flex-direction: column; // Change to column for better display
+	display: none;
+	flex-direction: column;
 	background: ${({ theme }) => theme.colors.activeTabBackground};
 	padding: 5px 0;
 	margin-top: 5px;
@@ -32,7 +37,7 @@ const SubTabContainer = styled.div`
 
 const CommandsTab = styled(Tab)`
 	&:hover ${SubTabContainer} {
-		display: flex; // Show subtabs on hover
+		display: flex;
 	}
 `;
 
@@ -41,13 +46,11 @@ const SubTab = styled(Tab)`
 `;
 
 const Tabs = () => {
-	const [activeTab, setActiveTab] = useState("/");
 	const router = useRouter();
 	const theme = useTheme();
 
 	const handleTabClick = (path: string) => {
 		router.push(path);
-		setActiveTab(path);
 	};
 
 	return (
@@ -67,18 +70,8 @@ const Tabs = () => {
 						</SubTab>
 					</SubTabContainer>
 				</CommandsTab>
-				<Tab
-					onClick={() => handleTabClick("/about")}
-					active={activeTab === "/about"}
-				>
-					About
-				</Tab>
-				<Tab
-					onClick={() => handleTabClick("/login")}
-					active={activeTab === "/login"}
-				>
-					Login
-				</Tab>
+				<Tab onClick={() => handleTabClick("/about")}>About</Tab>
+				<Tab onClick={() => handleTabClick("/login")}>Login</Tab>
 			</TabContainer>
 		</nav>
 	);
