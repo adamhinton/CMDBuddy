@@ -1,16 +1,20 @@
 "use client";
 
+// README:
+// This displays various Tabs for navigating through the app
+// The Commands tab has sub-tabs (/generate, /edit, /create) that appear on hover
+
 import React from "react";
 import { useRouter } from "next/navigation";
 import styled, { useTheme } from "styled-components";
 
 const TabContainer = styled.div`
 	display: flex;
+	position: relative; // Set the position to relative for absolute positioning of subtabs
 	background: ${({ theme }) => theme.colors.tabBackground};
 	padding: 10px 0;
 `;
 
-// Define a type for the custom props
 type TabProps = {
 	active?: boolean;
 };
@@ -29,10 +33,13 @@ const Tab = styled.button<TabProps>`
 
 const SubTabContainer = styled.div`
 	display: none;
+	position: absolute;
+	top: 100%; // Position right below the tab
+	left: 0;
 	flex-direction: column;
 	background: ${({ theme }) => theme.colors.activeTabBackground};
 	padding: 5px 0;
-	margin-top: 5px;
+	z-index: 10; // Ensure it appears above other content
 `;
 
 const CommandsContainer = styled.div`
