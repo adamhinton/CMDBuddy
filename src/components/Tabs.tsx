@@ -35,7 +35,7 @@ const SubTabContainer = styled.div`
 	margin-top: 5px;
 `;
 
-const CommandsTab = styled(Tab)`
+const CommandsContainer = styled.div`
 	&:hover ${SubTabContainer} {
 		display: flex;
 	}
@@ -56,8 +56,8 @@ const Tabs = () => {
 	return (
 		<nav>
 			<TabContainer>
-				<CommandsTab>
-					Commands
+				<CommandsContainer>
+					<Tab>Commands</Tab>
 					<SubTabContainer>
 						<SubTab onClick={() => handleTabClick("/commands/generate")}>
 							Generate
@@ -69,7 +69,7 @@ const Tabs = () => {
 							Create
 						</SubTab>
 					</SubTabContainer>
-				</CommandsTab>
+				</CommandsContainer>
 				<Tab onClick={() => handleTabClick("/about")}>About</Tab>
 				<Tab onClick={() => handleTabClick("/login")}>Login</Tab>
 			</TabContainer>
