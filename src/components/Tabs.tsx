@@ -23,10 +23,17 @@ const Tab = styled.button`
 `;
 
 const SubTabContainer = styled.div`
-	display: flex;
+	display: none; // Default to not display
+	flex-direction: column; // Change to column for better display
 	background: ${({ theme }) => theme.colors.activeTabBackground};
 	padding: 5px 0;
 	margin-top: 5px;
+`;
+
+const CommandsTab = styled(Tab)`
+	&:hover ${SubTabContainer} {
+		display: flex; // Show subtabs on hover
+	}
 `;
 
 const SubTab = styled(Tab)`
@@ -46,12 +53,20 @@ const Tabs = () => {
 	return (
 		<nav>
 			<TabContainer>
-				<Tab
-					onClick={() => handleTabClick("/commands")}
-					active={activeTab === "/commands"}
-				>
+				<CommandsTab>
 					Commands
-				</Tab>
+					<SubTabContainer>
+						<SubTab onClick={() => handleTabClick("/commands/generate")}>
+							Generate
+						</SubTab>
+						<SubTab onClick={() => handleTabClick("/commands/edit")}>
+							Edit
+						</SubTab>
+						<SubTab onClick={() => handleTabClick("/commands/create")}>
+							Create
+						</SubTab>
+					</SubTabContainer>
+				</CommandsTab>
 				<Tab
 					onClick={() => handleTabClick("/about")}
 					active={activeTab === "/about"}
@@ -65,17 +80,6 @@ const Tabs = () => {
 					Login
 				</Tab>
 			</TabContainer>
-			{activeTab === "/commands" && (
-				<SubTabContainer>
-					<SubTab onClick={() => handleTabClick("/commands/generate")}>
-						Generate
-					</SubTab>
-					<SubTab onClick={() => handleTabClick("/commands/edit")}>Edit</SubTab>
-					<SubTab onClick={() => handleTabClick("/commands/create")}>
-						Create
-					</SubTab>
-				</SubTabContainer>
-			)}
 		</nav>
 	);
 };
