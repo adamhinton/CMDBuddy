@@ -26,6 +26,10 @@ export default function ActiveCommandsPage() {
 		allCommands?.filter((command) => activeCommandIDs.includes(command.id)) ||
 		[];
 
+	if (activeCommandIDs.length === 0) {
+		return <h3>Select some commands to start generating!</h3>;
+	}
+
 	return (
 		<div>
 			{activeCommands.map((command) => (
