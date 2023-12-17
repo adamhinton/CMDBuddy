@@ -30,7 +30,7 @@ import {
 	AnyParameter,
 	submitNewCommandAndParamsToDB,
 } from "../../../utils/CommandCreationUtils";
-import LiveCommandPreview from "./LiveCommandPreview";
+import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { toast } from "react-toastify";
 
 const {

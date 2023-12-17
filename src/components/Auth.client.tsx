@@ -10,6 +10,7 @@ import { setIsDarkMode } from "../../redux/slices/darkModeSlice";
 import { getUserDarkModePreference } from "../../utils/darkModeUtils";
 
 Amplify.configure({ config, ssr: true });
+Auth.configure({ config, ssr: true });
 
 // TODO: These two cognito types are defined in two spots; merge them and export them.
 interface CognitoLoggedInUserAttributes {
@@ -50,14 +51,8 @@ export default function AuthClientComponent(): null {
 	}, []);
 
 	useEffect(() => {
-		console.log("useEffect triggering in Auth.client");
-		console.log(
-			"cognitoLoggedInUser in auth.client useEffect:",
-			cognitoLoggedInUser
-		);
 		const updateState = async () => {
 			if (cognitoLoggedInUser !== null) {
-				console.log("updating state");
 				try {
 					await setUserAndCommandsToState(cognitoLoggedInUser);
 				} catch (error) {
