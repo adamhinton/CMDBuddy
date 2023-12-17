@@ -12,7 +12,6 @@ import {
 
 const Header = () => {
 	const userID = useSelector((state: RootState) => state.auth.user?.id);
-	console.log("userID in Header:", userID);
 	const dispatch = useDispatch();
 
 	const isDarkMode = useSelector(

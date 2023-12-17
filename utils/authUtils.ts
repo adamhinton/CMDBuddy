@@ -37,7 +37,6 @@ export const useAuthActions = () => {
 				"email",
 				cognitoLoggedInUser.attributes.email
 			);
-			console.log("userFromDB in authutils:", userFromDB);
 
 			// Set user info to auth state
 			dispatch(setUser(userFromDB));

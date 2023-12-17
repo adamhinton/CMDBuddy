@@ -1,9 +1,10 @@
-import { Amplify } from "aws-amplify";
+import { Amplify, Auth } from "aws-amplify";
 import { Providers } from "../../redux/provider";
 import AuthClientComponent from "../components/Auth.client";
 import config from "../aws-exports";
 import Header from "../components/Header";
 Amplify.configure({ config, ssr: true });
+Auth.configure({ config, ssr: true });
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 import { lightTheme, darkTheme } from "../../utils/styles/themes";
 import { ToastContainer } from "react-toastify";

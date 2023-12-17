@@ -122,7 +122,6 @@ export const getSortedCommandsAndParameters = async (
 	fetchBy: "email" | "userID",
 	identifier: string
 ): Promise<CMDBuddyUser> => {
-	console.log("calling getSorted... from db");
 	// NOTE: The user in question is data.userByEmail.items[0]
 	// The user's Commands is data.userByEmail.items[0].commands
 	// The GraphQL response has some funny formats like that so we mutate it a bit below.
