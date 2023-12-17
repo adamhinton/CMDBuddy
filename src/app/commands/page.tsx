@@ -19,9 +19,7 @@ const Commands = () => {
 	return (
 		<>
 			<h1>Commands Placeholder</h1>
-			<Link href="/login">Login page</Link>
 			<div>{commands && commands[0] && commands[0].baseCommand}</div>
-			<CommandCreationForm />
 		</>
 	);
 };
