@@ -89,9 +89,9 @@ const CommandCreationForm: React.FC = () => {
 	});
 	const router = useRouter();
 
-	useEffect(() => {
-		!loggedInUser && router.push("login");
-	});
+	// useEffect(() => {
+	// 	!loggedInUser && router.push("login");
+	// });
 
 	useEffect(() => {
 		const subscription = watch((value, { name }) => {

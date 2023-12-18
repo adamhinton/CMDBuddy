@@ -8,6 +8,7 @@ Auth.configure({ config, ssr: true });
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 import { lightTheme, darkTheme } from "../../utils/styles/themes";
 import { ToastContainer } from "react-toastify";
+import Tabs from "@/components/Tabs";
 
 export const metadata = {
 	title: "Next.js",
@@ -23,9 +24,10 @@ export default async function RootLayout({
 		<html lang="en">
 			<body>
 				<Providers>
-					<ThemeProviderWrapper theme={lightTheme}>
+					<ThemeProviderWrapper>
 						<AuthClientComponent />
 						<Header />
+						<Tabs />
 						<main>{children}</main>
 						<ToastContainer />
 					</ThemeProviderWrapper>
