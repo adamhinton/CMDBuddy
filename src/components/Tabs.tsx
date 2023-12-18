@@ -4,6 +4,10 @@
 // This displays various Tabs (/commands, /login, /about  )for navigating through the app
 // The Commands tab has sub-tabs (/generate, /edit, /create) that appear on hover
 
+import { Amplify } from "aws-amplify";
+import config from "../aws-exports";
+Amplify.configure({ ...config, ssr: true });
+
 import React from "react";
 import { useRouter } from "next/navigation";
 import styled, { useTheme } from "styled-components";
