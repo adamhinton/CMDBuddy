@@ -1,7 +1,7 @@
 "use client";
 
 // README:
-// This displays various Tabs (/commands, /login, /about )for navigating through the app
+// This displays various Tabs (/commands, /login, /about  )for navigating through the app
 // The Commands tab has sub-tabs (/generate, /edit, /create) that appear on hover
 
 import React from "react";
