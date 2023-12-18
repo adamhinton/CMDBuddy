@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { CMDBuddyCommand } from "../../../../utils/zod/CommandSchema";
 import CommandExecutionForm from "@/components/CommandExecutionComponents/CommandExecutionForm";
-Amplify.configure(config);
+Amplify.configure({ ...config, ssr: true });
 
 export default function ActiveCommandsPage() {
 	// This is all the ids of the commands the user has selected
