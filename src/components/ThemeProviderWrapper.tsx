@@ -6,11 +6,7 @@ import { RootState } from "../../redux/store";
 import { darkTheme, lightTheme } from "../../utils/styles/themes";
 
 // The props should be passed as a single object and destructured within the function parameter list
-const ThemeProviderWrapper = ({
-	children,
-}: {
-	children: React.ReactNode;
-}) => {
+const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 	const isDarkMode = useSelector(
 		(state: RootState) => state.darkMode.isDarkMode
 	);
@@ -19,15 +15,6 @@ const ThemeProviderWrapper = ({
 	useEffect(() => {
 		setTheme(isDarkMode ? darkTheme : lightTheme);
 	}, [isDarkMode]);
-
-// The props should be passed as a single object and destructured within the function parameter list
-const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
-	const isDarkMode: boolean = useSelector((state: RootState) => {
-		return state.darkMode.isDarkMode;
-	});
-
-	const theme = isDarkMode ? darkTheme : lightTheme;
-
 	return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 

@@ -9,8 +9,3 @@ const CommandsEditPage = () => {
 };
 
 export default CommandsEditPage;
-const EditPage = () => {
-	return <h2>Edit Page Placeholder</h2>;
-};
-
-export default EditPage;
