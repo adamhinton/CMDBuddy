@@ -1,9 +1,24 @@
 "use client";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { DefaultTheme, ThemeProvider } from "styled-components";
-import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../../redux/store";
 import { darkTheme, lightTheme } from "../../utils/styles/themes";
-import { useEffect, useState } from "react";
+
+// The props should be passed as a single object and destructured within the function parameter list
+const ThemeProviderWrapper = ({
+	children,
+}: {
+	children: React.ReactNode;
+}) => {
+	const isDarkMode = useSelector(
+		(state: RootState) => state.darkMode.isDarkMode
+	);
+	const [theme, setTheme] = useState(darkTheme);
+
+	useEffect(() => {
+		setTheme(isDarkMode ? darkTheme : lightTheme);
+	}, [isDarkMode]);
 
 // The props should be passed as a single object and destructured within the function parameter list
 const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
