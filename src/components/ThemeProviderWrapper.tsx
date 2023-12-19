@@ -7,23 +7,27 @@ import { darkTheme, lightTheme } from "../../utils/styles/themes";
 
 // The props should be passed as a single object and destructured within the function parameter list
 const ThemeProviderWrapper = ({
-	// theme,
 	children,
 }: {
-	// theme: DefaultTheme;
 	children: React.ReactNode;
 }) => {
 	const isDarkMode = useSelector(
 		(state: RootState) => state.darkMode.isDarkMode
 	);
-	console.log("isDarkMode TPR:", isDarkMode);
 	const [theme, setTheme] = useState(darkTheme);
 
 	useEffect(() => {
 		setTheme(isDarkMode ? darkTheme : lightTheme);
 	}, [isDarkMode]);
 
-	console.log("theme:", theme);
+// The props should be passed as a single object and destructured within the function parameter list
+const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
+	const isDarkMode: boolean = useSelector((state: RootState) => {
+		return state.darkMode.isDarkMode;
+	});
+
+	const theme = isDarkMode ? darkTheme : lightTheme;
+
 	return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
