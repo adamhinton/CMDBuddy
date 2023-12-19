@@ -23,7 +23,7 @@ export default async function RootLayout({
 		<html lang="en">
 			<body>
 				<Providers>
-					<ThemeProviderWrapper theme={lightTheme}>
+					<ThemeProviderWrapper>
 						<AuthClientComponent />
 						<Header />
 						<main>{children}</main>
