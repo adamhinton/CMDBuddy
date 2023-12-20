@@ -12,10 +12,10 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import styled, { useTheme } from "styled-components";
 
-const TabContainer = styled.div`
+const TabContainer = styled.nav`
 	display: flex;
-	position: relative; // Set the position to relative for absolute positioning of subtabs
-	background: ${({ theme }) => theme.colors.tabBackground};
+	position: relative; // So subtabs appear over the rest of the UI
+	background: ${({ theme }) => theme.tabs.background};
 	padding: 10px 0;
 `;
 
@@ -25,16 +25,21 @@ type TabProps = {
 
 const Tab = styled.button<TabProps>`
 	background: ${({ theme, active }) =>
-		active ? theme.colors.activeTabBackground : "transparent"};
-	color: ${({ theme }) => theme.colors.text};
+		active ? theme.tabs.activeBackground : "transparent"};
+	color: ${({ theme }) => theme.tabs.text};
 	border: none;
 	padding: 10px 15px;
 	cursor: pointer;
 	position: relative; // relative positioning to keep hover within this element
 	z-index: 1; // Ensure the tab is above the subtab container
 	&:hover {
-		background: ${({ theme }) => theme.colors.hoverTabBackground};
+		background: ${({ theme }) => theme.tabs.hoverBackground};
 	}
+	font-weight: ${({ active }) => (active ? "bold" : "normal")};
+	border-bottom: 2px solid;
+	${({ theme, active }) => (active ? theme.tabs.activeBorder : "transparent")};
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s, border-bottom-color 0.3s;
 `;
 
 // These subtabs appear when you hover over the Commands tab. They show /commands subroutes (create, generate, edit)
@@ -45,7 +50,7 @@ const SubTabContainer = styled.div`
 	top: 100%; // Position right below the main tab
 	left: 0;
 	flex-direction: column;
-	background: ${({ theme }) => theme.colors.activeTabBackground};
+	background: ${({ theme }) => theme.tabs.activeBackground};
 	padding: 5px 0;
 	z-index: 0; // Position the subtabs below the main tabs
 `;

@@ -15,6 +15,13 @@ export const lightTheme: DefaultTheme = {
 		link: "#004D40", // Teal for links
 		toggleIcon: "#FFCA28", // Sun icon color
 	},
+	tabs: {
+		background: "#e0e0e0",
+		text: "#333",
+		activeBackground: "#c0c0c0",
+		hoverBackground: "#d0d0d0",
+		activeBorder: "#0D47A1", // The tab the user is currently on
+	},
 };
 
 export const darkTheme: DefaultTheme = {
@@ -30,5 +37,12 @@ export const darkTheme: DefaultTheme = {
 		text: "#ECEFF1", // Light gray text
 		link: "#80CBC4", // Soft teal for links
 		toggleIcon: "#FFEB3B", // Moon icon color
+	},
+	tabs: {
+		background: "#37474F",
+		text: "#ECEFF1",
+		activeBackground: "#263238",
+		hoverBackground: "#455A64",
+		activeBorder: "#80CBC4", // Soft teal border for active tab
 	},
 };
