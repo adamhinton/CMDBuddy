@@ -26,6 +26,12 @@ export const lightTheme: DefaultTheme = {
 		background: "#f0f0f0",
 		text: "#333",
 		hoverBackground: "#e0e0e0",
+		dividerColor: "#dcdcdc",
+		buttons: {
+			background: "#E0F7FA",
+			text: "#0D47A1",
+			hoverBackground: "#B3E5FC",
+		},
 	},
 };
 
@@ -53,6 +59,12 @@ export const darkTheme: DefaultTheme = {
 	sidebar: {
 		background: "#2c3e50",
 		text: "#ecf0f1",
-		hoverBackground: "#34495e", // Darker hover color
+		hoverBackground: "#34495e",
+		dividerColor: "#34495e",
+		buttons: {
+			background: "#37474F",
+			text: "#ECEFF1",
+			hoverBackground: "#546E7A",
+		},
 	},
 };

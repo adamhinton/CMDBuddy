@@ -133,4 +133,6 @@ const CommandInSideBar = ({
 
 export default CommandInSideBar;
 
-const ActivateCommandButton = styled.button``;
+const ActivateCommandButton = styled.button`
+	margin-right: 5px;
+`;

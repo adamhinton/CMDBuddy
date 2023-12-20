@@ -47,10 +47,9 @@ export const CommandContainer = styled.div`
 	padding: 8px;
 	margin: 5px 0;
 	border-radius: 4px;
-	transition: background-color 0.3s;
-	&:hover {
-		background-color: ${({ theme }) => theme.sidebar.hoverBackground};
-	}
+	// Ensure it doesn't grow beyond its container
+	width: calc(100% - 16px);
+	box-sizing: border-box;
 `;
 
 export const IconContainer = styled.div`
@@ -66,6 +65,7 @@ export const EditInput = styled.input`
 	&:focus {
 		outline: 3px solid green;
 	}
+	max-width: 60%;
 `;
 
 // Command's Title
@@ -74,6 +74,29 @@ export const Title = styled.span`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+`;
+
+export const SaveCancelDNDContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	padding: 10px;
+	background: ${({ theme }) =>
+		theme.sidebar.background}; // Match the sidebar background
+	border-bottom: 1px solid ${({ theme }) => theme.sidebar.dividerColor}; // Divider color in your theme
+`;
+
+export const SaveCancelDNDButton = styled.button`
+	margin: 0 5px;
+	padding: 5px 10px;
+	background-color: ${({ theme }) =>
+		theme.sidebar.buttons.background}; // Define button colors in your theme
+	color: ${({ theme }) => theme.sidebar.buttons.text};
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	&:hover {
+		background-color: ${({ theme }) => theme.sidebar.buttons.hoverBackground};
+	}
 `;
 
 export const EditButton = styled.button`
