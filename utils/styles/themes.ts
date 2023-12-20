@@ -22,6 +22,11 @@ export const lightTheme: DefaultTheme = {
 		hoverBackground: "#d0d0d0",
 		activeBorder: "#0D47A1", // The tab the user is currently on
 	},
+	sidebar: {
+		background: "#f0f0f0",
+		text: "#333",
+		hoverBackground: "#e0e0e0",
+	},
 };
 
 export const darkTheme: DefaultTheme = {
@@ -44,5 +49,10 @@ export const darkTheme: DefaultTheme = {
 		activeBackground: "#263238",
 		hoverBackground: "#455A64",
 		activeBorder: "#80CBC4", // Soft teal border for active tab
+	},
+	sidebar: {
+		background: "#2c3e50",
+		text: "#ecf0f1",
+		hoverBackground: "#34495e", // Darker hover color
 	},
 };

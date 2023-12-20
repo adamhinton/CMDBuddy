@@ -15,10 +15,12 @@ import { reorderCommands } from "../redux/slices/commandsSlice";
 // Styled components
 export const SideBarContainer = styled.div`
 	width: 250px;
-	color: ${({ theme }) => theme.text};
+	background: ${({ theme }) => theme.sidebar.background};
+	color: ${({ theme }) => theme.sidebar.text};
 	height: 100vh;
 	overflow-y: auto;
 	padding: 10px;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 `;
 
 export const DragHandle = styled.div`
@@ -37,10 +39,18 @@ export const DragHandle = styled.div`
 	}
 `;
 
+// Parent container of a single Command
 export const CommandContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	padding: 8px;
+	margin: 5px 0;
+	border-radius: 4px;
+	transition: background-color 0.3s;
+	&:hover {
+		background-color: ${({ theme }) => theme.sidebar.hoverBackground};
+	}
 `;
 
 export const IconContainer = styled.div`
@@ -71,6 +81,9 @@ export const EditButton = styled.button`
 	background: none;
 	border: none;
 	cursor: pointer;
+	&:hover {
+		color: blue;
+	}
 `;
 
 // Trash icon to delete Command
@@ -78,6 +91,9 @@ export const DeleteButton = styled.button`
 	background: none;
 	border: none;
 	cursor: pointer;
+	&:hover {
+		color: red;
+	}
 `;
 
 // Confirm deleting Command
@@ -150,6 +166,7 @@ const handleCommandDelete = async (
 	command: CMDBuddyCommand,
 	dispatch: Function
 ) => {
+	console.log("handleCommandDelete in sidebarutils");
 	// Optimistic UI update
 	dispatch(deleteCommand(command.id));
 
