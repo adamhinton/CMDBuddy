@@ -97,32 +97,32 @@ const SideBar = () => {
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
-			{hasChanges && (
-				<SaveCancelDNDContainer>
-					<SaveCancelDNDButton
-						onClick={async () =>
-							await handleDnDSave(
-								localCommands,
-								dispatch,
-								reduxStateCommands!,
-								setHasChanges,
-								setLocalCommands
-							)
-						}
-					>
-						Save
-					</SaveCancelDNDButton>
-					<SaveCancelDNDButton onClick={handleDnDCancel}>
-						Cancel
-					</SaveCancelDNDButton>
-				</SaveCancelDNDContainer>
-			)}
 			<StrictModeDroppable droppableId="commands">
 				{(provided) => (
 					<SideBarContainer
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
+						{hasChanges && (
+							<SaveCancelDNDContainer>
+								<SaveCancelDNDButton
+									onClick={async () =>
+										await handleDnDSave(
+											localCommands,
+											dispatch,
+											reduxStateCommands!,
+											setHasChanges,
+											setLocalCommands
+										)
+									}
+								>
+									Save
+								</SaveCancelDNDButton>
+								<SaveCancelDNDButton onClick={handleDnDCancel}>
+									Cancel
+								</SaveCancelDNDButton>
+							</SaveCancelDNDContainer>
+						)}
 						{localCommands?.map((command, index) => (
 							<Draggable
 								key={String(command.id)}
