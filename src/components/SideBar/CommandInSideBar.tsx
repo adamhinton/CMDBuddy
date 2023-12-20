@@ -78,8 +78,8 @@ const CommandInSideBar = ({
 
 	const handleCommandDelete = async (e: React.MouseEvent) => {
 		e.preventDefault();
-		e.stopPropagation(); // Add this line to stop event propagation
-		console.log("deleting command in CISB");
+		// There's an event handler to cancel deletion state when user clicks away; this stops that from triggering
+		e.stopPropagation();
 		SideBarUtils.handleCommandDelete(command, dispatch);
 		setShowConfirm(false);
 	};
