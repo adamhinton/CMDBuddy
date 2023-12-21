@@ -1,6 +1,5 @@
 import { DefaultTheme } from "styled-components";
 
-// These are dummy themes for proof of concept, will flesh out later
 export const lightTheme: DefaultTheme = {
 	colors: {
 		background: "#fff",
@@ -32,6 +31,15 @@ export const lightTheme: DefaultTheme = {
 			text: "#0D47A1",
 			hoverBackground: "#B3E5FC",
 		},
+	},
+	commandCreation: {
+		formBackground: "#E3F2FD",
+		formText: "#0D47A1",
+		inputBackground: "#FFFFFF",
+		inputText: "#333333",
+		errorText: "#D32F2F",
+		buttonBackground: "#B3E5FC",
+		buttonHoverBackground: "#81D4FA",
 	},
 };
 
@@ -66,5 +74,14 @@ export const darkTheme: DefaultTheme = {
 			text: "#ECEFF1",
 			hoverBackground: "#546E7A",
 		},
+	},
+	commandCreation: {
+		formBackground: "#37474F", // Darker background
+		formText: "#ECEFF1", // Light text
+		inputBackground: "#455A64", // Darker input background
+		inputText: "#ECEFF1", // Light text for input
+		errorText: "#EF9A9A", // Soft red for error messages
+		buttonBackground: "#546E7A", // Dark blue for buttons
+		buttonHoverBackground: "#78909C", // Hover effect for buttons
 	},
 };

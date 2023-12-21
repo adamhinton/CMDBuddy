@@ -3,6 +3,7 @@
 // Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
 
 import { z } from "zod";
+import styled from "styled-components";
 import { ParameterSchema } from "./zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationForm";
@@ -12,6 +13,46 @@ import { createCommand, createParameter } from "@/graphql/mutations";
 import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationForm";
 import { customGetCommandWithParameters } from "./customGraphQLQueries";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
+
+export const StyledCCFForm = styled.form`
+	background: ${({ theme }) => theme.commandCreation.formBackground};
+	color: ${({ theme }) => theme.commandCreation.formText};
+	padding: 20px;
+	border-radius: 8px;
+	width: 100%;
+`;
+
+export const StyledCCFLabel = styled.label`
+	display: block;
+	margin-bottom: 5px;
+`;
+
+export const StyledCCFInput = styled.input`
+	width: 300px;
+	padding: 8px;
+	margin-bottom: 10px;
+	background: ${({ theme }) => theme.commandCreation.inputBackground};
+	color: ${({ theme }) => theme.commandCreation.inputText};
+	border: 1px solid #ccc;
+	border-radius: 4px;
+`;
+
+export const StyledCCFError = styled.p`
+	color: ${({ theme }) => theme.commandCreation.errorText};
+	margin-bottom: 10px;
+`;
+
+export const StyledCCFButton = styled.button`
+	background: ${({ theme }) => theme.commandCreation.buttonBackground};
+	color: ${({ theme }) => theme.commandCreation.formText};
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	&:hover {
+		background: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
+	}
+`;
 
 // Subtypes for each parameter type
 const StringParameterSchema = ParameterSchema.pick({

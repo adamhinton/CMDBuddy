@@ -29,6 +29,11 @@ import {
 	CommandCreationUtils,
 	AnyParameter,
 	submitNewCommandAndParamsToDB,
+	StyledCCFForm,
+	StyledCCFLabel,
+	StyledCCFInput,
+	StyledCCFError,
+	StyledCCFButton,
 } from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { toast } from "react-toastify";
@@ -179,30 +184,34 @@ const CommandCreationForm: React.FC = () => {
 
 	return (
 		<FormProvider {...methods}>
-			<form onSubmit={methods.handleSubmit(onSubmit)}>
+			<StyledCCFForm onSubmit={methods.handleSubmit(onSubmit)}>
 				{/* Command Fields */}
 				<div>
-					<label htmlFor="baseCommand">Base Command</label>
-					<input
+					<StyledCCFLabel htmlFor="baseCommand">Base Command</StyledCCFLabel>
+					<StyledCCFInput
 						{...methods.register("baseCommand")}
 						placeholder="npm test myTestName"
 						maxLength={200}
 						required={true}
 					/>
 					{methods.formState.errors.baseCommand && (
-						<p>{methods.formState.errors.baseCommand.message}</p>
+						<StyledCCFError>
+							{methods.formState.errors.baseCommand.message}
+						</StyledCCFError>
 					)}
 				</div>
 
 				<div>
-					<label htmlFor="title">Title</label>
-					<input
+					<StyledCCFLabel htmlFor="title">Title</StyledCCFLabel>
+					<StyledCCFInput
 						{...methods.register("title")}
 						maxLength={60}
 						required={true}
 					/>
 					{methods.formState.errors.title && (
-						<p>{methods.formState.errors.title.message}</p>
+						<StyledCCFError>
+							{methods.formState.errors.title.message}
+						</StyledCCFError>
 					)}
 				</div>
 
@@ -215,7 +224,7 @@ const CommandCreationForm: React.FC = () => {
 					/>
 				))}
 
-				<button
+				<StyledCCFButton
 					type="button"
 					onClick={() =>
 						append({
@@ -228,13 +237,13 @@ const CommandCreationForm: React.FC = () => {
 					}
 				>
 					Add Parameter
-				</button>
+				</StyledCCFButton>
 
-				<button type="button" onClick={clearForm}>
+				<StyledCCFButton type="button" onClick={clearForm}>
 					Clear Form
-				</button>
+				</StyledCCFButton>
 
-				<button type="submit">Create Command</button>
+				<StyledCCFButton type="submit">Create Command</StyledCCFButton>
 
 				{/* This shows an example of the Command the user has created. */}
 				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}
@@ -243,7 +252,7 @@ const CommandCreationForm: React.FC = () => {
 					parameters={methods.getValues().parameters}
 					watch={watch}
 				/>
-			</form>
+			</StyledCCFForm>
 		</FormProvider>
 	);
 };
