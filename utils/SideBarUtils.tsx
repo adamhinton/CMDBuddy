@@ -14,17 +14,20 @@ import { reorderCommands } from "../redux/slices/commandsSlice";
 
 // Styled components
 export const SideBarContainer = styled.div`
-	width: 250px;
+	width: 300px;
 	background: ${({ theme }) => theme.sidebar.background};
 	color: ${({ theme }) => theme.sidebar.text};
 	height: 100vh;
 	overflow-y: auto;
-	padding: 10px;
+	padding: 5px;
 	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+	font-size: 0.9rem;
 `;
 
 export const DragHandle = styled.div`
-	width: 20px;
+	width: 13px;
+	max-width: 13px;
+	min-width: 13px;
 	height: 20px;
 	background-color: #ccc;
 	border-radius: 4px;
@@ -44,11 +47,11 @@ export const CommandContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 8px;
+	padding: 3px;
 	margin: 5px 0;
 	border-radius: 4px;
 	// Ensure it doesn't grow beyond its container
-	width: calc(100% - 16px);
+	width: 100%;
 	box-sizing: border-box;
 `;
 
@@ -82,14 +85,13 @@ export const SaveCancelDNDContainer = styled.div`
 	padding: 10px;
 	background: ${({ theme }) =>
 		theme.sidebar.background}; // Match the sidebar background
-	border-bottom: 1px solid ${({ theme }) => theme.sidebar.dividerColor}; // Divider color in your theme
+	border-bottom: 1px solid ${({ theme }) => theme.sidebar.dividerColor};
 `;
 
 export const SaveCancelDNDButton = styled.button`
 	margin: 0 5px;
 	padding: 5px 10px;
-	background-color: ${({ theme }) =>
-		theme.sidebar.buttons.background}; // Define button colors in your theme
+	background-color: ${({ theme }) => theme.sidebar.buttons.background};
 	color: ${({ theme }) => theme.sidebar.buttons.text};
 	border: none;
 	border-radius: 4px;
@@ -100,7 +102,7 @@ export const SaveCancelDNDButton = styled.button`
 `;
 
 export const EditButton = styled.button`
-	margin-right: 10px;
+	margin-right: 5px;
 	background: none;
 	border: none;
 	cursor: pointer;
