@@ -52,10 +52,10 @@ export const darkTheme: DefaultTheme = {
 		hoverTabBackground: "#444",
 	},
 	header: {
-		background: "#263238", // Dark slate background
-		text: "#ECEFF1", // Light gray text
-		link: "#80CBC4", // Soft teal for links
-		toggleIcon: "#FFEB3B", // Moon icon color
+		background: "#263238",
+		text: "#ECEFF1",
+		link: "#80CBC4",
+		toggleIcon: "#FFEB3B",
 	},
 	tabs: {
 		background: "#37474F",
@@ -76,12 +76,12 @@ export const darkTheme: DefaultTheme = {
 		},
 	},
 	commandCreation: {
-		formBackground: "#37474F", // Darker background
-		formText: "#ECEFF1", // Light text
-		inputBackground: "#455A64", // Darker input background
-		inputText: "#ECEFF1", // Light text for input
-		errorText: "#EF9A9A", // Soft red for error messages
-		buttonBackground: "#546E7A", // Dark blue for buttons
-		buttonHoverBackground: "#78909C", // Hover effect for buttons
+		formBackground: "#37474F",
+		formText: "#ECEFF1",
+		inputBackground: "#455A64",
+		inputText: "#ECEFF1",
+		errorText: "#EF9A9A",
+		buttonBackground: "#546E7A",
+		buttonHoverBackground: "#78909C",
 	},
 };
