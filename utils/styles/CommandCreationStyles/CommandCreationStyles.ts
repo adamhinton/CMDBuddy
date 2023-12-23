@@ -1,3 +1,6 @@
+// README:
+// This is the styles page for CommandCreationUtils.tsx.
+
 import styled from "styled-components";
 
 export const StyledCCFForm = styled.form`
