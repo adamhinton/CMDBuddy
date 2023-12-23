@@ -12,6 +12,12 @@ import {
 	CommandCreationUtils,
 	DefaultValueInput,
 	FlagParameterErrors,
+	ParameterCreationButton,
+	ParameterCreationError,
+	ParameterCreationFormContainer,
+	ParameterCreationInput,
+	ParameterCreationLabel,
+	ParameterCreationSelect,
 } from "../../../utils/CommandCreationUtils";
 import {
 	AnyParameter,
@@ -106,10 +112,10 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 
 	// Every Parameter has these fields, regardless of type
 	return (
-		<div>
+		<ParameterCreationFormContainer>
 			{/* Parameter Type Selector */}
-			<label>Type</label>
-			<select
+			<ParameterCreationLabel>Type</ParameterCreationLabel>
+			<ParameterCreationSelect
 				{...register(`parameters.${index}.type`)}
 				onChange={(e) =>
 					setParameterType(e.target.value as ParameterCreationType)
@@ -120,17 +126,21 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 				<option value="BOOLEAN">Boolean</option>
 				<option value="DROPDOWN">Dropdown</option>
 				<option value="FLAG">Flag</option>
-			</select>
+			</ParameterCreationSelect>
 
 			{/* Shared Name Field */}
-			<label>Name</label>
-			<input
+			<ParameterCreationLabel>Name</ParameterCreationLabel>
+			<ParameterCreationInput
 				{...register(`parameters.${index}.name`)}
 				placeholder="Name"
 				required={true}
 				maxLength={30}
 			/>
-			{parameterErrors?.name && <p>{parameterErrors.name.message}</p>}
+			{parameterErrors?.name && (
+				<ParameterCreationError>
+					{parameterErrors.name.message}
+				</ParameterCreationError>
+			)}
 
 			<DefaultValueInput
 				type={parameterType}
@@ -142,22 +152,25 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 			{/* IsNullable (Optional) Checkbox */}
 			{/* This isn't needed in FLAG type */}
 			{parameterType !== "FLAG" && (
-				<label>
-					<input
+				<ParameterCreationLabel>
+					<ParameterCreationInput
 						type="checkbox"
 						{...register(`parameters.${index}.isNullable`)}
 					/>
 					Optional
-				</label>
+				</ParameterCreationLabel>
 			)}
 
 			{renderParameterSpecificFields()}
 
 			{/* Delete Parameter Button */}
-			<button type="button" onClick={() => removeParameter(index)}>
+			<ParameterCreationButton
+				type="button"
+				onClick={() => removeParameter(index)}
+			>
 				Delete Parameter
-			</button>
-		</div>
+			</ParameterCreationButton>
+		</ParameterCreationFormContainer>
 	);
 };
 
