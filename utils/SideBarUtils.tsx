@@ -24,10 +24,11 @@ export const SideBarContainer = styled.div`
 	font-size: 0.9rem;
 `;
 
+// Button on right of Command to initiate drag and drop
 export const DragHandle = styled.div`
-	width: 13px;
-	max-width: 13px;
-	min-width: 13px;
+	width: 15px;
+	max-width: 15px;
+	min-width: 15px;
 	height: 20px;
 	background-color: #ccc;
 	border-radius: 4px;

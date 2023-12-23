@@ -54,6 +54,56 @@ export const StyledCCFButton = styled.button`
 	}
 `;
 
+export const ParameterCreationFormContainer = styled.div`
+	background: ${({ theme }) => theme.commandCreation.formBackground};
+	color: ${({ theme }) => theme.commandCreation.formText};
+	padding: 15px;
+	margin-bottom: 15px;
+	border-radius: 8px;
+`;
+
+export const ParameterCreationLabel = styled.label`
+	display: block;
+	margin-bottom: 5px;
+`;
+
+export const ParameterCreationInput = styled.input`
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 10px;
+	background: ${({ theme }) => theme.commandCreation.inputBackground};
+	color: ${({ theme }) => theme.commandCreation.inputText};
+	border: 1px solid #ccc;
+	border-radius: 4px;
+`;
+
+export const ParameterCreationError = styled.p`
+	color: ${({ theme }) => theme.commandCreation.errorText};
+	margin-bottom: 10px;
+`;
+
+export const ParameterCreationSelect = styled.select`
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 10px;
+	background: ${({ theme }) => theme.commandCreation.inputBackground};
+	color: ${({ theme }) => theme.commandCreation.inputText};
+	border: 1px solid #ccc;
+	border-radius: 4px;
+`;
+
+export const ParameterCreationButton = styled.button`
+	background: ${({ theme }) => theme.commandCreation.buttonBackground};
+	color: ${({ theme }) => theme.commandCreation.formText};
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	&:hover {
+		background: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
+	}
+`;
+
 // Subtypes for each parameter type
 const StringParameterSchema = ParameterSchema.pick({
 	type: true,
@@ -163,36 +213,46 @@ const StringParameterFields = ({
 	return (
 		<>
 			{/* Min Length Field */}
-			<label>Min Length</label>
-			<input
+			<ParameterCreationLabel>Min Length</ParameterCreationLabel>
+			<ParameterCreationInput
 				type="number"
 				{...register(`parameters.${index}.minLength`, {
 					setValueAs: toNumberOrNullOrUndefined,
 				})}
 				placeholder="Min Length"
 			/>
-			{parameterErrors?.minLength && <p>{parameterErrors.minLength.message}</p>}
+			{parameterErrors?.minLength && (
+				<ParameterCreationError>
+					{parameterErrors.minLength.message}
+				</ParameterCreationError>
+			)}
 
 			{/* Max Length Field */}
-			<label>Max Length</label>
-			<input
+			<ParameterCreationLabel>Max Length</ParameterCreationLabel>
+			<ParameterCreationInput
 				type="number"
 				{...register(`parameters.${index}.maxLength`, {
 					setValueAs: toNumberOrNullOrUndefined,
 				})}
 				placeholder="Max Length"
 			/>
-			{parameterErrors?.maxLength && <p>{parameterErrors.maxLength.message}</p>}
+			{parameterErrors?.maxLength && (
+				<ParameterCreationError>
+					{parameterErrors.maxLength.message}
+				</ParameterCreationError>
+			)}
 
 			{/* Validation Regex Field */}
-			<label>Validation Regex</label>
-			<input
+			<ParameterCreationLabel>Validation Regex</ParameterCreationLabel>
+			<ParameterCreationInput
 				{...register(`parameters.${index}.validationRegex`)}
 				placeholder="Validation Regex"
 				maxLength={100}
 			/>
 			{parameterErrors?.validationRegex && (
-				<p>{parameterErrors.validationRegex.message}</p>
+				<ParameterCreationError>
+					{parameterErrors.validationRegex.message}
+				</ParameterCreationError>
 			)}
 		</>
 	);
@@ -222,26 +282,34 @@ const IntParameterFields = ({
 	return (
 		<>
 			{/* Min Value Field */}
-			<label>Min Value</label>
-			<input
+			<ParameterCreationLabel>Min Value</ParameterCreationLabel>
+			<ParameterCreationInput
 				type="number"
 				{...register(`parameters.${index}.minValue`, {
 					setValueAs: toNumberOrNullOrUndefined,
 				})}
 				placeholder="Min Value"
 			/>
-			{parameterErrors?.minValue && <p>{parameterErrors.minValue.message}</p>}
+			{parameterErrors?.minValue && (
+				<ParameterCreationError>
+					{parameterErrors.minValue.message}
+				</ParameterCreationError>
+			)}
 
 			{/* Max Value Field */}
-			<label>Max Value</label>
-			<input
+			<ParameterCreationLabel>Max Value</ParameterCreationLabel>
+			<ParameterCreationInput
 				type="number"
 				{...register(`parameters.${index}.maxValue`, {
 					setValueAs: toNumberOrNullOrUndefined,
 				})}
 				placeholder="Max Value"
 			/>
-			{parameterErrors?.maxValue && <p>{parameterErrors.maxValue.message}</p>}
+			{parameterErrors?.maxValue && (
+				<ParameterCreationError>
+					{parameterErrors.maxValue.message}
+				</ParameterCreationError>
+			)}
 		</>
 	);
 };
@@ -283,7 +351,7 @@ const DropdownParameterFields = ({
 		<>
 			{/* Allowed Values Field */}
 			{/* Enter as many allowed values as they want, separated by commas */}
-			<label>Allowed Values</label>
+			<ParameterCreationLabel>Allowed Values</ParameterCreationLabel>
 			<textarea
 				{...register(`parameters.${index}.allowedValues`, {
 					setValueAs: stringToArray,
@@ -293,7 +361,9 @@ const DropdownParameterFields = ({
 				maxLength={5000}
 			/>
 			{parameterErrors?.allowedValues && (
-				<p>{parameterErrors.allowedValues.message}</p>
+				<ParameterCreationError>
+					{parameterErrors.allowedValues.message}
+				</ParameterCreationError>
 			)}
 		</>
 	);
@@ -333,15 +403,17 @@ export const DefaultValueInput = ({
 		case "DROPDOWN":
 			return (
 				<>
-					<label>Default Value</label>
-					<input
+					<ParameterCreationLabel>Default Value</ParameterCreationLabel>
+					<ParameterCreationInput
 						type="text"
 						{...register(`parameters.${index}.defaultValue`)}
 						placeholder="Default Value"
 						maxLength={1000}
 					/>
 					{parameterErrors?.defaultValue && (
-						<p>{parameterErrors.defaultValue.message}</p>
+						<ParameterCreationError>
+							{parameterErrors.defaultValue.message}
+						</ParameterCreationError>
 					)}
 				</>
 			);
@@ -349,14 +421,16 @@ export const DefaultValueInput = ({
 		case "INT":
 			return (
 				<>
-					<label>Default Value</label>
-					<input
+					<ParameterCreationLabel>Default Value</ParameterCreationLabel>
+					<ParameterCreationInput
 						type="number"
 						{...register(`parameters.${index}.defaultValue`)}
 						placeholder="Number"
 					/>
 					{parameterErrors?.defaultValue && (
-						<p>{parameterErrors.defaultValue.message}</p>
+						<ParameterCreationError>
+							{parameterErrors.defaultValue.message}
+						</ParameterCreationError>
 					)}
 				</>
 			);
@@ -364,25 +438,27 @@ export const DefaultValueInput = ({
 		case "BOOLEAN":
 			return (
 				<>
-					<label>Default Value</label>
-					<label>
-						<input
+					<ParameterCreationLabel>Default Value</ParameterCreationLabel>
+					<ParameterCreationLabel>
+						<ParameterCreationInput
 							type="radio"
 							value="true"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
 						True
-					</label>
-					<label>
-						<input
+					</ParameterCreationLabel>
+					<ParameterCreationLabel>
+						<ParameterCreationInput
 							type="radio"
 							value="false"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
 						False
-					</label>
+					</ParameterCreationLabel>
 					{parameterErrors?.defaultValue && (
-						<p>{parameterErrors.defaultValue.message}</p>
+						<ParameterCreationError>
+							{parameterErrors.defaultValue.message}
+						</ParameterCreationError>
 					)}
 				</>
 			);
@@ -390,25 +466,27 @@ export const DefaultValueInput = ({
 		case "FLAG":
 			return (
 				<>
-					<label>Default Value</label>
-					<label>
-						<input
+					<ParameterCreationLabel>Default Value</ParameterCreationLabel>
+					<ParameterCreationLabel>
+						<ParameterCreationInput
 							type="radio"
 							value="On"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
 						On
-					</label>
-					<label>
-						<input
+					</ParameterCreationLabel>
+					<ParameterCreationLabel>
+						<ParameterCreationInput
 							type="radio"
 							value="Off"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
 						Off
-					</label>
+					</ParameterCreationLabel>
 					{parameterErrors?.defaultValue && (
-						<p>{parameterErrors.defaultValue.message}</p>
+						<ParameterCreationError>
+							{parameterErrors.defaultValue.message}
+						</ParameterCreationError>
 					)}
 				</>
 			);
