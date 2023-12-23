@@ -55,6 +55,7 @@ export const StyledCCFButton = styled.button`
 `;
 
 export const ParameterCreationFormContainer = styled.div`
+	border: 1px solid blue;
 	background: ${({ theme }) => theme.commandCreation.formBackground};
 	color: ${({ theme }) => theme.commandCreation.formText};
 	padding: 15px;
@@ -65,10 +66,12 @@ export const ParameterCreationFormContainer = styled.div`
 export const ParameterCreationLabel = styled.label`
 	display: block;
 	margin-bottom: 5px;
+	max-width: 100px;
 `;
 
 export const ParameterCreationInput = styled.input`
-	width: 100%;
+	max-width: 100%;
+	display: block;
 	padding: 8px;
 	margin-bottom: 10px;
 	background: ${({ theme }) => theme.commandCreation.inputBackground};
@@ -83,7 +86,7 @@ export const ParameterCreationError = styled.p`
 `;
 
 export const ParameterCreationSelect = styled.select`
-	width: 100%;
+	width: 100px;
 	padding: 8px;
 	margin-bottom: 10px;
 	background: ${({ theme }) => theme.commandCreation.inputBackground};
