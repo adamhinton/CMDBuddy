@@ -19,6 +19,7 @@ import {
 	ParameterCreationLabel,
 	ParameterCreationSelect,
 	StyledPCFNameInput,
+	StyledPCFOptionalCheckbox,
 } from "../../../utils/CommandCreationUtils";
 import {
 	AnyParameter,
@@ -153,13 +154,13 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 			{/* IsNullable (Optional) Checkbox */}
 			{/* This isn't needed in FLAG type */}
 			{parameterType !== "FLAG" && (
-				<ParameterCreationLabel>
+				<StyledPCFOptionalCheckbox>
+					<ParameterCreationLabel>Optional</ParameterCreationLabel>
 					<ParameterCreationInput
 						type="checkbox"
 						{...register(`parameters.${index}.isNullable`)}
 					/>
-					Optional
-				</ParameterCreationLabel>
+				</StyledPCFOptionalCheckbox>
 			)}
 
 			{renderParameterSpecificFields()}
