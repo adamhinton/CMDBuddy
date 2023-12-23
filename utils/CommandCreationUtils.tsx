@@ -519,23 +519,22 @@ export const DefaultValueInput = ({
 		case "FLAG":
 			return (
 				<>
-					<ParameterCreationLabel>Default Value</ParameterCreationLabel>
-					<ParameterCreationLabel>
+					<StyledPCFRadioInputContainer>
+						<ParameterCreationLabel>Default Value</ParameterCreationLabel>
+						<ParameterCreationLabel>On</ParameterCreationLabel>
 						<ParameterCreationInput
 							type="radio"
 							value="On"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
-						On
-					</ParameterCreationLabel>
-					<ParameterCreationLabel>
+						<ParameterCreationLabel>Off</ParameterCreationLabel>
 						<ParameterCreationInput
 							type="radio"
 							value="Off"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
-						Off
-					</ParameterCreationLabel>
+					</StyledPCFRadioInputContainer>
+
 					{parameterErrors?.defaultValue && (
 						<ParameterCreationError>
 							{parameterErrors.defaultValue.message}
