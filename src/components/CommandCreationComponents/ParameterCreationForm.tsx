@@ -12,6 +12,9 @@ import {
 	CommandCreationUtils,
 	DefaultValueInput,
 	FlagParameterErrors,
+} from "../../../utils/CommandCreationUtils";
+
+import {
 	ParameterCreationButton,
 	ParameterCreationError,
 	ParameterCreationFormContainer,
@@ -20,7 +23,7 @@ import {
 	ParameterCreationSelect,
 	StyledPCFNameInput,
 	StyledPCFOptionalCheckbox,
-} from "../../../utils/CommandCreationUtils";
+} from "../../../utils/styles/CommandCreationStyles/ParameterCreationStyles";
 import {
 	AnyParameter,
 	StringParameterErrors,
