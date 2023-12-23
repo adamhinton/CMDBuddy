@@ -107,6 +107,50 @@ export const ParameterCreationButton = styled.button`
 	}
 `;
 
+export const StyledPCFNameInput = styled(ParameterCreationInput)`
+	width: 200px;
+	margin-right: 10px;
+`;
+
+export const StyledPCFDefaultValueInput = styled(ParameterCreationInput)`
+	width: 40%;
+	margin-right: 10px;
+`;
+
+export const StyledPCFOptionalCheckbox = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+`;
+
+export const StyledPCFLengthInput = styled.input`
+	width: 20%;
+	margin-right: 10px;
+`;
+
+const StyledPCFRadioInput = styled.div`
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	margin-right: 10px;
+`;
+
+const StyledPCFBooleanOptions = styled.div`
+	display: flex;
+	justify-content: space-between;
+	width: 100px;
+`;
+
+const StyledPCFDropdown = styled.select`
+	width: auto;
+`;
+
+// Handling multiple inputs on the same line for min/max values
+const StyledPCFMinMaxContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+`;
+
 // Subtypes for each parameter type
 const StringParameterSchema = ParameterSchema.pick({
 	type: true,

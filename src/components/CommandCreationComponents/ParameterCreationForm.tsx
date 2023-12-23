@@ -18,6 +18,7 @@ import {
 	ParameterCreationInput,
 	ParameterCreationLabel,
 	ParameterCreationSelect,
+	StyledPCFNameInput,
 } from "../../../utils/CommandCreationUtils";
 import {
 	AnyParameter,
@@ -130,7 +131,7 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 
 			{/* Shared Name Field */}
 			<ParameterCreationLabel>Name</ParameterCreationLabel>
-			<ParameterCreationInput
+			<StyledPCFNameInput
 				{...register(`parameters.${index}.name`)}
 				placeholder="Name"
 				required={true}
