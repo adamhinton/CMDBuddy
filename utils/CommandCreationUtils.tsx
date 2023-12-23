@@ -3,7 +3,6 @@
 // Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
 
 import { z } from "zod";
-import styled from "styled-components";
 import { ParameterSchema } from "./zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationForm";

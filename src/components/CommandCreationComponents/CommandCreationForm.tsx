@@ -4,8 +4,6 @@
 // Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different fields for each
 
 // TODO:
-// Also clear form on submit - but instate submit logic first and get that squared away
-// DB submit logic
 // Collapse Params && Collapse All && Expand All
 
 import React, { useState, useEffect } from "react";
@@ -95,10 +93,6 @@ const CommandCreationForm: React.FC = () => {
 	});
 	const router = useRouter();
 
-	// useEffect(() => {
-	// 	!loggedInUser && router.push("login");
-	// });
-
 	useEffect(() => {
 		const subscription = watch((value, { name }) => {
 			if (name?.startsWith("parameters")) {
@@ -122,11 +116,6 @@ const CommandCreationForm: React.FC = () => {
 		// TODO:
 		// Toast at beginning and end
 		// Notify if command title or baseCommand already exists
-		// Set the returned CMD with its Parameters from the db to redux state
-		// Clear form on successful submission
-
-		console.time("start submit");
-		const { id, email } = loggedInUser!;
 
 		data.order = 1;
 
