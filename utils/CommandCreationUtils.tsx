@@ -66,7 +66,8 @@ export const ParameterCreationFormContainer = styled.div`
 export const ParameterCreationLabel = styled.label`
 	display: block;
 	margin-bottom: 5px;
-	max-width: 100px;
+	max-width: 120px;
+	margin-right: 5px;
 `;
 
 export const ParameterCreationInput = styled.input`
@@ -78,6 +79,7 @@ export const ParameterCreationInput = styled.input`
 	color: ${({ theme }) => theme.commandCreation.inputText};
 	border: 1px solid #ccc;
 	border-radius: 4px;
+	margin-right: 20px;
 `;
 
 export const ParameterCreationError = styled.p`
@@ -86,7 +88,7 @@ export const ParameterCreationError = styled.p`
 `;
 
 export const ParameterCreationSelect = styled.select`
-	width: 100px;
+	width: 120px;
 	padding: 8px;
 	margin-bottom: 10px;
 	background: ${({ theme }) => theme.commandCreation.inputBackground};
@@ -96,6 +98,7 @@ export const ParameterCreationSelect = styled.select`
 `;
 
 export const ParameterCreationButton = styled.button`
+	margin: 15px 0;
 	background: ${({ theme }) => theme.commandCreation.buttonBackground};
 	color: ${({ theme }) => theme.commandCreation.formText};
 	padding: 10px 15px;
@@ -105,6 +108,7 @@ export const ParameterCreationButton = styled.button`
 	&:hover {
 		background: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
 	}
+	display: block;
 `;
 
 export const StyledPCFNameInput = styled(ParameterCreationInput)`
@@ -121,14 +125,15 @@ export const StyledPCFOptionalCheckbox = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
+	margin: 9px 0;
 `;
 
-export const StyledPCFLengthInput = styled.input`
-	width: 20%;
+export const StyledPCFLengthInput = styled(ParameterCreationInput)`
+	width: 100px;
 	margin-right: 10px;
 `;
 
-const StyledPCFRadioInput = styled.div`
+const StyledPCFRadioInputContainer = styled.div`
 	display: flex;
 	justify-content: start;
 	align-items: center;
@@ -148,7 +153,7 @@ const StyledPCFDropdown = styled.select`
 // Handling multiple inputs on the same line for min/max values
 const StyledPCFMinMaxContainer = styled.div`
 	display: flex;
-	justify-content: space-between;
+	align-items: center;
 `;
 
 // Subtypes for each parameter type
@@ -261,7 +266,7 @@ const StringParameterFields = ({
 		<>
 			{/* Min Length Field */}
 			<ParameterCreationLabel>Min Length</ParameterCreationLabel>
-			<ParameterCreationInput
+			<StyledPCFLengthInput
 				type="number"
 				{...register(`parameters.${index}.minLength`, {
 					setValueAs: toNumberOrNullOrUndefined,
@@ -276,7 +281,7 @@ const StringParameterFields = ({
 
 			{/* Max Length Field */}
 			<ParameterCreationLabel>Max Length</ParameterCreationLabel>
-			<ParameterCreationInput
+			<StyledPCFLengthInput
 				type="number"
 				{...register(`parameters.${index}.maxLength`, {
 					setValueAs: toNumberOrNullOrUndefined,
@@ -328,30 +333,33 @@ const IntParameterFields = ({
 
 	return (
 		<>
-			{/* Min Value Field */}
-			<ParameterCreationLabel>Min Value</ParameterCreationLabel>
-			<ParameterCreationInput
-				type="number"
-				{...register(`parameters.${index}.minValue`, {
-					setValueAs: toNumberOrNullOrUndefined,
-				})}
-				placeholder="Min Value"
-			/>
-			{parameterErrors?.minValue && (
-				<ParameterCreationError>
-					{parameterErrors.minValue.message}
-				</ParameterCreationError>
-			)}
+			<StyledPCFMinMaxContainer>
+				{/* Min Value Field */}
+				<ParameterCreationLabel>Min Value</ParameterCreationLabel>
+				<ParameterCreationInput
+					type="number"
+					{...register(`parameters.${index}.minValue`, {
+						setValueAs: toNumberOrNullOrUndefined,
+					})}
+					placeholder="Min Value"
+				/>
+				{parameterErrors?.minValue && (
+					<ParameterCreationError>
+						{parameterErrors.minValue.message}
+					</ParameterCreationError>
+				)}
 
-			{/* Max Value Field */}
-			<ParameterCreationLabel>Max Value</ParameterCreationLabel>
-			<ParameterCreationInput
-				type="number"
-				{...register(`parameters.${index}.maxValue`, {
-					setValueAs: toNumberOrNullOrUndefined,
-				})}
-				placeholder="Max Value"
-			/>
+				{/* Max Value Field */}
+				<ParameterCreationLabel>Max Value</ParameterCreationLabel>
+				<ParameterCreationInput
+					type="number"
+					{...register(`parameters.${index}.maxValue`, {
+						setValueAs: toNumberOrNullOrUndefined,
+					})}
+					placeholder="Max Value"
+				/>
+			</StyledPCFMinMaxContainer>
+
 			{parameterErrors?.maxValue && (
 				<ParameterCreationError>
 					{parameterErrors.maxValue.message}
@@ -486,22 +494,20 @@ export const DefaultValueInput = ({
 			return (
 				<>
 					<ParameterCreationLabel>Default Value</ParameterCreationLabel>
-					<ParameterCreationLabel>
+					<StyledPCFRadioInputContainer>
+						<ParameterCreationLabel>True</ParameterCreationLabel>
 						<ParameterCreationInput
 							type="radio"
 							value="true"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
-						True
-					</ParameterCreationLabel>
-					<ParameterCreationLabel>
+						<ParameterCreationLabel>False</ParameterCreationLabel>
 						<ParameterCreationInput
 							type="radio"
 							value="false"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
-						False
-					</ParameterCreationLabel>
+					</StyledPCFRadioInputContainer>
 					{parameterErrors?.defaultValue && (
 						<ParameterCreationError>
 							{parameterErrors.defaultValue.message}
