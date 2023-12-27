@@ -39,7 +39,6 @@ const ParameterExecutionForm = ({
 				);
 			case "BOOLEAN":
 				return (
-					// Assuming "true" and "false" are the values to be used
 					<div>
 						<label>
 							<input
