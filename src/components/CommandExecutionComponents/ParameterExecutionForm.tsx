@@ -46,7 +46,7 @@ const ParameterExecutionForm = ({
 				);
 			case "BOOLEAN":
 				return (
-					<div>
+					<FlagOrBooleanPEFLabel>
 						<CEFLabel>
 							<CEFInput
 								type="radio"
@@ -67,7 +67,7 @@ const ParameterExecutionForm = ({
 							/>
 							False
 						</CEFLabel>
-					</div>
+					</FlagOrBooleanPEFLabel>
 				);
 			case "DROPDOWN":
 				return (
@@ -86,7 +86,7 @@ const ParameterExecutionForm = ({
 				);
 			case "FLAG":
 				return (
-					<div>
+					<FlagOrBooleanPEFLabel>
 						<CEFLabel>
 							<CEFInput
 								type="radio"
@@ -107,7 +107,7 @@ const ParameterExecutionForm = ({
 							/>
 							Off
 						</CEFLabel>
-					</div>
+					</FlagOrBooleanPEFLabel>
 				);
 			default:
 				return <p>Unsupported parameter type</p>;
@@ -123,6 +123,11 @@ const ParameterExecutionForm = ({
 };
 
 const PEFContainer = styled.div`
+	display: flex;
+	align-items: center;
+`;
+
+const FlagOrBooleanPEFLabel = styled.div`
 	display: flex;
 	align-items: center;
 `;

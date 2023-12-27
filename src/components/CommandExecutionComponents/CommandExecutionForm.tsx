@@ -26,7 +26,7 @@ export const CEFFormContainer = styled.form`
 `;
 
 export const CEFInput = styled.input`
-	width: 250px;
+	max-width: 250px;
 	padding: 0.5rem;
 	margin: 0.5rem 0;
 	box-sizing: border-box;
@@ -39,6 +39,7 @@ export const CEFInput = styled.input`
 export const CEFLabel = styled.label`
 	display: block;
 	margin-bottom: 0.5rem;
+	margin-right: 10px;
 `;
 
 export const CEFButton = styled.button`
