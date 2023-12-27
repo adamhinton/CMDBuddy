@@ -1,6 +1,12 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
+import {
+	CEFInput,
+	CEFLabel,
+	CEFOption,
+	CEFSelect,
+} from "./CommandExecutionForm";
 
 const ParameterExecutionForm = ({
 	parameter,
@@ -14,7 +20,7 @@ const ParameterExecutionForm = ({
 		switch (parameter.type) {
 			case "STRING":
 				return (
-					<input
+					<CEFInput
 						type="text"
 						{...register(parameter.name, {
 							required: !parameter.isNullable,
@@ -28,7 +34,7 @@ const ParameterExecutionForm = ({
 				);
 			case "INT":
 				return (
-					<input
+					<CEFInput
 						type="number"
 						{...register(parameter.name, {
 							required: !parameter.isNullable,
@@ -40,8 +46,8 @@ const ParameterExecutionForm = ({
 			case "BOOLEAN":
 				return (
 					<div>
-						<label>
-							<input
+						<CEFLabel>
+							<CEFInput
 								type="radio"
 								value="true"
 								{...register(parameter.name, {
@@ -49,9 +55,9 @@ const ParameterExecutionForm = ({
 								})}
 							/>
 							True
-						</label>
-						<label>
-							<input
+						</CEFLabel>
+						<CEFLabel>
+							<CEFInput
 								type="radio"
 								value="false"
 								{...register(parameter.name, {
@@ -59,29 +65,29 @@ const ParameterExecutionForm = ({
 								})}
 							/>
 							False
-						</label>
+						</CEFLabel>
 					</div>
 				);
 			case "DROPDOWN":
 				return (
-					<select
+					<CEFSelect
 						{...register(parameter.name, {
 							required: !parameter.isNullable,
 							value: parameter.defaultValue,
 						})}
 					>
 						{parameter.allowedValues?.map((value) => (
-							<option key={value} value={value}>
+							<CEFOption key={value} value={value}>
 								{value}
-							</option>
+							</CEFOption>
 						))}
-					</select>
+					</CEFSelect>
 				);
 			case "FLAG":
 				return (
 					<div>
-						<label>
-							<input
+						<CEFLabel>
+							<CEFInput
 								type="radio"
 								value="On"
 								{...register(parameter.name, {
@@ -89,9 +95,9 @@ const ParameterExecutionForm = ({
 								})}
 							/>
 							On
-						</label>
-						<label>
-							<input
+						</CEFLabel>
+						<CEFLabel>
+							<CEFInput
 								type="radio"
 								value="Off"
 								{...register(parameter.name, {
@@ -99,7 +105,7 @@ const ParameterExecutionForm = ({
 								})}
 							/>
 							Off
-						</label>
+						</CEFLabel>
 					</div>
 				);
 			default:
@@ -109,10 +115,14 @@ const ParameterExecutionForm = ({
 
 	return (
 		<div>
-			<label htmlFor={parameter.name}>{parameter.name}</label>
+			<CEFLabel htmlFor={parameter.name}>{parameter.name}</CEFLabel>
 			{renderInputField()}
 		</div>
 	);
 };
+
+const PEFContainer = styled.div`
+	display: flex;
+`;
 
 export default ParameterExecutionForm;

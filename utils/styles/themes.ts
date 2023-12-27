@@ -41,6 +41,17 @@ export const lightTheme: DefaultTheme = {
 		buttonBackground: "#B3E5FC",
 		buttonHoverBackground: "#81D4FA",
 	},
+	commandGeneration: {
+		baseBackground: "#f0f0f0",
+		baseText: "#333",
+		inputBackground: "#fff",
+		inputText: "#333",
+		buttonBackground: "#e0e0e0",
+		buttonHoverBackground: "#d0d0d0",
+		buttonActiveBackground: "#c0c0c0",
+		selectBackground: "#fff",
+		selectText: "#333",
+	},
 };
 
 export const darkTheme: DefaultTheme = {
@@ -83,5 +94,16 @@ export const darkTheme: DefaultTheme = {
 		errorText: "#EF9A9A",
 		buttonBackground: "#546E7A",
 		buttonHoverBackground: "#78909C",
+	},
+	commandGeneration: {
+		baseBackground: "#222",
+		baseText: "#f5f5f5",
+		inputBackground: "#333",
+		inputText: "#f5f5f5",
+		buttonBackground: "#444",
+		buttonHoverBackground: "#555",
+		buttonActiveBackground: "#666",
+		selectBackground: "#333",
+		selectText: "#f5f5f5",
 	},
 };
