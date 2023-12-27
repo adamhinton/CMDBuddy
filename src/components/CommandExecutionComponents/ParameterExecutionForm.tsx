@@ -7,6 +7,7 @@ import {
 	CEFOption,
 	CEFSelect,
 } from "./CommandExecutionForm";
+import styled from "styled-components";
 
 const ParameterExecutionForm = ({
 	parameter,
@@ -114,15 +115,16 @@ const ParameterExecutionForm = ({
 	};
 
 	return (
-		<div>
+		<PEFContainer>
 			<CEFLabel htmlFor={parameter.name}>{parameter.name}</CEFLabel>
 			{renderInputField()}
-		</div>
+		</PEFContainer>
 	);
 };
 
 const PEFContainer = styled.div`
 	display: flex;
+	align-items: center;
 `;
 
 export default ParameterExecutionForm;
