@@ -22,13 +22,24 @@ export const CEFFormContainer = styled.form`
 	padding: 1rem;
 	border-radius: 8px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	margin-bottom: 2rem;
+`;
+
+const CEFHeader = styled.header`
+	padding-bottom: 1rem;
+	border-bottom: 2px solid ${({ theme }) => theme.commandGeneration.baseText};
 	margin-bottom: 1rem;
+`;
+
+const CEFCommandTitle = styled.h3`
+	font-size: 1.5rem;
+	color: ${({ theme }) => theme.commandGeneration.baseText};
 `;
 
 export const CEFInput = styled.input`
 	max-width: 250px;
 	padding: 0.5rem;
-	margin: 0.5rem 0;
+	margin: 0.75rem 0;
 	box-sizing: border-box;
 	border: 1px solid ${({ theme }) => theme.commandGeneration.inputText};
 	border-radius: 4px;
@@ -37,9 +48,11 @@ export const CEFInput = styled.input`
 `;
 
 export const CEFLabel = styled.label`
-	display: block;
-	margin-bottom: 0.5rem;
-	margin-right: 10px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	margin-right: 5px;
+	margin-bottom: 0.25rem;
 `;
 
 export const CEFButton = styled.button`
@@ -49,6 +62,7 @@ export const CEFButton = styled.button`
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
+	transition: background-color 0.3s ease;
 	&:hover {
 		background: ${({ theme }) => theme.commandGeneration.buttonHoverBackground};
 	}
@@ -98,9 +112,9 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 	return (
 		<FormProvider {...methods}>
 			<CEFFormContainer>
-				<header>
-					<h3>{command.title}</h3>
-				</header>
+				<CEFHeader>
+					<CEFCommandTitle>{command.title}</CEFCommandTitle>
+				</CEFHeader>
 				<LiveCommandExecutionPreview
 					baseCommand={command.baseCommand}
 					parameters={command.parameters}

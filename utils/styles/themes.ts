@@ -51,6 +51,8 @@ export const lightTheme: DefaultTheme = {
 		buttonActiveBackground: "#c0c0c0",
 		selectBackground: "#fff",
 		selectText: "#333",
+		inputBorderColor: "#ccc",
+		inputHoverBorderColor: "#bbb",
 	},
 };
 
@@ -105,5 +107,7 @@ export const darkTheme: DefaultTheme = {
 		buttonActiveBackground: "#666",
 		selectBackground: "#333",
 		selectText: "#f5f5f5",
+		inputBorderColor: "#ccc",
+		inputHoverBorderColor: "#bbb",
 	},
 };

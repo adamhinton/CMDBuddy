@@ -123,13 +123,22 @@ const ParameterExecutionForm = ({
 };
 
 const PEFContainer = styled.div`
-	display: flex;
-	align-items: center;
+	background: ${({ theme }) => theme.commandGeneration.inputBackground};
+	padding: 0.3rem;
+	border-radius: 4px;
+	margin-bottom: 1rem; // Added for clearer delineation between parameters
+	border: 1px solid ${({ theme }) => theme.colors.text}; // Border for emphasis
+	transition: box-shadow 0.3s ease;
+
+	&:hover {
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Soft shadow on hover for interactivity
+	}
 `;
 
 const FlagOrBooleanPEFLabel = styled.div`
 	display: flex;
 	align-items: center;
+	margin-right: 1rem;
 `;
 
 export default ParameterExecutionForm;
