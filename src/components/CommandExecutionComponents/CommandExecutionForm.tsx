@@ -30,7 +30,7 @@ export const CEFForm = styled.form`
 `;
 
 const CEFHeader = styled.header`
-	padding-bottom: 1rem;
+	padding-bottom: 0.3rem;
 	border-bottom: 2px solid ${({ theme }) => theme.commandGeneration.baseText};
 	margin-bottom: 1rem;
 `;
@@ -38,12 +38,23 @@ const CEFHeader = styled.header`
 const CEFCommandTitle = styled.h3`
 	font-size: 1.5rem;
 	color: ${({ theme }) => theme.commandGeneration.baseText};
+	margin: 0.5rem 0;
 `;
 
-export const CEFInput = styled.input`
+type CEFTextInputProps = {
+	inputType: "STRING" | "INT" | "OTHER";
+};
+
+export const CEFInput = styled.input<CEFTextInputProps>`
 	max-width: 250px;
 	padding: 0.5rem;
-	margin: 0.75rem 0;
+	width: ${(props) =>
+		props.inputType === "STRING"
+			? "250px"
+			: props.inputType === "INT"
+			? "100px"
+			: null};
+	margin: 0.75rem 1rem;
 	box-sizing: border-box;
 	border: 1px solid ${({ theme }) => theme.commandGeneration.inputText};
 	border-radius: 4px;
@@ -55,7 +66,8 @@ export const CEFLabel = styled.label`
 	font-weight: bold;
 	display: flex;
 	align-items: center;
-	margin-right: 5px;
+	margin-left: 10px;
+	margin-right: 3px;
 	margin-bottom: 0.25rem;
 `;
 
@@ -73,7 +85,7 @@ export const CEFButton = styled.button`
 `;
 
 export const CEFSelect = styled.select`
-	width: 250px;
+	width: 150px;
 	padding: 0.5rem;
 	margin: 0.5rem 0;
 	border: 1px solid ${({ theme }) => theme.commandGeneration.inputText};
@@ -123,9 +135,12 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 					baseCommand={command.baseCommand}
 					parameters={command.parameters}
 				/>
-				{parameters?.map((param) => {
-					return <ParameterExecutionForm parameter={param} key={param.id} />;
-				})}
+				<CEFParametersContainer>
+					{parameters?.map((param) => {
+						return <ParameterExecutionForm parameter={param} key={param.id} />;
+					})}
+				</CEFParametersContainer>
+
 				<CEFButton
 					onClick={(e) => {
 						removeCommandOnClick(e, command.id, dispatch);
@@ -138,3 +153,9 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 	);
 };
 export default CommandExecutionForm;
+
+const CEFParametersContainer = styled.section`
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+`;

@@ -22,6 +22,7 @@ const ParameterExecutionForm = ({
 			case "STRING":
 				return (
 					<CEFInput
+						inputType="STRING"
 						type="text"
 						{...register(parameter.name, {
 							required: !parameter.isNullable,
@@ -36,6 +37,7 @@ const ParameterExecutionForm = ({
 			case "INT":
 				return (
 					<CEFInput
+						inputType="INT"
 						type="number"
 						{...register(parameter.name, {
 							required: !parameter.isNullable,
@@ -54,6 +56,7 @@ const ParameterExecutionForm = ({
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
+								inputType="OTHER"
 							/>
 							True
 						</CEFLabel>
@@ -64,6 +67,7 @@ const ParameterExecutionForm = ({
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
+								inputType="OTHER"
 							/>
 							False
 						</CEFLabel>
@@ -94,6 +98,7 @@ const ParameterExecutionForm = ({
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
+								inputType="OTHER"
 							/>
 							On
 						</CEFLabel>
@@ -104,6 +109,7 @@ const ParameterExecutionForm = ({
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
+								inputType="OTHER"
 							/>
 							Off
 						</CEFLabel>
@@ -123,11 +129,14 @@ const ParameterExecutionForm = ({
 };
 
 const PEFContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+	max-width: 400px;
 	background: ${({ theme }) => theme.commandGeneration.inputBackground};
-	padding: 0.3rem;
+	padding: 0.2rem;
 	border-radius: 4px;
-	margin-bottom: 1rem; // Added for clearer delineation between parameters
-	border: 1px solid ${({ theme }) => theme.colors.text}; // Border for emphasis
+	margin-bottom: 0.75rem;
+	border: 1px solid ${({ theme }) => theme.colors.text};
 	transition: box-shadow 0.3s ease;
 
 	&:hover {
