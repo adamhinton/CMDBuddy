@@ -72,7 +72,7 @@ export const CEFSelect = styled.select`
 	width: 250px;
 	padding: 0.5rem;
 	margin: 0.5rem 0;
-	border: 1px solid ${({ theme }) => theme.commandGeneration.selectBackground};
+	border: 1px solid ${({ theme }) => theme.commandGeneration.inputText};
 	border-radius: 4px;
 	background: ${({ theme }) => theme.commandGeneration.selectBackground};
 	color: ${({ theme }) => theme.commandGeneration.selectText};
