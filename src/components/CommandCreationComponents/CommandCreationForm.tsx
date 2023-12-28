@@ -4,8 +4,6 @@
 // Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different fields for each
 
 // TODO:
-// Also clear form on submit - but instate submit logic first and get that squared away
-// DB submit logic
 // Collapse Params && Collapse All && Expand All
 
 import React, { useState, useEffect } from "react";
@@ -26,12 +24,18 @@ import z from "zod";
 import { CommandSchema } from "../../../utils/zod/CommandSchema";
 import ParameterCreationForm from "./ParameterCreationForm";
 import {
+	StyledCCFForm,
+	StyledCCFLabel,
+	StyledCCFInput,
+	StyledCCFError,
+	StyledCCFButton,
+} from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
+import {
 	CommandCreationUtils,
 	AnyParameter,
 	submitNewCommandAndParamsToDB,
 } from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
-import { toast } from "react-toastify";
 
 const {
 	StringParameterSchema,
@@ -89,10 +93,6 @@ const CommandCreationForm: React.FC = () => {
 	});
 	const router = useRouter();
 
-	// useEffect(() => {
-	// 	!loggedInUser && router.push("login");
-	// });
-
 	useEffect(() => {
 		const subscription = watch((value, { name }) => {
 			if (name?.startsWith("parameters")) {
@@ -116,11 +116,6 @@ const CommandCreationForm: React.FC = () => {
 		// TODO:
 		// Toast at beginning and end
 		// Notify if command title or baseCommand already exists
-		// Set the returned CMD with its Parameters from the db to redux state
-		// Clear form on successful submission
-
-		console.time("start submit");
-		const { id, email } = loggedInUser!;
 
 		data.order = 1;
 
@@ -179,30 +174,34 @@ const CommandCreationForm: React.FC = () => {
 
 	return (
 		<FormProvider {...methods}>
-			<form onSubmit={methods.handleSubmit(onSubmit)}>
+			<StyledCCFForm onSubmit={methods.handleSubmit(onSubmit)}>
 				{/* Command Fields */}
 				<div>
-					<label htmlFor="baseCommand">Base Command</label>
-					<input
+					<StyledCCFLabel htmlFor="baseCommand">Base Command</StyledCCFLabel>
+					<StyledCCFInput
 						{...methods.register("baseCommand")}
 						placeholder="npm test myTestName"
 						maxLength={200}
 						required={true}
 					/>
 					{methods.formState.errors.baseCommand && (
-						<p>{methods.formState.errors.baseCommand.message}</p>
+						<StyledCCFError>
+							{methods.formState.errors.baseCommand.message}
+						</StyledCCFError>
 					)}
 				</div>
 
 				<div>
-					<label htmlFor="title">Title</label>
-					<input
+					<StyledCCFLabel htmlFor="title">Title</StyledCCFLabel>
+					<StyledCCFInput
 						{...methods.register("title")}
 						maxLength={60}
 						required={true}
 					/>
 					{methods.formState.errors.title && (
-						<p>{methods.formState.errors.title.message}</p>
+						<StyledCCFError>
+							{methods.formState.errors.title.message}
+						</StyledCCFError>
 					)}
 				</div>
 
@@ -215,7 +214,7 @@ const CommandCreationForm: React.FC = () => {
 					/>
 				))}
 
-				<button
+				<StyledCCFButton
 					type="button"
 					onClick={() =>
 						append({
@@ -228,13 +227,13 @@ const CommandCreationForm: React.FC = () => {
 					}
 				>
 					Add Parameter
-				</button>
+				</StyledCCFButton>
 
-				<button type="button" onClick={clearForm}>
+				<StyledCCFButton type="button" onClick={clearForm}>
 					Clear Form
-				</button>
+				</StyledCCFButton>
 
-				<button type="submit">Create Command</button>
+				<StyledCCFButton type="submit">Create Command</StyledCCFButton>
 
 				{/* This shows an example of the Command the user has created. */}
 				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}
@@ -243,7 +242,7 @@ const CommandCreationForm: React.FC = () => {
 					parameters={methods.getValues().parameters}
 					watch={watch}
 				/>
-			</form>
+			</StyledCCFForm>
 		</FormProvider>
 	);
 };

@@ -1,6 +1,13 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
+import {
+	CEFInput,
+	CEFLabel,
+	CEFOption,
+	CEFSelect,
+} from "./CommandExecutionForm";
+import styled from "styled-components";
 
 const ParameterExecutionForm = ({
 	parameter,
@@ -14,7 +21,8 @@ const ParameterExecutionForm = ({
 		switch (parameter.type) {
 			case "STRING":
 				return (
-					<input
+					<CEFInput
+						inputType="STRING"
 						type="text"
 						{...register(parameter.name, {
 							required: !parameter.isNullable,
@@ -28,7 +36,8 @@ const ParameterExecutionForm = ({
 				);
 			case "INT":
 				return (
-					<input
+					<CEFInput
+						inputType="INT"
 						type="number"
 						{...register(parameter.name, {
 							required: !parameter.isNullable,
@@ -39,69 +48,72 @@ const ParameterExecutionForm = ({
 				);
 			case "BOOLEAN":
 				return (
-					// Assuming "true" and "false" are the values to be used
-					<div>
-						<label>
-							<input
+					<FlagOrBooleanPEFLabel>
+						<CEFLabel>
+							<CEFInput
 								type="radio"
 								value="true"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
+								inputType="OTHER"
 							/>
 							True
-						</label>
-						<label>
-							<input
+						</CEFLabel>
+						<CEFLabel>
+							<CEFInput
 								type="radio"
 								value="false"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
+								inputType="OTHER"
 							/>
 							False
-						</label>
-					</div>
+						</CEFLabel>
+					</FlagOrBooleanPEFLabel>
 				);
 			case "DROPDOWN":
 				return (
-					<select
+					<CEFSelect
 						{...register(parameter.name, {
 							required: !parameter.isNullable,
 							value: parameter.defaultValue,
 						})}
 					>
 						{parameter.allowedValues?.map((value) => (
-							<option key={value} value={value}>
+							<CEFOption key={value} value={value}>
 								{value}
-							</option>
+							</CEFOption>
 						))}
-					</select>
+					</CEFSelect>
 				);
 			case "FLAG":
 				return (
-					<div>
-						<label>
-							<input
+					<FlagOrBooleanPEFLabel>
+						<CEFLabel>
+							<CEFInput
 								type="radio"
 								value="On"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
+								inputType="OTHER"
 							/>
 							On
-						</label>
-						<label>
-							<input
+						</CEFLabel>
+						<CEFLabel>
+							<CEFInput
 								type="radio"
 								value="Off"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
+								inputType="OTHER"
 							/>
 							Off
-						</label>
-					</div>
+						</CEFLabel>
+					</FlagOrBooleanPEFLabel>
 				);
 			default:
 				return <p>Unsupported parameter type</p>;
@@ -109,11 +121,33 @@ const ParameterExecutionForm = ({
 	};
 
 	return (
-		<div>
-			<label htmlFor={parameter.name}>{parameter.name}</label>
+		<PEFContainer>
+			<CEFLabel htmlFor={parameter.name}>{parameter.name}</CEFLabel>
 			{renderInputField()}
-		</div>
+		</PEFContainer>
 	);
 };
+
+const PEFContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+	max-width: 400px;
+	background: ${({ theme }) => theme.commandGeneration.inputBackground};
+	padding: 0.2rem;
+	border-radius: 4px;
+	margin-bottom: 0.75rem;
+	border: 1px solid ${({ theme }) => theme.colors.text};
+	transition: box-shadow 0.3s ease;
+
+	&:hover {
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Soft shadow on hover for interactivity
+	}
+`;
+
+const FlagOrBooleanPEFLabel = styled.div`
+	display: flex;
+	align-items: center;
+	margin-right: 1rem;
+`;
 
 export default ParameterExecutionForm;

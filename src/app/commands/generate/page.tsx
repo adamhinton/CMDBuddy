@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { CMDBuddyCommand } from "../../../../utils/zod/CommandSchema";
 import CommandExecutionForm from "@/components/CommandExecutionComponents/CommandExecutionForm";
+import styled from "styled-components";
 Amplify.configure({ ...config, ssr: true });
 
 export default function ActiveCommandsPage() {
@@ -31,11 +32,15 @@ export default function ActiveCommandsPage() {
 	}
 
 	return (
-		<div>
+		<CEFSectionContainer>
 			{activeCommands.map((command) => (
 				// Render each active command here
 				<CommandExecutionForm key={command.id} command={command} />
 			))}
-		</div>
+		</CEFSectionContainer>
 	);
 }
+
+const CEFSectionContainer = styled.section`
+	width: 100%;
+`;

@@ -32,30 +32,38 @@ const CommandInSideBar = ({
 	const { title, id: commandID } = command;
 	const dispatch = useDispatch();
 	const router = useRouter();
+
+	// Edit command title stuff
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedTitle, setEditedTitle] = useState(title);
-	const [showConfirm, setShowConfirm] = useState(false);
 	const editInputRef = useRef<HTMLInputElement>(null);
+
+	// Delete command stuff
+	const [showConfirm, setShowConfirm] = useState(false);
+	const confirmRef = useRef<HTMLDivElement>(null);
 
 	// This useEffect handles the user clicking the `edit` or `delete` buttons then clicking away to cancel.
 	useEffect(() => {
 		// Clicking away cancels the `edit` or `delete` state.
 		const handleOutsideClick = (e: any) => {
-			if (editInputRef.current && !editInputRef.current.contains(e.target)) {
+			let outsideEdit =
+				editInputRef.current && !editInputRef.current.contains(e.target);
+			let outsideConfirm =
+				confirmRef.current && !confirmRef.current.contains(e.target);
+
+			// Cancel editing state
+			if (outsideEdit) {
 				setIsEditing(false);
 				setEditedTitle(title);
 			}
 
-			// Correctly reset showConfirm state when clicking outside
-			if (showConfirm && !editInputRef.current?.contains(e.target)) {
+			// Cancel command deletion
+			if (outsideConfirm) {
 				setShowConfirm(false);
 			}
 		};
 
 		document.addEventListener("mousedown", handleOutsideClick);
-		return () => {
-			document.removeEventListener("mousedown", handleOutsideClick);
-		};
 	}, [command, showConfirm, title]);
 
 	const handleCommandTitlesEditSubmit = async () => {
@@ -68,7 +76,10 @@ const CommandInSideBar = ({
 		setEditedTitle(editedTitle);
 	};
 
-	const handleCommandDelete = async () => {
+	const handleCommandDelete = async (e: React.MouseEvent) => {
+		e.preventDefault();
+		// There's an event handler to cancel deletion state when user clicks away; this stops that from triggering
+		e.stopPropagation();
 		SideBarUtils.handleCommandDelete(command, dispatch);
 		setShowConfirm(false);
 	};
@@ -101,7 +112,16 @@ const CommandInSideBar = ({
 			<IconContainer>
 				<EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
 				{showConfirm ? (
-					<ConfirmIcon onClick={() => handleCommandDelete()}>✅</ConfirmIcon>
+					<div ref={confirmRef}>
+						<ConfirmIcon
+							onClick={async (e) => {
+								e.stopPropagation(); // Stop propagation
+								await handleCommandDelete(e);
+							}}
+						>
+							✅
+						</ConfirmIcon>
+					</div>
 				) : (
 					<DeleteButton onClick={() => setShowConfirm(true)}>🗑️</DeleteButton>
 				)}
@@ -113,4 +133,6 @@ const CommandInSideBar = ({
 
 export default CommandInSideBar;
 
-const ActivateCommandButton = styled.button``;
+const ActivateCommandButton = styled.button`
+	margin-right: 5px;
+`;

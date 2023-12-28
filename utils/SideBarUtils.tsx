@@ -14,15 +14,21 @@ import { reorderCommands } from "../redux/slices/commandsSlice";
 
 // Styled components
 export const SideBarContainer = styled.div`
-	width: 250px;
-	color: ${({ theme }) => theme.text};
+	width: 300px;
+	background: ${({ theme }) => theme.sidebar.background};
+	color: ${({ theme }) => theme.sidebar.text};
 	height: 100vh;
 	overflow-y: auto;
-	padding: 10px;
+	padding: 5px;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+	font-size: 0.9rem;
 `;
 
+// Button on right of Command to initiate drag and drop
 export const DragHandle = styled.div`
-	width: 20px;
+	width: 15px;
+	max-width: 15px;
+	min-width: 15px;
 	height: 20px;
 	background-color: #ccc;
 	border-radius: 4px;
@@ -37,10 +43,17 @@ export const DragHandle = styled.div`
 	}
 `;
 
+// Parent container of a single Command
 export const CommandContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	padding: 3px;
+	margin: 5px 0;
+	border-radius: 4px;
+	// Ensure it doesn't grow beyond its container
+	width: 100%;
+	box-sizing: border-box;
 `;
 
 export const IconContainer = styled.div`
@@ -56,6 +69,7 @@ export const EditInput = styled.input`
 	&:focus {
 		outline: 3px solid green;
 	}
+	max-width: 60%;
 `;
 
 // Command's Title
@@ -66,11 +80,36 @@ export const Title = styled.span`
 	white-space: nowrap;
 `;
 
+export const SaveCancelDNDContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	padding: 10px;
+	background: ${({ theme }) =>
+		theme.sidebar.background}; // Match the sidebar background
+	border-bottom: 1px solid ${({ theme }) => theme.sidebar.dividerColor};
+`;
+
+export const SaveCancelDNDButton = styled.button`
+	margin: 0 5px;
+	padding: 5px 10px;
+	background-color: ${({ theme }) => theme.sidebar.buttons.background};
+	color: ${({ theme }) => theme.sidebar.buttons.text};
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	&:hover {
+		background-color: ${({ theme }) => theme.sidebar.buttons.hoverBackground};
+	}
+`;
+
 export const EditButton = styled.button`
-	margin-right: 10px;
+	margin-right: 5px;
 	background: none;
 	border: none;
 	cursor: pointer;
+	&:hover {
+		color: blue;
+	}
 `;
 
 // Trash icon to delete Command
@@ -78,6 +117,9 @@ export const DeleteButton = styled.button`
 	background: none;
 	border: none;
 	cursor: pointer;
+	&:hover {
+		color: red;
+	}
 `;
 
 // Confirm deleting Command
@@ -150,6 +192,7 @@ const handleCommandDelete = async (
 	command: CMDBuddyCommand,
 	dispatch: Function
 ) => {
+	console.log("handleCommandDelete in sidebarutils");
 	// Optimistic UI update
 	dispatch(deleteCommand(command.id));
 

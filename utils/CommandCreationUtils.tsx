@@ -13,6 +13,15 @@ import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationCompo
 import { customGetCommandWithParameters } from "./customGraphQLQueries";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
 
+import {
+	ParameterCreationLabel,
+	StyledPCFLengthInput,
+	ParameterCreationError,
+	ParameterCreationInput,
+	StyledPCFMinMaxContainer,
+	StyledPCFRadioInputContainer,
+} from "../utils/styles/CommandCreationStyles/ParameterCreationStyles";
+
 // Subtypes for each parameter type
 const StringParameterSchema = ParameterSchema.pick({
 	type: true,
@@ -122,36 +131,46 @@ const StringParameterFields = ({
 	return (
 		<>
 			{/* Min Length Field */}
-			<label>Min Length</label>
-			<input
+			<ParameterCreationLabel>Min Length</ParameterCreationLabel>
+			<StyledPCFLengthInput
 				type="number"
 				{...register(`parameters.${index}.minLength`, {
 					setValueAs: toNumberOrNullOrUndefined,
 				})}
 				placeholder="Min Length"
 			/>
-			{parameterErrors?.minLength && <p>{parameterErrors.minLength.message}</p>}
+			{parameterErrors?.minLength && (
+				<ParameterCreationError>
+					{parameterErrors.minLength.message}
+				</ParameterCreationError>
+			)}
 
 			{/* Max Length Field */}
-			<label>Max Length</label>
-			<input
+			<ParameterCreationLabel>Max Length</ParameterCreationLabel>
+			<StyledPCFLengthInput
 				type="number"
 				{...register(`parameters.${index}.maxLength`, {
 					setValueAs: toNumberOrNullOrUndefined,
 				})}
 				placeholder="Max Length"
 			/>
-			{parameterErrors?.maxLength && <p>{parameterErrors.maxLength.message}</p>}
+			{parameterErrors?.maxLength && (
+				<ParameterCreationError>
+					{parameterErrors.maxLength.message}
+				</ParameterCreationError>
+			)}
 
 			{/* Validation Regex Field */}
-			<label>Validation Regex</label>
-			<input
+			<ParameterCreationLabel>Validation Regex</ParameterCreationLabel>
+			<ParameterCreationInput
 				{...register(`parameters.${index}.validationRegex`)}
 				placeholder="Validation Regex"
 				maxLength={100}
 			/>
 			{parameterErrors?.validationRegex && (
-				<p>{parameterErrors.validationRegex.message}</p>
+				<ParameterCreationError>
+					{parameterErrors.validationRegex.message}
+				</ParameterCreationError>
 			)}
 		</>
 	);
@@ -180,27 +199,38 @@ const IntParameterFields = ({
 
 	return (
 		<>
-			{/* Min Value Field */}
-			<label>Min Value</label>
-			<input
-				type="number"
-				{...register(`parameters.${index}.minValue`, {
-					setValueAs: toNumberOrNullOrUndefined,
-				})}
-				placeholder="Min Value"
-			/>
-			{parameterErrors?.minValue && <p>{parameterErrors.minValue.message}</p>}
+			<StyledPCFMinMaxContainer>
+				{/* Min Value Field */}
+				<ParameterCreationLabel>Min Value</ParameterCreationLabel>
+				<ParameterCreationInput
+					type="number"
+					{...register(`parameters.${index}.minValue`, {
+						setValueAs: toNumberOrNullOrUndefined,
+					})}
+					placeholder="Min Value"
+				/>
+				{parameterErrors?.minValue && (
+					<ParameterCreationError>
+						{parameterErrors.minValue.message}
+					</ParameterCreationError>
+				)}
 
-			{/* Max Value Field */}
-			<label>Max Value</label>
-			<input
-				type="number"
-				{...register(`parameters.${index}.maxValue`, {
-					setValueAs: toNumberOrNullOrUndefined,
-				})}
-				placeholder="Max Value"
-			/>
-			{parameterErrors?.maxValue && <p>{parameterErrors.maxValue.message}</p>}
+				{/* Max Value Field */}
+				<ParameterCreationLabel>Max Value</ParameterCreationLabel>
+				<ParameterCreationInput
+					type="number"
+					{...register(`parameters.${index}.maxValue`, {
+						setValueAs: toNumberOrNullOrUndefined,
+					})}
+					placeholder="Max Value"
+				/>
+			</StyledPCFMinMaxContainer>
+
+			{parameterErrors?.maxValue && (
+				<ParameterCreationError>
+					{parameterErrors.maxValue.message}
+				</ParameterCreationError>
+			)}
 		</>
 	);
 };
@@ -242,7 +272,7 @@ const DropdownParameterFields = ({
 		<>
 			{/* Allowed Values Field */}
 			{/* Enter as many allowed values as they want, separated by commas */}
-			<label>Allowed Values</label>
+			<ParameterCreationLabel>Allowed Values</ParameterCreationLabel>
 			<textarea
 				{...register(`parameters.${index}.allowedValues`, {
 					setValueAs: stringToArray,
@@ -252,7 +282,9 @@ const DropdownParameterFields = ({
 				maxLength={5000}
 			/>
 			{parameterErrors?.allowedValues && (
-				<p>{parameterErrors.allowedValues.message}</p>
+				<ParameterCreationError>
+					{parameterErrors.allowedValues.message}
+				</ParameterCreationError>
 			)}
 		</>
 	);
@@ -292,15 +324,17 @@ export const DefaultValueInput = ({
 		case "DROPDOWN":
 			return (
 				<>
-					<label>Default Value</label>
-					<input
+					<ParameterCreationLabel>Default Value</ParameterCreationLabel>
+					<ParameterCreationInput
 						type="text"
 						{...register(`parameters.${index}.defaultValue`)}
 						placeholder="Default Value"
 						maxLength={1000}
 					/>
 					{parameterErrors?.defaultValue && (
-						<p>{parameterErrors.defaultValue.message}</p>
+						<ParameterCreationError>
+							{parameterErrors.defaultValue.message}
+						</ParameterCreationError>
 					)}
 				</>
 			);
@@ -308,14 +342,16 @@ export const DefaultValueInput = ({
 		case "INT":
 			return (
 				<>
-					<label>Default Value</label>
-					<input
+					<ParameterCreationLabel>Default Value</ParameterCreationLabel>
+					<ParameterCreationInput
 						type="number"
 						{...register(`parameters.${index}.defaultValue`)}
 						placeholder="Number"
 					/>
 					{parameterErrors?.defaultValue && (
-						<p>{parameterErrors.defaultValue.message}</p>
+						<ParameterCreationError>
+							{parameterErrors.defaultValue.message}
+						</ParameterCreationError>
 					)}
 				</>
 			);
@@ -323,25 +359,25 @@ export const DefaultValueInput = ({
 		case "BOOLEAN":
 			return (
 				<>
-					<label>Default Value</label>
-					<label>
-						<input
+					<ParameterCreationLabel>Default Value</ParameterCreationLabel>
+					<StyledPCFRadioInputContainer>
+						<ParameterCreationLabel>True</ParameterCreationLabel>
+						<ParameterCreationInput
 							type="radio"
 							value="true"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
-						True
-					</label>
-					<label>
-						<input
+						<ParameterCreationLabel>False</ParameterCreationLabel>
+						<ParameterCreationInput
 							type="radio"
 							value="false"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
-						False
-					</label>
+					</StyledPCFRadioInputContainer>
 					{parameterErrors?.defaultValue && (
-						<p>{parameterErrors.defaultValue.message}</p>
+						<ParameterCreationError>
+							{parameterErrors.defaultValue.message}
+						</ParameterCreationError>
 					)}
 				</>
 			);
@@ -349,25 +385,26 @@ export const DefaultValueInput = ({
 		case "FLAG":
 			return (
 				<>
-					<label>Default Value</label>
-					<label>
-						<input
+					<StyledPCFRadioInputContainer>
+						<ParameterCreationLabel>Default Value</ParameterCreationLabel>
+						<ParameterCreationLabel>On</ParameterCreationLabel>
+						<ParameterCreationInput
 							type="radio"
 							value="On"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
-						On
-					</label>
-					<label>
-						<input
+						<ParameterCreationLabel>Off</ParameterCreationLabel>
+						<ParameterCreationInput
 							type="radio"
 							value="Off"
 							{...register(`parameters.${index}.defaultValue`)}
 						/>{" "}
-						Off
-					</label>
+					</StyledPCFRadioInputContainer>
+
 					{parameterErrors?.defaultValue && (
-						<p>{parameterErrors.defaultValue.message}</p>
+						<ParameterCreationError>
+							{parameterErrors.defaultValue.message}
+						</ParameterCreationError>
 					)}
 				</>
 			);

@@ -15,7 +15,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { SideBarUtils } from "../../../utils/SideBarUtils";
+import {
+	SaveCancelDNDButton,
+	SaveCancelDNDContainer,
+	SideBarUtils,
+} from "../../../utils/SideBarUtils";
 import Link from "next/link";
 import {
 	DragDropContext,
@@ -27,6 +31,7 @@ import {
 // Styled components
 import { SideBarContainer } from "../../../utils/SideBarUtils";
 import CommandInSideBar from "./CommandInSideBar";
+import styled from "styled-components";
 
 const { handleCommandTitlesEditSubmit, handleCommandDelete, handleDnDSave } =
 	SideBarUtils;
@@ -92,30 +97,32 @@ const SideBar = () => {
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
-			{hasChanges && (
-				<div>
-					<button
-						onClick={async () =>
-							await handleDnDSave(
-								localCommands,
-								dispatch,
-								reduxStateCommands!,
-								setHasChanges,
-								setLocalCommands
-							)
-						}
-					>
-						Save
-					</button>
-					<button onClick={handleDnDCancel}>Cancel</button>
-				</div>
-			)}
 			<StrictModeDroppable droppableId="commands">
 				{(provided) => (
 					<SideBarContainer
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
+						{hasChanges && (
+							<SaveCancelDNDContainer>
+								<SaveCancelDNDButton
+									onClick={async () =>
+										await handleDnDSave(
+											localCommands,
+											dispatch,
+											reduxStateCommands!,
+											setHasChanges,
+											setLocalCommands
+										)
+									}
+								>
+									Save
+								</SaveCancelDNDButton>
+								<SaveCancelDNDButton onClick={handleDnDCancel}>
+									Cancel
+								</SaveCancelDNDButton>
+							</SaveCancelDNDContainer>
+						)}
 						{localCommands?.map((command, index) => (
 							<Draggable
 								key={String(command.id)}
