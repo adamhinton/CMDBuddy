@@ -54,6 +54,11 @@ export const lightTheme: DefaultTheme = {
 		inputBorderColor: "#ccc",
 		inputHoverBorderColor: "#bbb",
 	},
+	login: {
+		buttonBackground: "#B3E5FC",
+		buttonText: "#0D47A1",
+		buttonHoverBackground: "#81D4FA",
+	},
 };
 
 export const darkTheme: DefaultTheme = {
@@ -109,5 +114,10 @@ export const darkTheme: DefaultTheme = {
 		selectText: "#f5f5f5",
 		inputBorderColor: "#ccc",
 		inputHoverBorderColor: "#bbb",
+	},
+	login: {
+		buttonBackground: "#B3E5FC",
+		buttonText: "#0D47A1",
+		buttonHoverBackground: "#81D4FA",
 	},
 };

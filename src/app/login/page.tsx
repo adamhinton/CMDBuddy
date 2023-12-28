@@ -10,8 +10,43 @@ import { useAuthActions } from "../../../utils/authUtils";
 import { useRouter } from "next/navigation";
 import { API, graphqlOperation } from "aws-amplify";
 import { deleteUser as deleteUserMutation } from "@/graphql/mutations";
+import styled from "styled-components";
 
 Amplify.configure({ ...config, ssr: true });
+
+// Styled wrapper for the whole page to ensure it takes the theme colors
+const StyledLoginWrapper = styled.div`
+	color: ${({ theme }) => theme.colors.text};
+	background-color: ${({ theme }) => theme.colors.background};
+	padding: 20px;
+	border-radius: 5px;
+	max-width: 500px;
+	margin: 50px auto;
+`;
+
+// Header for the login page
+const StyledHeader = styled.h1`
+	color: ${({ theme }) => theme.header.text};
+	text-align: center;
+	margin-bottom: 30px;
+`;
+
+// Styled button with theming
+const StyledButton = styled.button`
+	background-color: ${({ theme }) => theme.login.buttonBackground};
+	color: ${({ theme }) => theme.login.buttonText};
+	border: none;
+	border-radius: 4px;
+	padding: 10px 20px;
+	margin-right: 10px;
+	cursor: pointer;
+	&:hover {
+		background-color: ${({ theme }) => theme.login.buttonHoverBackground};
+	}
+`;
+
+// Styled Authenticator component to override default styles
+const StyledAuthenticator = styled(Authenticator)``;
 
 const Login = () => {
 	const currentUser = useSelector((state: RootState) => state.auth.user);
@@ -81,10 +116,9 @@ const Login = () => {
 	};
 
 	return (
-		<>
-			<h1>Log In</h1>
-			<Link href="/commands">Commands</Link>
-			<Authenticator>
+		<StyledLoginWrapper>
+			<StyledHeader>Log In</StyledHeader>
+			<StyledAuthenticator>
 				{({ signOut, user }) => {
 					if (user && !currentUser) {
 						handleLogin(user);
@@ -93,14 +127,16 @@ const Login = () => {
 						<div>
 							{currentUser ? (
 								<>
-									<button onClick={() => handleSignOut(signOut)}>
+									<StyledButton onClick={() => handleSignOut(signOut)}>
 										Sign Out
-									</button>
-									<button onClick={toggleChangePassword}>
+									</StyledButton>
+									<StyledButton onClick={toggleChangePassword}>
 										Change Password
-									</button>
+									</StyledButton>
 									{/* Clicking this doesn't immediately delete account, just pulls up the UI to do so */}
-									<button onClick={toggleDeleteAccount}>Delete Account</button>
+									<StyledButton onClick={toggleDeleteAccount}>
+										Delete Account
+									</StyledButton>
 									{showChangePassword && (
 										<AccountSettings.ChangePassword onSuccess={handleSuccess} />
 									)}
@@ -116,8 +152,8 @@ const Login = () => {
 						</div>
 					);
 				}}
-			</Authenticator>
-		</>
+			</StyledAuthenticator>
+		</StyledLoginWrapper>
 	);
 };
 
