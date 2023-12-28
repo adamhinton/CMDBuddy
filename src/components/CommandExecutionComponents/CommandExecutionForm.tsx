@@ -45,7 +45,7 @@ export const CEFLabel = styled.label`
 export const CEFButton = styled.button`
 	background: ${({ theme }) => theme.commandGeneration.buttonBackground};
 	color: ${({ theme }) => theme.commandGeneration.baseText};
-	padding: 0.75rem 1.5rem;
+	padding: 0.5rem 0.75rem;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
@@ -108,13 +108,13 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 				{parameters?.map((param) => {
 					return <ParameterExecutionForm parameter={param} key={param.id} />;
 				})}
-				<button
+				<CEFButton
 					onClick={(e) => {
 						removeCommandOnClick(e, command.id, dispatch);
 					}}
 				>
 					Exit this command
-				</button>
+				</CEFButton>
 			</CEFFormContainer>
 		</FormProvider>
 	);

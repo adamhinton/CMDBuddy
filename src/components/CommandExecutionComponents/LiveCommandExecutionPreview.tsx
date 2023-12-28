@@ -8,6 +8,7 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
+import { CEFButton } from "./CommandExecutionForm";
 
 const LiveCommandExecutionPreview = ({
 	baseCommand,
@@ -40,10 +41,10 @@ const LiveCommandExecutionPreview = ({
 		<div>
 			<div>{commandPreview}</div>
 			{/* Clicking this button copies generated Command to clipboard */}
-			<button onClick={(e) => copyCommandToClipboard(e, commandPreview)}>
+			<CEFButton onClick={(e) => copyCommandToClipboard(e, commandPreview)}>
 				{/* TODO: Put an icon here instead of a button saying "Copy" */}
 				Copy <i className="icon-to-represent-copy"></i>{" "}
-			</button>
+			</CEFButton>
 		</div>
 	);
 };
