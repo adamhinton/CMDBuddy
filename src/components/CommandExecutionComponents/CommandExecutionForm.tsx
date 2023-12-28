@@ -16,7 +16,11 @@ import { useForm, FormProvider } from "react-hook-form";
 import LiveCommandExecutionPreview from "./LiveCommandExecutionPreview";
 import styled from "styled-components";
 
-export const CEFFormContainer = styled.form`
+const CEFContainer = styled.section`
+	width: 100%;
+`;
+
+export const CEFForm = styled.form`
 	background: ${({ theme }) => theme.commandGeneration.baseBackground};
 	color: ${({ theme }) => theme.commandGeneration.baseText};
 	padding: 1rem;
@@ -111,7 +115,7 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 
 	return (
 		<FormProvider {...methods}>
-			<CEFFormContainer>
+			<CEFForm>
 				<CEFHeader>
 					<CEFCommandTitle>{command.title}</CEFCommandTitle>
 				</CEFHeader>
@@ -129,7 +133,7 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 				>
 					Exit this command
 				</CEFButton>
-			</CEFFormContainer>
+			</CEFForm>
 		</FormProvider>
 	);
 };
