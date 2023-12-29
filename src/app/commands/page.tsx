@@ -17,10 +17,15 @@ const Commands = () => {
 	console.log("commands:", commands);
 
 	return (
-		<>
-			<h1>Commands Placeholder</h1>
-			<div>{commands && commands[0] && commands[0].baseCommand}</div>
-		</>
+		<section>
+			<h1>Commands</h1>
+			{commands && commands[0] && <div>{commands[0].baseCommand}</div>}
+			{!commands && (
+				<div>
+					Add some commands <Link href="/create">here!</Link>
+				</div>
+			)}
+		</section>
 	);
 };
 
