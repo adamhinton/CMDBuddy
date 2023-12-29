@@ -46,7 +46,73 @@ const StyledButton = styled.button`
 `;
 
 // Styled Authenticator component to override default styles
-const StyledAuthenticator = styled(Authenticator)``;
+const StyledAuthenticator = styled(Authenticator)`
+	/* General container styles */
+	--amplify-colors-background-primary: ${({ theme }) =>
+		theme.colors.background};
+	--amplify-colors-font-primary: ${({ theme }) => theme.colors.text};
+
+	/* Button styles */
+	--amplify-colors-brand-primary-80: ${({ theme }) =>
+		theme.login.buttonHoverBackground};
+	--amplify-colors-brand-primary-60: ${({ theme }) =>
+		theme.login.buttonBackground};
+	--amplify-colors-font-inverse: ${({ theme }) => theme.login.buttonText};
+
+	/* Input styles */
+	--amplify-components-fieldcontrol-border-color: ${({ theme }) =>
+		theme.login.inputBorder};
+	--amplify-colors-font-secondary: ${({ theme }) => theme.login.inputText};
+	--amplify-components-fieldcontrol-placeholder-color: ${({ theme }) =>
+		theme.login.inputPlaceholderText};
+
+	/* Tab and link styles */
+	--amplify-colors-brand-secondary-80: ${({ theme }) =>
+		theme.login.tabActiveBackground};
+	--amplify-colors-font-tertiary: ${({ theme }) => theme.login.tabText};
+	--amplify-colors-font-interactive: ${({ theme }) => theme.login.linkText};
+	--amplify-colors-font-interactive-hover: ${({ theme }) =>
+		theme.login.linkHoverText};
+
+	/* Error text styles */
+	--amplify-colors-feedback-error: ${({ theme }) => theme.login.errorText};
+
+	/* Override specific component styles */
+	.amplify-button {
+		background-color: ${({ theme }) => theme.login.buttonBackground} !important;
+		color: ${({ theme }) => theme.login.buttonText} !important;
+	}
+
+	.amplify-input {
+		background-color: ${({ theme }) => theme.login.inputBackground} !important;
+		color: ${({ theme }) => theme.login.inputText} !important;
+		border-color: ${({ theme }) => theme.login.inputBorder} !important;
+	}
+
+	.amplify-tabs-item[data-state="active"] {
+		background-color: ${({ theme }) =>
+			theme.login.tabActiveBackground} !important;
+		color: ${({ theme }) => theme.login.tabActiveText} !important;
+	}
+
+	.amplify-tabs-item:not([data-state="active"]) {
+		background-color: ${({ theme }) =>
+			theme.login.tabInactiveBackground} !important;
+		color: ${({ theme }) => theme.login.tabText} !important;
+	}
+
+	.amplify-label {
+		color: ${({ theme }) => theme.login.inputText} !important;
+	}
+
+	.amplify-field-group__outer-end {
+		.amplify-button {
+			color: ${({ theme }) => theme.login.inputText} !important;
+		}
+	}
+
+	/* Add more overrides based on the components you want to style */
+`;
 
 const Login = () => {
 	const currentUser = useSelector((state: RootState) => state.auth.user);
