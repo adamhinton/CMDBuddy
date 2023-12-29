@@ -24,6 +24,11 @@ const StyledLoginWrapper = styled.div`
 	margin: 50px auto;
 `;
 
+// Tells user to make an account if they're not logged in
+const StyledLoginExplain = styled.p`
+	text-align: center;
+`;
+
 // Header for the login page
 const StyledHeader = styled.h1`
 	color: ${({ theme }) => theme.header.text};
@@ -199,6 +204,11 @@ const Login = () => {
 	return (
 		<StyledLoginWrapper>
 			<StyledHeader>Account Management</StyledHeader>
+			{!currentUser && (
+				<StyledLoginExplain>
+					Make an account to generate CLI commands!
+				</StyledLoginExplain>
+			)}
 			<StyledAuthenticator>
 				{({ signOut, user }) => {
 					if (user && !currentUser) {
