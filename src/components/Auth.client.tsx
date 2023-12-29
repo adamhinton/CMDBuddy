@@ -8,6 +8,7 @@ import { useAuthActions } from "../../utils/authUtils";
 import { useDispatch } from "react-redux";
 import { setIsDarkMode } from "../../redux/slices/darkModeSlice";
 import { getUserDarkModePreference } from "../../utils/darkModeUtils";
+import { useRouter } from "next/navigation";
 
 Amplify.configure({ config, ssr: true });
 Auth.configure({ config, ssr: true });
@@ -36,6 +37,8 @@ const getMyUser = async (): Promise<CognitoLoggedInUser | null> => {
 };
 
 export default function AuthClientComponent(): null {
+	const router = useRouter();
+
 	const dispatch = useDispatch();
 
 	const [cognitoLoggedInUser, setCognitoLoggedInUser] =
@@ -46,9 +49,16 @@ export default function AuthClientComponent(): null {
 		const fetchData = async () => {
 			const initUser = await getMyUser();
 			setCognitoLoggedInUser(initUser);
+			// If user is logged in on page load, redirect to /commands.
+			// Else, redirect to login
+			if (initUser) {
+				router.push("commands");
+			} else {
+				router.push("login");
+			}
 		};
 		fetchData();
-	}, []);
+	}, [router]);
 
 	useEffect(() => {
 		const updateState = async () => {
