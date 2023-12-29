@@ -45,73 +45,88 @@ const StyledButton = styled.button`
 	}
 `;
 
-// Styled Authenticator component to override default styles
+const StyledAccountManagementContainer = styled.section`
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+`;
+
+// Styled Authenticator component to override default styles in Amplify's built in component
 const StyledAuthenticator = styled(Authenticator)`
-	/* General container styles */
-	--amplify-colors-background-primary: ${({ theme }) =>
+	--amplify-components-main-background-color: ${({ theme }) =>
 		theme.colors.background};
-	--amplify-colors-font-primary: ${({ theme }) => theme.colors.text};
-
-	/* Button styles */
-	--amplify-colors-brand-primary-80: ${({ theme }) =>
-		theme.login.buttonHoverBackground};
-	--amplify-colors-brand-primary-60: ${({ theme }) =>
+	--amplify-components-main-text-color: ${({ theme }) => theme.colors.text};
+	--amplify-components-main-border-color: ${({ theme }) =>
+		theme.login.inputBorderColor};
+	--amplify-colors-background-secondary: ${({ theme }) =>
+		theme.login.inputBackground};
+	--amplify-colors-border-primary: ${({ theme }) =>
+		theme.login.inputBorderColor};
+	--amplify-colors-border-secondary: ${({ theme }) =>
+		theme.login.inputHoverBorderColor};
+	--amplify-components-button-background-color: ${({ theme }) =>
 		theme.login.buttonBackground};
-	--amplify-colors-font-inverse: ${({ theme }) => theme.login.buttonText};
-
-	/* Input styles */
-	--amplify-components-fieldcontrol-border-color: ${({ theme }) =>
-		theme.login.inputBorder};
-	--amplify-colors-font-secondary: ${({ theme }) => theme.login.inputText};
-	--amplify-components-fieldcontrol-placeholder-color: ${({ theme }) =>
-		theme.login.inputPlaceholderText};
-
-	/* Tab and link styles */
-	--amplify-colors-brand-secondary-80: ${({ theme }) =>
+	--amplify-components-button-text-color: ${({ theme }) =>
+		theme.login.buttonText};
+	--amplify-components-button-hover-background-color: ${({ theme }) =>
+		theme.login.buttonHoverBackground};
+	--amplify-components-button-hover-text-color: ${({ theme }) =>
+		theme.login.buttonHoverText};
+	--amplify-components-tabs-text-color: ${({ theme }) => theme.login.tabText};
+	--amplify-components-tabs-active-text-color: ${({ theme }) =>
+		theme.login.tabActiveText};
+	--amplify-components-tabs-inactive-background-color: ${({ theme }) =>
+		theme.login.tabInactiveBackground};
+	--amplify-components-tabs-active-background-color: ${({ theme }) =>
 		theme.login.tabActiveBackground};
-	--amplify-colors-font-tertiary: ${({ theme }) => theme.login.tabText};
-	--amplify-colors-font-interactive: ${({ theme }) => theme.login.linkText};
-	--amplify-colors-font-interactive-hover: ${({ theme }) =>
-		theme.login.linkHoverText};
 
-	/* Error text styles */
-	--amplify-colors-feedback-error: ${({ theme }) => theme.login.errorText};
-
-	/* Override specific component styles */
-	.amplify-button {
-		background-color: ${({ theme }) => theme.login.buttonBackground} !important;
-		color: ${({ theme }) => theme.login.buttonText} !important;
-	}
-
-	.amplify-input {
-		background-color: ${({ theme }) => theme.login.inputBackground} !important;
-		color: ${({ theme }) => theme.login.inputText} !important;
-		border-color: ${({ theme }) => theme.login.inputBorder} !important;
-	}
-
-	.amplify-tabs-item[data-state="active"] {
-		background-color: ${({ theme }) =>
-			theme.login.tabActiveBackground} !important;
-		color: ${({ theme }) => theme.login.tabActiveText} !important;
-	}
-
-	.amplify-tabs-item:not([data-state="active"]) {
-		background-color: ${({ theme }) =>
-			theme.login.tabInactiveBackground} !important;
-		color: ${({ theme }) => theme.login.tabText} !important;
-	}
-
-	.amplify-label {
-		color: ${({ theme }) => theme.login.inputText} !important;
-	}
-
-	.amplify-field-group__outer-end {
-		.amplify-button {
-			color: ${({ theme }) => theme.login.inputText} !important;
+	// Inputs
+	.amplify-input,
+	.amplify-select {
+		background-color: ${({ theme }) => theme.login.inputBackground};
+		color: ${({ theme }) => theme.login.inputText};
+		border-color: ${({ theme }) => theme.login.inputBorderColor};
+		padding: 0.5em;
+		margin-bottom: 0.5em;
+		&:focus {
+			border-color: ${({ theme }) => theme.login.inputFocusBorderColor};
+			outline: none;
 		}
 	}
 
-	/* Add more overrides based on the components you want to style */
+	// Buttons
+	.amplify-button {
+		background-color: ${({ theme }) => theme.login.buttonBackground};
+		color: ${({ theme }) => theme.login.buttonText};
+		border: none;
+		border-radius: 3px;
+		padding: 0.6em 1.2em;
+		margin: 0.3em;
+		font-size: 1rem;
+		&:hover {
+			background-color: ${({ theme }) => theme.login.buttonHoverBackground};
+			color: ${({ theme }) => theme.login.buttonHoverText};
+		}
+	}
+
+	// Tab styling for Sign In and Create Account
+	.amplify-tabs-item {
+		background-color: ${({ theme }) => theme.login.tabInactiveBackground};
+		color: ${({ theme }) => theme.login.tabText};
+		&[data-state="active"] {
+			background-color: ${({ theme }) => theme.login.tabActiveBackground};
+			color: ${({ theme }) => theme.login.tabActiveText};
+			border-bottom: 2px solid ${({ theme }) => theme.login.tabActiveBorder};
+		}
+	}
+
+	// Error Text
+	.amplify-field .amplify-field-message--error {
+		color: ${({ theme }) => theme.login.errorText};
+	}
+
+	// Overrides for specific components
+	// Add other overrides as needed
 `;
 
 const Login = () => {
@@ -183,14 +198,14 @@ const Login = () => {
 
 	return (
 		<StyledLoginWrapper>
-			<StyledHeader>Log In</StyledHeader>
+			<StyledHeader>Account Management</StyledHeader>
 			<StyledAuthenticator>
 				{({ signOut, user }) => {
 					if (user && !currentUser) {
 						handleLogin(user);
 					}
 					return (
-						<div>
+						<StyledAccountManagementContainer>
 							{currentUser ? (
 								<>
 									<StyledButton onClick={() => handleSignOut(signOut)}>
@@ -215,7 +230,7 @@ const Login = () => {
 							) : (
 								"Please sign in"
 							)}
-						</div>
+						</StyledAccountManagementContainer>
 					);
 				}}
 			</StyledAuthenticator>
