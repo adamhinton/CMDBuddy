@@ -21,7 +21,10 @@ import {
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { CommandSchema } from "../../../utils/zod/CommandSchema";
+import {
+	CMDBuddyCommand,
+	CommandSchema,
+} from "../../../utils/zod/CommandSchema";
 import ParameterCreationForm from "./ParameterCreationForm";
 import {
 	StyledCCFForm,
@@ -36,6 +39,7 @@ import {
 	submitNewCommandAndParamsToDB,
 } from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
+import exp from "constants";
 
 const {
 	StringParameterSchema,
@@ -75,6 +79,22 @@ const CommandCreationForm: React.FC = () => {
 	const methods = useForm<CMDBuddyCommandFormValidation>({
 		resolver: zodResolver(CommandCreationFormSchema),
 	});
+
+	const experimentalCommand = useSelector((state: RootState) => {
+		return state.commands.commands ? state.commands.commands[0] : null;
+	});
+
+	useEffect(() => {
+		console.log("experimentalCommand:", experimentalCommand);
+		experimentalCommand &&
+			methods.setValue("baseCommand", experimentalCommand!.baseCommand);
+		experimentalCommand?.parameters &&
+			//@ts-ignore
+			methods.setValue("parameters", experimentalCommand.parameters);
+
+		const formValues = methods.getValues();
+		console.log("formValues:", formValues);
+	}, [experimentalCommand, methods]);
 
 	const { watch } = methods;
 
