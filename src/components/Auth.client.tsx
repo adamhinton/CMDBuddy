@@ -52,9 +52,10 @@ export default function AuthClientComponent(): null {
 			// If user is logged in on page load, redirect to /commands.
 			// Else, redirect to login
 			if (initUser) {
-				router.push("commands");
+				console.log("pushing");
+				router.push("/commands");
 			} else {
-				router.push("login");
+				router.push("/login");
 			}
 		};
 		fetchData();
