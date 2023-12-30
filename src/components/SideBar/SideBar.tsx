@@ -130,6 +130,7 @@ const SideBar = () => {
 								{(provided) => {
 									return (
 										<div ref={provided.innerRef} {...provided.draggableProps}>
+											{/* This is an individual Command */}
 											<CommandInSideBar
 												command={command}
 												dragHandleProps={provided.dragHandleProps}
