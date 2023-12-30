@@ -4,9 +4,7 @@ import { Amplify } from "aws-amplify";
 import config from "../../../aws-exports";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import CommandCreationOrEditForm, {
-	CommandCreationFormSchema,
-} from "@/components/CommandCreationComponents/CommandCreationForm";
+import CommandCreationOrEditForm from "@/components/CommandCreationComponents/CommandCreationForm";
 Amplify.configure({ ...config, ssr: true });
 
 const CommandsEditPage = () => {
