@@ -5,7 +5,7 @@
 // Clicking the "edit" icon will redirect the user to /commands/edit and set that command to edit redux state.
 
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import { addNewActiveCommand } from "../../../redux/slices/activeCommandsSlice";
@@ -22,6 +22,8 @@ import {
 	DragHandle,
 } from "../../../utils/SideBarUtils";
 import styled from "styled-components";
+import { setCommandToEdit } from "../../../redux/slices/editCommandSlice";
+import { RootState } from "../../../redux/store";
 
 const CommandInSideBar = ({
 	command,
@@ -30,14 +32,15 @@ const CommandInSideBar = ({
 	command: CMDBuddyCommand;
 	dragHandleProps: any;
 }) => {
+	const commandToEdit = useSelector(
+		(state: RootState) => state.commandToEdit.commandToEdit
+	);
+
+	console.log("commandToEdit (delete this later):", commandToEdit);
+
 	const { title, id: commandID } = command;
 	const dispatch = useDispatch();
 	const router = useRouter();
-
-	// Edit command title stuff
-	const [isEditing, setIsEditing] = useState(false);
-	const [editedTitle, setEditedTitle] = useState(title);
-	const editInputRef = useRef<HTMLInputElement>(null);
 
 	// Delete command stuff
 	const [showConfirm, setShowConfirm] = useState(false);
@@ -47,16 +50,8 @@ const CommandInSideBar = ({
 	useEffect(() => {
 		// Clicking away cancels the `edit` or `delete` state.
 		const handleOutsideClick = (e: any) => {
-			let outsideEdit =
-				editInputRef.current && !editInputRef.current.contains(e.target);
 			let outsideConfirm =
 				confirmRef.current && !confirmRef.current.contains(e.target);
-
-			// Cancel editing state
-			if (outsideEdit) {
-				setIsEditing(false);
-				setEditedTitle(title);
-			}
 
 			// Cancel command deletion
 			if (outsideConfirm) {
@@ -65,17 +60,7 @@ const CommandInSideBar = ({
 		};
 
 		document.addEventListener("mousedown", handleOutsideClick);
-	}, [command, showConfirm, title]);
-
-	const handleCommandTitlesEditSubmit = async () => {
-		SideBarUtils.handleCommandTitlesEditSubmit(
-			commandID,
-			editedTitle,
-			dispatch
-		);
-		setIsEditing(false);
-		setEditedTitle(editedTitle);
-	};
+	}, [command, showConfirm]);
 
 	const handleCommandDelete = async (e: React.MouseEvent) => {
 		e.preventDefault();
@@ -95,28 +80,22 @@ const CommandInSideBar = ({
 		<CommandContainer>
 			{/* Drag and drop stuff */}
 			<DragHandle {...dragHandleProps}>⋮⋮</DragHandle>
-			{/* Here the user can input a new Title */}
-			{isEditing ? (
-				<EditInput
-					ref={editInputRef}
-					value={editedTitle}
-					onChange={(e) => setEditedTitle(e.target.value)}
-					onBlur={handleCommandTitlesEditSubmit}
-					onKeyDown={(e) =>
-						e.key === "Enter" && handleCommandTitlesEditSubmit()
-					}
-				/>
-			) : (
-				<Title>{title}</Title>
-			)}
+			<Title>{title}</Title>
 			{/* Buttons  to edit the command's Title or delete the Command */}
 			<IconContainer>
-				<EditButton onClick={() => setIsEditing(!isEditing)}>✏️</EditButton>
+				<EditButton
+					onClick={() => {
+						dispatch(setCommandToEdit(command));
+						router.push("/commands/edit");
+					}}
+				>
+					✏️
+				</EditButton>
 				{showConfirm ? (
 					<div ref={confirmRef}>
 						<ConfirmIcon
 							onClick={async (e) => {
-								e.stopPropagation(); // Stop propagation
+								e.stopPropagation(); // Stop propagation because that messed with deletion flow
 								await handleCommandDelete(e);
 							}}
 						>
