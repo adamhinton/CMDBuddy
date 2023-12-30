@@ -95,7 +95,6 @@ type FormProps = FormPropsCreateCommand | FormPropsEditCurrentCommand;
 const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	// There will only be a commandToEdit if we're in edit mode
 	const { componentMode, commandToEdit } = props;
-	const isEditMode = componentMode === "editExistingCommand";
 
 	const dispatch = useDispatch();
 
