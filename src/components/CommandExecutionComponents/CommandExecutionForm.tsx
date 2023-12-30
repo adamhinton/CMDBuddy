@@ -42,16 +42,16 @@ const CEFCommandTitle = styled.h3`
 `;
 
 type CEFTextInputProps = {
-	inputType: "STRING" | "INT" | "OTHER";
+	inputtype: "STRING" | "INT" | "OTHER";
 };
 
 export const CEFInput = styled.input<CEFTextInputProps>`
 	max-width: 250px;
 	padding: 0.5rem;
 	width: ${(props) =>
-		props.inputType === "STRING"
+		props.inputtype === "STRING"
 			? "250px"
-			: props.inputType === "INT"
+			: props.inputtype === "INT"
 			? "100px"
 			: null};
 	margin: 0.75rem 1rem;

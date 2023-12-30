@@ -22,7 +22,7 @@ const ParameterExecutionForm = ({
 			case "STRING":
 				return (
 					<CEFInput
-						inputType="STRING"
+						inputtype="STRING"
 						type="text"
 						{...register(parameter.name, {
 							required: !parameter.isNullable,
@@ -37,7 +37,7 @@ const ParameterExecutionForm = ({
 			case "INT":
 				return (
 					<CEFInput
-						inputType="INT"
+						inputtype="INT"
 						type="number"
 						{...register(parameter.name, {
 							required: !parameter.isNullable,
@@ -56,7 +56,7 @@ const ParameterExecutionForm = ({
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
-								inputType="OTHER"
+								inputtype="OTHER"
 							/>
 							True
 						</CEFLabel>
@@ -67,7 +67,7 @@ const ParameterExecutionForm = ({
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
-								inputType="OTHER"
+								inputtype="OTHER"
 							/>
 							False
 						</CEFLabel>
@@ -98,7 +98,7 @@ const ParameterExecutionForm = ({
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
-								inputType="OTHER"
+								inputtype="OTHER"
 							/>
 							On
 						</CEFLabel>
@@ -109,7 +109,7 @@ const ParameterExecutionForm = ({
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
 								})}
-								inputType="OTHER"
+								inputtype="OTHER"
 							/>
 							Off
 						</CEFLabel>
