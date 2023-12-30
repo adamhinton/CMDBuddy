@@ -10,7 +10,10 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useRouter } from "next/navigation";
-import { addCommand } from "../../../redux/slices/commandsSlice";
+import {
+	addCommand,
+	editSingleCommand,
+} from "../../../redux/slices/commandsSlice";
 import { useDispatch } from "react-redux";
 
 import {
@@ -73,18 +76,23 @@ export type CMDBuddyCommandFormValidation = z.infer<
 	typeof CommandCreationFormSchema
 >;
 
+export enum ComponentMode {
+	"editExistingCommand",
+	"createNewCommand",
+}
+
 // If using this component to edit an existing Command, a command to edit must be passed in
 type FormPropsEditCurrentCommand = {
-	componentMode: "editExistingCommand";
+	componentMode: ComponentMode.editExistingCommand;
 	commandToEdit: CMDBuddyCommand;
 };
 
 // If using this component to add a new command, this tell that to th code
 type FormPropsCreateCommand = {
-	componentMode: "createNewCommand";
+	componentMode: ComponentMode.createNewCommand;
 	// No command to edit because we're creating a new command
 	// Added this property for type safety stuff
-	commandToEdit: null;
+	commandToEdit?: null;
 };
 
 // Slightly different props based on if it's "edit" or "create" mode
@@ -166,7 +174,10 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		return () => subscription.unsubscribe();
 	}, [watch]);
 
-	const onSubmit = async (data: CMDBuddyCommandFormValidation) => {
+	const onSubmit = async (
+		data: CMDBuddyCommandFormValidation,
+		componentMode: ComponentMode
+	) => {
 		// TODO:
 		// Toast at beginning and end
 		// Notify if command title or baseCommand already exists
@@ -203,12 +214,24 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			return; // Stop submission if validation fails
 		}
 
-		const completedCommandFromDB = await submitNewCommandAndParamsToDB(
-			data,
-			loggedInUser!.id
-		);
+		// Creating new command
+		if (componentMode === ComponentMode.createNewCommand) {
+			const completedCommandFromDB = await submitNewCommandAndParamsToDB(
+				data,
+				loggedInUser!.id
+			);
 
-		dispatch(addCommand(completedCommandFromDB));
+			dispatch(addCommand(completedCommandFromDB));
+		}
+
+		// Editing existing command
+		else if (componentMode === ComponentMode.editExistingCommand) {
+			// Edit command in redux state
+			// Update command in db
+			// set editing redux state to null
+
+			dispatch(editSingleCommand(data as CMDBuddyCommand));
+		}
 		// Finally, clear form values
 		remove();
 		methods.reset();
@@ -226,9 +249,16 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		}
 	};
 
+	console.log("componentMode:", componentMode);
+
 	return (
 		<FormProvider {...methods}>
-			<StyledCCFForm onSubmit={methods.handleSubmit(onSubmit)}>
+			<StyledCCFForm
+				// Handles submit differently if it's in "edit command" mode or "create command" mode
+				onSubmit={methods.handleSubmit((data, e) => {
+					onSubmit(data, componentMode);
+				})}
+			>
 				{/* Command Fields */}
 				<div>
 					<StyledCCFLabel htmlFor="baseCommand">Base Command</StyledCCFLabel>
