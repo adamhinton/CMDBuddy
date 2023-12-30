@@ -73,7 +73,30 @@ export type CMDBuddyCommandFormValidation = z.infer<
 	typeof CommandCreationFormSchema
 >;
 
-const CommandCreationForm: React.FC = () => {
+// If using this component to edit an existing Command, a command to edit must be passed in
+type FormPropsEditCurrentCommand = {
+	componentMode: "editExistingCommand";
+	commandToEdit: CMDBuddyCommand;
+};
+
+// If using this component to add a new command, this tell that to th code
+type FormPropsCreateCommand = {
+	componentMode: "createNewCommand";
+	// No command to edit because we're creating a new command
+	// Added this property for type safety stuff
+	commandToEdit: null;
+};
+
+// Slightly different props based on if it's "edit" or "create" mode
+type FormProps = FormPropsCreateCommand | FormPropsEditCurrentCommand;
+
+// Can either be in "Create new command" mode or "Edit existing command" mode
+// Differences are minimal, edit mode just populates existing command's details, and submitting in edit mode updates that command instead of making a new one
+const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
+	// There will only be a commandToEdit if we're in edit mode
+	const { componentMode, commandToEdit } = props;
+	const isEditMode = componentMode === "editExistingCommand";
+
 	const dispatch = useDispatch();
 
 	const methods = useForm<CMDBuddyCommandFormValidation>({
@@ -84,6 +107,8 @@ const CommandCreationForm: React.FC = () => {
 		return state.commands.commands ? state.commands.commands[0] : null;
 	});
 
+	// If component mode is "editExistingCommand", this adds that command to form state
+	// If mode is "createNewCommand", this does nothing.
 	useEffect(() => {
 		console.log("experimentalCommand:", experimentalCommand);
 		experimentalCommand &&
@@ -267,4 +292,4 @@ const CommandCreationForm: React.FC = () => {
 	);
 };
 
-export default CommandCreationForm;
+export default CommandCreationOrEditForm;
