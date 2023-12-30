@@ -13,7 +13,7 @@ const initialState: EditCommandState = {
 	commandToEdit: null,
 };
 
-export const activeCommandsSlice = createSlice({
+export const editCommandSlice = createSlice({
 	name: "commandToEdit",
 	initialState,
 	reducers: {
@@ -29,6 +29,6 @@ export const activeCommandsSlice = createSlice({
 });
 
 export const { setCommandToEdit, deleteCommandToEdit } =
-	activeCommandsSlice.actions;
+	editCommandSlice.actions;
 
-export default activeCommandsSlice.reducer;
+export default editCommandSlice.reducer;
