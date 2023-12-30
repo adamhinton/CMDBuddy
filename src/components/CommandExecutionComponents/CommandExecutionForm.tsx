@@ -42,6 +42,7 @@ const CEFCommandTitle = styled.h3`
 `;
 
 type CEFTextInputProps = {
+	// This is all lowercase because React yelled at me for some reason, saying it had to be lower case.
 	inputtype: "STRING" | "INT" | "OTHER";
 };
 
