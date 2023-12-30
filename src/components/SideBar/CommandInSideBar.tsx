@@ -32,12 +32,6 @@ const CommandInSideBar = ({
 	command: CMDBuddyCommand;
 	dragHandleProps: any;
 }) => {
-	const commandToEdit = useSelector(
-		(state: RootState) => state.commandToEdit.commandToEdit
-	);
-
-	console.log("commandToEdit (delete this later):", commandToEdit);
-
 	const { title, id: commandID } = command;
 	const dispatch = useDispatch();
 	const router = useRouter();

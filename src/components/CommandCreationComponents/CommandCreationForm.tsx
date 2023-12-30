@@ -114,22 +114,16 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
 	useEffect(() => {
-		console.log(
-			"experimentalCommand:",
-			// Set edit values to form state
-			experimentalCommand
-		);
-		experimentalCommand &&
-			methods.setValue("baseCommand", experimentalCommand!.baseCommand);
-		methods.setValue("order", experimentalCommand?.order);
-		experimentalCommand?.title &&
-			methods.setValue("title", experimentalCommand?.title!);
-		experimentalCommand?.parameters &&
+		commandToEdit &&
+			methods.setValue("baseCommand", commandToEdit!.baseCommand);
+		methods.setValue("order", commandToEdit?.order);
+		commandToEdit?.title && methods.setValue("title", commandToEdit?.title!);
+		commandToEdit?.parameters &&
 			// @ts-ignore
-			methods.setValue("parameters", experimentalCommand.parameters);
+			methods.setValue("parameters", commandToEdit.parameters);
 
-		// if (experimentalCommand?.parameters) {
-		// 	for (const parameter of experimentalCommand?.parameters!) {
+		// if (commandToEdit?.parameters) {
+		// 	for (const parameter of commandToEdit?.parameters!) {
 		// 		append({
 		// 			type: parameter.type,
 		// 			name: parameter.name,
@@ -139,10 +133,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		// 		} as any);
 		// 	}
 		// }
-
-		const formValues = methods.getValues();
-		console.log("formValues:", formValues);
-	}, [append, experimentalCommand, methods]);
+	}, [append, commandToEdit, methods]);
 
 	const { watch } = methods;
 
