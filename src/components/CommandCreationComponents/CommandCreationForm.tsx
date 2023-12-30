@@ -102,6 +102,11 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		resolver: zodResolver(CommandCreationFormSchema),
 	});
 
+	const { fields, append, remove } = useFieldArray({
+		control: methods.control,
+		name: "parameters",
+	});
+
 	const experimentalCommand = useSelector((state: RootState) => {
 		return state.commands.commands ? state.commands.commands[0] : null;
 	});
@@ -109,16 +114,35 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
 	useEffect(() => {
-		console.log("experimentalCommand:", experimentalCommand);
+		console.log(
+			"experimentalCommand:",
+			// Set edit values to form state
+			experimentalCommand
+		);
 		experimentalCommand &&
 			methods.setValue("baseCommand", experimentalCommand!.baseCommand);
+		methods.setValue("order", experimentalCommand?.order);
+		experimentalCommand?.title &&
+			methods.setValue("title", experimentalCommand?.title!);
 		experimentalCommand?.parameters &&
-			//@ts-ignore
+			// @ts-ignore
 			methods.setValue("parameters", experimentalCommand.parameters);
+
+		// if (experimentalCommand?.parameters) {
+		// 	for (const parameter of experimentalCommand?.parameters!) {
+		// 		append({
+		// 			type: parameter.type,
+		// 			name: parameter.name,
+		// 			isNullable: parameter.isNullable,
+		// 			defaultValue: parameter.defaultValue,
+		// 			// TODO: Fix this as any
+		// 		} as any);
+		// 	}
+		// }
 
 		const formValues = methods.getValues();
 		console.log("formValues:", formValues);
-	}, [experimentalCommand, methods]);
+	}, [append, experimentalCommand, methods]);
 
 	const { watch } = methods;
 
@@ -150,11 +174,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		});
 		return () => subscription.unsubscribe();
 	}, [watch]);
-
-	const { fields, append, remove } = useFieldArray({
-		control: methods.control,
-		name: "parameters",
-	});
 
 	const onSubmit = async (data: CMDBuddyCommandFormValidation) => {
 		// TODO:
