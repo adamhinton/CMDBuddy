@@ -1,3 +1,5 @@
+"use client";
+
 // README:
 // User fills out this form to create a Command
 // Each Command has multiple Parameters; they fill out ParameterCreationForm once per Parameter
@@ -42,7 +44,6 @@ import {
 	submitNewCommandAndParamsToDB,
 } from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
-import exp from "constants";
 
 const {
 	StringParameterSchema,
@@ -61,7 +62,7 @@ const AnyParameterSchema = z.union([
 	FlagParameterSchema,
 ]);
 
-// Creating a specific schema for the Command Creation Form
+// Creating a specific schema for command creation mode
 // This is because the user doesn't define things like `id` or `order`
 export const CommandCreationFormSchema = CommandSchema.omit({
 	id: true,
@@ -72,8 +73,18 @@ export const CommandCreationFormSchema = CommandSchema.omit({
 	// Each Parameter can be one of four types
 	parameters: z.array(AnyParameterSchema).optional(),
 });
+
+// Form validation in edit mode; this needs an `id` and `userID` for the existing command
+export const CommandEditFormSchema = CommandSchema.extend({
+	id: z.string().optional(),
+	userID: z.string().optional(),
+	order: z.number().int().optional(),
+	parameters: z.array(AnyParameterSchema).optional(),
+});
+
+// Either edit mode or create mode
 export type CMDBuddyCommandFormValidation = z.infer<
-	typeof CommandCreationFormSchema
+	typeof CommandCreationFormSchema | typeof CommandEditFormSchema
 >;
 
 export enum ComponentMode {
@@ -82,7 +93,7 @@ export enum ComponentMode {
 }
 
 // If using this component to edit an existing Command, a command to edit must be passed in
-type FormPropsEditCurrentCommand = {
+type FormPropsEditExistingCommand = {
 	componentMode: ComponentMode.editExistingCommand;
 	commandToEdit: CMDBuddyCommand;
 };
@@ -96,7 +107,7 @@ type FormPropsCreateCommand = {
 };
 
 // Slightly different props based on if it's "edit" or "create" mode
-type FormProps = FormPropsCreateCommand | FormPropsEditCurrentCommand;
+type FormProps = FormPropsCreateCommand | FormPropsEditExistingCommand;
 
 // Can either be in "Create new command" mode or "Edit existing command" mode
 // Differences are minimal, edit mode just populates existing command's details, and submitting in edit mode updates that command instead of making a new one
@@ -107,7 +118,12 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	const dispatch = useDispatch();
 
 	const methods = useForm<CMDBuddyCommandFormValidation>({
-		resolver: zodResolver(CommandCreationFormSchema),
+		// Form validation is either "edit" mode or "create" mode
+		resolver: zodResolver(
+			componentMode === ComponentMode.createNewCommand
+				? CommandCreationFormSchema
+				: CommandEditFormSchema
+		),
 	});
 
 	const { fields, append, remove } = useFieldArray({
@@ -122,26 +138,17 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
 	useEffect(() => {
-		commandToEdit &&
+		if (componentMode === ComponentMode.editExistingCommand) {
 			methods.setValue("baseCommand", commandToEdit!.baseCommand);
-		methods.setValue("order", commandToEdit?.order);
-		commandToEdit?.title && methods.setValue("title", commandToEdit?.title!);
-		commandToEdit?.parameters &&
+			methods.setValue("order", commandToEdit?.order);
+			methods.setValue("title", commandToEdit?.title!);
 			// @ts-ignore
 			methods.setValue("parameters", commandToEdit.parameters);
-
-		// if (commandToEdit?.parameters) {
-		// 	for (const parameter of commandToEdit?.parameters!) {
-		// 		append({
-		// 			type: parameter.type,
-		// 			name: parameter.name,
-		// 			isNullable: parameter.isNullable,
-		// 			defaultValue: parameter.defaultValue,
-		// 			// TODO: Fix this as any
-		// 		} as any);
-		// 	}
-		// }
-	}, [append, commandToEdit, methods]);
+			methods.setValue("id", commandToEdit?.id);
+			methods.setValue("userID", commandToEdit?.userID);
+			console.log("methods.getValues():", methods.getValues());
+		}
+	}, [append, commandToEdit, methods, componentMode]);
 
 	const { watch } = methods;
 
@@ -183,6 +190,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		// Notify if command title or baseCommand already exists
 
 		data.order = 1;
+		console.log("data in onsubmit:", data);
 
 		const parameters: AnyParameter[] | undefined = data.parameters;
 		let nonFlagOrder = 1;
@@ -214,7 +222,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			return; // Stop submission if validation fails
 		}
 
-		// Creating new command
+		// Creating new command in db if in "create new command" mode
 		if (componentMode === ComponentMode.createNewCommand) {
 			const completedCommandFromDB = await submitNewCommandAndParamsToDB(
 				data,
@@ -224,7 +232,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			dispatch(addCommand(completedCommandFromDB));
 		}
 
-		// Editing existing command
+		// Editing existing command if in edit mode
 		else if (componentMode === ComponentMode.editExistingCommand) {
 			// Edit command in redux state
 			// Update command in db
@@ -249,12 +257,10 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		}
 	};
 
-	console.log("componentMode:", componentMode);
-
 	return (
 		<FormProvider {...methods}>
 			<StyledCCFForm
-				// Handles submit differently if it's in "edit command" mode or "create command" mode
+				// Handles submit differently if it's in "edit existing command" mode or "create new command" mode
 				onSubmit={methods.handleSubmit((data, e) => {
 					onSubmit(data, componentMode);
 				})}

@@ -44,6 +44,18 @@ export const commandsSlice = createSlice({
 			}
 		},
 
+		editSingleCommand: (state, action: PayloadAction<CMDBuddyCommand>) => {
+			console.log("edit single command");
+			const command = action.payload;
+			console.log("command:", command);
+			let commandToEdit = state.commands?.find((cmd) => {
+				console.log("cmd.id:", cmd.id);
+				return cmd.id === command.id;
+			});
+			console.log("commandToEdit:", commandToEdit);
+			commandToEdit = { ...command };
+		},
+
 		// pass in command
 		deleteCommand: (state, action: PayloadAction<string>) => {
 			const commandId = action.payload;
@@ -72,6 +84,7 @@ export const {
 	addCommand,
 	deleteCommand,
 	editCommandTitle,
+	editSingleCommand,
 	reorderCommands,
 } = commandsSlice.actions;
 export default commandsSlice.reducer;
