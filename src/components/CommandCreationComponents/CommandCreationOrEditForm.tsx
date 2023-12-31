@@ -230,6 +230,18 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			// Update command in db
 			// set editing redux state to null
 
+			const originalParameters = commandToEdit?.parameters;
+
+			if (data.parameters && data.parameters.length > 0) {
+				const newParameters = data.parameters.filter((p) => !p.id);
+				const updatedParameters = data.parameters.filter(
+					(p) => p.id && originalParameters?.some((ep) => ep.id === p.id)
+				);
+				const deletedParameterIds = originalParameters
+					.filter((ep) => !data.parameters?.some((p) => p.id === ep.id))
+					.map((p) => p.id);
+			}
+
 			dispatch(editSingleCommand(data as CMDBuddyCommand));
 		}
 		// Finally, clear form values
