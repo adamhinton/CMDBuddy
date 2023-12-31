@@ -143,10 +143,8 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			methods.setValue("id", commandToEdit?.id);
 			methods.setValue("userID", commandToEdit?.userID);
 
-			// @ts-ignore
-			// methods.setValue("parameters", commandToEdit.parameters);
-
 			commandToEdit.parameters?.forEach((param) => {
+				// @ts-ignore
 				append({ ...param });
 			});
 
