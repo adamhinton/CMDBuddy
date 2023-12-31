@@ -45,15 +45,13 @@ export const commandsSlice = createSlice({
 		},
 
 		editSingleCommand: (state, action: PayloadAction<CMDBuddyCommand>) => {
-			console.log("edit single command");
-			const command = action.payload;
-			console.log("command:", command);
-			let commandToEdit = state.commands?.find((cmd) => {
-				console.log("cmd.id:", cmd.id);
-				return cmd.id === command.id;
-			});
-			console.log("commandToEdit:", commandToEdit);
-			commandToEdit = { ...command };
+			const updatedCommands = state.commands!.map((cmd) =>
+				cmd.id === action.payload.id ? { ...cmd, ...action.payload } : cmd
+			);
+			return {
+				...state,
+				commands: updatedCommands,
+			};
 		},
 
 		// pass in command

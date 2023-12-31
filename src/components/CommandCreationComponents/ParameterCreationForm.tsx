@@ -1,3 +1,5 @@
+"use client";
+
 // README:
 // User fills this form out to make a Parameter
 // Param can be STRING, INT, BOOLEAN, DROPDOWN or FLAG
@@ -34,6 +36,7 @@ import {
 type FormProps = {
 	index: number;
 	removeParameter: Function;
+	parameterCreationType: ParameterCreationType;
 };
 
 const {
@@ -52,15 +55,20 @@ export type ParameterCreationType =
 	| "FLAG";
 
 // User fills this out once for every Parameter they create
-const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
+const ParameterCreationForm = ({
+	index,
+	removeParameter,
+	parameterCreationType,
+}: FormProps) => {
 	const {
 		register,
 		watch,
 		formState: { errors },
 	} = useFormContext<{ parameters: AnyParameter[] }>();
 
-	const [parameterType, setParameterType] =
-		useState<ParameterCreationType>("STRING");
+	const [parameterType, setParameterType] = useState<ParameterCreationType>(
+		parameterCreationType
+	);
 	const parameterErrors = errors.parameters?.[index];
 
 	// This updates the necessary fields when user clicks a different parameter type

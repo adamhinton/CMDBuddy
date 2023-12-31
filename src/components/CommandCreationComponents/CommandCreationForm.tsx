@@ -44,6 +44,7 @@ import {
 	submitNewCommandAndParamsToDB,
 } from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
+import { clear } from "console";
 
 const {
 	StringParameterSchema,
@@ -135,13 +136,20 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	// If mode is "createNewCommand", this does nothing.
 	useEffect(() => {
 		if (componentMode === ComponentMode.editExistingCommand) {
+			methods.reset();
 			methods.setValue("baseCommand", commandToEdit!.baseCommand);
 			methods.setValue("order", commandToEdit?.order);
 			methods.setValue("title", commandToEdit?.title!);
-			// @ts-ignore
-			methods.setValue("parameters", commandToEdit.parameters);
 			methods.setValue("id", commandToEdit?.id);
 			methods.setValue("userID", commandToEdit?.userID);
+
+			// @ts-ignore
+			// methods.setValue("parameters", commandToEdit.parameters);
+
+			commandToEdit.parameters?.forEach((param) => {
+				append({ ...param });
+			});
+
 			console.log("methods.getValues():", methods.getValues());
 		}
 	}, [append, commandToEdit, methods, componentMode]);
@@ -297,6 +305,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						key={field.id}
 						index={index}
 						removeParameter={() => remove(index)}
+						parameterCreationType={field.type}
 					/>
 				))}
 

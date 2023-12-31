@@ -22,7 +22,10 @@ import {
 	DragHandle,
 } from "../../../utils/SideBarUtils";
 import styled from "styled-components";
-import { setCommandToEdit } from "../../../redux/slices/editCommandSlice";
+import {
+	deleteCommandToEdit,
+	setCommandToEdit,
+} from "../../../redux/slices/editCommandSlice";
 import { RootState } from "../../../redux/store";
 
 const CommandInSideBar = ({
@@ -79,6 +82,7 @@ const CommandInSideBar = ({
 			<IconContainer>
 				<EditButton
 					onClick={() => {
+						dispatch(deleteCommandToEdit());
 						dispatch(setCommandToEdit(command));
 						router.push("/commands/edit");
 					}}
