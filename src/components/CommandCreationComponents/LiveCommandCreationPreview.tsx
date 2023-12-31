@@ -1,3 +1,5 @@
+"use client";
+
 // README:
 // This component shows a preview of the Command you've created. Like it'll show `companyName= zipCode= npx playwright test createCompany --headed`
 // It's updated every time a user inputs a value in baseCommand, or a parameter's name or defaultValue.
