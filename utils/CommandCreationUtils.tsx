@@ -35,6 +35,9 @@ const StringParameterSchema = ParameterSchema.pick({
 	type: z.literal("STRING"),
 	// Making Order optional because we only add it on submit
 	order: z.number().int().optional(),
+	// Optional because it's only needed in "edit" mode
+	id: z.string().uuid().optional(),
+	commandID: z.string().uuid().optional(),
 });
 
 const IntParameterSchema = ParameterSchema.pick({
