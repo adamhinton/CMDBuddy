@@ -35,9 +35,12 @@ const StringParameterSchema = ParameterSchema.pick({
 	type: z.literal("STRING"),
 	// Making Order optional because we only add it on submit
 	order: z.number().int().optional(),
-	// Optional because it's only needed in "edit" mode
+	// id and commandID are optional because it's only needed in "edit" mode
 	id: z.string().uuid().optional(),
 	commandID: z.string().uuid().optional(),
+	// Lets onSubmit know that the param has/hasn't been changed and does/doesn't need to be updated
+	// false by default
+	hasBeenEdited: z.boolean().default(false).optional(),
 });
 
 const IntParameterSchema = ParameterSchema.pick({
@@ -51,9 +54,12 @@ const IntParameterSchema = ParameterSchema.pick({
 	type: z.literal("INT"),
 	// Making Order optional because we only add it on submit
 	order: z.number().int().optional(),
-	// Optional because it's only needed in "edit" mode
+	// id and commandID are optional because it's only needed in "edit" mode
 	id: z.string().uuid().optional(),
 	commandID: z.string().uuid().optional(),
+	// Lets onSubmit know that the param has/hasn't been changed and does/doesn't need to be updated
+	// false by default
+	hasBeenEdited: z.boolean().default(false).optional(),
 });
 
 const BooleanParameterSchema = ParameterSchema.pick({
@@ -65,11 +71,12 @@ const BooleanParameterSchema = ParameterSchema.pick({
 	type: z.literal("BOOLEAN"),
 	// Making Order optional because we only add it on submit
 	order: z.number().int().optional(),
-	// Needs to be string for validation purposes, can convert later
-	defaultValue: z.enum(["true", "false"]),
-	// Optional because it's only needed in "edit" mode
+	// id and commandID are optional because it's only needed in "edit" mode
 	id: z.string().uuid().optional(),
 	commandID: z.string().uuid().optional(),
+	// Lets onSubmit know that the param has/hasn't been changed and does/doesn't need to be updated
+	// false by default
+	hasBeenEdited: z.boolean().default(false).optional(),
 });
 
 const DropdownParameterSchema = ParameterSchema.pick({
@@ -82,9 +89,12 @@ const DropdownParameterSchema = ParameterSchema.pick({
 	type: z.literal("DROPDOWN"),
 	// Making Order optional because we only add it on submit
 	order: z.number().int().optional(),
-	// Optional because it's only needed in "edit" mode
+	// id and commandID are optional because it's only needed in "edit" mode
 	id: z.string().uuid().optional(),
 	commandID: z.string().uuid().optional(),
+	// Lets onSubmit know that the param has/hasn't been changed and does/doesn't need to be updated
+	// false by default
+	hasBeenEdited: z.boolean().default(false).optional(),
 });
 
 const FlagParameterSchema = ParameterSchema.pick({
@@ -96,9 +106,12 @@ const FlagParameterSchema = ParameterSchema.pick({
 	// Making Order optional because we only add it on submit
 	order: z.number().int().optional(),
 	defaultValue: z.enum(["On", "Off"]),
-	// Optional because it's only needed in "edit" mode
+	// id and commandID are optional because it's only needed in "edit" mode
 	id: z.string().uuid().optional(),
 	commandID: z.string().uuid().optional(),
+	// Lets onSubmit know that the param has/hasn't been changed and does/doesn't need to be updated
+	// false by default
+	hasBeenEdited: z.boolean().default(false).optional(),
 });
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
