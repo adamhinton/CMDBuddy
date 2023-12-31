@@ -11,19 +11,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { useRouter } from "next/navigation";
 import {
 	addCommand,
 	editSingleCommand,
 } from "../../../redux/slices/commandsSlice";
 import { useDispatch } from "react-redux";
 
-import {
-	useForm,
-	useFieldArray,
-	FormProvider,
-	useFormContext,
-} from "react-hook-form";
+import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import {
@@ -44,7 +38,6 @@ import {
 	submitNewCommandAndParamsToDB,
 } from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
-import { clear } from "console";
 
 const {
 	StringParameterSchema,
@@ -147,8 +140,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				// @ts-ignore
 				append({ ...param });
 			});
-
-			console.log("methods.getValues():", methods.getValues());
 		}
 	}, [append, commandToEdit, methods, componentMode]);
 
@@ -167,7 +158,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	const loggedInUser = useSelector((state: RootState) => {
 		return state.auth.user;
 	});
-	const router = useRouter();
 
 	useEffect(() => {
 		const subscription = watch((value, { name }) => {
