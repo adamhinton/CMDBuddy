@@ -6,10 +6,10 @@ import { z } from "zod";
 import { ParameterSchema } from "./zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationForm";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
 import { API, graphqlOperation } from "aws-amplify";
 import { createCommand, createParameter } from "@/graphql/mutations";
-import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationForm";
+import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
 import { customGetCommandWithParameters } from "./customGraphQLQueries";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
 

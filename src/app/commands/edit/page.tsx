@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import CommandCreationOrEditForm, {
 	ComponentMode,
-} from "@/components/CommandCreationComponents/CommandCreationForm";
+} from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
 Amplify.configure({ ...config, ssr: true });
 
 const CommandsEditPage = () => {
