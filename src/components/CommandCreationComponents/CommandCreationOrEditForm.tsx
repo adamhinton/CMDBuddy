@@ -232,14 +232,20 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 			const originalParameters = commandToEdit?.parameters;
 
+			// If there are both old and new parameters, this filters
 			if (data.parameters && data.parameters.length > 0) {
+				// Add these parameters
 				const newParameters = data.parameters.filter((p) => !p.id);
+				// Update these parameters
 				const updatedParameters = data.parameters.filter(
 					(p) => p.id && originalParameters?.some((ep) => ep.id === p.id)
 				);
-				const deletedParameterIds = originalParameters
-					.filter((ep) => !data.parameters?.some((p) => p.id === ep.id))
-					.map((p) => p.id);
+				// Delete these parameters
+				if (originalParameters && originalParameters.length) {
+					const deletedParameterIds = originalParameters
+						.filter((ep) => !data.parameters?.some((p) => p.id === ep.id))
+						.map((p) => p.id);
+				}
 			}
 
 			dispatch(editSingleCommand(data as CMDBuddyCommand));
