@@ -234,17 +234,20 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 			// If there are both old and new parameters, this filters
 			if (data.parameters && data.parameters.length > 0) {
-				// Add these parameters
+				// Add these new parameters
 				const newParameters = data.parameters.filter((p) => !p.id);
-				// Update these parameters
+				// Update these original parameter ids with new data
+				console.log("newParameters:", newParameters);
 				const updatedParameters = data.parameters.filter(
 					(p) => p.id && originalParameters?.some((ep) => ep.id === p.id)
 				);
-				// Delete these parameters
+				console.log("updatedParameters:", updatedParameters);
+				// Delete these original parameters
 				if (originalParameters && originalParameters.length) {
-					const deletedParameterIds = originalParameters
+					const deletedParameters = originalParameters
 						.filter((ep) => !data.parameters?.some((p) => p.id === ep.id))
-						.map((p) => p.id);
+						.map((p) => p);
+					console.log("deletedParameters:", deletedParameters);
 				}
 			}
 
