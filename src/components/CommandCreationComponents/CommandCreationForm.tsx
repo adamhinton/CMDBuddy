@@ -131,10 +131,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		name: "parameters",
 	});
 
-	const experimentalCommand = useSelector((state: RootState) => {
-		return state.commands.commands ? state.commands.commands[0] : null;
-	});
-
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
 	useEffect(() => {
