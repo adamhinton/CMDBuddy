@@ -16,10 +16,6 @@ import { useForm, FormProvider } from "react-hook-form";
 import LiveCommandExecutionPreview from "./LiveCommandExecutionPreview";
 import styled from "styled-components";
 
-const CEFContainer = styled.section`
-	width: 100%;
-`;
-
 export const CEFForm = styled.form`
 	background: ${({ theme }) => theme.commandGeneration.baseBackground};
 	color: ${({ theme }) => theme.commandGeneration.baseText};
@@ -124,7 +120,6 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 	const parameters = command.parameters;
 
 	const { watch } = methods;
-	const parameterValues = watch(); // Tracks all inputted parameter values
 
 	return (
 		<FormProvider {...methods}>
