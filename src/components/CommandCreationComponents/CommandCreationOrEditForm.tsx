@@ -267,8 +267,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				graphqlOperation(updateCommand, { input: editCommandInput })
 			);
 
-			// Not working, work on this
-
+			// Add new params to the db
 			newParameters?.forEach(async (param) => {
 				const createParameterInput = param;
 				delete createParameterInput["hasBeenEdited"];
