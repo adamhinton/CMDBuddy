@@ -80,8 +80,8 @@ export const CommandCreationFormSchema = CommandSchema.omit({
 
 // Form validation in edit mode; this needs an `id` and `userID` for the existing command
 export const CommandEditFormSchema = CommandSchema.extend({
+	userID: z.string().optional(),
 	id: z.string(),
-	commandID: z.string(),
 	order: z.number().int().optional(),
 	parameters: z.array(AnyParameterSchema).optional(),
 });
@@ -137,6 +137,11 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		name: "parameters",
 	});
 
+	// Delete any values leftover from editing of previous commands
+	useEffect(() => {
+		methods.reset();
+	}, [methods, commandToEdit]);
+
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
 	useEffect(() => {
@@ -147,7 +152,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			methods.setValue("order", commandToEdit?.order);
 			methods.setValue("title", commandToEdit?.title!);
 			methods.setValue("id", commandToEdit?.id);
-			methods.setValue("userID", commandToEdit?.userID);
 
 			commandToEdit.parameters?.forEach((param) => {
 				// @ts-ignore
@@ -268,8 +272,13 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			console.log("newParameters:", newParameters);
 
 			// Not working, work on this
-			// Edit: it's missing commandID
+
 			newParameters?.forEach(async (param) => {
+				const createParameterInput = {
+					...param,
+					hasBeenEdited: undefined,
+				};
+
 				const createParamResult = await API.graphql(
 					graphqlOperation(createParameter, { input: param })
 				);
