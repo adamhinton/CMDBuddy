@@ -542,16 +542,18 @@ export const submitNewCommandAndParamsToDB = async (
 	}
 };
 
+// When user edits a Command, this tells the code if its params are newly created, updated, or deleted
+// Params that haven't changed are left out of the returned object
 export const sortSubmittedEditedParams = (
 	data: CMDBuddyCommandFormValidation,
 	commandToEdit: CMDBuddyCommand
 ) => {
 	const originalParameters = commandToEdit?.parameters;
 
-	// If there are both old and new parameters, this filters
 	// Add these new parameters
 	// We know they're new bc they don't have an id yet
 	const newParameters = data.parameters?.filter((p) => !p.id);
+
 	// Update these original parameter ids with new data
 	// These are params that existed already but have been updated.
 	const updatedParameters = data.parameters?.filter(
@@ -560,6 +562,7 @@ export const sortSubmittedEditedParams = (
 			originalParameters?.some((ep) => ep.id === p.id && p.hasBeenEdited)
 	);
 
+	// Params that the user deleted while editing a command
 	let deletedParameters: CMDBuddyParameter[] = [];
 	if (originalParameters && originalParameters.length) {
 		deletedParameters = originalParameters
