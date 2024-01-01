@@ -81,7 +81,7 @@ export const CommandCreationFormSchema = CommandSchema.omit({
 // Form validation in edit mode; this needs an `id` and `userID` for the existing command
 export const CommandEditFormSchema = CommandSchema.extend({
 	id: z.string(),
-	userID: z.string().optional(),
+	commandID: z.string(),
 	order: z.number().int().optional(),
 	parameters: z.array(AnyParameterSchema).optional(),
 });
@@ -151,7 +151,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 			commandToEdit.parameters?.forEach((param) => {
 				// @ts-ignore
-				append({ ...param, hasBeenEdited: false });
+				append({ ...param, hasBeenEdited: false, commandID: commandToEdit.id });
 			});
 		}
 	}, [append, commandToEdit, methods, componentMode]);
@@ -195,6 +195,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		// Toast at beginning and end
 		// Notify if command title or baseCommand already exists
 
+		console.log("submitting:");
 		data.order = 1;
 
 		const parameters: AnyParameter[] | undefined = data.parameters;
@@ -267,6 +268,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			console.log("newParameters:", newParameters);
 
 			// Not working, work on this
+			// Edit: it's missing commandID
 			newParameters?.forEach(async (param) => {
 				const createParamResult = await API.graphql(
 					graphqlOperation(createParameter, { input: param })
@@ -363,6 +365,9 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 							isNullable: false,
 							defaultValue: "",
 							hasBeenEdited: false,
+							commandID:
+								componentMode === ComponentMode.editExistingCommand &&
+								commandToEdit.id,
 							// TODO: Fix this as any
 						} as any)
 					}
