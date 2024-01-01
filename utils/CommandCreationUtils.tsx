@@ -549,32 +549,30 @@ export const sortSubmittedEditedParams = (
 	const originalParameters = commandToEdit?.parameters;
 
 	// If there are both old and new parameters, this filters
-	if (data.parameters && data.parameters.length > 0) {
-		// Add these new parameters
-		// We know they're new bc they don't have an id yet
-		const newParameters = data.parameters.filter((p) => !p.id);
-		// Update these original parameter ids with new data
-		// These are params that existed already but have been updated.
-		const updatedParameters = data.parameters.filter(
-			(p) =>
-				p.id &&
-				originalParameters?.some((ep) => ep.id === p.id && p.hasBeenEdited)
-		);
+	// Add these new parameters
+	// We know they're new bc they don't have an id yet
+	const newParameters = data.parameters?.filter((p) => !p.id);
+	// Update these original parameter ids with new data
+	// These are params that existed already but have been updated.
+	const updatedParameters = data.parameters?.filter(
+		(p) =>
+			p.id &&
+			originalParameters?.some((ep) => ep.id === p.id && p.hasBeenEdited)
+	);
 
-		let deletedParameters: CMDBuddyParameter[] = [];
-		if (originalParameters && originalParameters.length) {
-			deletedParameters = originalParameters
-				.filter((ep) => !data.parameters?.some((p) => p.id === ep.id))
-				.map((p) => p);
-			console.log("deletedParameters:", deletedParameters);
-		}
-
-		return {
-			newParameters: newParameters,
-			updatedParameters: updatedParameters,
-			deletedParameters: deletedParameters,
-		};
+	let deletedParameters: CMDBuddyParameter[] = [];
+	if (originalParameters && originalParameters.length) {
+		deletedParameters = originalParameters
+			.filter((ep) => !data.parameters?.some((p) => p.id === ep.id))
+			.map((p) => p);
+		console.log("deletedParameters:", deletedParameters);
 	}
+
+	return {
+		newParameters: newParameters,
+		updatedParameters: updatedParameters,
+		deletedParameters: deletedParameters,
+	};
 };
 
 const fetchCommandWithParameters = async (commandID: string) => {

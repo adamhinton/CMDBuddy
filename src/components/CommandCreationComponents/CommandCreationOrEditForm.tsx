@@ -279,8 +279,11 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			});
 
 			deletedParameters?.forEach(async (param) => {
+				console.log("param.id:", param.id);
 				await API.graphql(
-					graphqlOperation(deleteParameter, { input: param.id })
+					graphqlOperation(deleteParameter, {
+						input: { id: param.id },
+					})
 				);
 			});
 
