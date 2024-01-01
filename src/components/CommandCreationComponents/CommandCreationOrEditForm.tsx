@@ -40,6 +40,14 @@ import {
 } from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
+import { API, graphqlOperation } from "aws-amplify";
+import {
+	createParameter,
+	deleteParameter,
+	updateCommand,
+	updateParameter,
+} from "@/graphql/mutations";
+import { UpdateCommandInput } from "@/API";
 
 const {
 	StringParameterSchema,
@@ -72,7 +80,7 @@ export const CommandCreationFormSchema = CommandSchema.omit({
 
 // Form validation in edit mode; this needs an `id` and `userID` for the existing command
 export const CommandEditFormSchema = CommandSchema.extend({
-	id: z.string().optional(),
+	id: z.string(),
 	userID: z.string().optional(),
 	order: z.number().int().optional(),
 	parameters: z.array(AnyParameterSchema).optional(),
@@ -188,7 +196,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		// Notify if command title or baseCommand already exists
 
 		data.order = 1;
-		console.log("data in onsubmit:", data);
 
 		const parameters: AnyParameter[] | undefined = data.parameters;
 		let nonFlagOrder = 1;
@@ -241,19 +248,40 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			const deletedParameters = sortedParameters?.deletedParameters;
 			const updatedParameters = sortedParameters?.updatedParameters;
 
-			// TODO: Update Command itself in DB
+			const editCommandInput: UpdateCommandInput = {
+				// @ts-ignore
+				id: data.id!,
+				order: data.order,
+				baseCommand: data.baseCommand,
+				title: data.title,
+			};
 
-			newParameters?.forEach((param) => {
-				// add to db
-				// Make sure to include commandID
+			console.log("editCommandInput:", editCommandInput);
+
+			const editCommandResult = await API.graphql(
+				graphqlOperation(updateCommand, { input: editCommandInput })
+			);
+
+			console.log("editCommandResult:", editCommandResult);
+
+			console.log("newParameters:", newParameters);
+
+			// Not working, work on this
+			newParameters?.forEach(async (param) => {
+				const createParamResult = await API.graphql(
+					graphqlOperation(createParameter, { input: param })
+				);
+				console.log("createParamResult:", createParamResult);
 			});
 
-			deletedParameters?.forEach((param) => {
-				// delete from DB
+			deletedParameters?.forEach(async (param) => {
+				await API.graphql(
+					graphqlOperation(deleteParameter, { input: param.id })
+				);
 			});
 
-			updatedParameters?.forEach((param) => {
-				// update in db
+			updatedParameters?.forEach(async (param) => {
+				await API.graphql(graphqlOperation(updateParameter, { input: param }));
 			});
 
 			console.log("sortedParameters:", sortedParameters);
