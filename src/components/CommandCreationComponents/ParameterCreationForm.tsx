@@ -9,7 +9,7 @@
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
 import React, { useState, useEffect } from "react";
-import { useFormContext } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import {
 	CommandCreationUtils,
 	DefaultValueInput,
@@ -32,11 +32,14 @@ import {
 	IntParameterErrors,
 	DropdownParameterErrors,
 } from "../../../utils/CommandCreationUtils";
+import { AnyParameterSchema } from "./CommandCreationOrEditForm";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type FormProps = {
 	index: number;
 	removeParameter: Function;
 	parameterCreationType: ParameterCreationType;
+	setValue: Function;
 };
 
 const {
@@ -64,6 +67,7 @@ const ParameterCreationForm = ({
 		register,
 		watch,
 		formState: { errors },
+		setValue,
 	} = useFormContext<{ parameters: AnyParameter[] }>();
 
 	const [parameterType, setParameterType] = useState<ParameterCreationType>(
@@ -75,15 +79,27 @@ const ParameterCreationForm = ({
 	// Name here refers to the name of the field, not the `name` key in Parameters
 	useEffect(() => {
 		const subscription = watch((value, { name, type }) => {
+			const parameter = value.parameters ? value.parameters[index] : null;
+
 			if (type === "change" && name?.includes(`parameters.${index}.type`)) {
-				const parameter = value.parameters ? value.parameters[index] : null;
 				if (parameter) {
 					setParameterType(parameter.type!);
 				}
 			}
+			if (
+				type === "change" &&
+				parameter?.hasBeenEdited !== true &&
+				name?.includes(`parameters.${index}`)
+			) {
+				console.log("parameter before setting hasBeenEdited:", parameter);
+				// setValue("hasBeenEdited", true);
+				setValue(`parameters.${index}.hasBeenEdited`, true);
+				console.log("changing hasBeenEdited");
+				console.log("parameter after setting hasBeenEdited:", parameter);
+			}
 		});
 		return () => subscription.unsubscribe();
-	}, [watch, index]);
+	}, [watch, index, setValue]);
 
 	// User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN
 	const renderParameterSpecificFields = () => {

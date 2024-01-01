@@ -48,7 +48,7 @@ const {
 	validateParameterOnSubmit,
 } = CommandCreationUtils;
 
-const AnyParameterSchema = z.union([
+export const AnyParameterSchema = z.union([
 	StringParameterSchema,
 	IntParameterSchema,
 	BooleanParameterSchema,
@@ -119,6 +119,8 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				: CommandEditFormSchema
 		),
 	});
+
+	const { setValue } = methods;
 
 	const { fields, append, remove } = useFieldArray({
 		control: methods.control,
@@ -241,7 +243,9 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				// These are params that existed already but have been updated.
 				console.log("newParameters:", newParameters);
 				const updatedParameters = data.parameters.filter(
-					(p) => p.id && originalParameters?.some((ep) => ep.id === p.id)
+					(p) =>
+						p.id &&
+						originalParameters?.some((ep) => ep.id === p.id && p.hasBeenEdited)
 				);
 				console.log("updatedParameters:", updatedParameters);
 
@@ -317,6 +321,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						index={index}
 						removeParameter={() => remove(index)}
 						parameterCreationType={field.type}
+						setValue={setValue}
 					/>
 				))}
 
