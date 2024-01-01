@@ -3,7 +3,7 @@
 // Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
 
 import { z } from "zod";
-import { ParameterSchema } from "./zod/ParameterSchema";
+import { CMDBuddyParameter, ParameterSchema } from "./zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationForm";
 import { UseFormRegister } from "react-hook-form";
@@ -539,6 +539,41 @@ export const submitNewCommandAndParamsToDB = async (
 		console.error("Error submitting command and parameters:", error);
 	} finally {
 		return completeCommand!;
+	}
+};
+
+export const sortSubmittedEditedParams = (
+	data: CMDBuddyCommandFormValidation,
+	commandToEdit: CMDBuddyCommand
+) => {
+	const originalParameters = commandToEdit?.parameters;
+
+	// If there are both old and new parameters, this filters
+	if (data.parameters && data.parameters.length > 0) {
+		// Add these new parameters
+		// We know they're new bc they don't have an id yet
+		const newParameters = data.parameters.filter((p) => !p.id);
+		// Update these original parameter ids with new data
+		// These are params that existed already but have been updated.
+		const updatedParameters = data.parameters.filter(
+			(p) =>
+				p.id &&
+				originalParameters?.some((ep) => ep.id === p.id && p.hasBeenEdited)
+		);
+
+		let deletedParameters: CMDBuddyParameter[] = [];
+		if (originalParameters && originalParameters.length) {
+			deletedParameters = originalParameters
+				.filter((ep) => !data.parameters?.some((p) => p.id === ep.id))
+				.map((p) => p);
+			console.log("deletedParameters:", deletedParameters);
+		}
+
+		return {
+			newParameters: newParameters,
+			updatedParameters: updatedParameters,
+			deletedParameters: deletedParameters,
+		};
 	}
 };
 
