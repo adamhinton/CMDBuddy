@@ -277,6 +277,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				);
 			});
 
+			// Delete deleted params from db
 			deletedParameters?.forEach(async (param) => {
 				console.log("param.id:", param.id);
 				await API.graphql(
@@ -287,6 +288,8 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			});
 
 			updatedParameters?.forEach(async (param) => {
+				const updateParameterInput = param;
+				delete updateParameterInput["hasBeenEdited"];
 				await API.graphql(graphqlOperation(updateParameter, { input: param }));
 			});
 
