@@ -140,7 +140,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 			commandToEdit.parameters?.forEach((param) => {
 				// @ts-ignore
-				append({ ...param });
+				append({ ...param, hasBeenEdited: false });
 			});
 		}
 	}, [append, commandToEdit, methods, componentMode]);
@@ -241,13 +241,11 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				const newParameters = data.parameters.filter((p) => !p.id);
 				// Update these original parameter ids with new data
 				// These are params that existed already but have been updated.
-				console.log("newParameters:", newParameters);
 				const updatedParameters = data.parameters.filter(
 					(p) =>
 						p.id &&
 						originalParameters?.some((ep) => ep.id === p.id && p.hasBeenEdited)
 				);
-				console.log("updatedParameters:", updatedParameters);
 
 				if (originalParameters && originalParameters.length) {
 					const deletedParameters = originalParameters
@@ -333,6 +331,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 							name: "",
 							isNullable: false,
 							defaultValue: "",
+							hasBeenEdited: false,
 							// TODO: Fix this as any
 						} as any)
 					}
