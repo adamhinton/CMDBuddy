@@ -14,8 +14,6 @@ const CommandsEditPage = () => {
 		return state.commandToEdit.commandToEdit;
 	});
 
-	console.log("commandToEdit in edit/page:", commandToEdit);
-
 	return (
 		<section>
 			{!commandToEdit && <h3>Click edit icon in sidebar to edit a command</h3>}

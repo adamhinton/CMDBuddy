@@ -39,7 +39,6 @@ import {
 	sortSubmittedEditedParams,
 } from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
-import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
 import { API, graphqlOperation } from "aws-amplify";
 import {
 	createParameter,
@@ -118,7 +117,6 @@ type FormProps = FormPropsCreateCommand | FormPropsEditExistingCommand;
 const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	// There will only be a commandToEdit if we're in edit mode
 	const { componentMode, commandToEdit } = props;
-	console.log("props:", props);
 
 	const dispatch = useDispatch();
 
@@ -202,7 +200,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		// Toast at beginning and end
 		// Notify if command title or baseCommand already exists
 
-		console.log("submitting:");
 		data.order = 1;
 
 		const parameters: AnyParameter[] | undefined = data.parameters;
@@ -270,22 +267,15 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				graphqlOperation(updateCommand, { input: editCommandInput })
 			);
 
-			console.log("editCommandResult:", editCommandResult);
-
-			console.log("newParameters:", newParameters);
-
 			// Not working, work on this
 
 			newParameters?.forEach(async (param) => {
-				const createParameterInput = {
-					...param,
-					hasBeenEdited: undefined,
-				};
+				const createParameterInput = param;
+				delete createParameterInput["hasBeenEdited"];
 
-				const createParamResult = await API.graphql(
-					graphqlOperation(createParameter, { input: param })
+				await API.graphql(
+					graphqlOperation(createParameter, { input: createParameterInput })
 				);
-				console.log("createParamResult:", createParamResult);
 			});
 
 			deletedParameters?.forEach(async (param) => {
