@@ -118,6 +118,7 @@ type FormProps = FormPropsCreateCommand | FormPropsEditExistingCommand;
 const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	// There will only be a commandToEdit if we're in edit mode
 	const { componentMode, commandToEdit } = props;
+	console.log("props:", props);
 
 	const dispatch = useDispatch();
 
@@ -140,7 +141,9 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	// Delete any values leftover from editing of previous commands
 	useEffect(() => {
 		methods.reset();
-	}, [methods, commandToEdit]);
+		// Remove pre-existing parameter inputs
+		remove();
+	}, [methods, commandToEdit, remove]);
 
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
