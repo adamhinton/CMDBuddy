@@ -132,6 +132,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
 	useEffect(() => {
+		// This useEffect is all for edit mode
 		if (componentMode === ComponentMode.editExistingCommand) {
 			methods.reset();
 			methods.setValue("baseCommand", commandToEdit!.baseCommand);
@@ -163,6 +164,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		return state.auth.user;
 	});
 
+	// This is for LiveCommandPreview
 	useEffect(() => {
 		const subscription = watch((value, { name }) => {
 			if (name?.startsWith("parameters")) {
@@ -235,6 +237,25 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			// set editing redux state to null
 
 			const sortedParameters = sortSubmittedEditedParams(data, commandToEdit!);
+			const newParameters = sortedParameters?.newParameters;
+			const deletedParameters = sortedParameters?.deletedParameters;
+			const updatedParameters = sortedParameters?.updatedParameters;
+
+			// TODO: Update Command itself in DB
+
+			newParameters?.forEach((param) => {
+				// add to db
+				// Make sure to include commandID
+			});
+
+			deletedParameters?.forEach((param) => {
+				// delete from DB
+			});
+
+			updatedParameters?.forEach((param) => {
+				// update in db
+			});
+
 			console.log("sortedParameters:", sortedParameters);
 
 			dispatch(editSingleCommand(data as CMDBuddyCommand));
