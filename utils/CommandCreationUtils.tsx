@@ -502,7 +502,7 @@ const validateParameterOnSubmit = (
 	return isValid;
 };
 
-export const submitNewCommandAndParamsToDB = async (
+const submitNewCommandAndParamsToDB = async (
 	formData: CMDBuddyCommandFormValidation,
 	userID: string
 ): Promise<CMDBuddyCommand> => {
@@ -556,7 +556,7 @@ export const submitNewCommandAndParamsToDB = async (
 
 // When user edits a Command, this tells the code if its params are newly created, updated, or deleted
 // Params that haven't changed are left out of the returned object
-export const sortSubmittedEditedParams = (
+const sortSubmittedEditedParams = (
 	data: CMDBuddyCommandFormValidation,
 	commandToEdit: CMDBuddyCommand
 ) => {
@@ -607,7 +607,7 @@ const fetchCommandWithParameters = async (commandID: string) => {
 };
 
 updateParameter;
-export const submitParamEditsToDB = async (
+const submitParamEditsToDB = async (
 	data: CMDBuddyCommandFormValidation,
 	commandToEdit: CMDBuddyCommand
 ) => {
@@ -656,21 +656,25 @@ export const submitParamEditsToDB = async (
 };
 
 // export objects
-const CommandCreationUtils = {
+export const CommandCreationUtils = {
 	StringParameterFields,
 	IntParameterFields,
 	BooleanParameterFields,
 	DropdownParameterFields,
 	FlagParameterFields,
+	validateParameterOnSubmit,
+	submitParamEditsToDB,
+	sortSubmittedEditedParams,
+	submitNewCommandAndParamsToDB,
+};
+
+export const CommandCreationZodSchemas = {
 	StringParameterSchema,
 	IntParameterSchema,
 	BooleanParameterSchema,
 	DropdownParameterSchema,
 	FlagParameterSchema,
-	validateParameterOnSubmit,
 };
-
-export { CommandCreationUtils };
 
 // export types
 export type {

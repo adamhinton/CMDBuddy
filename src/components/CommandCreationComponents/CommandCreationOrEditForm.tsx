@@ -35,9 +35,7 @@ import {
 import {
 	CommandCreationUtils,
 	AnyParameter,
-	submitNewCommandAndParamsToDB,
-	sortSubmittedEditedParams,
-	submitParamEditsToDB,
+	CommandCreationZodSchemas,
 } from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { API, graphqlOperation } from "aws-amplify";
@@ -55,7 +53,12 @@ const {
 	BooleanParameterSchema,
 	DropdownParameterSchema,
 	FlagParameterSchema,
+} = CommandCreationZodSchemas;
+
+const {
 	validateParameterOnSubmit,
+	submitParamEditsToDB,
+	submitNewCommandAndParamsToDB,
 } = CommandCreationUtils;
 
 export const AnyParameterSchema = z.union([
