@@ -354,8 +354,6 @@ export const DefaultValueInput = ({
 	index: number;
 	parameterErrors: any; // TODO: Specify the correct type here
 }) => {
-	console.log("parameterErrors:", parameterErrors);
-	console.log("type:", type);
 	switch (type) {
 		case "STRING":
 		case "DROPDOWN":
@@ -522,6 +520,8 @@ export const submitNewCommandAndParamsToDB = async (
 			userID: userID,
 		};
 
+		console.log("commandInput on submitting new Command to db:", commandInput);
+
 		// Submit Command and get the new command's ID
 		const commandResponse = await API.graphql(
 			graphqlOperation(createCommand, { input: commandInput })
@@ -532,13 +532,19 @@ export const submitNewCommandAndParamsToDB = async (
 		// Submit each Parameter with the new command's ID
 		const parameters = formData.parameters || [];
 		for (const parameter of parameters) {
+			delete parameter.hasBeenEdited;
 			const parameterInput = {
 				...parameter,
 				commandID: newCommandID,
 			};
-			await API.graphql(
-				graphqlOperation(createParameter, { input: parameterInput })
-			);
+			console.log("parameterInput on submit to db:", parameterInput);
+			try {
+				await API.graphql(
+					graphqlOperation(createParameter, { input: parameterInput })
+				);
+			} catch (err) {
+				console.log("error submitting Parameter to db", err);
+			}
 		}
 
 		// Fetch the complete command with parameters from the database

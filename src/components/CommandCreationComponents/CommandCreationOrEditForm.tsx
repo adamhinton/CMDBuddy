@@ -240,6 +240,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				data,
 				loggedInUser!.id
 			);
+			console.log("completedCommandFromDB:", completedCommandFromDB);
 			dispatch(addCommand(completedCommandFromDB));
 		}
 
@@ -317,19 +318,28 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 				<StyledCCFButton
 					type="button"
-					onClick={() =>
-						append({
+					onClick={() => {
+						const appendValueIfCreationMode = {
 							type: "STRING",
 							name: "",
 							isNullable: false,
 							defaultValue: "",
 							hasBeenEdited: false,
-							commandID:
-								componentMode === ComponentMode.editExistingCommand &&
-								commandToEdit.id,
-							// TODO: Fix this as any
-						} as any)
-					}
+						};
+
+						// Needs command ID if editing existing command
+						const appendValueIfEditMode = {
+							...appendValueIfCreationMode,
+							commandID: commandToEdit?.id,
+						};
+
+						// Add new param
+						append(
+							componentMode === ComponentMode.createNewCommand
+								? (appendValueIfCreationMode as any)
+								: (appendValueIfEditMode as any)
+						);
+					}}
 				>
 					Add Parameter
 				</StyledCCFButton>
