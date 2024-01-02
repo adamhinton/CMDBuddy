@@ -37,6 +37,7 @@ import {
 	AnyParameter,
 	submitNewCommandAndParamsToDB,
 	sortSubmittedEditedParams,
+	submitParamEditsToDB,
 } from "../../../utils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { API, graphqlOperation } from "aws-amplify";
@@ -227,9 +228,10 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			}
 		});
 
+		// Stop submission if validation fails
 		if (!isFormValuesValid) {
 			console.error("Validation failed");
-			return; // Stop submission if validation fails
+			return;
 		}
 
 		// Creating new command in db if in "create new command" mode
@@ -238,69 +240,19 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				data,
 				loggedInUser!.id
 			);
-
 			dispatch(addCommand(completedCommandFromDB));
 		}
 
 		// Editing existing command if in edit mode
 		else if (componentMode === ComponentMode.editExistingCommand) {
-			// Edit command in redux state
-			// Update command in db
-			// set editing redux state to null
-
-			const sortedParameters = sortSubmittedEditedParams(data, commandToEdit!);
-			const newParameters = sortedParameters?.newParameters;
-			const deletedParameters = sortedParameters?.deletedParameters;
-			const updatedParameters = sortedParameters?.updatedParameters;
-
-			const editCommandInput: UpdateCommandInput = {
-				// @ts-ignore
-				id: data.id!,
-				order: data.order,
-				baseCommand: data.baseCommand,
-				title: data.title,
-			};
-
-			console.log("editCommandInput:", editCommandInput);
-
-			const editCommandResult = await API.graphql(
-				graphqlOperation(updateCommand, { input: editCommandInput })
-			);
-
-			// Add new params to the db
-			newParameters?.forEach(async (param) => {
-				const createParameterInput = param;
-				delete createParameterInput["hasBeenEdited"];
-
-				await API.graphql(
-					graphqlOperation(createParameter, { input: createParameterInput })
-				);
-			});
-
-			// Delete deleted params from db
-			deletedParameters?.forEach(async (param) => {
-				console.log("param.id:", param.id);
-				await API.graphql(
-					graphqlOperation(deleteParameter, {
-						input: { id: param.id },
-					})
-				);
-			});
-
-			updatedParameters?.forEach(async (param) => {
-				const updateParameterInput = param;
-				delete updateParameterInput["hasBeenEdited"];
-				await API.graphql(graphqlOperation(updateParameter, { input: param }));
-			});
-
-			console.log("sortedParameters:", sortedParameters);
+			await submitParamEditsToDB(data, commandToEdit!);
 
 			dispatch(editSingleCommand(data as CMDBuddyCommand));
 		}
+
 		// Finally, clear form values
 		remove();
 		methods.reset();
-		console.timeEnd("start submit");
 	};
 
 	// Maybe refactor this to also clear form on submit. Wouldn't need the user conf then.

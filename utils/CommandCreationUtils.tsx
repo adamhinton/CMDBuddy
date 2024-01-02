@@ -8,7 +8,13 @@ import { useFormContext } from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationOrEditForm";
 import { UseFormRegister } from "react-hook-form";
 import { API, graphqlOperation } from "aws-amplify";
-import { createCommand, createParameter } from "@/graphql/mutations";
+import {
+	createCommand,
+	createParameter,
+	deleteParameter,
+	updateCommand,
+	updateParameter,
+} from "@/graphql/mutations";
 import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
 import { customGetCommandWithParameters } from "./customGraphQLQueries";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
@@ -21,6 +27,7 @@ import {
 	StyledPCFMinMaxContainer,
 	StyledPCFRadioInputContainer,
 } from "../utils/styles/CommandCreationStyles/ParameterCreationStyles";
+import { UpdateCommandInput } from "@/API";
 
 // Subtypes for each parameter type
 const StringParameterSchema = ParameterSchema.pick({
@@ -593,6 +600,55 @@ const fetchCommandWithParameters = async (commandID: string) => {
 		console.error("Error fetching command with parameters:", error);
 		return null;
 	}
+};
+
+export const submitParamEditsToDB = async (
+	data: CMDBuddyCommandFormValidation,
+	commandToEdit: CMDBuddyCommand
+) => {
+	const sortedParameters = sortSubmittedEditedParams(data, commandToEdit!);
+	const newParameters = sortedParameters?.newParameters;
+	const deletedParameters = sortedParameters?.deletedParameters;
+	const updatedParameters = sortedParameters?.updatedParameters;
+
+	const editCommandInput: UpdateCommandInput = {
+		// @ts-ignore
+		id: data.id!,
+		order: data.order,
+		baseCommand: data.baseCommand,
+		title: data.title,
+	};
+
+	// Update command in db
+	await API.graphql(
+		graphqlOperation(updateCommand, { input: editCommandInput })
+	);
+
+	// Add new params to the db
+	newParameters?.forEach(async (param) => {
+		const createParameterInput = param;
+		delete createParameterInput["hasBeenEdited"];
+
+		await API.graphql(
+			graphqlOperation(createParameter, { input: createParameterInput })
+		);
+	});
+
+	// Delete deleted params from db
+	deletedParameters?.forEach(async (param) => {
+		console.log("param.id:", param.id);
+		await API.graphql(
+			graphqlOperation(deleteParameter, {
+				input: { id: param.id },
+			})
+		);
+	});
+
+	updatedParameters?.forEach(async (param) => {
+		const updateParameterInput = param;
+		delete updateParameterInput["hasBeenEdited"];
+		await API.graphql(graphqlOperation(updateParameter, { input: param }));
+	});
 };
 
 // export objects
