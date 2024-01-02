@@ -197,10 +197,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		data: CMDBuddyCommandFormValidation,
 		componentMode: ComponentMode
 	) => {
-		// TODO:
-		// Toast at beginning and end
-		// Notify if command title or baseCommand already exists
-
 		data.order = 1;
 
 		const parameters: AnyParameter[] | undefined = data.parameters;
