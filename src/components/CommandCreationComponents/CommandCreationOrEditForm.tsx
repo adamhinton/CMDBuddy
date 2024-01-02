@@ -334,7 +334,11 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 					Clear Form
 				</StyledCCFButton>
 
-				<StyledCCFButton type="submit">Create Command</StyledCCFButton>
+				<StyledCCFButton type="submit">
+					{componentMode === ComponentMode.createNewCommand
+						? "Create Command"
+						: "Save Changes"}
+				</StyledCCFButton>
 
 				{/* This shows an example of the Command the user has created. */}
 				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}

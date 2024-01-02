@@ -192,7 +192,6 @@ const handleCommandDelete = async (
 	command: CMDBuddyCommand,
 	dispatch: Function
 ) => {
-	console.log("handleCommandDelete in sidebarutils");
 	// Optimistic UI update
 	dispatch(deleteCommand(command.id));
 

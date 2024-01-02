@@ -90,11 +90,7 @@ const ParameterCreationOrEditForm = ({
 				parameter?.hasBeenEdited !== true &&
 				name?.includes(`parameters.${index}`)
 			) {
-				console.log("parameter before setting hasBeenEdited:", parameter);
-				// setValue("hasBeenEdited", true);
 				setValue(`parameters.${index}.hasBeenEdited`, true);
-				console.log("changing hasBeenEdited");
-				console.log("parameter after setting hasBeenEdited:", parameter);
 			}
 		});
 		return () => subscription.unsubscribe();
