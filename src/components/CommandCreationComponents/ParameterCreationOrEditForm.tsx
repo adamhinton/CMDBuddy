@@ -13,7 +13,6 @@ import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import {
 	CommandCreationUIElements,
-	CommandSubmitUtils,
 	DefaultValueInput,
 } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 
@@ -43,6 +42,7 @@ type FormProps = {
 };
 
 import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
+import { CommandSubmitUtils } from "../../../utils/CommandCreationUtils/CommandSubmissionUtils";
 
 const {
 	StringParameterFields,
