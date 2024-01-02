@@ -6,7 +6,7 @@ import { getUserDarkModePreference } from "./darkModeUtils";
 import { setIsDarkMode } from "../redux/slices/darkModeSlice";
 
 // TODO: These two cognito types are defined in two spots; merge them and export them.
-interface CognitoLoggedInUserAttributes {
+export interface CognitoLoggedInUserAttributes {
 	sub: string;
 	email_verified: boolean;
 	email: string;
