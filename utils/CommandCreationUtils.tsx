@@ -354,6 +354,8 @@ export const DefaultValueInput = ({
 	index: number;
 	parameterErrors: any; // TODO: Specify the correct type here
 }) => {
+	console.log("parameterErrors:", parameterErrors);
+	console.log("type:", type);
 	switch (type) {
 		case "STRING":
 		case "DROPDOWN":
@@ -602,6 +604,7 @@ const fetchCommandWithParameters = async (commandID: string) => {
 	}
 };
 
+updateParameter;
 export const submitParamEditsToDB = async (
 	data: CMDBuddyCommandFormValidation,
 	commandToEdit: CMDBuddyCommand
