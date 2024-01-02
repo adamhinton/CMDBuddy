@@ -77,6 +77,9 @@ const DropdownParameterSchema = ParameterCreationSchema.pick({
 });
 
 const FlagParameterSchema = ParameterCreationSchema.pick({
+	order: true,
+	id: true,
+	commandID: true,
 	type: true,
 	defaultValue: true,
 	name: true,

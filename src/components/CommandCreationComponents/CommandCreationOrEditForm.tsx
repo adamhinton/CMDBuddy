@@ -32,7 +32,7 @@ import {
 	StyledCCFError,
 	StyledCCFButton,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
-import { CommandSubmitUtils } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
+import { CommandSubmitUtils } from "../../../utils/CommandCreationUtils/CommandSubmissionUtils";
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { CommandCreationZodSchemas } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
