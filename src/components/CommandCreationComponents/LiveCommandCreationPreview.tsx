@@ -6,7 +6,7 @@
 // NOTE: This is when the user initially CREATING a Command, like when the user fills out a form with parameters' names, baseCommand etc.
 // Dynamic Command generation will be another component.
 
-import { AnyParameter } from "../../../utils/CommandCreationUtils";
+import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 
 type LiveCommandPreviewProps = {
 	baseCommand: string;

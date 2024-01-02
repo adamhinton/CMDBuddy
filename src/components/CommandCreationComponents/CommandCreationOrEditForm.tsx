@@ -36,7 +36,7 @@ import {
 	CommandCreationUtils,
 	AnyParameter,
 	CommandCreationZodSchemas,
-} from "../../../utils/CommandCreationUtils";
+} from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { API, graphqlOperation } from "aws-amplify";
 import {

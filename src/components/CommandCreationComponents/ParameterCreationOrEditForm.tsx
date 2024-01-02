@@ -15,7 +15,7 @@ import {
 	CommandCreationUtils,
 	DefaultValueInput,
 	FlagParameterErrors,
-} from "../../../utils/CommandCreationUtils";
+} from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 
 import {
 	ParameterCreationButton,
@@ -32,7 +32,7 @@ import {
 	StringParameterErrors,
 	IntParameterErrors,
 	DropdownParameterErrors,
-} from "../../../utils/CommandCreationUtils";
+} from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 
 type FormProps = {
 	index: number;

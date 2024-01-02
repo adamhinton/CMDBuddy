@@ -3,7 +3,7 @@
 // Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
 
 import { z } from "zod";
-import { CMDBuddyParameter, ParameterSchema } from "./zod/ParameterSchema";
+import { CMDBuddyParameter, ParameterSchema } from "../zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationOrEditForm";
 import { UseFormRegister } from "react-hook-form";
@@ -16,8 +16,8 @@ import {
 	updateParameter,
 } from "@/graphql/mutations";
 import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
-import { customGetCommandWithParameters } from "./customGraphQLQueries";
-import { CMDBuddyCommand } from "./zod/CommandSchema";
+import { customGetCommandWithParameters } from "../customGraphQLQueries";
+import { CMDBuddyCommand } from "../zod/CommandSchema";
 
 import {
 	ParameterCreationLabel,
@@ -26,7 +26,7 @@ import {
 	ParameterCreationInput,
 	StyledPCFMinMaxContainer,
 	StyledPCFRadioInputContainer,
-} from "../utils/styles/CommandCreationStyles/ParameterCreationStyles";
+} from "../styles/CommandCreationStyles/ParameterCreationStyles";
 import { UpdateCommandInput } from "@/API";
 
 // Subtypes for each parameter type
