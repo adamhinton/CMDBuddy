@@ -8,6 +8,7 @@ Amplify.configure({ ...config, ssr: true });
 import CommandCreationForm, {
 	ComponentMode,
 } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
+import styled from "styled-components";
 
 const CreateCommandsPage = () => {
 	return <CommandCreationForm componentMode={ComponentMode.createNewCommand} />;

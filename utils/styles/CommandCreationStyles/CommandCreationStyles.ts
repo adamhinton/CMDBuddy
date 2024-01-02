@@ -11,6 +11,17 @@ export const StyledCCFForm = styled.form`
 	width: 100%;
 `;
 
+export const StyledCommandCreationHeader = styled.h2`
+	color: ${({ theme }) => theme.commandCreation.formText};
+	margin-top: 0;
+`;
+
+export const StyledCommandCreationDisclaimer = styled.p`
+	color: ${({ theme }) => theme.commandCreation.formText};
+	padding-bottom: 1rem;
+	border-bottom: 1px solid white;
+`;
+
 export const StyledCCFLabel = styled.label`
 	display: block;
 	margin-bottom: 5px;

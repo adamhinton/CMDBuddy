@@ -27,15 +27,18 @@ import {
 import ParameterCreationOrEditForm from "./ParameterCreationOrEditForm";
 import {
 	StyledCCFForm,
+	StyledCommandCreationHeader,
 	StyledCCFLabel,
 	StyledCCFInput,
 	StyledCCFError,
 	StyledCCFButton,
+	StyledCommandCreationDisclaimer,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CommandSubmitUtils } from "../../../utils/CommandCreationUtils/CommandSubmissionUtils";
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { CommandCreationZodSchemas } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
+import Link from "next/link";
 const { AnyParameterSchema } = CommandCreationZodSchemas;
 
 const {
@@ -258,6 +261,14 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				})}
 			>
 				{/* Command Fields */}
+				<StyledCommandCreationHeader>
+					{componentMode === ComponentMode.createNewCommand
+						? "Create New Command"
+						: "Edit Existing Command"}
+				</StyledCommandCreationHeader>
+				<StyledCommandCreationDisclaimer>
+					To generate commands go <Link href="/commands/generate">here</Link>
+				</StyledCommandCreationDisclaimer>
 				<div>
 					<StyledCCFLabel htmlFor="baseCommand">Base Command</StyledCCFLabel>
 					<StyledCCFInput
