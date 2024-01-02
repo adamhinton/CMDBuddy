@@ -561,7 +561,7 @@ const submitParamEditsToDB = async (
 };
 
 // export objects
-export const CommandCreationUtils = {
+export const CommandCreationUIElements = {
 	StringParameterFields,
 	IntParameterFields,
 	BooleanParameterFields,
@@ -574,4 +574,11 @@ export const CommandSubmitUtils = {
 	submitParamEditsToDB,
 	sortSubmittedEditedParams,
 	submitNewCommandAndParamsToDB,
+};
+
+export type {
+	StringParameterErrors,
+	IntParameterErrors,
+	FlagParameterErrors,
+	DropdownParameterErrors,
 };

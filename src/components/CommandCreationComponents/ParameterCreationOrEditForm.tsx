@@ -12,9 +12,9 @@
 import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import {
-	CommandCreationUtils,
+	CommandCreationUIElements,
+	CommandSubmitUtils,
 	DefaultValueInput,
-	FlagParameterErrors,
 } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 
 import {
@@ -28,11 +28,12 @@ import {
 	StyledPCFOptionalCheckbox,
 } from "../../../utils/styles/CommandCreationStyles/ParameterCreationStyles";
 import {
-	AnyParameter,
 	StringParameterErrors,
 	IntParameterErrors,
 	DropdownParameterErrors,
 } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
+
+import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 
 type FormProps = {
 	index: number;
@@ -41,13 +42,15 @@ type FormProps = {
 	setValue: Function;
 };
 
+import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
+
 const {
 	StringParameterFields,
 	IntParameterFields,
 	BooleanParameterFields,
 	DropdownParameterFields,
 	FlagParameterFields,
-} = CommandCreationUtils;
+} = CommandCreationUIElements;
 
 export type ParameterCreationType =
 	| "STRING"
