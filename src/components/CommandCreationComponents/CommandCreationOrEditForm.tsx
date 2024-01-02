@@ -133,6 +133,8 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			methods.setValue("title", commandToEdit?.title!);
 			methods.setValue("id", commandToEdit?.id);
 
+			console.log("commandToEdit in CCF useEffect", commandToEdit);
+
 			commandToEdit.parameters?.forEach((param) => {
 				// @ts-ignore
 				append({ ...param, hasBeenEdited: false, commandID: commandToEdit.id });
@@ -213,7 +215,15 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				data,
 				loggedInUser!.id
 			);
-			dispatch(addCommand(completedCommandFromDB));
+
+			// Fixing funny parameters formatting of db response
+			const commandForRedux = {
+				...completedCommandFromDB,
+				// @ts-ignore
+				parameters: completedCommandFromDB.parameters?.items,
+			};
+			console.log("commandForRedux:", commandForRedux);
+			dispatch(addCommand(commandForRedux));
 		}
 
 		// Editing existing command if in edit mode
