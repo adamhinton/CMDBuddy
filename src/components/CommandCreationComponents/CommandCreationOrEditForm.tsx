@@ -176,7 +176,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		componentMode: ComponentMode
 	) => {
 		data.order = 1;
-		const parameterErrorsStartOfOnSubmit = methods.formState.errors.parameters;
 		const parameters: AnyParameter[] | undefined = data.parameters;
 		let nonFlagOrder = 1;
 		let flagOrder = 1;
