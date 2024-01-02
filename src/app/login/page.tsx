@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import config from "../../../src/aws-exports";
-import Link from "next/link";
 import { useAuthActions } from "../../../utils/authUtils";
 import { useRouter } from "next/navigation";
 import { API, graphqlOperation } from "aws-amplify";

@@ -5,7 +5,6 @@ import config from "../aws-exports";
 import Header from "../components/Header";
 Amplify.configure({ config, ssr: true });
 Auth.configure({ config, ssr: true });
-import { lightTheme, darkTheme } from "../../utils/styles/themes";
 import { ToastContainer } from "react-toastify";
 import Tabs from "@/components/Tabs";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";

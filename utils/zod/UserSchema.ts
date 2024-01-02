@@ -1,4 +1,3 @@
-// UserSchema.ts
 import { z } from "zod";
 import { CommandSchema } from "./CommandSchema";
 

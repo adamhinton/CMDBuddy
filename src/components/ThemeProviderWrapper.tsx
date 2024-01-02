@@ -1,7 +1,10 @@
 "use client";
+// README:
+// This component wraps around the app and passes in theming (lightMode and darkMode)
+
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { DefaultTheme, ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import { RootState } from "../../redux/store";
 import { darkTheme, lightTheme } from "../../utils/styles/themes";
 
