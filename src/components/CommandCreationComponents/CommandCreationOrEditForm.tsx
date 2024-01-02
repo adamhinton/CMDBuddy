@@ -72,27 +72,29 @@ export type CMDBuddyCommandFormValidation = z.infer<
 	typeof CommandCreationFormSchema | typeof CommandEditFormSchema
 >;
 
-export enum ComponentMode {
-	"editExistingCommand",
-	"createNewCommand",
+export type ComponentMode = "editExistingCommand" | "createNewCommand";
+
+interface FormProps {
+	componentMode: ComponentMode;
+	commandToEdit?: CMDBuddyCommand | null;
 }
 
 // If using this component to edit an existing Command, a command to edit must be passed in
-type FormPropsEditExistingCommand = {
-	componentMode: ComponentMode.editExistingCommand;
-	commandToEdit: CMDBuddyCommand;
-};
+interface FormPropsEditExistingCommand extends FormProps {
+	componentMode: "editExistingCommand";
+	commandToEdit: NonNullable<CMDBuddyCommand>;
+}
 
 // If using this component to add a new command, this tell that to th code
-type FormPropsCreateCommand = {
-	componentMode: ComponentMode.createNewCommand;
+interface FormPropsCreateCommand extends FormProps {
+	componentMode: "createNewCommand";
 	// No command to edit because we're creating a new command
 	// Added this property for type safety stuff
 	commandToEdit?: null;
-};
+}
 
 // Slightly different props based on if it's "edit" or "create" mode
-type FormProps = FormPropsCreateCommand | FormPropsEditExistingCommand;
+// type FormProps = FormPropsCreateCommand | FormPropsEditExistingCommand;
 
 // Can either be in "Create new command" mode or "Edit existing command" mode
 // Differences are minimal, edit mode just populates existing command's details, and submitting in edit mode updates that command instead of making a new one
@@ -105,7 +107,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	const methods = useForm<CMDBuddyCommandFormValidation>({
 		// Form validation is either "edit" mode or "create" mode
 		resolver: zodResolver(
-			componentMode === ComponentMode.createNewCommand
+			componentMode === "createNewCommand"
 				? CommandCreationFormSchema
 				: CommandEditFormSchema
 		),
@@ -129,16 +131,16 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	// If mode is "createNewCommand", this does nothing.
 	useEffect(() => {
 		// This useEffect is all for edit mode
-		if (componentMode === ComponentMode.editExistingCommand) {
+		if (componentMode === "editExistingCommand") {
 			methods.reset();
 			methods.setValue("baseCommand", commandToEdit!.baseCommand);
 			methods.setValue("order", commandToEdit?.order);
 			methods.setValue("title", commandToEdit?.title!);
-			methods.setValue("id", commandToEdit?.id);
+			methods.setValue("id", commandToEdit!.id);
 
 			console.log("commandToEdit in CCF useEffect", commandToEdit);
 
-			commandToEdit.parameters?.forEach((param) => {
+			commandToEdit!.parameters?.forEach((param) => {
 				// @ts-ignore
 				append({ ...param, hasBeenEdited: false, commandID: commandToEdit.id });
 			});
@@ -213,7 +215,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		}
 
 		// Creating new command in db if in "create new command" mode
-		if (componentMode === ComponentMode.createNewCommand) {
+		if (componentMode === "createNewCommand") {
 			const completedCommandFromDB = await submitNewCommandAndParamsToDB(
 				data,
 				loggedInUser!.id
@@ -230,7 +232,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		}
 
 		// Editing existing command if in edit mode
-		else if (componentMode === ComponentMode.editExistingCommand) {
+		else if (componentMode === "editExistingCommand") {
 			await submitParamEditsToDB(data, commandToEdit!);
 
 			dispatch(editSingleCommand(data as CMDBuddyCommand));
@@ -261,7 +263,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			>
 				{/* Command Fields */}
 				<StyledCommandCreationHeader>
-					{componentMode === ComponentMode.createNewCommand
+					{componentMode === "createNewCommand"
 						? "Create New Command"
 						: "Edit Existing Command"}
 				</StyledCommandCreationHeader>
@@ -327,7 +329,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 						// Add new param
 						append(
-							componentMode === ComponentMode.createNewCommand
+							componentMode === "createNewCommand"
 								? (appendValueIfCreationMode as any)
 								: (appendValueIfEditMode as any)
 						);
@@ -341,7 +343,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				</StyledCCFButton>
 
 				<StyledCCFButton type="submit">
-					{componentMode === ComponentMode.createNewCommand
+					{componentMode === "createNewCommand"
 						? "Create Command"
 						: "Save Changes"}
 				</StyledCCFButton>
