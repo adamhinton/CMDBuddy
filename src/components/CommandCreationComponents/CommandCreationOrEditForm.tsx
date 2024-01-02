@@ -199,10 +199,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	) => {
 		data.order = 1;
 		const parameterErrorsStartOfOnSubmit = methods.formState.errors.parameters;
-		console.log(
-			"parameterErrorsStartOfOnSubmit:",
-			parameterErrorsStartOfOnSubmit
-		);
 		const parameters: AnyParameter[] | undefined = data.parameters;
 		let nonFlagOrder = 1;
 		let flagOrder = 1;
@@ -240,7 +236,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				data,
 				loggedInUser!.id
 			);
-			console.log("completedCommandFromDB:", completedCommandFromDB);
 			dispatch(addCommand(completedCommandFromDB));
 		}
 

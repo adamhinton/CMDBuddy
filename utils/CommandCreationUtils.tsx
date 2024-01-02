@@ -520,8 +520,6 @@ export const submitNewCommandAndParamsToDB = async (
 			userID: userID,
 		};
 
-		console.log("commandInput on submitting new Command to db:", commandInput);
-
 		// Submit Command and get the new command's ID
 		const commandResponse = await API.graphql(
 			graphqlOperation(createCommand, { input: commandInput })
@@ -537,7 +535,6 @@ export const submitNewCommandAndParamsToDB = async (
 				...parameter,
 				commandID: newCommandID,
 			};
-			console.log("parameterInput on submit to db:", parameterInput);
 			try {
 				await API.graphql(
 					graphqlOperation(createParameter, { input: parameterInput })
@@ -583,7 +580,6 @@ export const sortSubmittedEditedParams = (
 		deletedParameters = originalParameters
 			.filter((ep) => !data.parameters?.some((p) => p.id === ep.id))
 			.map((p) => p);
-		console.log("deletedParameters:", deletedParameters);
 	}
 
 	return {
@@ -645,7 +641,6 @@ export const submitParamEditsToDB = async (
 
 	// Delete deleted params from db
 	deletedParameters?.forEach(async (param) => {
-		console.log("param.id:", param.id);
 		await API.graphql(
 			graphqlOperation(deleteParameter, {
 				input: { id: param.id },

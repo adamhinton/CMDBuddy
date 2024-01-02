@@ -48,7 +48,6 @@ export const commandsSlice = createSlice({
 			const updatedCommand = state.commands!.map((cmd) =>
 				cmd.id === action.payload.id ? { ...cmd, ...action.payload } : cmd
 			);
-			console.log("updatedCommand in commandsSlice:", updatedCommand[0]);
 			return {
 				...state,
 				commands: updatedCommand,

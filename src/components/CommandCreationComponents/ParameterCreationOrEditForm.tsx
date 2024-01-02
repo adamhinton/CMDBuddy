@@ -73,7 +73,6 @@ const ParameterCreationOrEditForm = ({
 		parameterCreationType
 	);
 	const parameterErrors = errors.parameters?.[index];
-	console.log("parameterErrors in PCF	:", parameterErrors);
 
 	// This updates the necessary fields when user clicks a different parameter type
 	// Name here refers to the name of the field, not the `name` key in Parameters
