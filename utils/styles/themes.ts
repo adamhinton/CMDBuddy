@@ -9,10 +9,10 @@ export const lightTheme: DefaultTheme = {
 		hoverTabBackground: "#d0d0d0",
 	},
 	header: {
-		background: "#E0F7FA", // Light blue background
-		text: "#0D47A1", // Dark blue text
-		link: "#004D40", // Teal for links
-		toggleIcon: "#FFCA28", // Sun icon color
+		background: "#E0F7FA",
+		text: "#0D47A1",
+		link: "#004D40",
+		toggleIcon: "#FFCA28",
 	},
 	tabs: {
 		background: "#e0e0e0",
