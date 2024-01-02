@@ -88,12 +88,21 @@ const FlagParameterSchema = ParameterCreationSchema.pick({
 	type: z.literal("FLAG"),
 });
 
+const AnyParameterSchema = z.union([
+	StringParameterSchema,
+	IntParameterSchema,
+	BooleanParameterSchema,
+	DropdownParameterSchema,
+	FlagParameterSchema,
+]);
+
 export const CommandCreationZodSchemas = {
 	StringParameterSchema,
 	IntParameterSchema,
 	BooleanParameterSchema,
 	DropdownParameterSchema,
 	FlagParameterSchema,
+	AnyParameterSchema,
 };
 
 type StringParameter = z.infer<typeof StringParameterSchema>;

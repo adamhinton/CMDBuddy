@@ -36,28 +36,13 @@ import { CommandSubmitUtils } from "../../../utils/CommandCreationUtils/CommandS
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { CommandCreationZodSchemas } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
-
-const {
-	StringParameterSchema,
-	IntParameterSchema,
-	BooleanParameterSchema,
-	DropdownParameterSchema,
-	FlagParameterSchema,
-} = CommandCreationZodSchemas;
+const { AnyParameterSchema } = CommandCreationZodSchemas;
 
 const {
 	validateParameterOnSubmit,
 	submitParamEditsToDB,
 	submitNewCommandAndParamsToDB,
 } = CommandSubmitUtils;
-
-export const AnyParameterSchema = z.union([
-	StringParameterSchema,
-	IntParameterSchema,
-	BooleanParameterSchema,
-	DropdownParameterSchema,
-	FlagParameterSchema,
-]);
 
 // Creating a specific schema for command creation mode
 // This is because the user doesn't define things like `id` or `order`
