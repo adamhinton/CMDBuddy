@@ -246,7 +246,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		if (
 			window.confirm("Are you sure you want to DELETE all values in this form?")
 		) {
-			// TODO: This seems to delete the parameter inputs, but when you click Add Parameter again, it goes back to however many Param inputs there were plus your new one.
 			remove(); // Removes all parameter fields
 			methods.reset(); // Resets the form to default values
 		}
