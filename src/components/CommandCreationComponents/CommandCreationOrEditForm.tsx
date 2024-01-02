@@ -32,20 +32,10 @@ import {
 	StyledCCFError,
 	StyledCCFButton,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
-import {
-	CommandCreationUtils,
-	AnyParameter,
-	CommandCreationZodSchemas,
-} from "../../../utils/CommandCreationUtils/CommandCreationUtils";
+import { CommandSubmitUtils } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
+import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
-import { API, graphqlOperation } from "aws-amplify";
-import {
-	createParameter,
-	deleteParameter,
-	updateCommand,
-	updateParameter,
-} from "@/graphql/mutations";
-import { UpdateCommandInput } from "@/API";
+import { CommandCreationZodSchemas } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 
 const {
 	StringParameterSchema,
@@ -59,7 +49,7 @@ const {
 	validateParameterOnSubmit,
 	submitParamEditsToDB,
 	submitNewCommandAndParamsToDB,
-} = CommandCreationUtils;
+} = CommandSubmitUtils;
 
 export const AnyParameterSchema = z.union([
 	StringParameterSchema,

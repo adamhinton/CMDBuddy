@@ -2,8 +2,7 @@
 // This is the utils file for initial creation of user's Commands and each Command's Parameters to save to the db
 // Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
 
-import { z } from "zod";
-import { CMDBuddyParameter, ParameterSchema } from "../zod/ParameterSchema";
+import { CMDBuddyParameter } from "../zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationOrEditForm";
 import { UseFormRegister } from "react-hook-form";
@@ -28,115 +27,21 @@ import {
 	StyledPCFRadioInputContainer,
 } from "../styles/CommandCreationStyles/ParameterCreationStyles";
 import { UpdateCommandInput } from "@/API";
+import { CommandCreationZodSchemas } from "./CommandCreationTypes";
+CommandCreationZodSchemas;
 
-// Subtypes for each parameter type
-const StringParameterSchema = ParameterSchema.pick({
-	type: true,
-	defaultValue: true,
-	name: true,
-	validationRegex: true,
-	minLength: true,
-	maxLength: true,
-	isNullable: true,
-}).extend({
-	type: z.literal("STRING"),
-	// Making Order optional because we only add it on submit
-	order: z.number().int().optional(),
-	// id and commandID are optional because it's only needed in "edit" mode
-	id: z.string().uuid().optional(),
-	commandID: z.string().uuid().optional(),
-	// Lets onSubmit know that the param has/hasn't been changed and does/doesn't need to be updated
-	// false by default
-	hasBeenEdited: z.boolean().default(false).optional(),
-});
-
-const IntParameterSchema = ParameterSchema.pick({
-	type: true,
-	defaultValue: true,
-	name: true,
-	minValue: true,
-	maxValue: true,
-	isNullable: true,
-}).extend({
-	type: z.literal("INT"),
-	// Making Order optional because we only add it on submit
-	order: z.number().int().optional(),
-	// id and commandID are optional because it's only needed in "edit" mode
-	id: z.string().uuid().optional(),
-	commandID: z.string().uuid().optional(),
-	// Lets onSubmit know that the param has/hasn't been changed and does/doesn't need to be updated
-	// false by default
-	hasBeenEdited: z.boolean().default(false).optional(),
-});
-
-const BooleanParameterSchema = ParameterSchema.pick({
-	type: true,
-	defaultValue: true,
-	name: true,
-	isNullable: true,
-}).extend({
-	type: z.literal("BOOLEAN"),
-	// Making Order optional because we only add it on submit
-	order: z.number().int().optional(),
-	// id and commandID are optional because it's only needed in "edit" mode
-	id: z.string().uuid().optional(),
-	commandID: z.string().uuid().optional(),
-	// Lets onSubmit know that the param has/hasn't been changed and does/doesn't need to be updated
-	// false by default
-	hasBeenEdited: z.boolean().default(false).optional(),
-});
-
-const DropdownParameterSchema = ParameterSchema.pick({
-	type: true,
-	defaultValue: true,
-	name: true,
-	allowedValues: true,
-	isNullable: true,
-}).extend({
-	type: z.literal("DROPDOWN"),
-	// Making Order optional because we only add it on submit
-	order: z.number().int().optional(),
-	// id and commandID are optional because it's only needed in "edit" mode
-	id: z.string().uuid().optional(),
-	commandID: z.string().uuid().optional(),
-	// Lets onSubmit know that the param has/hasn't been changed and does/doesn't need to be updated
-	// false by default
-	hasBeenEdited: z.boolean().default(false).optional(),
-});
-
-const FlagParameterSchema = ParameterSchema.pick({
-	type: true,
-	defaultValue: true,
-	name: true,
-}).extend({
-	type: z.literal("FLAG"),
-	// Making Order optional because we only add it on submit
-	order: z.number().int().optional(),
-	defaultValue: z.enum(["On", "Off"]),
-	// id and commandID are optional because it's only needed in "edit" mode
-	id: z.string().uuid().optional(),
-	commandID: z.string().uuid().optional(),
-	// Lets onSubmit know that the param has/hasn't been changed and does/doesn't need to be updated
-	// false by default
-	hasBeenEdited: z.boolean().default(false).optional(),
-});
+import {
+	StringParameter,
+	IntParameter,
+	BooleanParameter,
+	DropdownParameter,
+	FlagParameter,
+	AnyParameter,
+} from "./CommandCreationTypes";
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
 	value === "" ? undefined : Number(value);
-
-type StringParameter = z.infer<typeof StringParameterSchema>;
-type IntParameter = z.infer<typeof IntParameterSchema>;
-type BooleanParameter = z.infer<typeof BooleanParameterSchema>;
-type DropdownParameter = z.infer<typeof DropdownParameterSchema>;
-type FlagParameter = z.infer<typeof FlagParameterSchema>;
-
-type AnyParameter =
-	| StringParameter
-	| IntParameter
-	| BooleanParameter
-	| DropdownParameter
-	| FlagParameter;
 
 // Parameter Field Functions
 type StringParameterErrors = {
@@ -662,30 +567,11 @@ export const CommandCreationUtils = {
 	BooleanParameterFields,
 	DropdownParameterFields,
 	FlagParameterFields,
+};
+
+export const CommandSubmitUtils = {
 	validateParameterOnSubmit,
 	submitParamEditsToDB,
 	sortSubmittedEditedParams,
 	submitNewCommandAndParamsToDB,
-};
-
-export const CommandCreationZodSchemas = {
-	StringParameterSchema,
-	IntParameterSchema,
-	BooleanParameterSchema,
-	DropdownParameterSchema,
-	FlagParameterSchema,
-};
-
-// export types
-export type {
-	StringParameter,
-	IntParameter,
-	BooleanParameter,
-	DropdownParameter,
-	FlagParameter,
-	AnyParameter,
-	StringParameterErrors,
-	IntParameterErrors,
-	DropdownParameterErrors,
-	FlagParameterErrors,
 };
