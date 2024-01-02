@@ -42,7 +42,6 @@ type FormProps = {
 };
 
 import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
-import { CommandSubmitUtils } from "../../../utils/CommandCreationUtils/CommandSubmissionUtils";
 
 const {
 	StringParameterFields,

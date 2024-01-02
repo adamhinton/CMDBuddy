@@ -2,22 +2,9 @@
 // This is the utils file for initial creation of user's Commands and each Command's Parameters to save to the db
 // Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
 
-import { CMDBuddyParameter } from "../zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationOrEditForm";
 import { UseFormRegister } from "react-hook-form";
-import { API, graphqlOperation } from "aws-amplify";
-import {
-	createCommand,
-	createParameter,
-	deleteParameter,
-	updateCommand,
-	updateParameter,
-} from "@/graphql/mutations";
-import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
-import { customGetCommandWithParameters } from "../customGraphQLQueries";
-import { CMDBuddyCommand } from "../zod/CommandSchema";
-
 import {
 	ParameterCreationLabel,
 	StyledPCFLengthInput,
@@ -26,18 +13,10 @@ import {
 	StyledPCFMinMaxContainer,
 	StyledPCFRadioInputContainer,
 } from "../styles/CommandCreationStyles/ParameterCreationStyles";
-import { UpdateCommandInput } from "@/API";
 import { CommandCreationZodSchemas } from "./CommandCreationTypes";
 CommandCreationZodSchemas;
 
-import {
-	StringParameter,
-	IntParameter,
-	BooleanParameter,
-	DropdownParameter,
-	FlagParameter,
-	AnyParameter,
-} from "./CommandCreationTypes";
+import { AnyParameter } from "./CommandCreationTypes";
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
