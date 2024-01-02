@@ -4,7 +4,8 @@ import { Amplify } from "aws-amplify";
 import config from "../../../aws-exports";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import CommandCreationOrEditForm, {
+// This is actually called CommandCreationOrEditForm but I'm calling it this to be descriptive here
+import CommandEditForm, {
 	ComponentMode,
 } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
 Amplify.configure({ ...config, ssr: true });
@@ -19,10 +20,10 @@ const CommandsEditPage = () => {
 			{!commandToEdit && <h3>Click edit icon in sidebar to edit a command</h3>}
 			{commandToEdit && <h3>Edit your command here</h3>}
 			{commandToEdit && (
-				<CommandCreationOrEditForm
+				<CommandEditForm
 					componentMode={ComponentMode.editExistingCommand}
 					commandToEdit={commandToEdit}
-				></CommandCreationOrEditForm>
+				></CommandEditForm>
 			)}
 		</section>
 	);

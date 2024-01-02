@@ -1,6 +1,7 @@
 "use client";
 
 // README:
+// This is the exact same whether it's in "edit command/parameters" mode or "create command/parameters" mode
 // User fills this form out to make a Parameter
 // Param can be STRING, INT, BOOLEAN, DROPDOWN or FLAG
 // Different fields in form for each type
@@ -9,7 +10,7 @@
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
 import React, { useState, useEffect } from "react";
-import { useForm, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
 	CommandCreationUtils,
 	DefaultValueInput,
@@ -32,8 +33,6 @@ import {
 	IntParameterErrors,
 	DropdownParameterErrors,
 } from "../../../utils/CommandCreationUtils";
-import { AnyParameterSchema } from "./CommandCreationOrEditForm";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 type FormProps = {
 	index: number;
@@ -58,7 +57,7 @@ export type ParameterCreationType =
 	| "FLAG";
 
 // User fills this out once for every Parameter they create
-const ParameterCreationForm = ({
+const ParameterCreationOrEditForm = ({
 	index,
 	removeParameter,
 	parameterCreationType,
@@ -203,4 +202,4 @@ const ParameterCreationForm = ({
 	);
 };
 
-export default ParameterCreationForm;
+export default ParameterCreationOrEditForm;

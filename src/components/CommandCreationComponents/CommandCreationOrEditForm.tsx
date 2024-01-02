@@ -2,7 +2,7 @@
 
 // README:
 // User fills out this form to create a Command
-// Each Command has multiple Parameters; they fill out ParameterCreationForm once per Parameter
+// Each Command has multiple Parameters; they fill out ParameterCreationOrEditForm once per Parameter
 // Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different fields for each
 
 // TODO:
@@ -24,7 +24,7 @@ import {
 	CMDBuddyCommand,
 	CommandSchema,
 } from "../../../utils/zod/CommandSchema";
-import ParameterCreationForm from "./ParameterCreationForm";
+import ParameterCreationOrEditForm from "./ParameterCreationOrEditForm";
 import {
 	StyledCCFForm,
 	StyledCCFLabel,
@@ -354,7 +354,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 				{/* As many parameter creation forms as user wants */}
 				{fields.map((field, index) => (
-					<ParameterCreationForm
+					<ParameterCreationOrEditForm
 						key={field.id}
 						index={index}
 						removeParameter={() => remove(index)}

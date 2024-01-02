@@ -5,7 +5,7 @@
 import { z } from "zod";
 import { CMDBuddyParameter, ParameterSchema } from "./zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
-import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationForm";
+import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationOrEditForm";
 import { UseFormRegister } from "react-hook-form";
 import { API, graphqlOperation } from "aws-amplify";
 import { createCommand, createParameter } from "@/graphql/mutations";
