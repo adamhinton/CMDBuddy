@@ -511,7 +511,6 @@ const fetchCommandWithParameters = async (commandID: string) => {
 	}
 };
 
-updateParameter;
 const submitParamEditsToDB = async (
 	data: CMDBuddyCommandFormValidation,
 	commandToEdit: CMDBuddyCommand
