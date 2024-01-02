@@ -1,5 +1,11 @@
 "use client";
 
+// README:
+// This component has NO UI ELEMENTS
+// This is purely an Auth component
+// That is to say, on page load, it checks to see if a user is already logged in, and if so, sets that user's data to global state
+// It also sets darkMode pref to state; if a user isn't logged in, it checks localStorage and device darkMode preference
+
 import { useEffect, useState } from "react";
 import { Amplify } from "aws-amplify";
 import config from "../aws-exports";
@@ -52,9 +58,9 @@ export default function AuthClientComponent(): null {
 			// If user is logged in on page load, redirect to /commands.
 			// Else, redirect to login
 			if (initUser) {
-				router.push("commands");
+				router.push("/commands");
 			} else {
-				router.push("login");
+				router.push("/login");
 			}
 		};
 		fetchData();

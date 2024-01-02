@@ -2,17 +2,9 @@
 // This is the utils file for initial creation of user's Commands and each Command's Parameters to save to the db
 // Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
 
-import { z } from "zod";
-import { ParameterSchema } from "./zod/ParameterSchema";
 import { useFormContext } from "react-hook-form";
-import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationForm";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
-import { API, graphqlOperation } from "aws-amplify";
-import { createCommand, createParameter } from "@/graphql/mutations";
-import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationForm";
-import { customGetCommandWithParameters } from "./customGraphQLQueries";
-import { CMDBuddyCommand } from "./zod/CommandSchema";
-
+import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationOrEditForm";
+import { UseFormRegister } from "react-hook-form";
 import {
 	ParameterCreationLabel,
 	StyledPCFLengthInput,
@@ -20,88 +12,15 @@ import {
 	ParameterCreationInput,
 	StyledPCFMinMaxContainer,
 	StyledPCFRadioInputContainer,
-} from "../utils/styles/CommandCreationStyles/ParameterCreationStyles";
+} from "../styles/CommandCreationStyles/ParameterCreationStyles";
+import { CommandCreationZodSchemas } from "./CommandCreationTypes";
+CommandCreationZodSchemas;
 
-// Subtypes for each parameter type
-const StringParameterSchema = ParameterSchema.pick({
-	type: true,
-	defaultValue: true,
-	name: true,
-	validationRegex: true,
-	minLength: true,
-	maxLength: true,
-	isNullable: true,
-}).extend({
-	type: z.literal("STRING"),
-	// Making Order optional because we only add it on submit
-	order: z.number().int().optional(),
-});
-
-const IntParameterSchema = ParameterSchema.pick({
-	type: true,
-	defaultValue: true,
-	name: true,
-	minValue: true,
-	maxValue: true,
-	isNullable: true,
-}).extend({
-	type: z.literal("INT"),
-	// Making Order optional because we only add it on submit
-	order: z.number().int().optional(),
-});
-
-const BooleanParameterSchema = ParameterSchema.pick({
-	type: true,
-	defaultValue: true,
-	name: true,
-	isNullable: true,
-}).extend({
-	type: z.literal("BOOLEAN"),
-	// Making Order optional because we only add it on submit
-	order: z.number().int().optional(),
-	// Needs to be string for validation purposes, can convert later
-	defaultValue: z.enum(["true", "false"]),
-});
-
-const DropdownParameterSchema = ParameterSchema.pick({
-	type: true,
-	defaultValue: true,
-	name: true,
-	allowedValues: true,
-	isNullable: true,
-}).extend({
-	type: z.literal("DROPDOWN"),
-	// Making Order optional because we only add it on submit
-	order: z.number().int().optional(),
-});
-
-const FlagParameterSchema = ParameterSchema.pick({
-	type: true,
-	defaultValue: true,
-	name: true,
-}).extend({
-	type: z.literal("FLAG"),
-	// Making Order optional because we only add it on submit
-	order: z.number().int().optional(),
-	defaultValue: z.enum(["On", "Off"]),
-});
+import { AnyParameter } from "./CommandCreationTypes";
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
 	value === "" ? undefined : Number(value);
-
-type StringParameter = z.infer<typeof StringParameterSchema>;
-type IntParameter = z.infer<typeof IntParameterSchema>;
-type BooleanParameter = z.infer<typeof BooleanParameterSchema>;
-type DropdownParameter = z.infer<typeof DropdownParameterSchema>;
-type FlagParameter = z.infer<typeof FlagParameterSchema>;
-
-type AnyParameter =
-	| StringParameter
-	| IntParameter
-	| BooleanParameter
-	| DropdownParameter
-	| FlagParameter;
 
 // Parameter Field Functions
 type StringParameterErrors = {
@@ -414,150 +333,18 @@ export const DefaultValueInput = ({
 	}
 };
 
-// This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
-const validateParameterOnSubmit = (
-	parameter: AnyParameter,
-	index: number,
-	methods: any,
-	isValid: boolean
-): boolean => {
-	const { setError } = methods;
-
-	if (parameter.type === "STRING") {
-		// TODO: Validate defaultValue against regex
-		if (
-			parameter.minLength &&
-			parameter.maxLength &&
-			parameter.minLength > parameter.maxLength
-		) {
-			setError(`parameters.${index}.minLength`, {
-				type: "manual",
-				message: "Min length cannot be greater than max length.",
-			});
-			isValid = false;
-		}
-	} else if (parameter.type === "INT") {
-		// TODO: Validate defaultValue against min and max
-		if (
-			parameter.minValue &&
-			parameter.maxValue &&
-			parameter.minValue > parameter.maxValue
-		) {
-			setError(`parameters.${index}.minValue`, {
-				type: "manual",
-				message: "Min value cannot be greater than max value.",
-			});
-			isValid = false;
-		}
-
-		// Couldn't think of any additional BOOLEAN validations
-	} else if (parameter.type === "DROPDOWN") {
-		if (
-			parameter.defaultValue &&
-			!parameter.allowedValues?.includes(parameter.defaultValue)
-		) {
-			setError(`parameters.${index}.defaultValue`, {
-				type: "manual",
-				message: "Default value must be in allowed values.",
-			});
-			isValid = false;
-		}
-		// Couldn't think of any additional FLAG validations
-	}
-	return isValid;
-};
-
-export const submitNewCommandAndParamsToDB = async (
-	formData: CMDBuddyCommandFormValidation,
-	userID: string
-): Promise<CMDBuddyCommand> => {
-	// Disable submit button and show toast
-	// disableSubmitButton();
-	// showToast("Submitting... Please do not close the page.");
-	let completeCommand: CMDBuddyCommand | null = null;
-
-	try {
-		// Construct command input for GraphQL mutation
-		const commandInput = {
-			baseCommand: formData.baseCommand,
-			title: formData.title,
-			order: formData.order,
-			userID: userID,
-		};
-
-		// Submit Command and get the new command's ID
-		const commandResponse = await API.graphql(
-			graphqlOperation(createCommand, { input: commandInput })
-		);
-		// @ts-ignore
-		const newCommandID = commandResponse.data.createCommand.id;
-
-		// Submit each Parameter with the new command's ID
-		const parameters = formData.parameters || [];
-		for (const parameter of parameters) {
-			const parameterInput = {
-				...parameter,
-				commandID: newCommandID,
-			};
-			await API.graphql(
-				graphqlOperation(createParameter, { input: parameterInput })
-			);
-		}
-
-		// Fetch the complete command with parameters from the database
-		// Replace this with your actual fetch command function
-		completeCommand = await fetchCommandWithParameters(newCommandID);
-	} catch (error) {
-		console.error("Error submitting command and parameters:", error);
-	} finally {
-		return completeCommand!;
-	}
-};
-
-const fetchCommandWithParameters = async (commandID: string) => {
-	try {
-		const response = await API.graphql(
-			graphqlOperation(customGetCommandWithParameters, {
-				id: commandID,
-			})
-		);
-		// @ts-ignore
-		const commandWithParameters = response.data?.getCommand;
-
-		return commandWithParameters;
-	} catch (error) {
-		console.error("Error fetching command with parameters:", error);
-		return null;
-	}
-};
-
 // export objects
-const CommandCreationUtils = {
+export const CommandCreationUIElements = {
 	StringParameterFields,
 	IntParameterFields,
 	BooleanParameterFields,
 	DropdownParameterFields,
 	FlagParameterFields,
-	StringParameterSchema,
-	IntParameterSchema,
-	BooleanParameterSchema,
-	DropdownParameterSchema,
-	FlagParameterSchema,
-	validateParameterOnSubmit,
 };
 
-export { CommandCreationUtils };
-
-// export types
 export type {
-	StringParameter,
-	IntParameter,
-	BooleanParameter,
-	DropdownParameter,
-	FlagParameter,
-	AnyParameter,
 	StringParameterErrors,
 	IntParameterErrors,
-	DropdownParameterErrors,
 	FlagParameterErrors,
+	DropdownParameterErrors,
 };

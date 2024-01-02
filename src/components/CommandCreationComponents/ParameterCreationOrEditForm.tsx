@@ -1,4 +1,7 @@
+"use client";
+
 // README:
+// This is the exact same whether it's in "edit command/parameters" mode or "create command/parameters" mode
 // User fills this form out to make a Parameter
 // Param can be STRING, INT, BOOLEAN, DROPDOWN or FLAG
 // Different fields in form for each type
@@ -9,10 +12,9 @@
 import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import {
-	CommandCreationUtils,
+	CommandCreationUIElements,
 	DefaultValueInput,
-	FlagParameterErrors,
-} from "../../../utils/CommandCreationUtils";
+} from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 
 import {
 	ParameterCreationButton,
@@ -25,16 +27,21 @@ import {
 	StyledPCFOptionalCheckbox,
 } from "../../../utils/styles/CommandCreationStyles/ParameterCreationStyles";
 import {
-	AnyParameter,
 	StringParameterErrors,
 	IntParameterErrors,
 	DropdownParameterErrors,
-} from "../../../utils/CommandCreationUtils";
+} from "../../../utils/CommandCreationUtils/CommandCreationUtils";
+
+import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 
 type FormProps = {
 	index: number;
 	removeParameter: Function;
+	parameterCreationType: ParameterCreationType;
+	setValue: Function;
 };
+
+import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 
 const {
 	StringParameterFields,
@@ -42,7 +49,7 @@ const {
 	BooleanParameterFields,
 	DropdownParameterFields,
 	FlagParameterFields,
-} = CommandCreationUtils;
+} = CommandCreationUIElements;
 
 export type ParameterCreationType =
 	| "STRING"
@@ -52,30 +59,44 @@ export type ParameterCreationType =
 	| "FLAG";
 
 // User fills this out once for every Parameter they create
-const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
+const ParameterCreationOrEditForm = ({
+	index,
+	removeParameter,
+	parameterCreationType,
+}: FormProps) => {
 	const {
 		register,
 		watch,
 		formState: { errors },
+		setValue,
 	} = useFormContext<{ parameters: AnyParameter[] }>();
 
-	const [parameterType, setParameterType] =
-		useState<ParameterCreationType>("STRING");
+	const [parameterType, setParameterType] = useState<ParameterCreationType>(
+		parameterCreationType
+	);
 	const parameterErrors = errors.parameters?.[index];
 
 	// This updates the necessary fields when user clicks a different parameter type
 	// Name here refers to the name of the field, not the `name` key in Parameters
 	useEffect(() => {
 		const subscription = watch((value, { name, type }) => {
+			const parameter = value.parameters ? value.parameters[index] : null;
+
 			if (type === "change" && name?.includes(`parameters.${index}.type`)) {
-				const parameter = value.parameters ? value.parameters[index] : null;
 				if (parameter) {
 					setParameterType(parameter.type!);
 				}
 			}
+			if (
+				type === "change" &&
+				parameter?.hasBeenEdited !== true &&
+				name?.includes(`parameters.${index}`)
+			) {
+				setValue(`parameters.${index}.hasBeenEdited`, true);
+			}
 		});
 		return () => subscription.unsubscribe();
-	}, [watch, index]);
+	}, [watch, index, setValue]);
 
 	// User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN
 	const renderParameterSpecificFields = () => {
@@ -179,4 +200,4 @@ const ParameterCreationForm = ({ index, removeParameter }: FormProps) => {
 	);
 };
 
-export default ParameterCreationForm;
+export default ParameterCreationOrEditForm;

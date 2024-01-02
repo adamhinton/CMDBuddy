@@ -4,10 +4,13 @@ import { Amplify } from "aws-amplify";
 import config from "../../../aws-exports";
 Amplify.configure({ ...config, ssr: true });
 
-import CommandCreationForm from "@/components/CommandCreationComponents/CommandCreationForm";
+// Calling this CommandCreationForm here because we're not using its "edit" mode in this file
+import CommandCreationForm, {
+	ComponentMode,
+} from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
 
 const CreateCommandsPage = () => {
-	return <CommandCreationForm />;
+	return <CommandCreationForm componentMode={ComponentMode.createNewCommand} />;
 };
 
 export default CreateCommandsPage;

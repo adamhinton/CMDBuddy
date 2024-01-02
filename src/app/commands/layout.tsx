@@ -1,7 +1,6 @@
 "use client";
 
 import SideBar from "@/components/SideBar/SideBar";
-import Link from "next/link";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";

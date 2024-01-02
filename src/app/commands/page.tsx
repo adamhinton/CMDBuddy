@@ -4,15 +4,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import config from "../../aws-exports";
-import { CMDBuddyUser } from "../../../utils/zod/UserSchema";
 import Link from "next/link";
-import CommandCreationForm from "@/components/CommandCreationComponents/CommandCreationForm";
 Amplify.configure({ ...config, ssr: true });
 
 const Commands = () => {
-	const currentUser: CMDBuddyUser | null = useSelector(
-		(state: RootState) => state.auth.user
-	);
 	const commands = useSelector((state: RootState) => state.commands.commands);
 	console.log("commands:", commands);
 

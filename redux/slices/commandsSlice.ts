@@ -44,6 +44,16 @@ export const commandsSlice = createSlice({
 			}
 		},
 
+		editSingleCommand: (state, action: PayloadAction<CMDBuddyCommand>) => {
+			const updatedCommand = state.commands!.map((cmd) =>
+				cmd.id === action.payload.id ? { ...cmd, ...action.payload } : cmd
+			);
+			return {
+				...state,
+				commands: updatedCommand,
+			};
+		},
+
 		// pass in command
 		deleteCommand: (state, action: PayloadAction<string>) => {
 			const commandId = action.payload;
@@ -72,6 +82,7 @@ export const {
 	addCommand,
 	deleteCommand,
 	editCommandTitle,
+	editSingleCommand,
 	reorderCommands,
 } = commandsSlice.actions;
 export default commandsSlice.reducer;

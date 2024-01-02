@@ -1,6 +1,6 @@
 // README:
 // In this form, the user enters in values for Parameters.
-// They should have already created a Command and its Parameters. If they haven't, see CommandCreationForm.tsx
+// They should have already created a Command and its Parameters. If they haven't, see CommandCreationOrEditForm.tsx
 // This page dynamically generates the Command and its Parameters with the inputted values
 // And displays the completed command on the page.
 
@@ -15,10 +15,6 @@ import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import LiveCommandExecutionPreview from "./LiveCommandExecutionPreview";
 import styled from "styled-components";
-
-const CEFContainer = styled.section`
-	width: 100%;
-`;
 
 export const CEFForm = styled.form`
 	background: ${({ theme }) => theme.commandGeneration.baseBackground};
@@ -42,16 +38,17 @@ const CEFCommandTitle = styled.h3`
 `;
 
 type CEFTextInputProps = {
-	inputType: "STRING" | "INT" | "OTHER";
+	// This is all lowercase because React yelled at me for some reason, saying it had to be lower case.
+	inputtype: "STRING" | "INT" | "OTHER";
 };
 
 export const CEFInput = styled.input<CEFTextInputProps>`
 	max-width: 250px;
 	padding: 0.5rem;
 	width: ${(props) =>
-		props.inputType === "STRING"
+		props.inputtype === "STRING"
 			? "250px"
-			: props.inputType === "INT"
+			: props.inputtype === "INT"
 			? "100px"
 			: null};
 	margin: 0.75rem 1rem;
@@ -123,7 +120,6 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 	const parameters = command.parameters;
 
 	const { watch } = methods;
-	const parameterValues = watch(); // Tracks all inputted parameter values
 
 	return (
 		<FormProvider {...methods}>

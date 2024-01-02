@@ -20,7 +20,6 @@ import {
 	SaveCancelDNDContainer,
 	SideBarUtils,
 } from "../../../utils/SideBarUtils";
-import Link from "next/link";
 import {
 	DragDropContext,
 	Droppable,
@@ -31,7 +30,6 @@ import {
 // Styled components
 import { SideBarContainer } from "../../../utils/SideBarUtils";
 import CommandInSideBar from "./CommandInSideBar";
-import styled from "styled-components";
 
 const { handleCommandTitlesEditSubmit, handleCommandDelete, handleDnDSave } =
 	SideBarUtils;
@@ -132,6 +130,7 @@ const SideBar = () => {
 								{(provided) => {
 									return (
 										<div ref={provided.innerRef} {...provided.draggableProps}>
+											{/* This is an individual Command */}
 											<CommandInSideBar
 												command={command}
 												dragHandleProps={provided.dragHandleProps}

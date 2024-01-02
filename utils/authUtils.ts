@@ -1,16 +1,9 @@
 import { useDispatch } from "react-redux";
-import { API, graphqlOperation } from "aws-amplify";
 import { setUser, logOutUser } from "../redux/slices/authSlice";
 import { setCommands, logOutCommands } from "../redux/slices/commandsSlice";
-import {
-	customCommandsAndParametersByUserID,
-	customUserByEmail,
-	getSortedCommandsAndParameters,
-} from "./customGraphQLQueries";
-import { CMDBuddyUser } from "./zod/UserSchema";
+import { getSortedCommandsAndParameters } from "./customGraphQLQueries";
 import { getUserDarkModePreference } from "./darkModeUtils";
 import { setIsDarkMode } from "../redux/slices/darkModeSlice";
-import { GraphQLResult } from "@aws-amplify/api";
 
 // TODO: These two cognito types are defined in two spots; merge them and export them.
 interface CognitoLoggedInUserAttributes {

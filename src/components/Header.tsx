@@ -19,8 +19,6 @@ const Header = () => {
 		(state: RootState) => state.darkMode.isDarkMode
 	);
 
-	console.log("isDarkMode in Header:", isDarkMode);
-
 	const isLoggedIn = useSelector((state: RootState) => {
 		return state.auth.user ? true : false;
 	});
