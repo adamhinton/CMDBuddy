@@ -3,7 +3,7 @@
 // README:
 // This is an individual Command - its title, DnD button, delete/edit icons.
 // This is looped over in SideBar to display each Command.
-// Clicking the 'Activate Command' "+" button will add the command to activeCommands and redirect to /commands/generate.
+// Clicking anywhere on a Command that isn't some kind of button will activate it for command generation.
 // Clicking the "edit" icon will redirect the user to /commands/edit and set that command to edit redux state.
 
 import React, { useState, useRef, useEffect } from "react";
@@ -68,7 +68,8 @@ const CommandInSideBar = ({
 	};
 
 	// Activates command generation form for this command
-	const activateCommand = () => {
+	const activateCommand = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		dispatch(addNewActiveCommand(command.id));
 		router.push("/commands/generate");
 	};
@@ -76,12 +77,15 @@ const CommandInSideBar = ({
 	return (
 		<CommandContainer onClick={activateCommand}>
 			{/* Drag and drop stuff */}
-			<DragHandle {...dragHandleProps}>⋮⋮</DragHandle>
+			<DragHandle {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
+				⋮⋮
+			</DragHandle>
 			<Title>{title}</Title>
 			{/* Buttons  to edit the command's Title or delete the Command */}
 			<IconContainer>
 				<EditButton
-					onClick={() => {
+					onClick={(e) => {
+						e.stopPropagation();
 						// First get rid of any previous command that was being edited
 						dispatch(deleteCommandToEdit());
 						// Now set this command to editing state
@@ -106,7 +110,6 @@ const CommandInSideBar = ({
 					<DeleteButton onClick={() => setShowConfirm(true)}>🗑️</DeleteButton>
 				)}
 			</IconContainer>
-			<ActivateCommandButton>+</ActivateCommandButton>
 		</CommandContainer>
 	);
 };
