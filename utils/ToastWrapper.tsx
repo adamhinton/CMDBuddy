@@ -19,9 +19,10 @@ export default function ToastWrapper({ children }: ToastProviderProps) {
 	);
 }
 
+// Include this with every toast call
+// Example: useToast("My toast message!", customToastConfig)
 export const customToastConfig: ToastOptions = {
-	delay: 5,
-	closeOnClick: true,
-	draggable: true,
-	pauseOnHover: true,
+	delay: 7,
 };
+
+customToastConfig.draggable;
