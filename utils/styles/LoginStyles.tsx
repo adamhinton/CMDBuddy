@@ -1,3 +1,6 @@
+// README:
+// Styles for Login/page.tsx
+
 import { Authenticator } from "@aws-amplify/ui-react";
 import styled from "styled-components";
 
@@ -43,7 +46,7 @@ const StyledAccountManagementContainer = styled.section`
 	justify-content: center;
 `;
 
-// Styled Authenticator component to override default styles in Amplify's built in component
+// Styled Authenticator component to override default styles in Amplify's built in Auth component
 const StyledAuthenticator = styled(Authenticator)`
 	--amplify-components-main-background-color: ${({ theme }) =>
 		theme.colors.background};
