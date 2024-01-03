@@ -9,7 +9,6 @@
 // TODO CCF:
 // Toasts for db submissions start and end
 // Fix ordering of new/edited commands
-// Disable Create/Edit button while submitting
 
 import { Amplify, Auth } from "aws-amplify";
 import { Providers } from "../../redux/provider";
