@@ -22,7 +22,6 @@ import {
 	CommandContainer,
 	DragHandle,
 } from "../../../utils/SideBarUtils";
-import styled from "styled-components";
 import {
 	deleteCommandToEdit,
 	setCommandToEdit,
@@ -119,7 +118,3 @@ const CommandInSideBar = ({
 };
 
 export default CommandInSideBar;
-
-const ActivateCommandButton = styled.button`
-	margin-right: 5px;
-`;
