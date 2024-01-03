@@ -1,3 +1,7 @@
+// TODO:
+// Toasts for db submissions start and end
+// Any other toasts
+
 import { Amplify, Auth } from "aws-amplify";
 import { Providers } from "../../redux/provider";
 import AuthClientComponent from "../components/Auth.client";
