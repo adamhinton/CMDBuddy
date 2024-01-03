@@ -130,14 +130,12 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		// This useEffect is all for edit mode
 		if (componentMode === "editExistingCommand") {
 			methods.reset();
-			methods.setValue("baseCommand", commandToEdit!.baseCommand);
-			methods.setValue("order", commandToEdit?.order);
-			methods.setValue("title", commandToEdit?.title!);
-			methods.setValue("id", commandToEdit!.id);
+			methods.setValue("baseCommand", commandToEdit.baseCommand);
+			methods.setValue("order", commandToEdit.order);
+			methods.setValue("title", commandToEdit.title);
+			methods.setValue("id", commandToEdit.id);
 
-			console.log("commandToEdit in CCF useEffect", commandToEdit);
-
-			commandToEdit!.parameters?.forEach((param) => {
+			commandToEdit.parameters?.forEach((param) => {
 				// @ts-ignore
 				append({ ...param, hasBeenEdited: false, commandID: commandToEdit.id });
 			});
