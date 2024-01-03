@@ -153,6 +153,9 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		FilteredParameter[]
 	>([]);
 
+	// This will disable the submit button while submitting updates to db
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
 	const loggedInUser = useSelector((state: RootState) => {
 		return state.auth.user;
 	});
@@ -176,6 +179,8 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		data: CMDBuddyCommandFormValidation,
 		componentMode: ComponentMode
 	) => {
+		// Disables the submit button temporarily
+		setIsSubmitting(true);
 		const beginSubmissionToastText =
 			componentMode === "createNewCommand"
 				? "Submitting new Command..."
@@ -212,6 +217,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		// Stop submission if validation fails
 		if (!isFormValuesValid) {
 			console.error("Validation failed");
+			setIsSubmitting(false);
 			return;
 		}
 
@@ -235,6 +241,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				toast(
 					"Error submitting new Command - please use contact form if issue persists"
 				);
+				setIsSubmitting(false);
 				return;
 			}
 		}
@@ -247,6 +254,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				toast(
 					"Error submitting edited Command - please use contact form if issue persists"
 				);
+				setIsSubmitting(false);
 				return;
 			}
 
@@ -264,6 +272,8 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		// Finally, clear form values
 		remove();
 		methods.reset();
+		// This shouldn't actually be necessary
+		setIsSubmitting(false);
 	};
 
 	// Maybe refactor this to also clear form on submit. Wouldn't need the user conf then.
@@ -365,7 +375,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 					Clear Form
 				</StyledCCFButton>
 
-				<StyledCCFButton type="submit">
+				<StyledCCFButton type="submit" disabled={isSubmitting}>
 					{componentMode === "createNewCommand"
 						? "Create Command"
 						: "Save Changes"}
