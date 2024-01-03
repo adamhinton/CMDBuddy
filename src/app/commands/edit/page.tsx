@@ -25,7 +25,7 @@ const CommandsEditPage = () => {
 			{!commandToEdit && <h3>Click edit icon in sidebar to edit a command</h3>}
 			{commandToEdit && (
 				<CommandEditForm
-					componentMode={ComponentMode.editExistingCommand}
+					componentMode={"editExistingCommand"}
 					commandToEdit={commandToEdit}
 				></CommandEditForm>
 			)}
