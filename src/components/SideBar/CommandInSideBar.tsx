@@ -6,6 +6,9 @@
 // Clicking anywhere on a Command that isn't some kind of button will activate it for command generation.
 // Clicking the "edit" icon will redirect the user to /commands/edit and set that command to edit redux state.
 
+// TODO:
+// When deleting the last remaining command, it doesn't disappear from sidebar. Fix it.
+
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -108,7 +111,13 @@ const CommandInSideBar = ({
 						</ConfirmIcon>
 					</div>
 				) : (
-					<DeleteButton onClick={() => setShowConfirmDeleteButton(true)}>
+					<DeleteButton
+						onClick={(e) => {
+							// Stops click from bubbling up and triggering another onClick
+							e.stopPropagation();
+							setShowConfirmDeleteButton(true);
+						}}
+					>
 						🗑️
 					</DeleteButton>
 				)}
