@@ -36,7 +36,8 @@ import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreatio
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { CommandCreationZodSchemas } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import Link from "next/link";
-import { toast } from "react-toastify";
+import { ToastOptions, toast } from "react-toastify";
+import { customToastConfig } from "../../../utils/ToastWrapper";
 const { AnyParameterSchema } = CommandCreationZodSchemas;
 
 const {
@@ -175,6 +176,13 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		data: CMDBuddyCommandFormValidation,
 		componentMode: ComponentMode
 	) => {
+		const beginSubmissionToastText =
+			componentMode === "createNewCommand"
+				? "Submitting new Command..."
+				: "Submitting edited Command... ";
+
+		toast(beginSubmissionToastText, customToastConfig);
+
 		data.order = 1;
 		const parameters: AnyParameter[] | undefined = data.parameters;
 		let nonFlagOrder = 1;
@@ -220,7 +228,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				// @ts-ignore
 				parameters: completedCommandFromDB.parameters?.items,
 			};
-			console.log("commandForRedux:", commandForRedux);
 			dispatch(addCommand(commandForRedux));
 		}
 
@@ -230,6 +237,14 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 			dispatch(editSingleCommand(data as CMDBuddyCommand));
 		}
+
+		// Notify user of submit success
+		const successfulSubmissionToastText =
+			componentMode === "createNewCommand"
+				? "New Command submitted successfully!"
+				: "Edited Command submitted successfully!";
+
+		toast(successfulSubmissionToastText, customToastConfig);
 
 		// Finally, clear form values
 		remove();

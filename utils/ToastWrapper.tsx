@@ -3,7 +3,7 @@
 // README:
 // Using react-toastify to alert user of various things with toasts.
 
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 interface ToastProviderProps {
@@ -18,3 +18,10 @@ export default function ToastWrapper({ children }: ToastProviderProps) {
 		</>
 	);
 }
+
+export const customToastConfig: ToastOptions = {
+	delay: 5,
+	closeOnClick: true,
+	draggable: true,
+	pauseOnHover: true,
+};
