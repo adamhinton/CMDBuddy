@@ -7,7 +7,6 @@
 // Fix bug where logging out doesn't remove commands from state
 
 // TODO CCF:
-// Toasts for db submissions start and end
 // Fix ordering of new/edited commands
 
 import { Amplify, Auth } from "aws-amplify";
