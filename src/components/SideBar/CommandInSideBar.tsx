@@ -1,3 +1,5 @@
+"use client";
+
 // README:
 // This is an individual Command - its title, DnD button, delete/edit icons.
 // This is looped over in SideBar to display each Command.
@@ -74,7 +76,7 @@ const CommandInSideBar = ({
 	};
 
 	return (
-		<CommandContainer>
+		<CommandContainer onClick={activateCommand}>
 			{/* Drag and drop stuff */}
 			<DragHandle {...dragHandleProps}>⋮⋮</DragHandle>
 			<Title>{title}</Title>
@@ -82,7 +84,9 @@ const CommandInSideBar = ({
 			<IconContainer>
 				<EditButton
 					onClick={() => {
+						// First get rid of any previous command that was being edited
 						dispatch(deleteCommandToEdit());
+						// Now set this command to editing state
 						dispatch(setCommandToEdit(command));
 						router.push("/commands/edit");
 					}}
@@ -104,7 +108,7 @@ const CommandInSideBar = ({
 					<DeleteButton onClick={() => setShowConfirm(true)}>🗑️</DeleteButton>
 				)}
 			</IconContainer>
-			<ActivateCommandButton onClick={activateCommand}>+</ActivateCommandButton>
+			<ActivateCommandButton>+</ActivateCommandButton>
 		</CommandContainer>
 	);
 };
