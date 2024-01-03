@@ -217,23 +217,38 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 		// Creating new command in db if in "create new command" mode
 		if (componentMode === "createNewCommand") {
-			const completedCommandFromDB = await submitNewCommandAndParamsToDB(
-				data,
-				loggedInUser!.id
-			);
+			try {
+				// Submit new command to db and get response for Redux
+				const completedCommandFromDB = await submitNewCommandAndParamsToDB(
+					data,
+					loggedInUser!.id
+				);
 
-			// Fixing funny parameters formatting of db response
-			const commandForRedux = {
-				...completedCommandFromDB,
-				// @ts-ignore
-				parameters: completedCommandFromDB.parameters?.items,
-			};
-			dispatch(addCommand(commandForRedux));
+				// Fixing funny parameters formatting of db response
+				const commandForRedux = {
+					...completedCommandFromDB,
+					// @ts-ignore
+					parameters: completedCommandFromDB.parameters?.items,
+				};
+				dispatch(addCommand(commandForRedux));
+			} catch {
+				toast(
+					"Error submitting new Command - please use contact form if issue persists"
+				);
+				return;
+			}
 		}
 
 		// Editing existing command if in edit mode
 		else if (componentMode === "editExistingCommand") {
-			await submitParamEditsToDB(data, commandToEdit!);
+			try {
+				await submitParamEditsToDB(data, commandToEdit!);
+			} catch {
+				toast(
+					"Error submitting edited Command - please use contact form if issue persists"
+				);
+				return;
+			}
 
 			dispatch(editSingleCommand(data as CMDBuddyCommand));
 		}
