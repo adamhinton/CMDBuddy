@@ -14,7 +14,6 @@ import { addNewActiveCommand } from "../../../redux/slices/activeCommandsSlice";
 
 import {
 	SideBarUtils,
-	EditInput,
 	Title,
 	IconContainer,
 	EditButton,
@@ -28,7 +27,6 @@ import {
 	deleteCommandToEdit,
 	setCommandToEdit,
 } from "../../../redux/slices/editCommandSlice";
-import { RootState } from "../../../redux/store";
 
 const CommandInSideBar = ({
 	command,
