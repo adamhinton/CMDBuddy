@@ -7,7 +7,7 @@
 // Clicking the "edit" icon will redirect the user to /commands/edit and set that command to edit redux state.
 
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import { addNewActiveCommand } from "../../../redux/slices/activeCommandsSlice";
@@ -35,12 +35,12 @@ const CommandInSideBar = ({
 	command: CMDBuddyCommand;
 	dragHandleProps: any;
 }) => {
-	const { title, id: commandID } = command;
+	const { title } = command;
 	const dispatch = useDispatch();
 	const router = useRouter();
 
 	// Delete command stuff
-	const [showConfirm, setShowConfirm] = useState(false);
+	const [showConfirmDeleteButton, setShowConfirmDeleteButton] = useState(false);
 	const confirmRef = useRef<HTMLDivElement>(null);
 
 	// This useEffect handles the user clicking the `edit` or `delete` buttons then clicking away to cancel.
@@ -52,19 +52,19 @@ const CommandInSideBar = ({
 
 			// Cancel command deletion
 			if (outsideConfirm) {
-				setShowConfirm(false);
+				setShowConfirmDeleteButton(false);
 			}
 		};
 
 		document.addEventListener("mousedown", handleOutsideClick);
-	}, [command, showConfirm]);
+	}, [command, showConfirmDeleteButton]);
 
 	const handleCommandDelete = async (e: React.MouseEvent) => {
 		e.preventDefault();
 		// There's an event handler to cancel deletion state when user clicks away; this stops that from triggering
 		e.stopPropagation();
 		SideBarUtils.handleCommandDelete(command, dispatch);
-		setShowConfirm(false);
+		setShowConfirmDeleteButton(false);
 	};
 
 	// Activates command generation form for this command
@@ -85,6 +85,7 @@ const CommandInSideBar = ({
 			<IconContainer>
 				<EditButton
 					onClick={(e) => {
+						// stopPropagation() stops the click from bubbling up to the rest of the component, which would trigger a different onClick
 						e.stopPropagation();
 						// First get rid of any previous command that was being edited
 						dispatch(deleteCommandToEdit());
@@ -95,7 +96,8 @@ const CommandInSideBar = ({
 				>
 					✏️
 				</EditButton>
-				{showConfirm ? (
+				{/* Command deletion section */}
+				{showConfirmDeleteButton ? (
 					<div ref={confirmRef}>
 						<ConfirmIcon
 							onClick={async (e) => {
@@ -107,7 +109,9 @@ const CommandInSideBar = ({
 						</ConfirmIcon>
 					</div>
 				) : (
-					<DeleteButton onClick={() => setShowConfirm(true)}>🗑️</DeleteButton>
+					<DeleteButton onClick={() => setShowConfirmDeleteButton(true)}>
+						🗑️
+					</DeleteButton>
 				)}
 			</IconContainer>
 		</CommandContainer>
