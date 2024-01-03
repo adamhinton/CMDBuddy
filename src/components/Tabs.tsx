@@ -69,7 +69,6 @@ const SubTab = styled(Tab)`
 
 const Tabs = () => {
 	const router = useRouter();
-	const theme = useTheme();
 
 	const handleTabClick = (path: string) => {
 		router.push(path);
