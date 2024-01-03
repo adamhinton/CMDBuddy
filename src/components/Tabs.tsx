@@ -10,7 +10,7 @@ Amplify.configure({ ...config, ssr: true });
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 
 const TabContainer = styled.nav`
 	display: flex;
