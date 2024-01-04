@@ -150,7 +150,20 @@ const ParameterCreationOrEditForm = ({
 	};
 
 	// Every Parameter has these fields, regardless of type
-	return (
+	return isCollapsed ? (
+		<>
+			<h1>Collapsed</h1>
+			<StyledCCFButton
+				onClick={(e) => {
+					e.preventDefault();
+					//@ts-ignore - this expects a name and type value which is dumb
+					update(index, { ...parameter, isCollapsed: !isCollapsed });
+				}}
+			>
+				{isCollapsed ? "Uncollapse" : "Collapse"}
+			</StyledCCFButton>
+		</>
+	) : (
 		<ParameterCreationFormContainer>
 			<StyledCCFButton
 				onClick={(e) => {
