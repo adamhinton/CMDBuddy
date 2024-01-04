@@ -19,7 +19,7 @@ export default function CommandsLayout({
 		if (!loggedInUser) {
 			router.push("/login");
 		}
-	});
+	}, [loggedInUser, router]);
 
 	return (
 		<LayoutContainer>

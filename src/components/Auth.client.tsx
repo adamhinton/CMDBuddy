@@ -47,13 +47,15 @@ export default function AuthClientComponent(): null {
 	useEffect(() => {
 		const fetchData = async () => {
 			const initUser = await getMyUser();
+			console.log("initUser in auth.client:", initUser);
 			setCognitoLoggedInUser(initUser);
 			// If user is logged in on page load, redirect to /commands.
 			// Else, redirect to login
 			if (initUser) {
+				console.log("blah blah blah");
 				router.push("/commands");
 			} else {
-				router.push("/login");
+				// router.push("/login");
 			}
 		};
 		fetchData();
