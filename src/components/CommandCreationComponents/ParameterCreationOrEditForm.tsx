@@ -10,7 +10,7 @@
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
 import React, { useState, useEffect } from "react";
-import { useFormContext } from "react-hook-form";
+import { UseFieldArrayUpdate, useFormContext } from "react-hook-form";
 import {
 	CommandCreationUIElements,
 	DefaultValueInput,
@@ -40,10 +40,12 @@ type FormProps = {
 	parameterCreationType: ParameterCreationType;
 	setValue: Function;
 	isCollapsed: boolean;
+	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
 };
 
 import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 import { StyledCCFButton } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
+import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 
 const {
 	StringParameterFields,
@@ -67,6 +69,7 @@ const ParameterCreationOrEditForm = ({
 	parameterCreationType,
 	isCollapsed,
 	setValue,
+	update,
 }: FormProps) => {
 	const {
 		register,
@@ -147,17 +150,18 @@ const ParameterCreationOrEditForm = ({
 	// Every Parameter has these fields, regardless of type
 	return (
 		<ParameterCreationFormContainer>
-			<button
+			<StyledCCFButton
 				{...register(`parameters.${index}.isCollapsed`)}
 				onClick={(e) => {
 					e.preventDefault();
-					setValue(`parameters.${index}.isCollapsed`, !isCollapsed);
-
+					// setValue(`parameters.${index}.isCollapsed`, !isCollapsed);
+					//@ts-ignore
+					update(index, { isCollapsed: !isCollapsed });
 					console.log("blah blah blah");
 				}}
 			>
 				derp
-			</button>
+			</StyledCCFButton>
 			{/* Parameter Type Selector */}
 			<ParameterCreationLabel>Type</ParameterCreationLabel>
 			<ParameterCreationSelect

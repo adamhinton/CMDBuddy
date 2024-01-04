@@ -364,6 +364,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 							parameterCreationType={field.type}
 							setValue={setValue}
 							isCollapsed={field.isCollapsed!}
+							update={update}
 						/>
 					</>
 				))}
