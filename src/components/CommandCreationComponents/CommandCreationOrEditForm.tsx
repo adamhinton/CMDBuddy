@@ -348,17 +348,21 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				</div>
 
 				{/* As many parameter creation forms as user wants */}
-				{fields.map((field, index) => (
-					<ParameterCreationOrEditForm
-						key={field.id}
-						index={index}
-						removeParameter={() => remove(index)}
-						parameterCreationType={field.type}
-						setValue={setValue}
-						isCollapsed={field.isCollapsed!}
-						update={update}
-					/>
-				))}
+				{fields.map((field, index) => {
+					console.log("field:", field);
+					return (
+						<ParameterCreationOrEditForm
+							key={field.id}
+							parameter={field}
+							index={index}
+							removeParameter={() => remove(index)}
+							parameterCreationType={field.type}
+							setValue={setValue}
+							isCollapsed={field.isCollapsed!}
+							update={update}
+						/>
+					);
+				})}
 
 				<StyledCCFButton
 					type="button"

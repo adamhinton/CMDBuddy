@@ -36,6 +36,7 @@ import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreatio
 
 type FormProps = {
 	index: number;
+	parameter: AnyParameter;
 	removeParameter: Function;
 	parameterCreationType: ParameterCreationType;
 	setValue: Function;
@@ -70,6 +71,7 @@ const ParameterCreationOrEditForm = ({
 	isCollapsed,
 	setValue,
 	update,
+	parameter,
 }: FormProps) => {
 	const {
 		register,
@@ -154,7 +156,7 @@ const ParameterCreationOrEditForm = ({
 				onClick={(e) => {
 					e.preventDefault();
 					//@ts-ignore - this expects a name and type value which is dumb
-					update(index, { isCollapsed: !isCollapsed });
+					update(index, { ...parameter, isCollapsed: !isCollapsed });
 				}}
 			>
 				{isCollapsed ? "Uncollapse" : "Collapse"}
