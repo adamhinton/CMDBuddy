@@ -2,8 +2,7 @@
 // Any other toasts
 // DND for params
 // Collapse Params && Collapse All && Expand All
-// Error handling - specifically db submissions
-// -- Don't reset form values if db submission fails?
+// Error handling - specifically db submissions. Partially done
 // Fix bug where logging out doesn't remove commands from state
 
 // TODO CCF:

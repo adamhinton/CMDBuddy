@@ -4,6 +4,9 @@ import { setCommands, logOutCommands } from "../redux/slices/commandsSlice";
 import { getSortedCommandsAndParameters } from "./customGraphQLQueries";
 import { getUserDarkModePreference } from "./darkModeUtils";
 import { setIsDarkMode } from "../redux/slices/darkModeSlice";
+import { deleteCommandToEdit } from "../redux/slices/editCommandSlice";
+import { deleteAllActiveCommands } from "../redux/slices/activeCommandsSlice";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export interface CognitoLoggedInUserAttributes {
 	sub: string;
@@ -44,10 +47,14 @@ export const useAuthActions = () => {
 		}
 	};
 
-	const logOut = () => {
+	const logOut = (router: AppRouterInstance) => {
 		try {
+			// Reset all state to null
 			dispatch(logOutCommands());
 			dispatch(logOutUser());
+			dispatch(deleteCommandToEdit());
+			dispatch(deleteAllActiveCommands());
+			router.push("login");
 		} catch (error) {
 			console.error("Error logging out:", error);
 		}

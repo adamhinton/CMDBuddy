@@ -35,11 +35,11 @@ const Login = () => {
 				() => null
 			);
 			if (!amplifyUser && currentUser) {
-				logOut();
+				logOut(router);
 			}
 		};
 		checkUser();
-	}, [currentUser, logOut]);
+	}, [currentUser, logOut, router]);
 
 	const handleLogin = async (user: any) => {
 		if (user) {
@@ -53,7 +53,7 @@ const Login = () => {
 			if (signOut) {
 				await signOut();
 			}
-			logOut();
+			logOut(router);
 		} catch (error) {
 			console.error("Error signing out: ", error);
 		}
@@ -82,8 +82,8 @@ const Login = () => {
 					})
 				);
 			}
-			logOut();
-			router.push("/");
+			logOut(router);
+			router.push("login");
 		} catch (error) {
 			console.error("Error deleting user from database: ", error);
 		}
