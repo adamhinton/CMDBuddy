@@ -227,6 +227,7 @@ const FlagParameterFields = ({
 	return <></>;
 };
 
+// Collapse all instances of PCF for cleaner UI
 const collapseAllParams = (
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>,
 	params: AnyParameter[]
