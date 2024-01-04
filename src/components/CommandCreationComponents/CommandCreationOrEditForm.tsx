@@ -111,10 +111,12 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 	const { setValue } = methods;
 
-	const { fields, append, remove } = useFieldArray({
+	const { fields, append, remove, update } = useFieldArray({
 		control: methods.control,
 		name: "parameters",
 	});
+
+	console.log("fields:", fields);
 
 	// Delete any values leftover from editing of previous commands
 	useEffect(() => {
@@ -122,6 +124,9 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		// Remove pre-existing parameter inputs
 		remove();
 	}, [methods, commandToEdit, remove]);
+
+	const myValues = methods.getValues();
+	console.log("myValues(delete this and its definition later):", myValues);
 
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
@@ -136,7 +141,12 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 			commandToEdit.parameters?.forEach((param) => {
 				// @ts-ignore
-				append({ ...param, hasBeenEdited: false, commandID: commandToEdit.id });
+				append({
+					...param,
+					hasBeenEdited: false,
+					commandID: commandToEdit.id,
+					isCollapsed: false,
+				});
 			});
 		}
 	}, [append, commandToEdit, methods, componentMode]);
@@ -340,6 +350,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						removeParameter={() => remove(index)}
 						parameterCreationType={field.type}
 						setValue={setValue}
+						isCollapsed={field.isCollapsed}
 					/>
 				))}
 
@@ -352,6 +363,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 							isNullable: false,
 							defaultValue: "",
 							hasBeenEdited: false,
+							isCollapsed: false,
 						};
 
 						// Needs command ID if editing existing command

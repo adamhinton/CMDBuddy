@@ -39,9 +39,11 @@ type FormProps = {
 	removeParameter: Function;
 	parameterCreationType: ParameterCreationType;
 	setValue: Function;
+	isCollapsed: boolean;
 };
 
 import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
+import { StyledCCFButton } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 
 const {
 	StringParameterFields,
@@ -63,6 +65,7 @@ const ParameterCreationOrEditForm = ({
 	index,
 	removeParameter,
 	parameterCreationType,
+	isCollapsed,
 }: FormProps) => {
 	const {
 		register,
@@ -71,9 +74,14 @@ const ParameterCreationOrEditForm = ({
 		setValue,
 	} = useFormContext<{ parameters: AnyParameter[] }>();
 
+	useEffect(() => {
+		console.log("isCollapsed delete this useEffect later", isCollapsed);
+	});
+
 	const [parameterType, setParameterType] = useState<ParameterCreationType>(
 		parameterCreationType
 	);
+
 	const parameterErrors = errors.parameters?.[index];
 
 	// This updates the necessary fields when user clicks a different parameter type
@@ -139,6 +147,17 @@ const ParameterCreationOrEditForm = ({
 	// Every Parameter has these fields, regardless of type
 	return (
 		<ParameterCreationFormContainer>
+			<StyledCCFButton
+				// {...register(`parameters.${index}.isCollapsed`)}
+				onClick={(e) => {
+					e.preventDefault();
+					setValue(`parameters.${index}.isCollapsed`, !isCollapsed);
+
+					console.log("blah blah blah");
+				}}
+			>
+				Collapse?
+			</StyledCCFButton>
 			{/* Parameter Type Selector */}
 			<ParameterCreationLabel>Type</ParameterCreationLabel>
 			<ParameterCreationSelect
@@ -153,7 +172,6 @@ const ParameterCreationOrEditForm = ({
 				<option value="DROPDOWN">Dropdown</option>
 				<option value="FLAG">Flag</option>
 			</ParameterCreationSelect>
-
 			{/* Shared Name Field */}
 			<ParameterCreationLabel>Name</ParameterCreationLabel>
 			<StyledPCFNameInput
@@ -167,14 +185,12 @@ const ParameterCreationOrEditForm = ({
 					{parameterErrors.name.message}
 				</ParameterCreationError>
 			)}
-
 			<DefaultValueInput
 				type={parameterType}
 				register={register}
 				index={index}
 				parameterErrors={parameterErrors}
 			></DefaultValueInput>
-
 			{/* IsNullable (Optional) Checkbox */}
 			{/* This isn't needed in FLAG type */}
 			{parameterType !== "FLAG" && (
@@ -186,9 +202,7 @@ const ParameterCreationOrEditForm = ({
 					/>
 				</StyledPCFOptionalCheckbox>
 			)}
-
 			{renderParameterSpecificFields()}
-
 			{/* Delete Parameter Button */}
 			<ParameterCreationButton
 				type="button"
