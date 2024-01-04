@@ -116,7 +116,9 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		name: "parameters",
 	});
 
-	console.log("fields:", fields);
+	useEffect(() => {
+		console.log("fields changed", fields);
+	}, [fields]);
 
 	// Delete any values leftover from editing of previous commands
 	useEffect(() => {
@@ -344,14 +346,26 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 				{/* As many parameter creation forms as user wants */}
 				{fields.map((field, index) => (
-					<ParameterCreationOrEditForm
-						key={field.id}
-						index={index}
-						removeParameter={() => remove(index)}
-						parameterCreationType={field.type}
-						setValue={setValue}
-						isCollapsed={field.isCollapsed}
-					/>
+					<>
+						{/* <StyledCCFButton
+							key={index}
+							onClick={(e) => {
+								console.log("big boy collapse");
+								setValue(`parameters.${index}.isCollapsed`, !field.isCollapsed);
+								e.preventDefault();
+							}}
+						>
+							Collapse
+						</StyledCCFButton> */}
+						<ParameterCreationOrEditForm
+							key={field.id}
+							index={index}
+							removeParameter={() => remove(index)}
+							parameterCreationType={field.type}
+							setValue={setValue}
+							isCollapsed={field.isCollapsed!}
+						/>
+					</>
 				))}
 
 				<StyledCCFButton

@@ -66,12 +66,12 @@ const ParameterCreationOrEditForm = ({
 	removeParameter,
 	parameterCreationType,
 	isCollapsed,
+	setValue,
 }: FormProps) => {
 	const {
 		register,
 		watch,
 		formState: { errors },
-		setValue,
 	} = useFormContext<{ parameters: AnyParameter[] }>();
 
 	useEffect(() => {
@@ -147,8 +147,8 @@ const ParameterCreationOrEditForm = ({
 	// Every Parameter has these fields, regardless of type
 	return (
 		<ParameterCreationFormContainer>
-			<StyledCCFButton
-				// {...register(`parameters.${index}.isCollapsed`)}
+			<button
+				{...register(`parameters.${index}.isCollapsed`)}
 				onClick={(e) => {
 					e.preventDefault();
 					setValue(`parameters.${index}.isCollapsed`, !isCollapsed);
@@ -156,8 +156,8 @@ const ParameterCreationOrEditForm = ({
 					console.log("blah blah blah");
 				}}
 			>
-				Collapse?
-			</StyledCCFButton>
+				derp
+			</button>
 			{/* Parameter Type Selector */}
 			<ParameterCreationLabel>Type</ParameterCreationLabel>
 			<ParameterCreationSelect

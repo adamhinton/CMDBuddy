@@ -32,7 +32,7 @@ const StringParameterSchema = ParameterCreationSchema.pick({
 	hasBeenEdited: true,
 }).extend({
 	type: z.literal("STRING"),
-	isCollapsed: z.boolean().optional().default(false),
+	isCollapsed: z.boolean().optional(),
 });
 
 const IntParameterSchema = ParameterCreationSchema.pick({
@@ -48,7 +48,7 @@ const IntParameterSchema = ParameterCreationSchema.pick({
 	hasBeenEdited: true,
 }).extend({
 	type: z.literal("INT"),
-	isCollapsed: z.boolean().optional().default(false),
+	isCollapsed: z.boolean().optional(),
 });
 
 const BooleanParameterSchema = ParameterCreationSchema.pick({
@@ -62,7 +62,7 @@ const BooleanParameterSchema = ParameterCreationSchema.pick({
 	hasBeenEdited: true,
 }).extend({
 	type: z.literal("BOOLEAN"),
-	isCollapsed: z.boolean().optional().default(false),
+	isCollapsed: z.boolean().optional(),
 });
 
 const DropdownParameterSchema = ParameterCreationSchema.pick({
@@ -77,7 +77,7 @@ const DropdownParameterSchema = ParameterCreationSchema.pick({
 	hasBeenEdited: true,
 }).extend({
 	type: z.literal("DROPDOWN"),
-	isCollapsed: z.boolean().optional().default(false),
+	isCollapsed: z.boolean().optional(),
 });
 
 const FlagParameterSchema = ParameterCreationSchema.pick({
