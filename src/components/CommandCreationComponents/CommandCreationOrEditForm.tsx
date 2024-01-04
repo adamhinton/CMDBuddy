@@ -116,19 +116,12 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		name: "parameters",
 	});
 
-	useEffect(() => {
-		console.log("fields changed", fields);
-	}, [fields]);
-
 	// Delete any values leftover from editing of previous commands
 	useEffect(() => {
 		methods.reset();
 		// Remove pre-existing parameter inputs
 		remove();
 	}, [methods, commandToEdit, remove]);
-
-	const myValues = methods.getValues();
-	console.log("myValues(delete this and its definition later):", myValues);
 
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
@@ -346,27 +339,15 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 				{/* As many parameter creation forms as user wants */}
 				{fields.map((field, index) => (
-					<>
-						{/* <StyledCCFButton
-							key={index}
-							onClick={(e) => {
-								console.log("big boy collapse");
-								setValue(`parameters.${index}.isCollapsed`, !field.isCollapsed);
-								e.preventDefault();
-							}}
-						>
-							Collapse
-						</StyledCCFButton> */}
-						<ParameterCreationOrEditForm
-							key={field.id}
-							index={index}
-							removeParameter={() => remove(index)}
-							parameterCreationType={field.type}
-							setValue={setValue}
-							isCollapsed={field.isCollapsed!}
-							update={update}
-						/>
-					</>
+					<ParameterCreationOrEditForm
+						key={field.id}
+						index={index}
+						removeParameter={() => remove(index)}
+						parameterCreationType={field.type}
+						setValue={setValue}
+						isCollapsed={field.isCollapsed!}
+						update={update}
+					/>
 				))}
 
 				<StyledCCFButton

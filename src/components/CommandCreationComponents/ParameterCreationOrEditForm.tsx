@@ -151,13 +151,10 @@ const ParameterCreationOrEditForm = ({
 	return (
 		<ParameterCreationFormContainer>
 			<StyledCCFButton
-				{...register(`parameters.${index}.isCollapsed`)}
 				onClick={(e) => {
 					e.preventDefault();
-					// setValue(`parameters.${index}.isCollapsed`, !isCollapsed);
-					//@ts-ignore
+					//@ts-ignore - this expects a name and type value which is dumb
 					update(index, { isCollapsed: !isCollapsed });
-					console.log("blah blah blah");
 				}}
 			>
 				derp
