@@ -36,9 +36,12 @@ import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreatio
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { CommandCreationZodSchemas } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import Link from "next/link";
-import { ToastOptions, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { customToastConfig } from "../../../utils/ToastWrapper";
+import { CommandCreationUIElements } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
+
 const { AnyParameterSchema } = CommandCreationZodSchemas;
+const { collapseAllParams } = CommandCreationUIElements;
 
 const {
 	validateParameterOnSubmit,
@@ -293,6 +296,13 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 	return (
 		<FormProvider {...methods}>
+			<StyledCCFButton
+				onClick={(e) => {
+					collapseAllParams(update, fields.length);
+				}}
+			>
+				Collapse All Params
+			</StyledCCFButton>
 			<StyledCCFForm
 				// Handles submit differently if it's in "edit existing command" mode or "create new command" mode
 				onSubmit={methods.handleSubmit((data, e) => {
