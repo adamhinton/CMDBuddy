@@ -229,11 +229,12 @@ const FlagParameterFields = ({
 
 const collapseAllParams = (
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>,
-	paramsLength: number
+	params: AnyParameter[]
 ) => {
-	for (let i = 0; i < paramsLength; i++) {
+	for (let i = 0; i < params.length; i++) {
 		// @ts-ignore - this wants type and name values for Params which is dumb
 		update(i, {
+			...params[i],
 			isCollapsed: true,
 		});
 	}

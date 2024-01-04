@@ -298,7 +298,8 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		<FormProvider {...methods}>
 			<StyledCCFButton
 				onClick={(e) => {
-					collapseAllParams(update, fields.length);
+					// `fields` is what the function calls `params`
+					collapseAllParams(update, fields);
 				}}
 			>
 				Collapse All Params
