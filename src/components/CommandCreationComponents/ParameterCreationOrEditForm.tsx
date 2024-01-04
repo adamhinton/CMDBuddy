@@ -157,7 +157,7 @@ const ParameterCreationOrEditForm = ({
 					update(index, { isCollapsed: !isCollapsed });
 				}}
 			>
-				derp
+				{isCollapsed ? "Uncollapse" : "Collapse"}
 			</StyledCCFButton>
 			{/* Parameter Type Selector */}
 			<ParameterCreationLabel>Type</ParameterCreationLabel>
