@@ -1,3 +1,12 @@
+// TODO:
+// Any other toasts
+// DND for params
+// Collapse Params && Collapse All && Expand All
+// Error handling - specifically db submissions. Partially done
+
+// TODO CCF:
+// Fix ordering of new/edited commands
+
 import { Amplify, Auth } from "aws-amplify";
 import { Providers } from "../../redux/provider";
 import AuthClientComponent from "../components/Auth.client";
@@ -5,9 +14,10 @@ import config from "../aws-exports";
 import Header from "../components/Header";
 Amplify.configure({ config, ssr: true });
 Auth.configure({ config, ssr: true });
-import { ToastContainer } from "react-toastify";
 import Tabs from "@/components/Tabs";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
+// Using react-toastify to alert user of various things with toasts.
+import ToastWrapper from "../../utils/ToastWrapper";
 
 export const metadata = {
 	title: "Next.js",
@@ -22,15 +32,16 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<Providers>
-					<ThemeProviderWrapper>
-						<AuthClientComponent />
-						<Header />
-						<Tabs />
-						<main>{children}</main>
-						<ToastContainer />
-					</ThemeProviderWrapper>
-				</Providers>
+				<ToastWrapper>
+					<Providers>
+						<ThemeProviderWrapper>
+							<AuthClientComponent />
+							<Header />
+							<Tabs />
+							<main>{children}</main>
+						</ThemeProviderWrapper>
+					</Providers>
+				</ToastWrapper>
 			</body>
 		</html>
 	);

@@ -2,7 +2,7 @@
 // This is the utils file for initial creation of user's Commands and each Command's Parameters to save to the db
 // Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
 
-import { useFormContext } from "react-hook-form";
+import { UseFieldArrayUpdate, useFormContext } from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationOrEditForm";
 import { UseFormRegister } from "react-hook-form";
 import {
@@ -17,6 +17,7 @@ import { CommandCreationZodSchemas } from "./CommandCreationTypes";
 CommandCreationZodSchemas;
 
 import { AnyParameter } from "./CommandCreationTypes";
+import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
@@ -226,6 +227,18 @@ const FlagParameterFields = ({
 	return <></>;
 };
 
+const collapseAllParams = (
+	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>,
+	paramsLength: number
+) => {
+	for (let i = 0; i < paramsLength; i++) {
+		// @ts-ignore - this wants type and name values for Params which is dumb
+		update(i, {
+			isCollapsed: true,
+		});
+	}
+};
+
 // "Default Value" input fields will be a little different depending on Parameter type.
 export const DefaultValueInput = ({
 	type,
@@ -340,6 +353,7 @@ export const CommandCreationUIElements = {
 	BooleanParameterFields,
 	DropdownParameterFields,
 	FlagParameterFields,
+	collapseAllParams,
 };
 
 export type {

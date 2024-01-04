@@ -55,8 +55,6 @@ export const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
 	return <Droppable {...props}>{children}</Droppable>;
 };
 
-// A single Command. Just displays its title, DnD grabber, edit and delete button
-
 const SideBar = () => {
 	const dispatch = useDispatch();
 	// The user will be editing the order of commands locally; this tracks original redux state commands

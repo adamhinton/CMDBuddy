@@ -15,17 +15,10 @@ import { useDispatch } from "react-redux";
 import { setIsDarkMode } from "../../redux/slices/darkModeSlice";
 import { getUserDarkModePreference } from "../../utils/darkModeUtils";
 import { useRouter } from "next/navigation";
+import { CognitoLoggedInUserAttributes } from "../../utils/authUtils";
 
 Amplify.configure({ config, ssr: true });
 Auth.configure({ config, ssr: true });
-
-// TODO: These two cognito types are defined in two spots; merge them and export them.
-interface CognitoLoggedInUserAttributes {
-	sub: string;
-	email_verified: boolean;
-	email: string;
-	data: [any];
-}
 
 interface CognitoLoggedInUser {
 	storage: any;

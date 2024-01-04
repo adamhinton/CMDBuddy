@@ -10,7 +10,7 @@ import CommandCreationForm, {
 } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
 
 const CreateCommandsPage = () => {
-	return <CommandCreationForm componentMode={ComponentMode.createNewCommand} />;
+	return <CommandCreationForm componentMode={"createNewCommand"} />;
 };
 
 export default CreateCommandsPage;
