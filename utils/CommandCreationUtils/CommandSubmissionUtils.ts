@@ -94,7 +94,7 @@ const submitNewCommandAndParamsToDB = async (
 		// Submit each Parameter with the new command's ID
 		const parameters = formData.parameters || [];
 		for (const parameter of parameters) {
-			// hasBeenEdited and isCollapsed only exist on the frontend, so leaving them in the input would invalidate DB submission
+			// DB
 			delete parameter.hasBeenEdited;
 			delete parameter.isCollapsed;
 			const parameterInput = {
@@ -140,7 +140,7 @@ const sortSubmittedEditedParams = (
 			originalParameters?.some((ep) => ep.id === p.id && p.hasBeenEdited)
 	);
 
-	// hasBeenEdited and isCollapsed only exist on the frontend, so leaving them in the input would invalidate DB submission
+	// Params that the user deleted while editing a command
 	let deletedParameters: CMDBuddyParameter[] = [];
 	if (originalParameters && originalParameters.length) {
 		deletedParameters = originalParameters
@@ -197,7 +197,9 @@ const submitParamEditsToDB = async (
 	// Add new params to the db
 	newParameters?.forEach(async (param) => {
 		const createParameterInput = param;
+		// hasBeenEdited and isCollapsed only exist on the frontend, so leaving them in the DB input would invalidate DB submission
 		delete createParameterInput["hasBeenEdited"];
+		delete createParameterInput["isCollapsed"];
 
 		await API.graphql(
 			graphqlOperation(createParameter, { input: createParameterInput })
@@ -215,6 +217,8 @@ const submitParamEditsToDB = async (
 
 	updatedParameters?.forEach(async (param) => {
 		const updateParameterInput = param;
+		// DB
+
 		delete updateParameterInput["hasBeenEdited"];
 		delete updateParameterInput["isCollapsed"];
 		await API.graphql(graphqlOperation(updateParameter, { input: param }));
