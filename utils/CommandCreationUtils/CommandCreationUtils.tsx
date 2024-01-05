@@ -2,7 +2,11 @@
 // This is the utils file for initial creation of user's Commands and each Command's Parameters to save to the db
 // Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
 
-import { UseFieldArrayUpdate, useFormContext } from "react-hook-form";
+import {
+	UseFieldArrayUpdate,
+	UseFormGetValues,
+	useFormContext,
+} from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationOrEditForm";
 import { UseFormRegister } from "react-hook-form";
 import {
@@ -230,14 +234,17 @@ const FlagParameterFields = ({
 // Collapse all instances of PCF for cleaner UI
 const collapseAllParams = (
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>,
-	params: AnyParameter[]
+	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>
 ) => {
-	for (let i = 0; i < params.length; i++) {
-		// @ts-ignore - this wants type and name values for Params which is dumb
-		update(i, {
-			...params[i],
-			isCollapsed: true,
-		});
+	const params = getValues(`parameters`);
+
+	if (params && params.length > 0) {
+		for (let i = 0; i < params.length; i++) {
+			update(i, {
+				...params[i],
+				isCollapsed: true,
+			});
+		}
 	}
 };
 
