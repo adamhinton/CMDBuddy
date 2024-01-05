@@ -95,6 +95,7 @@ const submitNewCommandAndParamsToDB = async (
 		const parameters = formData.parameters || [];
 		for (const parameter of parameters) {
 			delete parameter.hasBeenEdited;
+			delete parameter.isCollapsed;
 			const parameterInput = {
 				...parameter,
 				commandID: newCommandID,
@@ -214,6 +215,7 @@ const submitParamEditsToDB = async (
 	updatedParameters?.forEach(async (param) => {
 		const updateParameterInput = param;
 		delete updateParameterInput["hasBeenEdited"];
+		delete updateParameterInput["isCollapsed"];
 		await API.graphql(graphqlOperation(updateParameter, { input: param }));
 	});
 };
