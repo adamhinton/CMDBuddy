@@ -40,7 +40,6 @@ import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreatio
 
 type FormProps = {
 	index: number;
-	parameter: AnyParameter;
 	removeParameter: Function;
 	parameterCreationType: ParameterCreationType;
 	setValue: Function;
@@ -76,7 +75,6 @@ const ParameterCreationOrEditForm = ({
 	isCollapsed,
 	setValue,
 	update,
-	parameter,
 	getValues,
 }: FormProps) => {
 	const {

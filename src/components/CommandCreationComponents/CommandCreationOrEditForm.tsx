@@ -349,11 +349,9 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				{/* As many parameter creation forms as user wants */}
 				{/* `fields` is what the function calls `parameters` */}
 				{fields.map((field, index) => {
-					console.log("field:", field);
 					return (
 						<ParameterCreationOrEditForm
 							key={field.id}
-							parameter={field}
 							index={index}
 							removeParameter={() => remove(index)}
 							parameterCreationType={field.type}
