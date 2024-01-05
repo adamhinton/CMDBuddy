@@ -298,7 +298,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		<FormProvider {...methods}>
 			<StyledCCFButton
 				onClick={(e) => {
-					// `fields` is what the function calls `params`
+					// `fields` is what the function calls `parameters`
 					collapseAllParams(update, fields);
 				}}
 			>
@@ -333,7 +333,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						</StyledCCFError>
 					)}
 				</div>
-
 				<div>
 					<StyledCCFLabel htmlFor="title">Title</StyledCCFLabel>
 					<StyledCCFInput
@@ -347,8 +346,8 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						</StyledCCFError>
 					)}
 				</div>
-
 				{/* As many parameter creation forms as user wants */}
+				{/* `fields` is what the function calls `parameters` */}
 				{fields.map((field, index) => {
 					console.log("field:", field);
 					return (
@@ -364,7 +363,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						/>
 					);
 				})}
-
 				<StyledCCFButton
 					type="button"
 					onClick={() => {
@@ -393,17 +391,14 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				>
 					Add Parameter
 				</StyledCCFButton>
-
 				<StyledCCFButton type="button" onClick={clearForm}>
 					Clear Form
 				</StyledCCFButton>
-
 				<StyledCCFButton type="submit" disabled={isSubmitting}>
 					{componentMode === "createNewCommand"
 						? "Create Command"
 						: "Save Changes"}
 				</StyledCCFButton>
-
 				{/* This shows an example of the Command the user has created. */}
 				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}
 				<LiveCommandPreview
