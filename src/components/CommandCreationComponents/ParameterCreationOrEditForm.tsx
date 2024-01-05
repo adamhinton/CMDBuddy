@@ -51,6 +51,7 @@ type FormProps = {
 import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 import { StyledCCFButton } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
+import styled from "styled-components";
 
 const {
 	StringParameterFields,
@@ -150,21 +151,25 @@ const ParameterCreationOrEditForm = ({
 	};
 
 	// Every Parameter has these fields, regardless of type
-	return isCollapsed ? (
-		<>
-			<h1>Collapsed</h1>
-			<StyledCCFButton
+	return (
+		<ParameterCreationFormContainer>
+			<CollapsibleBar
 				onClick={(e) => {
 					e.preventDefault();
 					const param = getValues(`parameters.${index}`);
 					update(index, { ...param, isCollapsed: !isCollapsed });
 				}}
 			>
-				{isCollapsed ? "Uncollapse" : "Collapse"}
-			</StyledCCFButton>
-		</>
-	) : (
-		<ParameterCreationFormContainer>
+				<ParameterName>myName</ParameterName>
+				<IconWrapper>
+					{isCollapsed ? (
+						<StyledCCFButton>down</StyledCCFButton>
+					) : (
+						<StyledCCFButton>up</StyledCCFButton>
+					)}
+				</IconWrapper>
+			</CollapsibleBar>
+
 			<StyledCCFButton
 				onClick={(e) => {
 					e.preventDefault();
@@ -231,3 +236,29 @@ const ParameterCreationOrEditForm = ({
 };
 
 export default ParameterCreationOrEditForm;
+
+const CollapsibleBar = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+	cursor: pointer;
+	border: 1px solid #ccc; // Placeholder style, replace with your theme
+	border-radius: 4px;
+	margin-bottom: 5px; // Adjust as needed
+	background-color: #f6f8fa; // Placeholder style, replace with your theme
+
+	&:hover {
+		background-color: #e2e6ea; // Placeholder style, replace with your theme
+	}
+`;
+
+const ParameterName = styled.span`
+	font-weight: bold;
+`;
+
+const IconWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 10px; // Distance between icons
+`;
