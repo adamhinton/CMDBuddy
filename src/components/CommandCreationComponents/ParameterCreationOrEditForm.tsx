@@ -85,11 +85,6 @@ const ParameterCreationOrEditForm = ({
 		formState: { errors },
 	} = useFormContext<{ parameters: AnyParameter[] }>();
 
-	useEffect(() => {
-		console.log("isCollapsed delete this useEffect later", isCollapsed);
-		// console.log("parameter:", parameter);
-	}, [isCollapsed, parameter]);
-
 	const [parameterType, setParameterType] = useState<ParameterCreationType>(
 		parameterCreationType
 	);
@@ -163,10 +158,7 @@ const ParameterCreationOrEditForm = ({
 			<StyledCCFButton
 				onClick={(e) => {
 					e.preventDefault();
-
 					const param = getValues(`parameters.${index}`);
-					console.log("param:", param);
-					//@ts-ignore - this expects a name and type value which is dumb
 					update(index, { ...param, isCollapsed: !isCollapsed });
 				}}
 			>
@@ -179,10 +171,6 @@ const ParameterCreationOrEditForm = ({
 				onClick={(e) => {
 					e.preventDefault();
 					const param = getValues(`parameters.${index}`);
-					console.log("param:", param);
-					// console.log("parameter in collapse button:", parameter);
-
-					//@ts-ignore - this expects a name and type value which is dumb
 					update(index, { ...param, isCollapsed: !isCollapsed });
 				}}
 			>
