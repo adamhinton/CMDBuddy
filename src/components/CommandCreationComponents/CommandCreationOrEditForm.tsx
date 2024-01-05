@@ -296,14 +296,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 	return (
 		<FormProvider {...methods}>
-			<StyledCCFButton
-				onClick={(e) => {
-					// `fields` is what the function calls `parameters`
-					collapseAllParams(update, methods.getValues);
-				}}
-			>
-				Collapse All Params
-			</StyledCCFButton>
 			<StyledCCFForm
 				// Handles submit differently if it's in "edit existing command" mode or "create new command" mode
 				onSubmit={methods.handleSubmit((data, e) => {
@@ -320,6 +312,14 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 					To generate commands go <Link href="/commands/generate">here</Link>
 				</StyledCommandCreationDisclaimer>
 				<div>
+					<StyledCCFButton
+						onClick={(e) => {
+							// `fields` is what the function calls `parameters`
+							collapseAllParams(update, methods.getValues);
+						}}
+					>
+						Collapse All Params
+					</StyledCCFButton>
 					<StyledCCFLabel htmlFor="baseCommand">Base Command</StyledCCFLabel>
 					<StyledCCFInput
 						{...methods.register("baseCommand")}
