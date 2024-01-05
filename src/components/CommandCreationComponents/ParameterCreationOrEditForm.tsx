@@ -10,7 +10,11 @@
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
 import React, { useState, useEffect } from "react";
-import { UseFieldArrayUpdate, useFormContext } from "react-hook-form";
+import {
+	UseFieldArrayUpdate,
+	UseFormGetValues,
+	useFormContext,
+} from "react-hook-form";
 import {
 	CommandCreationUIElements,
 	DefaultValueInput,
@@ -42,6 +46,7 @@ type FormProps = {
 	setValue: Function;
 	isCollapsed: boolean;
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
+	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>;
 };
 
 import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
@@ -72,6 +77,7 @@ const ParameterCreationOrEditForm = ({
 	setValue,
 	update,
 	parameter,
+	getValues,
 }: FormProps) => {
 	const {
 		register,
@@ -81,7 +87,8 @@ const ParameterCreationOrEditForm = ({
 
 	useEffect(() => {
 		console.log("isCollapsed delete this useEffect later", isCollapsed);
-	});
+		// console.log("parameter:", parameter);
+	}, [isCollapsed, parameter]);
 
 	const [parameterType, setParameterType] = useState<ParameterCreationType>(
 		parameterCreationType
@@ -156,8 +163,11 @@ const ParameterCreationOrEditForm = ({
 			<StyledCCFButton
 				onClick={(e) => {
 					e.preventDefault();
+
+					const param = getValues(`parameters.${index}`);
+					console.log("param:", param);
 					//@ts-ignore - this expects a name and type value which is dumb
-					update(index, { ...parameter, isCollapsed: !isCollapsed });
+					update(index, { ...param, isCollapsed: !isCollapsed });
 				}}
 			>
 				{isCollapsed ? "Uncollapse" : "Collapse"}
@@ -168,8 +178,12 @@ const ParameterCreationOrEditForm = ({
 			<StyledCCFButton
 				onClick={(e) => {
 					e.preventDefault();
+					const param = getValues(`parameters.${index}`);
+					console.log("param:", param);
+					// console.log("parameter in collapse button:", parameter);
+
 					//@ts-ignore - this expects a name and type value which is dumb
-					update(index, { ...parameter, isCollapsed: !isCollapsed });
+					update(index, { ...param, isCollapsed: !isCollapsed });
 				}}
 			>
 				{isCollapsed ? "Uncollapse" : "Collapse"}

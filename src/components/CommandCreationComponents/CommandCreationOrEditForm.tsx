@@ -360,6 +360,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 							setValue={setValue}
 							isCollapsed={field.isCollapsed!}
 							update={update}
+							getValues={methods.getValues}
 						/>
 					);
 				})}
