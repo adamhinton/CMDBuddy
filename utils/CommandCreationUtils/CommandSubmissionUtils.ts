@@ -94,6 +94,7 @@ const submitNewCommandAndParamsToDB = async (
 		// Submit each Parameter with the new command's ID
 		const parameters = formData.parameters || [];
 		for (const parameter of parameters) {
+			// hasBeenEdited and isCollapsed only exist on the frontend, so leaving them in the input would invalidate DB submission
 			delete parameter.hasBeenEdited;
 			delete parameter.isCollapsed;
 			const parameterInput = {
@@ -139,7 +140,7 @@ const sortSubmittedEditedParams = (
 			originalParameters?.some((ep) => ep.id === p.id && p.hasBeenEdited)
 	);
 
-	// Params that the user deleted while editing a command
+	// hasBeenEdited and isCollapsed only exist on the frontend, so leaving them in the input would invalidate DB submission
 	let deletedParameters: CMDBuddyParameter[] = [];
 	if (originalParameters && originalParameters.length) {
 		deletedParameters = originalParameters
