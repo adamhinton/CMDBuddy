@@ -165,18 +165,16 @@ const ParameterCreationOrEditForm = ({
 					{isCollapsed ? (
 						<StyledDownPlaceholder>Down</StyledDownPlaceholder>
 					) : (
-						<>
-							<StyledUpPlaceholder>Up</StyledUpPlaceholder>
-							<StyledTrashPlaceholder
-							// onClick={(e) => {
-							// 	e.stopPropagation();
-							// 	onDelete();
-							// }}
-							>
-								Delete PH
-							</StyledTrashPlaceholder>
-						</>
+						<StyledUpPlaceholder>Up</StyledUpPlaceholder>
 					)}
+					<StyledTrashPlaceholder
+						onClick={(e) => {
+							e.preventDefault();
+							removeParameter(index);
+						}}
+					>
+						Delete PH
+					</StyledTrashPlaceholder>
 				</IconWrapper>
 			</CollapsibleBar>
 
@@ -237,12 +235,6 @@ const ParameterCreationOrEditForm = ({
 					)}
 					{renderParameterSpecificFields()}
 					{/* Delete Parameter Button */}
-					<ParameterCreationButton
-						type="button"
-						onClick={() => removeParameter(index)}
-					>
-						Delete Parameter
-					</ParameterCreationButton>
 				</div>
 			)}
 		</ParameterCreationFormContainer>
