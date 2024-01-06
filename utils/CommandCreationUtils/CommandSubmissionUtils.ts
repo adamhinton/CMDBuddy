@@ -1,5 +1,8 @@
 import { AnyParameter } from "./CommandCreationTypes";
-import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
+import {
+	CMDBuddyCommandFormValidation,
+	ComponentMode,
+} from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
 import { CMDBuddyCommand } from "../zod/CommandSchema";
 import { API, graphqlOperation } from "aws-amplify";
 import {
@@ -12,6 +15,14 @@ import {
 import { CMDBuddyParameter } from "../zod/ParameterSchema";
 import { customGetCommandWithParameters } from "../customGraphQLQueries";
 import { UpdateCommandInput } from "@/API";
+import { toast } from "react-toastify";
+import {
+	addCommand,
+	editSingleCommand,
+} from "../../redux/slices/commandsSlice";
+import { AnyAction, Dispatch } from "redux";
+import { CMDBuddyUser } from "../zod/UserSchema";
+import { UseFormReturn } from "react-hook-form";
 
 // This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
 const validateParameterOnSubmit = (
@@ -172,6 +183,137 @@ const fetchCommandWithParameters = async (commandID: string) => {
 	}
 };
 
+/**
+ * Validates all parameters and updates their order.
+ * Returns whether all parameters are valid.
+ */
+function validateAndUpdateParameters(
+	parameters: AnyParameter[],
+	methods: any
+): boolean {
+	let nonFlagOrder = 1;
+	let flagOrder = 1;
+	let isFormValuesValid = true;
+
+	parameters?.forEach((parameter, index) => {
+		parameter.order = parameter.type === "FLAG" ? flagOrder++ : nonFlagOrder++;
+
+		const isParameterValid = validateParameterOnSubmit(
+			parameter,
+			index,
+			methods,
+			isFormValuesValid
+		);
+		if (!isParameterValid) {
+			isFormValuesValid = false;
+		}
+	});
+
+	return isFormValuesValid;
+}
+
+/**
+ * Handles creation of new command.
+ */
+async function createNewCommand(
+	data: CMDBuddyCommandFormValidation,
+	dispatch: any,
+	loggedInUserId: string
+) {
+	try {
+		const completedCommandFromDB = await submitNewCommandAndParamsToDB(
+			data,
+			loggedInUserId
+		);
+
+		const commandForRedux = {
+			...completedCommandFromDB,
+			// @ts-ignore
+			parameters: completedCommandFromDB.parameters?.items,
+		};
+		dispatch(addCommand(commandForRedux));
+	} catch {
+		toast(
+			"Error submitting new Command - please use contact form if issue persists"
+		);
+		throw new Error("New command submission failed");
+	}
+}
+
+/**
+ * Handles editing of existing command.
+ */
+async function editExistingCommand(
+	data: CMDBuddyCommandFormValidation,
+	dispatch: any,
+	commandToEdit: CMDBuddyCommand
+) {
+	try {
+		await submitParamEditsToDB(data, commandToEdit);
+		dispatch(editSingleCommand(data as CMDBuddyCommand));
+	} catch {
+		toast(
+			"Error submitting edited Command - please use contact form if issue persists"
+		);
+		throw new Error("Edit command submission failed");
+	}
+}
+
+/**
+ * Main function to handle form submission for both creating and editing commands.
+ */
+async function handleSubmit(
+	data: CMDBuddyCommandFormValidation,
+	componentMode: ComponentMode,
+	setIsSubmitting: (value: React.SetStateAction<boolean>) => void,
+	dispatch: Dispatch<AnyAction>,
+	loggedInUser: CMDBuddyUser,
+	commandToEdit: CMDBuddyCommand | null,
+	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
+	remove: (index?: number | number[] | undefined) => void
+) {
+	setIsSubmitting(true);
+	toast(
+		componentMode === "createNewCommand"
+			? "Submitting new Command..."
+			: "Submitting edited Command..."
+	);
+
+	data.order = 1; // Setting default order
+
+	let isFormValuesValid = validateAndUpdateParameters(
+		data.parameters || [],
+		methods
+	);
+
+	if (!isFormValuesValid) {
+		console.error("Validation failed");
+		toast("Encountered validation issues");
+		setIsSubmitting(false);
+		return;
+	}
+
+	try {
+		if (componentMode === "createNewCommand") {
+			await createNewCommand(data, dispatch, loggedInUser.id);
+		} else if (componentMode === "editExistingCommand") {
+			await editExistingCommand(data, dispatch, commandToEdit!);
+		}
+		toast(
+			`${
+				componentMode === "createNewCommand" ? "New" : "Edited"
+			} Command submitted successfully!`
+		);
+	} catch (error) {
+		setIsSubmitting(false);
+		return;
+	}
+
+	remove();
+	methods.reset();
+	setIsSubmitting(false);
+}
+
 const submitParamEditsToDB = async (
 	data: CMDBuddyCommandFormValidation,
 	commandToEdit: CMDBuddyCommand
@@ -230,4 +372,5 @@ export const CommandSubmitUtils = {
 	submitParamEditsToDB,
 	sortSubmittedEditedParams,
 	submitNewCommandAndParamsToDB,
+	handleSubmit,
 };
