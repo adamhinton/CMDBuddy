@@ -312,11 +312,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				<StyledCommandCreationDisclaimer>
 					To generate commands go <Link href="/commands/generate">here</Link>
 				</StyledCommandCreationDisclaimer>
-				<LiveCommandPreview
-					baseCommand={methods.getValues().baseCommand}
-					parameters={methods.getValues().parameters}
-					watch={watch}
-				/>
+				<LiveCommandPreview watch={watch} />
 				<div>
 					{/*  Reusable parameter creation buttons: "Add new parameter", "Clear
 				form", "Submit", "Collapse All Params" */}
@@ -377,11 +373,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 				{/* This shows an example of the Command the user has created. */}
 				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}
-				<LiveCommandPreview
-					baseCommand={methods.getValues().baseCommand}
-					parameters={methods.getValues().parameters}
-					watch={watch}
-				/>
+				<LiveCommandPreview watch={watch} />
 
 				{/*  Reusable parameter creation buttons: "Add new parameter", "Clear
 				form", "Submit", "Collapse All Params" */}
