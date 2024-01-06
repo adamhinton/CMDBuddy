@@ -41,7 +41,8 @@ import { customToastConfig } from "../../../utils/ToastWrapper";
 import { CommandCreationUIElements } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 
 const { AnyParameterSchema } = CommandCreationZodSchemas;
-const { collapseAllParams } = CommandCreationUIElements;
+const { collapseAllParams, parameterCreationButtons } =
+	CommandCreationUIElements;
 
 const {
 	validateParameterOnSubmit,
@@ -311,52 +312,25 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				<StyledCommandCreationDisclaimer>
 					To generate commands go <Link href="/commands/generate">here</Link>
 				</StyledCommandCreationDisclaimer>
+				<LiveCommandPreview
+					baseCommand={methods.getValues().baseCommand}
+					parameters={methods.getValues().parameters}
+					watch={watch}
+				/>
 				<div>
-					<StyledCCFButton
-						onClick={(e) => {
-							// `fields` is what the function calls `parameters`
-							e.preventDefault();
-							collapseAllParams(update, methods.getValues);
-						}}
-					>
-						Collapse All Params
-					</StyledCCFButton>
-					<StyledCCFButton
-						type="button"
-						onClick={() => {
-							const appendValueIfCreationMode = {
-								type: "STRING",
-								name: "",
-								isNullable: false,
-								defaultValue: "",
-								hasBeenEdited: false,
-								isCollapsed: false,
-							};
-
-							// Needs command ID if editing existing command
-							const appendValueIfEditMode = {
-								...appendValueIfCreationMode,
-								commandID: commandToEdit?.id,
-							};
-
-							// Add new param
-							append(
-								componentMode === "createNewCommand"
-									? (appendValueIfCreationMode as any)
-									: (appendValueIfEditMode as any)
-							);
-						}}
-					>
-						Add Parameter
-					</StyledCCFButton>
-					<StyledCCFButton type="button" onClick={clearForm}>
-						Clear Form
-					</StyledCCFButton>
-					<StyledCCFButton type="submit" disabled={isSubmitting}>
-						{componentMode === "createNewCommand"
-							? "Create Command"
-							: "Save Changes"}
-					</StyledCCFButton>
+					{/*  Reusable parameter creation buttons: "Add new parameter", "Clear
+				form", "Submit", "Collapse All Params" */}
+					{/* Made a function for this because it's used twice in this component */}
+					{parameterCreationButtons({
+						collapseAllParams,
+						update,
+						getValues: methods.getValues,
+						append,
+						clearForm,
+						isSubmitting,
+						componentMode,
+						commandToEdit: commandToEdit ? commandToEdit : null,
+					})}
 
 					<StyledCCFLabel htmlFor="baseCommand">Base Command</StyledCCFLabel>
 					<StyledCCFInput
@@ -407,6 +381,20 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 					parameters={methods.getValues().parameters}
 					watch={watch}
 				/>
+				{/*  Reusable parameter creation buttons: "Add new parameter", "Clear
+				form", "Submit", "Collapse All Params" */}
+				{/* Made a function for this because it's used twice in this component */}
+				{fields.length > 0 &&
+					parameterCreationButtons({
+						collapseAllParams,
+						update,
+						getValues: methods.getValues,
+						append,
+						clearForm,
+						isSubmitting,
+						componentMode,
+						commandToEdit: commandToEdit ? commandToEdit : null,
+					})}
 			</StyledCCFForm>
 		</FormProvider>
 	);

@@ -364,7 +364,7 @@ type ParameterCreationButtonProps = {
 	append: (value: any) => void; // Define more specific type if known
 	clearForm: () => void;
 	isSubmitting: boolean;
-	componentMode: "createNewCommand" | "editCommand"; // Assuming these are the two modes
+	componentMode: "createNewCommand" | "editExistingCommand"; // Assuming these are the two modes
 	commandToEdit: CMDBuddyCommand | null; // Assuming it can be null if not in edit mode
 };
 
