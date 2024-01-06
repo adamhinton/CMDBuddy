@@ -53,3 +53,54 @@ export const StyledCCFButton = styled.button`
 		background: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
 	}
 `;
+
+export const CollapsibleBar = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+	cursor: pointer;
+	border: 1px solid ${({ theme }) => theme.commandCreation.buttonBackground};
+	border-radius: 4px;
+	margin-bottom: 5px;
+	background-color: ${({ theme }) => theme.commandCreation.formBackground};
+	color: ${({ theme }) => theme.commandCreation.formText};
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: ${({ theme }) =>
+			theme.commandCreation.buttonHoverBackground};
+	}
+`;
+
+export const ParameterName = styled.span`
+	font-weight: bold;
+	color: ${({ theme }) => theme.commandCreation.inputText};
+`;
+
+export const IconWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 10px; // Distance between icons
+`;
+
+export const StyledDownPlaceholder = styled.span`
+	color: ${({ theme }) => theme.commandCreation.formText};
+	&:hover {
+		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
+	}
+`;
+
+export const StyledUpPlaceholder = styled.span`
+	color: ${({ theme }) => theme.commandCreation.formText};
+	&:hover {
+		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
+	}
+`;
+
+export const StyledTrashPlaceholder = styled.span`
+	color: ${({ theme }) => theme.commandCreation.errorText};
+	&:hover {
+		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
+	}
+`;
