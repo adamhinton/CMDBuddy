@@ -315,6 +315,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 					<StyledCCFButton
 						onClick={(e) => {
 							// `fields` is what the function calls `parameters`
+							e.preventDefault();
 							collapseAllParams(update, methods.getValues);
 						}}
 					>

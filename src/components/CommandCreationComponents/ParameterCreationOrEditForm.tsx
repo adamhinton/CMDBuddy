@@ -180,7 +180,7 @@ const ParameterCreationOrEditForm = ({
 				</IconWrapper>
 			</CollapsibleBar>
 
-			{isCollapsed && (
+			{!isCollapsed && (
 				<div>
 					<StyledCCFButton
 						onClick={(e) => {
