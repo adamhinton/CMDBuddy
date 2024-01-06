@@ -5,6 +5,9 @@
 // Each Command has multiple Parameters; they fill out ParameterCreationOrEditForm once per Parameter
 // Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different fields for each
 
+// TODO:
+// If a param has validation issues on submit, make sure it's expanded or otherwise clear which param
+
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
