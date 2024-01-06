@@ -153,19 +153,23 @@ const ParameterCreationOrEditForm = ({
 	// Every Parameter has these fields, regardless of type
 	return (
 		<ParameterCreationFormContainer>
-			<CollapsibleBar
-				onClick={(e) => {
-					e.preventDefault();
-					const param = getValues(`parameters.${index}`);
-					update(index, { ...param, isCollapsed: !isCollapsed });
-				}}
-			>
-				<ParameterName>myName</ParameterName>
+			<CollapsibleBar>
+				<ParameterName>ParameterName</ParameterName>
 				<IconWrapper>
 					{isCollapsed ? (
-						<StyledCCFButton>down</StyledCCFButton>
+						<StyledDownPlaceholder>Down</StyledDownPlaceholder>
 					) : (
-						<StyledCCFButton>up</StyledCCFButton>
+						<>
+							<StyledUpPlaceholder>Up</StyledUpPlaceholder>
+							<StyledTrashPlaceholder
+							// onClick={(e) => {
+							// 	e.stopPropagation();
+							// 	onDelete();
+							// }}
+							>
+								Delete PH
+							</StyledTrashPlaceholder>
+						</>
 					)}
 				</IconWrapper>
 			</CollapsibleBar>
@@ -243,22 +247,47 @@ const CollapsibleBar = styled.div`
 	justify-content: space-between;
 	padding: 10px;
 	cursor: pointer;
-	border: 1px solid #ccc; // Placeholder style, replace with your theme
+	border: 1px solid ${({ theme }) => theme.commandCreation.buttonBackground};
 	border-radius: 4px;
-	margin-bottom: 5px; // Adjust as needed
-	background-color: #f6f8fa; // Placeholder style, replace with your theme
+	margin-bottom: 5px;
+	background-color: ${({ theme }) => theme.commandCreation.formBackground};
+	color: ${({ theme }) => theme.commandCreation.formText};
+	transition: background-color 0.3s ease;
 
 	&:hover {
-		background-color: #e2e6ea; // Placeholder style, replace with your theme
+		background-color: ${({ theme }) =>
+			theme.commandCreation.buttonHoverBackground};
 	}
 `;
 
 const ParameterName = styled.span`
 	font-weight: bold;
+	color: ${({ theme }) => theme.commandCreation.inputText};
 `;
 
 const IconWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 10px; // Distance between icons
+`;
+
+const StyledDownPlaceholder = styled.span`
+	color: ${({ theme }) => theme.commandCreation.formText};
+	&:hover {
+		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
+	}
+`;
+
+const StyledUpPlaceholder = styled.span`
+	color: ${({ theme }) => theme.commandCreation.formText};
+	&:hover {
+		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
+	}
+`;
+
+const StyledTrashPlaceholder = styled.span`
+	color: ${({ theme }) => theme.commandCreation.errorText};
+	&:hover {
+		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
+	}
 `;
