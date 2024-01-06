@@ -40,7 +40,13 @@ const LiveCommandPreview = ({
 
 	const commandPreview = `${nonFlagParams} ${baseCommand} ${flagParams}`.trim();
 
-	return parameters?.length && <div>{commandPreview}</div>;
+	return (
+		parameters?.length && (
+			<section>
+				<code>{commandPreview}</code>
+			</section>
+		)
+	);
 };
 
 export default LiveCommandPreview;
