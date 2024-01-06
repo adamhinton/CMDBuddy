@@ -6,6 +6,9 @@
 // NOTE: This is when the user initially CREATING a Command, like when the user fills out a form with parameters' names, baseCommand etc.
 // Dynamic Command generation will be another component.
 
+// TODO:
+// Updating baseCommand in the form doesn't immediately change baseCommand here; iy only updates when you change a parameter.
+
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 
 type LiveCommandPreviewProps = {
