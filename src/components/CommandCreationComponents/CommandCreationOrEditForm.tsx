@@ -321,6 +321,43 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 					>
 						Collapse All Params
 					</StyledCCFButton>
+					<StyledCCFButton
+						type="button"
+						onClick={() => {
+							const appendValueIfCreationMode = {
+								type: "STRING",
+								name: "",
+								isNullable: false,
+								defaultValue: "",
+								hasBeenEdited: false,
+								isCollapsed: false,
+							};
+
+							// Needs command ID if editing existing command
+							const appendValueIfEditMode = {
+								...appendValueIfCreationMode,
+								commandID: commandToEdit?.id,
+							};
+
+							// Add new param
+							append(
+								componentMode === "createNewCommand"
+									? (appendValueIfCreationMode as any)
+									: (appendValueIfEditMode as any)
+							);
+						}}
+					>
+						Add Parameter
+					</StyledCCFButton>
+					<StyledCCFButton type="button" onClick={clearForm}>
+						Clear Form
+					</StyledCCFButton>
+					<StyledCCFButton type="submit" disabled={isSubmitting}>
+						{componentMode === "createNewCommand"
+							? "Create Command"
+							: "Save Changes"}
+					</StyledCCFButton>
+
 					<StyledCCFLabel htmlFor="baseCommand">Base Command</StyledCCFLabel>
 					<StyledCCFInput
 						{...methods.register("baseCommand")}
@@ -363,42 +400,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						/>
 					);
 				})}
-				<StyledCCFButton
-					type="button"
-					onClick={() => {
-						const appendValueIfCreationMode = {
-							type: "STRING",
-							name: "",
-							isNullable: false,
-							defaultValue: "",
-							hasBeenEdited: false,
-							isCollapsed: false,
-						};
-
-						// Needs command ID if editing existing command
-						const appendValueIfEditMode = {
-							...appendValueIfCreationMode,
-							commandID: commandToEdit?.id,
-						};
-
-						// Add new param
-						append(
-							componentMode === "createNewCommand"
-								? (appendValueIfCreationMode as any)
-								: (appendValueIfEditMode as any)
-						);
-					}}
-				>
-					Add Parameter
-				</StyledCCFButton>
-				<StyledCCFButton type="button" onClick={clearForm}>
-					Clear Form
-				</StyledCCFButton>
-				<StyledCCFButton type="submit" disabled={isSubmitting}>
-					{componentMode === "createNewCommand"
-						? "Create Command"
-						: "Save Changes"}
-				</StyledCCFButton>
 				{/* This shows an example of the Command the user has created. */}
 				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}
 				<LiveCommandPreview
