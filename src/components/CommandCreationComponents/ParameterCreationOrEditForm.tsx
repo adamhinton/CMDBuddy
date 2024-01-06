@@ -153,7 +153,13 @@ const ParameterCreationOrEditForm = ({
 	// Every Parameter has these fields, regardless of type
 	return (
 		<ParameterCreationFormContainer>
-			<CollapsibleBar>
+			<CollapsibleBar
+				onClick={(e) => {
+					e.preventDefault();
+					const param = getValues(`parameters.${index}`);
+					update(index, { ...param, isCollapsed: !isCollapsed });
+				}}
+			>
 				<ParameterName>ParameterName</ParameterName>
 				<IconWrapper>
 					{isCollapsed ? (
@@ -174,67 +180,71 @@ const ParameterCreationOrEditForm = ({
 				</IconWrapper>
 			</CollapsibleBar>
 
-			<StyledCCFButton
-				onClick={(e) => {
-					e.preventDefault();
-					const param = getValues(`parameters.${index}`);
-					update(index, { ...param, isCollapsed: !isCollapsed });
-				}}
-			>
-				{isCollapsed ? "Uncollapse" : "Collapse"}
-			</StyledCCFButton>
-			{/* Parameter Type Selector */}
-			<ParameterCreationLabel>Type</ParameterCreationLabel>
-			<ParameterCreationSelect
-				{...register(`parameters.${index}.type`)}
-				onChange={(e) =>
-					setParameterType(e.target.value as ParameterCreationType)
-				}
-			>
-				<option value="STRING">String</option>
-				<option value="INT">Integer</option>
-				<option value="BOOLEAN">Boolean</option>
-				<option value="DROPDOWN">Dropdown</option>
-				<option value="FLAG">Flag</option>
-			</ParameterCreationSelect>
-			{/* Shared Name Field */}
-			<ParameterCreationLabel>Name</ParameterCreationLabel>
-			<StyledPCFNameInput
-				{...register(`parameters.${index}.name`)}
-				placeholder="Name"
-				required={true}
-				maxLength={30}
-			/>
-			{parameterErrors?.name && (
-				<ParameterCreationError>
-					{parameterErrors.name.message}
-				</ParameterCreationError>
-			)}
-			<DefaultValueInput
-				type={parameterType}
-				register={register}
-				index={index}
-				parameterErrors={parameterErrors}
-			></DefaultValueInput>
-			{/* IsNullable (Optional) Checkbox */}
-			{/* This isn't needed in FLAG type */}
-			{parameterType !== "FLAG" && (
-				<StyledPCFOptionalCheckbox>
-					<ParameterCreationLabel>Optional</ParameterCreationLabel>
-					<ParameterCreationInput
-						type="checkbox"
-						{...register(`parameters.${index}.isNullable`)}
+			{isCollapsed && (
+				<div>
+					<StyledCCFButton
+						onClick={(e) => {
+							e.preventDefault();
+							const param = getValues(`parameters.${index}`);
+							update(index, { ...param, isCollapsed: !isCollapsed });
+						}}
+					>
+						{isCollapsed ? "Uncollapse" : "Collapse"}
+					</StyledCCFButton>
+					{/* Parameter Type Selector */}
+					<ParameterCreationLabel>Type</ParameterCreationLabel>
+					<ParameterCreationSelect
+						{...register(`parameters.${index}.type`)}
+						onChange={(e) =>
+							setParameterType(e.target.value as ParameterCreationType)
+						}
+					>
+						<option value="STRING">String</option>
+						<option value="INT">Integer</option>
+						<option value="BOOLEAN">Boolean</option>
+						<option value="DROPDOWN">Dropdown</option>
+						<option value="FLAG">Flag</option>
+					</ParameterCreationSelect>
+					{/* Shared Name Field */}
+					<ParameterCreationLabel>Name</ParameterCreationLabel>
+					<StyledPCFNameInput
+						{...register(`parameters.${index}.name`)}
+						placeholder="Name"
+						required={true}
+						maxLength={30}
 					/>
-				</StyledPCFOptionalCheckbox>
+					{parameterErrors?.name && (
+						<ParameterCreationError>
+							{parameterErrors.name.message}
+						</ParameterCreationError>
+					)}
+					<DefaultValueInput
+						type={parameterType}
+						register={register}
+						index={index}
+						parameterErrors={parameterErrors}
+					></DefaultValueInput>
+					{/* IsNullable (Optional) Checkbox */}
+					{/* This isn't needed in FLAG type */}
+					{parameterType !== "FLAG" && (
+						<StyledPCFOptionalCheckbox>
+							<ParameterCreationLabel>Optional</ParameterCreationLabel>
+							<ParameterCreationInput
+								type="checkbox"
+								{...register(`parameters.${index}.isNullable`)}
+							/>
+						</StyledPCFOptionalCheckbox>
+					)}
+					{renderParameterSpecificFields()}
+					{/* Delete Parameter Button */}
+					<ParameterCreationButton
+						type="button"
+						onClick={() => removeParameter(index)}
+					>
+						Delete Parameter
+					</ParameterCreationButton>
+				</div>
 			)}
-			{renderParameterSpecificFields()}
-			{/* Delete Parameter Button */}
-			<ParameterCreationButton
-				type="button"
-				onClick={() => removeParameter(index)}
-			>
-				Delete Parameter
-			</ParameterCreationButton>
 		</ParameterCreationFormContainer>
 	);
 };
