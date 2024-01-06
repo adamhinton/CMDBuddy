@@ -1,5 +1,5 @@
 // README:
-// This is the styles page for CommandCreationUtils.tsx.
+// This is the styles page for Command Creation
 
 import styled from "styled-components";
 
