@@ -22,6 +22,8 @@ CommandCreationZodSchemas;
 
 import { AnyParameter } from "./CommandCreationTypes";
 import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
+import { StyledCCFButton } from "../styles/CommandCreationStyles/CommandCreationStyles";
+import { CMDBuddyCommand } from "../zod/CommandSchema";
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
@@ -355,6 +357,74 @@ export const DefaultValueInput = ({
 	}
 };
 
+type ParameterCreationButtonProps = {
+	collapseAllParams: (update: any, getValues: any) => void;
+	update: any; // Define more specific type if known
+	getValues: any; // Define more specific type if known
+	append: (value: any) => void; // Define more specific type if known
+	clearForm: () => void;
+	isSubmitting: boolean;
+	componentMode: "createNewCommand" | "editCommand"; // Assuming these are the two modes
+	commandToEdit: CMDBuddyCommand | null; // Assuming it can be null if not in edit mode
+};
+
+// Reusable parameter creation buttons: "Add new parameter", "Clear form", "Submit", "Collapse All Params"
+const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
+	collapseAllParams,
+	update,
+	getValues,
+	append,
+	clearForm,
+	isSubmitting,
+	componentMode,
+	commandToEdit,
+}) => {
+	const appendValueIfCreationMode = {
+		type: "STRING",
+		name: "",
+		isNullable: false,
+		defaultValue: "",
+		hasBeenEdited: false,
+		isCollapsed: false,
+	};
+
+	const appendValueIfEditMode = {
+		...appendValueIfCreationMode,
+		commandID: commandToEdit?.id,
+	};
+
+	return (
+		<>
+			<StyledCCFButton
+				onClick={(e) => {
+					e.preventDefault();
+					collapseAllParams(update, getValues);
+				}}
+			>
+				Collapse All Params
+			</StyledCCFButton>
+			<StyledCCFButton
+				type="button"
+				onClick={() => {
+					append(
+						componentMode === "createNewCommand"
+							? appendValueIfCreationMode
+							: appendValueIfEditMode
+					);
+				}}
+			>
+				Add Parameter
+			</StyledCCFButton>
+			<StyledCCFButton type="button" onClick={clearForm}>
+				Clear Form
+			</StyledCCFButton>
+			<StyledCCFButton type="submit" disabled={isSubmitting}>
+				Submit
+			</StyledCCFButton>
+		</>
+	);
+};
+
 // export objects
 export const CommandCreationUIElements = {
 	StringParameterFields,
@@ -363,6 +433,7 @@ export const CommandCreationUIElements = {
 	DropdownParameterFields,
 	FlagParameterFields,
 	collapseAllParams,
+	parameterCreationButtons,
 };
 
 export type {
