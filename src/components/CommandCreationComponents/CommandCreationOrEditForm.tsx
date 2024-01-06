@@ -374,6 +374,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						/>
 					);
 				})}
+
 				{/* This shows an example of the Command the user has created. */}
 				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}
 				<LiveCommandPreview
@@ -381,6 +382,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 					parameters={methods.getValues().parameters}
 					watch={watch}
 				/>
+
 				{/*  Reusable parameter creation buttons: "Add new parameter", "Clear
 				form", "Submit", "Collapse All Params" */}
 				{/* Made a function for this because it's used twice in this component */}
