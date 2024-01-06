@@ -170,7 +170,8 @@ const ParameterCreationOrEditForm = ({
 					<StyledTrashPlaceholder
 						onClick={(e) => {
 							e.preventDefault();
-							removeParameter(index);
+							e.stopPropagation();
+							removeParameter();
 						}}
 					>
 						Delete PH
