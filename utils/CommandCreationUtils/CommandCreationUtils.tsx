@@ -2,7 +2,11 @@
 // This is the utils file for initial creation of user's Commands and each Command's Parameters to save to the db
 // Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
 
-import { UseFieldArrayUpdate, useFormContext } from "react-hook-form";
+import {
+	UseFieldArrayUpdate,
+	UseFormGetValues,
+	useFormContext,
+} from "react-hook-form";
 import { ParameterCreationType } from "@/components/CommandCreationComponents/ParameterCreationOrEditForm";
 import { UseFormRegister } from "react-hook-form";
 import {
@@ -18,6 +22,8 @@ CommandCreationZodSchemas;
 
 import { AnyParameter } from "./CommandCreationTypes";
 import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
+import { StyledCCFButton } from "../styles/CommandCreationStyles/CommandCreationStyles";
+import { CMDBuddyCommand } from "../zod/CommandSchema";
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
@@ -227,15 +233,20 @@ const FlagParameterFields = ({
 	return <></>;
 };
 
+// Collapse all instances of PCF for cleaner UI
 const collapseAllParams = (
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>,
-	paramsLength: number
+	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>
 ) => {
-	for (let i = 0; i < paramsLength; i++) {
-		// @ts-ignore - this wants type and name values for Params which is dumb
-		update(i, {
-			isCollapsed: true,
-		});
+	const params = getValues(`parameters`);
+
+	if (params && params.length > 0) {
+		for (let i = 0; i < params.length; i++) {
+			update(i, {
+				...params[i],
+				isCollapsed: true,
+			});
+		}
 	}
 };
 
@@ -346,6 +357,74 @@ export const DefaultValueInput = ({
 	}
 };
 
+type ParameterCreationButtonProps = {
+	collapseAllParams: (update: any, getValues: any) => void;
+	update: any; // Define more specific type if known
+	getValues: any; // Define more specific type if known
+	append: (value: any) => void; // Define more specific type if known
+	clearForm: () => void;
+	isSubmitting: boolean;
+	componentMode: "createNewCommand" | "editExistingCommand"; // Assuming these are the two modes
+	commandToEdit: CMDBuddyCommand | null; // Assuming it can be null if not in edit mode
+};
+
+// Reusable parameter creation buttons: "Add new parameter", "Clear form", "Submit", "Collapse All Params"
+const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
+	collapseAllParams,
+	update,
+	getValues,
+	append,
+	clearForm,
+	isSubmitting,
+	componentMode,
+	commandToEdit,
+}) => {
+	const appendValueIfCreationMode = {
+		type: "STRING",
+		name: "",
+		isNullable: false,
+		defaultValue: "",
+		hasBeenEdited: false,
+		isCollapsed: false,
+	};
+
+	const appendValueIfEditMode = {
+		...appendValueIfCreationMode,
+		commandID: commandToEdit?.id,
+	};
+
+	return (
+		<>
+			<StyledCCFButton
+				onClick={(e) => {
+					e.preventDefault();
+					collapseAllParams(update, getValues);
+				}}
+			>
+				Collapse All Params
+			</StyledCCFButton>
+			<StyledCCFButton
+				type="button"
+				onClick={() => {
+					append(
+						componentMode === "createNewCommand"
+							? appendValueIfCreationMode
+							: appendValueIfEditMode
+					);
+				}}
+			>
+				Add Parameter
+			</StyledCCFButton>
+			<StyledCCFButton type="button" onClick={clearForm}>
+				Clear Form
+			</StyledCCFButton>
+			<StyledCCFButton type="submit" disabled={isSubmitting}>
+				Submit
+			</StyledCCFButton>
+		</>
+	);
+};
+
 // export objects
 export const CommandCreationUIElements = {
 	StringParameterFields,
@@ -354,6 +433,7 @@ export const CommandCreationUIElements = {
 	DropdownParameterFields,
 	FlagParameterFields,
 	collapseAllParams,
+	parameterCreationButtons,
 };
 
 export type {

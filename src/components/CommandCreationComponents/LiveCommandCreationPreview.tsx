@@ -1,25 +1,25 @@
 "use client";
 
+import { UseFormWatch } from "react-hook-form";
 // README:
 // This component shows a preview of the Command you've created (or edited). Like it'll show `companyName= zipCode= npx playwright test createCompany --headed`
 // It's updated every time a user inputs a value in baseCommand, or a parameter's name or defaultValue.
 // NOTE: This is when the user initially CREATING a Command, like when the user fills out a form with parameters' names, baseCommand etc.
 // Dynamic Command generation will be another component.
 
+// TODO:
+// Updating baseCommand in the form doesn't immediately change baseCommand here; iy only updates when you change a parameter.
+
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
+import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 
 type LiveCommandPreviewProps = {
-	baseCommand: string;
-	parameters?: AnyParameter[];
-	watch: Function;
+	watch: UseFormWatch<CMDBuddyCommandFormValidation>;
 };
 
-const LiveCommandPreview = ({
-	baseCommand,
-	parameters,
-	watch,
-}: LiveCommandPreviewProps) => {
+const LiveCommandPreview = ({ watch }: LiveCommandPreviewProps) => {
 	// Use watch to get real-time updates of form values
+	const watchedBaseCommand = watch("baseCommand");
 	const watchedParameters = watch("parameters");
 
 	// Build the command preview
@@ -35,9 +35,14 @@ const LiveCommandPreview = ({
 		}
 	});
 
-	const commandPreview = `${nonFlagParams} ${baseCommand} ${flagParams}`.trim();
+	const commandPreview =
+		`${nonFlagParams} ${watchedBaseCommand} ${flagParams}`.trim();
 
-	return parameters?.length && <div>{commandPreview}</div>;
+	return (
+		<section>
+			<code>{commandPreview}</code>
+		</section>
+	);
 };
 
 export default LiveCommandPreview;
