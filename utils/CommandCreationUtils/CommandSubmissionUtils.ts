@@ -262,16 +262,25 @@ async function editExistingCommand(
 /**
  * Main function to handle form submission for both creating and editing commands.
  */
-async function handleSubmit(
-	data: CMDBuddyCommandFormValidation,
-	componentMode: ComponentMode,
-	setIsSubmitting: (value: React.SetStateAction<boolean>) => void,
-	dispatch: Dispatch<AnyAction>,
-	loggedInUser: CMDBuddyUser,
-	commandToEdit: CMDBuddyCommand | null,
-	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
-	remove: (index?: number | number[] | undefined) => void
-) {
+const handleSubmit = async ({
+	data,
+	componentMode,
+	setIsSubmitting,
+	dispatch,
+	loggedInUser,
+	commandToEdit,
+	methods,
+	remove,
+}: {
+	data: CMDBuddyCommandFormValidation;
+	componentMode: ComponentMode;
+	setIsSubmitting: (value: React.SetStateAction<boolean>) => void;
+	dispatch: Dispatch<AnyAction>;
+	loggedInUser: CMDBuddyUser;
+	commandToEdit: CMDBuddyCommand | null;
+	methods: UseFormReturn<CMDBuddyCommandFormValidation>;
+	remove: (index?: number | number[] | undefined) => void;
+}) => {
 	setIsSubmitting(true);
 	toast(
 		componentMode === "createNewCommand"
@@ -312,7 +321,7 @@ async function handleSubmit(
 	remove();
 	methods.reset();
 	setIsSubmitting(false);
-}
+};
 
 const submitParamEditsToDB = async (
 	data: CMDBuddyCommandFormValidation,

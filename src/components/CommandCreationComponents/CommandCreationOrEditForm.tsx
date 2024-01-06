@@ -51,6 +51,7 @@ const {
 	validateParameterOnSubmit,
 	submitParamEditsToDB,
 	submitNewCommandAndParamsToDB,
+	handleSubmit,
 } = CommandSubmitUtils;
 
 // Creating a specific schema for command creation mode
@@ -187,108 +188,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		return () => subscription.unsubscribe();
 	}, [watch]);
 
-	const onSubmit = async (
-		data: CMDBuddyCommandFormValidation,
-		componentMode: ComponentMode
-	) => {
-		// Disables the submit button temporarily
-		setIsSubmitting(true);
-		const beginSubmissionToastText =
-			componentMode === "createNewCommand"
-				? "Submitting new Command..."
-				: "Submitting edited Command... ";
-
-		toast(beginSubmissionToastText, customToastConfig);
-
-		data.order = 1;
-		const parameters: AnyParameter[] | undefined = data.parameters;
-		let nonFlagOrder = 1;
-		let flagOrder = 1;
-		let isFormValuesValid = true;
-
-		// Loop over parameters, adding an `order` to each and doing final validation
-		parameters?.forEach((parameter, index) => {
-			if (parameter.type === "FLAG") {
-				parameter.order = flagOrder++;
-			} else {
-				parameter.order = nonFlagOrder++;
-			}
-
-			// This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
-			const isParameterValid = validateParameterOnSubmit(
-				parameter,
-				index,
-				methods,
-				isFormValuesValid
-			);
-			if (!isParameterValid) {
-				isFormValuesValid = false;
-			}
-		});
-
-		// Stop submission if validation fails
-		if (!isFormValuesValid) {
-			console.error("Validation failed");
-			toast("Encountered validation issues");
-			setIsSubmitting(false);
-			return;
-		}
-
-		// Creating new command in db if in "create new command" mode
-		if (componentMode === "createNewCommand") {
-			try {
-				// Submit new command to db and get response for Redux
-				const completedCommandFromDB = await submitNewCommandAndParamsToDB(
-					data,
-					loggedInUser!.id
-				);
-
-				// Fixing funny parameters formatting of db response
-				const commandForRedux = {
-					...completedCommandFromDB,
-					// @ts-ignore
-					parameters: completedCommandFromDB.parameters?.items,
-				};
-				dispatch(addCommand(commandForRedux));
-			} catch {
-				toast(
-					"Error submitting new Command - please use contact form if issue persists"
-				);
-				setIsSubmitting(false);
-				return;
-			}
-		}
-
-		// Editing existing command if in edit mode
-		else if (componentMode === "editExistingCommand") {
-			try {
-				await submitParamEditsToDB(data, commandToEdit!);
-			} catch {
-				toast(
-					"Error submitting edited Command - please use contact form if issue persists"
-				);
-				setIsSubmitting(false);
-				return;
-			}
-
-			dispatch(editSingleCommand(data as CMDBuddyCommand));
-		}
-
-		// Notify user of submit success
-		const successfulSubmissionToastText =
-			componentMode === "createNewCommand"
-				? "New Command submitted successfully!"
-				: "Edited Command submitted successfully!";
-
-		toast(successfulSubmissionToastText, customToastConfig);
-
-		// Finally, clear form values
-		remove();
-		methods.reset();
-		// This shouldn't actually be necessary
-		setIsSubmitting(false);
-	};
-
 	// Maybe refactor this to also clear form on submit. Wouldn't need the user conf then.
 	const clearForm = () => {
 		if (
@@ -304,7 +203,16 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			<StyledCCFForm
 				// Handles submit differently if it's in "edit existing command" mode or "create new command" mode
 				onSubmit={methods.handleSubmit((data, e) => {
-					onSubmit(data, componentMode);
+					handleSubmit({
+						data,
+						componentMode,
+						setIsSubmitting,
+						dispatch,
+						loggedInUser: loggedInUser!,
+						commandToEdit: commandToEdit ? commandToEdit : null,
+						methods,
+						remove,
+					});
 				})}
 			>
 				{/* Command Fields */}
