@@ -226,6 +226,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		// Stop submission if validation fails
 		if (!isFormValuesValid) {
 			console.error("Validation failed");
+			toast("Encountered validation issues");
 			setIsSubmitting(false);
 			return;
 		}
