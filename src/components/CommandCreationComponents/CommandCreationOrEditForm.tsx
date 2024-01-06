@@ -384,6 +384,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				{/*  Reusable parameter creation buttons: "Add new parameter", "Clear
 				form", "Submit", "Collapse All Params" */}
 				{/* Made a function for this because it's used twice in this component */}
+				{/* Only shows at bottom of page if user has made at least one param, seems unnecessary otherwisei */}
 				{fields.length > 0 &&
 					parameterCreationButtons({
 						collapseAllParams,
