@@ -29,6 +29,7 @@ import {
 	deleteCommandToEdit,
 	setCommandToEdit,
 } from "../../../redux/slices/editCommandSlice";
+import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 
 const CommandInSideBar = ({
 	command,
@@ -79,47 +80,56 @@ const CommandInSideBar = ({
 	return (
 		<CommandContainer onClick={activateCommand}>
 			{/* Drag and drop stuff */}
-			<DragHandle {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
-				⋮⋮
-			</DragHandle>
+			<CMDBuddyTooltip content="Drag to re-order commands">
+				<DragHandle {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
+					⋮⋮
+				</DragHandle>
+			</CMDBuddyTooltip>
 			<Title>{title}</Title>
 			{/* Buttons  to edit the command's Title or delete the Command */}
 			<IconContainer>
-				<EditButton
-					onClick={(e) => {
-						// stopPropagation() stops the click from bubbling up to the rest of the component, which would trigger a different onClick
-						e.stopPropagation();
-						// First get rid of any previous command that was being edited
-						dispatch(deleteCommandToEdit());
-						// Now set this command to editing state
-						dispatch(setCommandToEdit(command));
-						router.push("/commands/edit");
-					}}
-				>
-					✏️
-				</EditButton>
-				{/* Command deletion section */}
-				{showConfirmDeleteButton ? (
-					<div ref={confirmRef}>
-						<ConfirmIcon
-							onClick={async (e) => {
-								e.stopPropagation(); // Stop propagation because that messed with deletion flow
-								await handleCommandDelete(e);
-							}}
-						>
-							✅
-						</ConfirmIcon>
-					</div>
-				) : (
-					<DeleteButton
+				<CMDBuddyTooltip content="Edit parameter details">
+					<EditButton
 						onClick={(e) => {
-							// Stops click from bubbling up and triggering another onClick
+							// stopPropagation() stops the click from bubbling up to the rest of the component, which would trigger a different onClick
 							e.stopPropagation();
-							setShowConfirmDeleteButton(true);
+							// First get rid of any previous command that was being edited
+							dispatch(deleteCommandToEdit());
+							// Now set this command to editing state
+							dispatch(setCommandToEdit(command));
+							router.push("/commands/edit");
 						}}
 					>
-						🗑️
-					</DeleteButton>
+						✏️
+					</EditButton>
+				</CMDBuddyTooltip>
+
+				{/* Command deletion section */}
+				{showConfirmDeleteButton ? (
+					<CMDBuddyTooltip content="Permanently delete Command">
+						<div ref={confirmRef}>
+							<ConfirmIcon
+								onClick={async (e) => {
+									e.stopPropagation(); // Stop propagation because that messed with deletion flow
+									await handleCommandDelete(e);
+								}}
+							>
+								✅
+							</ConfirmIcon>
+						</div>
+					</CMDBuddyTooltip>
+				) : (
+					<CMDBuddyTooltip content="Permanently delete Command">
+						<DeleteButton
+							onClick={(e) => {
+								// Stops click from bubbling up and triggering another onClick
+								e.stopPropagation();
+								setShowConfirmDeleteButton(true);
+							}}
+						>
+							🗑️
+						</DeleteButton>
+					</CMDBuddyTooltip>
 				)}
 			</IconContainer>
 		</CommandContainer>

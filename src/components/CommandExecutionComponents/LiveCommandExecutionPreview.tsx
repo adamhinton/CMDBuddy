@@ -10,6 +10,7 @@ import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
 import { CEFButton } from "./CommandExecutionForm";
 import styled from "styled-components";
+import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 
 const LCEPContainer = styled.section`
 	margin: 10px 0;
@@ -48,10 +49,12 @@ const LiveCommandExecutionPreview = ({
 			{/* Clicking this button copies generated Command to clipboard */}
 			<div>
 				{" "}
-				<CEFButton onClick={(e) => copyCommandToClipboard(e, commandPreview)}>
-					{/* TODO: Put an icon here instead of a button saying "Copy" */}
-					Copy <i className="icon-to-represent-copy"></i>{" "}
-				</CEFButton>
+				<CMDBuddyTooltip content="Copy generated Command to clipboard">
+					<CEFButton onClick={(e) => copyCommandToClipboard(e, commandPreview)}>
+						{/* TODO: Put an icon here instead of a button saying "Copy" */}
+						Copy{" "}
+					</CEFButton>
+				</CMDBuddyTooltip>
 			</div>
 		</LCEPContainer>
 	);
