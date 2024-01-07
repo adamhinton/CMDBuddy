@@ -60,6 +60,7 @@ import {
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
+import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 
 const {
 	StringParameterFields,
@@ -161,47 +162,44 @@ const ParameterCreationOrEditForm = ({
 	// Every Parameter has these fields, regardless of type
 	return (
 		<ParameterCreationFormContainer>
-			<CollapsibleBar
-				onClick={(e) => {
-					e.preventDefault();
-					const param = getValues(`parameters.${index}`);
-					update(index, { ...param, isCollapsed: !isCollapsed });
-				}}
-			>
-				<ParameterName>ParameterName</ParameterName>
-				<IconWrapper>
-					{isCollapsed ? (
-						<StyledDownPlaceholder>Down</StyledDownPlaceholder>
-					) : (
-						<StyledUpPlaceholder>Up</StyledUpPlaceholder>
-					)}
-					<StyledTrashPlaceholder
-						onClick={(e) => {
-							e.preventDefault();
-							e.stopPropagation();
-							removeParameter();
-						}}
-					>
-						Delete PH
-					</StyledTrashPlaceholder>
-				</IconWrapper>
-			</CollapsibleBar>
+			<CMDBuddyTooltip content="Click to expand/collapse parameter creation UI">
+				<CollapsibleBar
+					onClick={(e) => {
+						e.preventDefault();
+						const param = getValues(`parameters.${index}`);
+						update(index, { ...param, isCollapsed: !isCollapsed });
+					}}
+				>
+					<ParameterName>ParameterName</ParameterName>
+					<IconWrapper>
+						{/* TODO: Instate real up/down icons */}
+						{isCollapsed ? (
+							<StyledDownPlaceholder>Down</StyledDownPlaceholder>
+						) : (
+							<StyledUpPlaceholder>Up</StyledUpPlaceholder>
+						)}
+						{/* TODO: Instate real trash icon */}
+						<CMDBuddyTooltip content="Delete Parameter">
+							<StyledTrashPlaceholder
+								onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
+									removeParameter();
+								}}
+							>
+								🗑️
+							</StyledTrashPlaceholder>
+						</CMDBuddyTooltip>
+					</IconWrapper>
+				</CollapsibleBar>
+			</CMDBuddyTooltip>
 
 			{!isCollapsed && (
 				<div>
-					<StyledCCFButton
-						onClick={(e) => {
-							e.preventDefault();
-							const param = getValues(`parameters.${index}`);
-							update(index, { ...param, isCollapsed: !isCollapsed });
-						}}
-					>
-						{isCollapsed ? "Uncollapse" : "Collapse"}
-					</StyledCCFButton>
 					{/* Parameter Type Selector */}
-					<Tippy content="Placeholder">
+					<CMDBuddyTooltip content="Parameter type options">
 						<ParameterCreationLabel>Type</ParameterCreationLabel>
-					</Tippy>
+					</CMDBuddyTooltip>
 					<ParameterCreationSelect
 						{...register(`parameters.${index}.type`)}
 						onChange={(e) =>
@@ -211,11 +209,18 @@ const ParameterCreationOrEditForm = ({
 						<option value="STRING">String</option>
 						<option value="INT">Integer</option>
 						<option value="BOOLEAN">Boolean</option>
-						<option value="DROPDOWN">Dropdown</option>
-						<option value="FLAG">Flag</option>
+						<CMDBuddyTooltip content="Make a list of possible values">
+							<option value="DROPDOWN">Dropdown</option>
+						</CMDBuddyTooltip>
+						<CMDBuddyTooltip content="Optional tag after base command, like `--headed` in `npx playwright test --headed`">
+							<option value="FLAG">Flag</option>
+						</CMDBuddyTooltip>
 					</ParameterCreationSelect>
+
 					{/* Shared Name Field */}
-					<ParameterCreationLabel>Name</ParameterCreationLabel>
+					<CMDBuddyTooltip content="Variable's name">
+						<ParameterCreationLabel>Name</ParameterCreationLabel>
+					</CMDBuddyTooltip>
 					<StyledPCFNameInput
 						{...register(`parameters.${index}.name`)}
 						placeholder="Name"
@@ -227,6 +232,7 @@ const ParameterCreationOrEditForm = ({
 							{parameterErrors.name.message}
 						</ParameterCreationError>
 					)}
+
 					<DefaultValueInput
 						type={parameterType}
 						register={register}
