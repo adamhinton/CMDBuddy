@@ -22,7 +22,13 @@ export const StyledCommandCreationDisclaimer = styled.p`
 	border-bottom: 1px solid white;
 `;
 
+export const StyledCommandInputContainer = styled.div`
+	display: flex;
+	justify-content: center; // or align-items based on your design need
+`;
+
 export const StyledCCFLabel = styled.label`
+	width: 200px;
 	display: block;
 	margin-bottom: 5px;
 `;

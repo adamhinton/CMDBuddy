@@ -59,6 +59,7 @@ import {
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import styled from "styled-components";
+import Tippy from "@tippyjs/react";
 
 const {
 	StringParameterFields,
@@ -198,7 +199,9 @@ const ParameterCreationOrEditForm = ({
 						{isCollapsed ? "Uncollapse" : "Collapse"}
 					</StyledCCFButton>
 					{/* Parameter Type Selector */}
-					<ParameterCreationLabel>Type</ParameterCreationLabel>
+					<Tippy content="Placeholder">
+						<ParameterCreationLabel>Type</ParameterCreationLabel>
+					</Tippy>
 					<ParameterCreationSelect
 						{...register(`parameters.${index}.type`)}
 						onChange={(e) =>

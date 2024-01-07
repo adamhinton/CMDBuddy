@@ -27,12 +27,17 @@ import {
 	StyledCCFInput,
 	StyledCCFError,
 	StyledCommandCreationDisclaimer,
+	StyledCCFButton,
+	StyledCommandInputContainer,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CommandSubmitUtils } from "../../../utils/CommandCreationUtils/CommandSubmissionUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { CommandCreationZodSchemas } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import Link from "next/link";
 import { CommandCreationUIElements } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css"; // optional
+import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 
 const { AnyParameterSchema } = CommandCreationZodSchemas;
 const { collapseAllParams, parameterCreationButtons } =
@@ -231,7 +236,10 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						commandToEdit: commandToEdit ? commandToEdit : null,
 					})}
 
-					<StyledCCFLabel htmlFor="baseCommand">Base Command</StyledCCFLabel>
+					<CMDBuddyTooltip content="The core command excluding any parameters; e.g. npx playwright test myTestName">
+						<StyledCCFLabel htmlFor="baseCommand">Base Command</StyledCCFLabel>
+					</CMDBuddyTooltip>
+
 					<StyledCCFInput
 						{...methods.register("baseCommand")}
 						placeholder="npm test myTestName"
@@ -245,7 +253,9 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 					)}
 				</div>
 				<div>
-					<StyledCCFLabel htmlFor="title">Title</StyledCCFLabel>
+					<CMDBuddyTooltip content="You select the command by its title in the sidebar.">
+						<StyledCCFLabel htmlFor="title">Title</StyledCCFLabel>
+					</CMDBuddyTooltip>
 					<StyledCCFInput
 						{...methods.register("title")}
 						maxLength={60}

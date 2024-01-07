@@ -14,6 +14,7 @@ const CMDBuddyTooltip: React.FC<CMDBuddyTooltipProps> = ({
 	return (
 		<Tippy
 			content={content}
+			placement="top"
 			popperOptions={{
 				modifiers: [
 					{
