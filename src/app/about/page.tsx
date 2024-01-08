@@ -6,7 +6,7 @@ Amplify.configure({ ...config, ssr: true });
 const About = () => {
 	return (
 		<>
-			<TableOfContents headings={toCHeadings} />;
+			<TableOfContents headings={toCHeadings} />
 			<p id="Mission Statement">Misison Statement</p>
 		</>
 	);
