@@ -4,7 +4,12 @@ import Link from "next/link";
 Amplify.configure({ ...config, ssr: true });
 
 const About = () => {
-	return <TableOfContents headings={toCHeadings} />;
+	return (
+		<>
+			<TableOfContents headings={toCHeadings} />;
+			<p id="Mission Statement">Misison Statement</p>
+		</>
+	);
 };
 
 export default About;
