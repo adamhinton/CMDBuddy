@@ -1,7 +1,10 @@
+"use client";
+
 import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
 import Link from "next/link";
 Amplify.configure({ ...config, ssr: true });
+import styled from "styled-components";
 
 const About = () => {
 	return (
@@ -31,12 +34,13 @@ const About = () => {
 						in this command (for example), and copy the generated Command to
 						enter in your CLI.
 					</p>
+					<p>TODO: Image here</p>
 				</section>
 				<section id="section2">
 					<h2>Section 2</h2>
 					<p>Your content for Section 2.</p>
 				</section>
-			</div>{" "}
+			</div>
 		</>
 	);
 };
