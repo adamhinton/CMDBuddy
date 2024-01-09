@@ -26,7 +26,7 @@ const About = () => {
 					<p>
 						Example Command:
 						<code>
-							npx playwright test createHuman age=25 location={"Philadelphia"}
+							age=25 location={"Philadelphia"} npx playwright test createHuman
 						</code>
 					</p>
 					<p>
