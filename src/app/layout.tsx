@@ -3,6 +3,8 @@
 // DND for params
 // Collapse Params && Collapse All && Expand All
 // Error handling - specifically db submissions. Partially done
+// TODO: in /generate, fix default values funniness
+// TODO: Handle /generate validation
 
 // TODO CCF:
 // Fix ordering of new/edited commands
