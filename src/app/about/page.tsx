@@ -20,8 +20,8 @@ const About = () => {
 					</p>
 					<p>
 						It was arduous to input parameter values again and again, so I made
-						this tool to generate Commands for me. Now I'm sharing it - free and
-						open source forever - with the dev community.
+						this tool to generate Commands for me. Now I{"`"}m sharing it - free
+						and open source forever - with the dev community.
 					</p>
 					<p>
 						Example Command:
