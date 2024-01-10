@@ -84,6 +84,7 @@ export const lightTheme: DefaultTheme = {
 		subSubtitle: "#006064",
 		imageBorder: "#B2EBF2",
 		imageBackground: "#E0F7FA",
+		toCSubHeading: "#78909C",
 	},
 };
 
@@ -171,5 +172,6 @@ export const darkTheme: DefaultTheme = {
 		subSubtitle: "#80CBC4",
 		imageBorder: "#26A69A",
 		imageBackground: "#004D40",
+		tOCSubHeading: "#B0BEC5",
 	},
 };

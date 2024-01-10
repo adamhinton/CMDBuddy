@@ -3,8 +3,8 @@
 
 // TODO: ToC appears over subtabs
 // TODO: Looks funny at small screen sizes
-// TODO: Sub-subtitles. Like h3 dividing up long sections
 // TODO: Use cases/ideas section
+// TODO: List Key features somewhere
 
 import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
@@ -79,7 +79,7 @@ const About = () => {
 						`personName` and `personAge` are environment variables in your test
 						that you pass in from the CLI.
 					</Text>
-					<SubSubtitle>Parameter Options</SubSubtitle>
+					<SubSubtitle id="Parameter Options">Parameter Options</SubSubtitle>
 					<Text>
 						There are five parameter types available: STRING, INTEGER, BOOLEAN,
 						FLAG, and DROPDOWN.
@@ -93,7 +93,7 @@ const About = () => {
 						like `--headed` in test files, or `--template typescript` in
 						create-react-app.
 					</Text>
-					<SubSubtitle>Further Refinement</SubSubtitle>
+					<SubSubtitle id="Further Refinement">Further Refinement</SubSubtitle>
 					<Text>
 						Customize your Parameters with default values, max/min values, regex
 						and more.
@@ -120,27 +120,45 @@ const About = () => {
 export default About;
 
 type TableOfContentProps = {
-	headings: Headings;
+	headings: TOCHeadings;
 };
 
-type Headings = { title: string }[];
+type TOCHeading = {
+	title: string;
+	subHeadings?: TOCSubHeading[];
+};
 
-const TableOfContents = (props: TableOfContentProps) => {
-	const { headings } = props;
+type TOCSubHeading = {
+	title: string;
+};
+
+type TOCHeadings = TOCHeading[];
+
+const TableOfContents = ({ headings }: TableOfContentProps) => {
 	return (
 		<StyledTableOfContents>
 			<ul>
 				{headings.map((heading) => (
 					<li key={heading.title}>
 						<Link href={`#${heading.title}`}>{heading.title}</Link>
+						{heading.subHeadings && (
+							<ul>
+								{heading.subHeadings.map((subHeading) => (
+									<li key={subHeading.title}>
+										<Link href={`#${subHeading.title}`}>
+											{subHeading.title}
+										</Link>
+									</li>
+								))}
+							</ul>
+						)}
 					</li>
 				))}
 			</ul>
 		</StyledTableOfContents>
 	);
 };
-
-const toCHeadings: Headings = [
+const toCHeadings: TOCHeadings = [
 	{
 		title: "Overview",
 	},
@@ -149,6 +167,14 @@ const toCHeadings: Headings = [
 	},
 	{
 		title: "Building your Commands",
+		subHeadings: [
+			{
+				title: "Parameter Options",
+			},
+			{
+				title: "Further Refinement",
+			},
+		],
 	},
 	{
 		title: "Generating your commands",
@@ -215,7 +241,7 @@ const StyledTableOfContents = styled.nav`
 		margin: 0;
 	}
 
-	li + li {
+	li {
 		margin-top: 10px;
 	}
 
@@ -236,6 +262,26 @@ const StyledTableOfContents = styled.nav`
 			outline: none;
 			box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.text};
 		}
+	}
+
+	// The below parts of StyledTableOfContents is all stuff for ToC Subheadings
+	li > ul {
+		padding-left: 20px; // Increased indentation for subheadings
+	}
+
+	/* Subheadings stuff */
+	li > ul > li {
+		margin-top: 5px;
+	}
+
+	/* Subheadings stuff */
+	li > ul > li > a {
+		font-weight: normal; // Less emphasis on subheadings
+		font-size: 0.85em; // Slightly smaller font size for subheadings
+		color: ${({ theme }) => theme.aboutPage.tOCSubHeading}; // Subheading color
+		padding-left: 15px; // Further indent subheadings
+		padding-top: 3px;
+		padding-bottom: 3px;
 	}
 `;
 
