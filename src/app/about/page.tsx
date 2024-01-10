@@ -80,7 +80,7 @@ const About = () => {
 						that you pass in from the CLI.
 					</Text>
 					<Text>
-						There are five parameter types available: STRING, INT, BOOLEAN,
+						There are five parameter types available: STRING, INTEGER, BOOLEAN,
 						FLAG, and DROPDOWN.
 					</Text>
 					<Text>
