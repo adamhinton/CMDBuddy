@@ -4,6 +4,7 @@
 // TODO: ToC appears over subtabs
 // TODO: Looks funny at small screen sizes
 // TODO: Sub-subtitles. Like h3 dividing up long sections
+// TODO: Use cases/ideas section
 
 import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
@@ -21,70 +22,92 @@ const About = () => {
 				<Section id="Overview">
 					<Subtitle>Overview</Subtitle>
 					<Text>
-						I created CMDBuddy because, as a QA Engineer, I found myself typing
-						out the same CLI test Commands over and over.
+						I created CMDBuddy because, as a QA Engineer, I repeatedly found
+						myself typing out the same CLI test commands over and over.
+					</Text>
+					<Text>
+						CMDBuddy lets you create command templates, entering values for
+						their parameters to quickly generate and copy formatted commands.
+						For example:
 					</Text>
 					<CodeBlock>
 						age=25 location={"Philadelphia"} npx playwright test createHuman
 					</CodeBlock>
+					<Text>
+						In this user's base command, `npx playwright test createHuman`, they
+						enter `25` for age and "Philadelphia" for location and voilà — their
+						command is generated. This is particularly useful for complex
+						commands with numerous parameters.
+					</Text>
 					<Text>TODO: Image here</Text>
 				</Section>
 
 				<Section id="Getting Started">
 					<Subtitle>Getting Started</Subtitle>
 					<Text>
-						1. Create an account or sign in <Link href="login">here</Link>
+						1. <Link href="/login">Create an account or sign in.</Link>
 					</Text>
 					<Text>
-						2. Build new Commands - complete with custom parameters -{" "}
-						<Link href="commands/generate">here</Link> (commands/create)
+						2. <Link href="/commands/create">Build new commands</Link> with
+						custom parameters.
 					</Text>
 					<Text>
-						3. Whenever you need to use your new Commands, enter values for
-						their Parameters and copy the generated Command{" "}
-						<Link href="commands/generate">Here</Link> (commands/generate)
+						3. Use your new commands by entering values for their parameters and
+						copying the generated command from{" "}
+						<Link href="/commands/generate">this page</Link>.
 					</Text>
 				</Section>
 
 				<Section id="Building your Commands">
 					<Subtitle>Building your Commands</Subtitle>
 					<Text>
-						Assign a <b>base command</b> (the core that actually runs the
-						program) and a <b>title</b> (You'll use this to select the Command
-						from the sidebar)
+						Assign a <strong>base command</strong>, the command that runs the
+						program, and a <strong>title</strong> to identify it in the sidebar.
 					</Text>
 					<Text>
-						Create as many <b>Parameters</b> as you want
+						Create as many <strong>parameters</strong> as needed for your
+						command.
 					</Text>
 					<Text>
-						Parameters are any dynamic variable. For example:
-						<CodeBlock>
-							personName="Bob" personAge=25 jest test createPerson
-						</CodeBlock>
-						<Text>
-							personName and personAge are ENV variables in your test that you
-							pass in from the CLI.
-						</Text>
-						<Text>
-							Five Parameter types are available: STRING, INT, BOOLEAN, FLAG and
-							DROPDOWN.
-						</Text>
-						<Text>
-							STRING, INT, BOOLEAN and DROPDOWN are self explanatory. They go
-							before the base command in your generated Command.
-						</Text>
-						<Text>
-							FLAG is different. It appears after the base command. This is
-							things like `--headed` in test files, or `--template typescript`
-							in create-react-app
-						</Text>
+						Parameters are dynamic variables such as `personName` and
+						`personAge` in this example:
+					</Text>
+					<CodeBlock>
+						personName="Bob" personAge=25 jest test createPerson
+					</CodeBlock>
+					<Text>
+						`personName` and `personAge` are environment variables in your test
+						that you pass in from the CLI.
+					</Text>
+					<Text>
+						There are five parameter types available: STRING, INT, BOOLEAN,
+						FLAG, and DROPDOWN.
+					</Text>
+					<Text>
+						STRING, INT, BOOLEAN, and DROPDOWN parameters precede the base
+						command in your generated command.
+					</Text>
+					<Text>
+						FLAG parameters are different; they appear after the base command,
+						like `--headed` in test files, or `--template typescript` in
+						create-react-app.
+					</Text>
+				</Section>
+
+				<Section id="Generating your commands">
+					<Subtitle>Generating your Commands</Subtitle>
+					<Text>
+						Select your command from the sidebar within the commands section.
+					</Text>
+					<Text>
+						Enter values for each parameter and copy the generated command to
+						your terminal. You can also set default values for each parameter.
 					</Text>
 				</Section>
 			</ContentContainer>
 		</AboutPageLayout>
 	);
 };
-
 export default About;
 
 type TableOfContentProps = {
