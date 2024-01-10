@@ -1,6 +1,9 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 // TODO: ToC appears over subtabs
+// TODO: Looks funny at small screen sizes
+// TODO: Sub-subtitles. Like h3 dividing up long sections
 
 import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
@@ -45,6 +48,37 @@ const About = () => {
 
 				<Section id="Building your Commands">
 					<Subtitle>Building your Commands</Subtitle>
+					<Text>
+						Assign a <b>base command</b> (the core that actually runs the
+						program) and a <b>title</b> (You'll use this to select the Command
+						from the sidebar)
+					</Text>
+					<Text>
+						Create as many <b>Parameters</b> as you want
+					</Text>
+					<Text>
+						Parameters are any dynamic variable. For example:
+						<CodeBlock>
+							personName="Bob" personAge=25 jest test createPerson
+						</CodeBlock>
+						<Text>
+							personName and personAge are ENV variables in your test that you
+							pass in from the CLI.
+						</Text>
+						<Text>
+							Five Parameter types are available: STRING, INT, BOOLEAN, FLAG and
+							DROPDOWN.
+						</Text>
+						<Text>
+							STRING, INT, BOOLEAN and DROPDOWN are self explanatory. They go
+							before the base command in your generated Command.
+						</Text>
+						<Text>
+							FLAG is different. It appears after the base command. This is
+							things like `--headed` in test files, or `--template typescript`
+							in create-react-app
+						</Text>
+					</Text>
 				</Section>
 			</ContentContainer>
 		</AboutPageLayout>
