@@ -109,6 +109,9 @@ const About = () => {
 						Enter values for each parameter and copy the generated command to
 						your terminal. You can also set default values for each parameter.
 					</Text>
+					<Text>
+						If you made a default value, the parameter will default to that.
+					</Text>
 				</Section>
 			</ContentContainer>
 		</AboutPageLayout>
