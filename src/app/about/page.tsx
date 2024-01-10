@@ -23,9 +23,20 @@ const About = () => {
 					</CodeBlock>
 					<Text>TODO: Image here</Text>
 				</Section>
-				<Section id="section2">
-					<Subtitle>section 2</Subtitle>
-					<Text>Your content for section 2.</Text>
+				<Section id="Getting Started">
+					<Subtitle>Getting Started</Subtitle>
+					<Text>
+						1. Create an account or sign in <Link href="login">here</Link>
+					</Text>
+					<Text>
+						2. Build new Commands - complete with custom parameters -{" "}
+						<Link href="commands/generate">here</Link> (commands/create)
+					</Text>
+					<Text>
+						3. Whenever you need to use your new Commands, enter values for
+						their Parameters and copy the generated Command{" "}
+						<Link href="commands/generate">Here</Link> (commands/generate)
+					</Text>
 				</Section>
 			</ContentContainer>
 		</AboutPageLayout>
@@ -38,7 +49,7 @@ type TableOfContentProps = {
 	headings: Headings;
 };
 
-type Headings = [{ title: string }];
+type Headings = { title: string }[];
 
 const TableOfContents = (props: TableOfContentProps) => {
 	const { headings } = props;
@@ -58,6 +69,18 @@ const TableOfContents = (props: TableOfContentProps) => {
 const toCHeadings: Headings = [
 	{
 		title: "Overview",
+	},
+	{
+		title: "Getting Started",
+	},
+	{
+		title: "Building your commands",
+	},
+	{
+		title: "Generating your commands",
+	},
+	{
+		title: "FAQ",
 	},
 ];
 
