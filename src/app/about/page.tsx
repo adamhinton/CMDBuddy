@@ -8,40 +8,27 @@ import styled from "styled-components";
 
 const About = () => {
 	return (
-		<>
+		<AboutPageLayout>
 			<TableOfContents headings={toCHeadings} />
-			<div>
-				<h1 id="title">CMDBuddy</h1>
-				<section id="Overview">
-					<h2>Overview</h2>
-					<p>
+			<ContentContainer>
+				<Title id="title">CMDBuddy</Title>
+				<Section id="Overview">
+					<Subtitle>Overview</Subtitle>
+					<Text>
 						I created CMDBuddy because, as a QA Engineer, I found myself typing
 						out the same CLI test Commands over and over.
-					</p>
-					<p>
-						It was arduous to input parameter values again and again, so I made
-						this tool to generate Commands for me. Now I{"`"}m sharing it - free
-						and open source forever - with the dev community.
-					</p>
-					<p>
-						Example Command:
-						<code>
-							age=25 location={"Philadelphia"} npx playwright test createHuman
-						</code>
-					</p>
-					<p>
-						CMDBuddy is a simple interface to input values for age and location
-						in this command (for example), and copy the generated Command to
-						enter in your CLI.
-					</p>
-					<p>TODO: Image here</p>
-				</section>
-				<section id="section2">
-					<h2>Section 2</h2>
-					<p>Your content for Section 2.</p>
-				</section>
-			</div>
-		</>
+					</Text>
+					<CodeBlock>
+						age=25 location={"Philadelphia"} npx playwright test createHuman
+					</CodeBlock>
+					<Text>TODO: Image here</Text>
+				</Section>
+				<Section id="section2">
+					<Subtitle>section 2</Subtitle>
+					<Text>Your content for section 2.</Text>
+				</Section>
+			</ContentContainer>
+		</AboutPageLayout>
 	);
 };
 
@@ -56,7 +43,7 @@ type Headings = [{ title: string }];
 const TableOfContents = (props: TableOfContentProps) => {
 	const { headings } = props;
 	return (
-		<nav>
+		<StyledTableOfContents>
 			<ul>
 				{headings.map((heading) => (
 					<li key={heading.title}>
@@ -64,7 +51,7 @@ const TableOfContents = (props: TableOfContentProps) => {
 					</li>
 				))}
 			</ul>
-		</nav>
+		</StyledTableOfContents>
 	);
 };
 
@@ -73,3 +60,84 @@ const toCHeadings: Headings = [
 		title: "Overview",
 	},
 ];
+
+const Title = styled.h1`
+	color: ${({ theme }) => theme.aboutPage.title};
+`;
+
+const Subtitle = styled.h2`
+	color: ${({ theme }) => theme.aboutPage.subtitle};
+`;
+
+const Text = styled.p`
+	color: ${({ theme }) => theme.aboutPage.text};
+`;
+
+const CodeBlock = styled.code`
+	background-color: ${({ theme }) => theme.aboutPage.codeBlock};
+	color: ${({ theme }) => theme.aboutPage.codeText};
+	padding: 10px;
+	display: block;
+	margin: 10px 0;
+`;
+
+const AboutPageLayout = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	@media (max-width: 768px) {
+		flex-direction: column;
+	}
+`;
+
+const ContentContainer = styled.div`
+	padding: 20px;
+	flex-grow: 1;
+	background-color: ${({ theme }) => theme.colors.background};
+`;
+
+const Section = styled.section`
+	margin-bottom: 30px;
+`;
+
+const StyledTableOfContents = styled.nav`
+	flex: 0 0 200px;
+	max-height: 100vh;
+	overflow-y: auto; // scroll on overflow
+	position: sticky;
+	top: 0; // stick to the top of the viewport
+	background-color: ${({ theme }) => theme.sidebar.background};
+	color: ${({ theme }) => theme.sidebar.text};
+	padding: 20px;
+	margin-right: 20px; // space between ToC and content
+	border-right: 2px solid ${({ theme }) => theme.sidebar.dividerColor};
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	li + li {
+		margin-top: 10px;
+	}
+
+	a {
+		color: ${({ theme }) => theme.sidebar.text};
+		text-decoration: none;
+		font-weight: bold;
+		display: block;
+		padding: 5px 10px;
+		border-radius: 5px;
+		transition: background-color 0.3s ease;
+
+		&:hover {
+			background-color: ${({ theme }) => theme.sidebar.hoverBackground};
+		}
+
+		&:focus {
+			outline: none;
+			box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.text};
+		}
+	}
+`;
