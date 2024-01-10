@@ -1,5 +1,7 @@
 "use client";
 
+// TODO: ToC appears over subtabs
+
 import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
 import Link from "next/link";
@@ -12,6 +14,7 @@ const About = () => {
 			<TableOfContents headings={toCHeadings} />
 			<ContentContainer>
 				<Title id="title">CMDBuddy</Title>
+
 				<Section id="Overview">
 					<Subtitle>Overview</Subtitle>
 					<Text>
@@ -23,6 +26,7 @@ const About = () => {
 					</CodeBlock>
 					<Text>TODO: Image here</Text>
 				</Section>
+
 				<Section id="Getting Started">
 					<Subtitle>Getting Started</Subtitle>
 					<Text>
@@ -37,6 +41,10 @@ const About = () => {
 						their Parameters and copy the generated Command{" "}
 						<Link href="commands/generate">Here</Link> (commands/generate)
 					</Text>
+				</Section>
+
+				<Section id="Building your Commands">
+					<Subtitle>Building your Commands</Subtitle>
 				</Section>
 			</ContentContainer>
 		</AboutPageLayout>
@@ -74,7 +82,7 @@ const toCHeadings: Headings = [
 		title: "Getting Started",
 	},
 	{
-		title: "Building your commands",
+		title: "Building your Commands",
 	},
 	{
 		title: "Generating your commands",
