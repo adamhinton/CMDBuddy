@@ -79,6 +79,7 @@ const About = () => {
 						`personName` and `personAge` are environment variables in your test
 						that you pass in from the CLI.
 					</Text>
+					<SubSubtitle>Parameter Options</SubSubtitle>
 					<Text>
 						There are five parameter types available: STRING, INTEGER, BOOLEAN,
 						FLAG, and DROPDOWN.
@@ -91,6 +92,11 @@ const About = () => {
 						FLAG parameters are different; they appear after the base command,
 						like `--headed` in test files, or `--template typescript` in
 						create-react-app.
+					</Text>
+					<SubSubtitle>Further Refinement</SubSubtitle>
+					<Text>
+						Customize your Parameters with default values, max/min values, regex
+						and more.
 					</Text>
 				</Section>
 
@@ -227,5 +233,31 @@ const StyledTableOfContents = styled.nav`
 			outline: none;
 			box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.text};
 		}
+	}
+`;
+
+const SubSubtitle = styled.h3`
+	color: ${({ theme }) => theme.aboutPage.subSubtitle};
+	margin-top: 20px; // Adjust as needed
+	margin-bottom: 10px; // Adjust as needed
+`;
+
+const ImageContainer = styled.div`
+	border: 2px solid ${({ theme }) => theme.aboutPage.imageBorder};
+	background-color: ${({ theme }) => theme.aboutPage.imageBackground};
+	padding: 10px; // Adjust as needed
+	max-width: 100%;
+	height: auto; // Adjust height based on your image aspect ratio
+	margin-top: 20px; // Space above the image
+	margin-bottom: 20px; // Space below the image
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Optional shadow for depth
+
+	img {
+		width: 100%;
+		height: auto;
+	}
+
+	@media (max-width: 768px) {
+		width: 100%;
 	}
 `;
