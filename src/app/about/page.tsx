@@ -54,6 +54,7 @@ const About = () => {
 	return (
 		<AboutPageLayout>
 			<TableOfContents headings={toCHeadings} />
+
 			<ContentContainer>
 				<Title id="title">CMDBuddy</Title>
 
@@ -210,6 +211,7 @@ type TOCSubHeading = {
 
 type TOCHeadings = TOCHeading[];
 
+// Table of contents on left of page where user can click headings and be taken to that heading
 const TableOfContents = ({ headings }: TableOfContentProps) => {
 	return (
 		<StyledTableOfContents>
