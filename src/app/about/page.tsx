@@ -168,8 +168,6 @@ const About = () => {
 									: lightModeGenMakeNewPersonIMG
 							}
 							alt="Command generation UI. Command is `npx create human` with parameter inputs for personsName, isEmployed, and age"
-							// width={200}
-							// height={100}
 						/>
 					</ImageContainer>
 					<Text>
