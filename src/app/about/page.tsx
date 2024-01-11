@@ -18,8 +18,16 @@ import Link from "next/link";
 Amplify.configure({ ...config, ssr: true });
 import styled, { useTheme } from "styled-components";
 import Image from "next/image";
-import darkModeGenMakeNewPerson from "../../../utils/images/generatemakenewperson-darkmode.png";
-import lightModeGenMakeNewPerson from "../../../utils/images/generatemakenewperson-lightmode.png";
+// These two image show command generation UI
+import darkModeGenMakeNewPersonIMG from "../../../utils/images/generatemakenewperson-darkmode.png";
+import lightModeGenMakeNewPersonIMG from "../../../utils/images/generatemakenewperson-lightmode.png";
+// These two images show command creation UI for baseCommand and title
+import darkModeCreateBaseComandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-darkmode.png";
+import lightModeCreateBaseComandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-lightmode.png";
+// These two images show Parameter creation UI
+import lightModePCFIMG from "../../../utils/images/PCF-lightmode.png";
+import darkModePCFIMG from "../../../utils/images/PCF-darkmode.png";
+
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
@@ -58,8 +66,8 @@ const About = () => {
 						<StyledImage
 							src={
 								isDarkMode
-									? darkModeGenMakeNewPerson
-									: lightModeGenMakeNewPerson
+									? darkModeGenMakeNewPersonIMG
+									: lightModeGenMakeNewPersonIMG
 							}
 							alt="Command generation UI. Command is `npx create human` with parameter inputs for personsName, isEmployed, and age"
 							// width={200}
@@ -90,6 +98,16 @@ const About = () => {
 						Assign a <strong>base command</strong>, the command that runs the
 						program, and a <strong>title</strong> to identify it in the sidebar.
 					</Text>
+					<ImageContainer>
+						<Image
+							src={
+								isDarkMode
+									? darkModeCreateBaseComandTitleIMG
+									: lightModeCreateBaseComandTitle
+							}
+							alt="Inputs to create a new Command with title and base command"
+						/>
+					</ImageContainer>
 					<Text>
 						Create as many <strong>parameters</strong> as needed for your
 						command.
@@ -105,13 +123,20 @@ const About = () => {
 						`personName` and `personAge` are environment variables in your test
 						that you pass in from the CLI.
 					</Text>
+
 					<SubSubtitle id="Parameter Options">Parameter Options</SubSubtitle>
 					<Text>
 						There are five parameter types available: STRING, INTEGER, BOOLEAN,
-						FLAG, and DROPDOWN.
+						FLAG, and DROPDOWN. Each has different options for validation.
 					</Text>
+					<ImageContainer>
+						<Image
+							src={isDarkMode ? darkModePCFIMG : lightModePCFIMG}
+							alt="Parameter Creation UI with inputs for Type, Name, Default Value, Optional (checkbox), min/max length, and Validation Regex"
+						/>
+					</ImageContainer>
 					<Text>
-						STRING, INT, BOOLEAN, and DROPDOWN parameters precede the base
+						STRING, INTEGER, BOOLEAN, and DROPDOWN parameters precede the base
 						command in your generated command.
 					</Text>
 					<Text>
@@ -135,6 +160,18 @@ const About = () => {
 						Enter values for each parameter and copy the generated command to
 						your terminal. You can also set default values for each parameter.
 					</Text>
+					<ImageContainer>
+						<StyledImage
+							src={
+								isDarkMode
+									? darkModeGenMakeNewPersonIMG
+									: lightModeGenMakeNewPersonIMG
+							}
+							alt="Command generation UI. Command is `npx create human` with parameter inputs for personsName, isEmployed, and age"
+							// width={200}
+							// height={100}
+						/>
+					</ImageContainer>
 					<Text>
 						If you made a default value, the parameter will default to that.
 					</Text>
