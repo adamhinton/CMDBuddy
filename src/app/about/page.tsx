@@ -17,6 +17,8 @@ import config from "../../aws-exports";
 import Link from "next/link";
 Amplify.configure({ ...config, ssr: true });
 import styled from "styled-components";
+import Image from "next/image";
+import img from "../../../utils/images/generatemakenewperson-darkmode.png";
 
 const About = () => {
 	return (
@@ -45,7 +47,14 @@ const About = () => {
 						command is generated. This is particularly useful for complex
 						commands with numerous parameters.
 					</Text>
-					<Text>TODO: Image here</Text>
+					<ImageContainer>
+						<StyledImage
+							src={img}
+							alt="Command generation UI. Command is `npx create human` with parameter inputs for personsName, isEmployed, and age"
+							// width={200}
+							// height={100}
+						/>
+					</ImageContainer>
 				</Section>
 
 				<Section id="Getting Started">
@@ -293,26 +302,26 @@ const StyledTableOfContents = styled.nav`
 
 const SubSubtitle = styled.h3`
 	color: ${({ theme }) => theme.aboutPage.subSubtitle};
-	margin-top: 20px; // Adjust as needed
-	margin-bottom: 10px; // Adjust as needed
+	margin-top: 20px;
+	margin-bottom: 10px;
 `;
 
 const ImageContainer = styled.div`
 	border: 2px solid ${({ theme }) => theme.aboutPage.imageBorder};
 	background-color: ${({ theme }) => theme.aboutPage.imageBackground};
-	padding: 10px; // Adjust as needed
+	padding: 10px;
 	max-width: 100%;
-	height: auto; // Adjust height based on your image aspect ratio
-	margin-top: 20px; // Space above the image
-	margin-bottom: 20px; // Space below the image
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Optional shadow for depth
-
-	img {
-		width: 100%;
-		height: auto;
-	}
+	height: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
 	@media (max-width: 768px) {
 		width: 100%;
 	}
+`;
+
+const StyledImage = styled(Image)`
+	width: 100%;
+	height: auto;
 `;
