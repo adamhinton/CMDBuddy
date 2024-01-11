@@ -16,11 +16,18 @@ import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
 import Link from "next/link";
 Amplify.configure({ ...config, ssr: true });
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import Image from "next/image";
-import img from "../../../utils/images/generatemakenewperson-darkmode.png";
+import darkModeGenMakeNewPerson from "../../../utils/images/generatemakenewperson-darkmode.png";
+import lightModeGenMakeNewPerson from "../../../utils/images/generatemakenewperson-lightmode.png";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const About = () => {
+	const isDarkMode = useSelector((state: RootState) => {
+		return state.darkMode.isDarkMode;
+	});
+
 	return (
 		<AboutPageLayout>
 			<TableOfContents headings={toCHeadings} />
@@ -49,7 +56,11 @@ const About = () => {
 					</Text>
 					<ImageContainer>
 						<StyledImage
-							src={img}
+							src={
+								isDarkMode
+									? darkModeGenMakeNewPerson
+									: lightModeGenMakeNewPerson
+							}
 							alt="Command generation UI. Command is `npx create human` with parameter inputs for personsName, isEmployed, and age"
 							// width={200}
 							// height={100}
