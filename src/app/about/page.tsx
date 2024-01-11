@@ -103,7 +103,7 @@ const About = () => {
 							src={
 								isDarkMode
 									? darkModeCreateBaseComandTitleIMG
-									: lightModeCreateBaseComandTitle
+									: lightModeCreateBaseComandTitleIMG
 							}
 							alt="Inputs to create a new Command with title and base command"
 						/>
