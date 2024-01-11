@@ -16,7 +16,6 @@ import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
 import Link from "next/link";
 Amplify.configure({ ...config, ssr: true });
-import styled, { useTheme } from "styled-components";
 import Image from "next/image";
 // These two image show command generation UI
 import darkModeGenMakeNewPersonIMG from "../../../utils/images/generatemakenewperson-darkmode.png";
