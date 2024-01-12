@@ -52,7 +52,7 @@ const About = () => {
 	});
 
 	return (
-		<AboutPageLayout>
+		<AboutPageLayout className="aboutPageLayout">
 			<TableOfContents headings={toCHeadings} />
 
 			<ContentContainer>

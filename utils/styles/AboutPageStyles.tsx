@@ -24,6 +24,7 @@ const CodeBlock = styled.code`
 `;
 
 const AboutPageLayout = styled.div`
+	max-width: 100%;
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
@@ -54,6 +55,10 @@ const StyledTableOfContents = styled.nav`
 	padding: 20px;
 	margin-right: 20px; // space between ToC and content
 	border-right: 2px solid ${({ theme }) => theme.sidebar.dividerColor};
+
+	@media (max-width: 768px) {
+		position: relative;
+	}
 
 	ul {
 		list-style: none;
@@ -117,7 +122,7 @@ const ImageContainer = styled.div`
 	border: 2px solid ${({ theme }) => theme.aboutPage.imageBorder};
 	background-color: ${({ theme }) => theme.aboutPage.imageBackground};
 	padding: 10px;
-	max-width: 100%;
+	max-width: 500px;
 	height: auto;
 	margin-top: 20px;
 	margin-bottom: 20px;
