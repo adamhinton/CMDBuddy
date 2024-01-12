@@ -87,6 +87,8 @@ const validateParameterOnSubmit = (
 				isValid = false;
 			}
 		}
+
+		// INT param validation
 	} else if (parameter.type === "INT") {
 		// TODO: Validate defaultValue against min and max
 		if (
@@ -99,6 +101,31 @@ const validateParameterOnSubmit = (
 				message: "Min value cannot be greater than max value.",
 			});
 			isValid = false;
+		}
+
+		// Ensure default value is not greater than max value or less than min value
+		if (parameter.defaultValue) {
+			if (
+				parameter.maxValue &&
+				Number(parameter.defaultValue) > parameter.maxValue
+			) {
+				setError(`parameters.${index}.defaultValue`, {
+					type: "manual",
+					message: "Default value cannot exceed max value",
+				});
+				isValid = false;
+			}
+
+			if (
+				parameter.minValue &&
+				Number(parameter.defaultValue) < parameter.minValue
+			) {
+				setError(`parameters.${index}.defaultValue`, {
+					type: "manual",
+					message: "Default value cannot be less than min value",
+				});
+				isValid = false;
+			}
 		}
 
 		// Couldn't think of any additional BOOLEAN validations
