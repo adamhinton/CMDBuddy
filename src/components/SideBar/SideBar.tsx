@@ -30,6 +30,7 @@ import {
 // Styled components
 import { SideBarContainer } from "../../../utils/SideBarUtils";
 import CommandInSideBar from "./CommandInSideBar";
+import Link from "next/link";
 
 const { handleCommandTitlesEditSubmit, handleCommandDelete, handleDnDSave } =
 	SideBarUtils;
@@ -90,6 +91,16 @@ const SideBar = () => {
 		setLocalCommands(reduxStateCommands!);
 		setHasChanges(false);
 	};
+
+	if (localCommands.length === 0) {
+		return (
+			<SideBarContainer>
+				<h2>
+					Add commands <Link href="commands/create">here</Link>
+				</h2>
+			</SideBarContainer>
+		);
+	}
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
