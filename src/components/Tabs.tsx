@@ -52,7 +52,7 @@ const SubTabContainer = styled.div`
 	flex-direction: column;
 	background: ${({ theme }) => theme.tabs.activeBackground};
 	padding: 5px 0;
-	z-index: 0; // Position the subtabs below the main tabs
+	z-index: 10; // Position the subtabs below the main tabs
 `;
 
 // This contains the Commands tab, which has sub-tabs on hover so needs extra styling

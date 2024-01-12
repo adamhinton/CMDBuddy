@@ -42,6 +42,7 @@ const Section = styled.section`
 
 const StyledTableOfContents = styled.nav`
 	flex: 0 0 200px;
+	z-index: 1;
 	max-height: 100vh;
 	overflow-y: auto; // scroll on overflow
 	position: sticky;
