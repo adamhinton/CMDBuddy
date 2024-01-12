@@ -3,7 +3,7 @@
 // Features:
 // Edit command title
 // Delete whole command
-// Clicking a command brings it up in the main UI (TODO)
+// Clicking a command brings it up in the main UI
 // Drag and Drop: Can re-order commands in Sidebar. This updates their order in redux state and the db.
 // The DnD is the reason for `localCommands` state. localCommands reflects the unsaved changes to commands order. We only pass those to redux state (and the db) when they hit Save.
 
