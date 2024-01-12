@@ -24,6 +24,8 @@ import { AnyAction, Dispatch } from "redux";
 import { CMDBuddyUser } from "../zod/UserSchema";
 import { UseFormReturn } from "react-hook-form";
 
+// TODO: Make it clear where errors are. Expand Param; maybe toast saying param name and field?
+
 // This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
 const validateParameterOnSubmit = (
 	parameter: AnyParameter,
@@ -34,7 +36,7 @@ const validateParameterOnSubmit = (
 	const { setError } = methods;
 
 	if (parameter.type === "STRING") {
-		// TODO: Validate defaultValue against regex
+		// TODO: Validate defaultValue against regex, and against min/max lengths
 		if (
 			parameter.minLength &&
 			parameter.maxLength &&
@@ -47,13 +49,40 @@ const validateParameterOnSubmit = (
 			isValid = false;
 		}
 
-		if (parameter.validationRegex && parameter.defaultValue) {
-			const regex = new RegExp(parameter.validationRegex);
-			if (!regex.test(parameter.defaultValue)) {
+		// Default value validation
+		if (parameter.defaultValue) {
+			// Make sure default value matches validation regex
+			if (parameter.validationRegex) {
+				const regex = new RegExp(parameter.validationRegex);
+				if (!regex.test(parameter.defaultValue)) {
+					setError(`parameters.${index}.defaultValue`, {
+						type: "manual",
+						message: "Provided default value does not match provided regex",
+					});
+					isValid = false;
+				}
+			}
+
+			if (
+				parameter.maxLength &&
+				parameter.defaultValue.length > parameter.maxLength
+			) {
 				setError(`parameters.${index}.defaultValue`, {
 					type: "manual",
-					message: "Provided default value does not match provided regex",
+					message: "Provided default value is longer than max length",
 				});
+				isValid = false;
+			}
+
+			if (
+				parameter.minLength &&
+				parameter.defaultValue.length < parameter.minLength
+			) {
+				setError(`parameters.${index}.defaultValue`, {
+					type: "manual",
+					message: "Provided default value is shorter than min length",
+				});
+				isValid = false;
 			}
 		}
 	} else if (parameter.type === "INT") {
