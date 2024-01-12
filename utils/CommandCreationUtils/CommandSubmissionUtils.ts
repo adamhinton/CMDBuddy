@@ -46,6 +46,16 @@ const validateParameterOnSubmit = (
 			});
 			isValid = false;
 		}
+
+		if (parameter.validationRegex && parameter.defaultValue) {
+			const regex = new RegExp(parameter.validationRegex);
+			if (!regex.test(parameter.defaultValue)) {
+				setError(`parameters.${index}.defaultValue`, {
+					type: "manual",
+					message: "Provided default value does not match provided regex",
+				});
+			}
+		}
 	} else if (parameter.type === "INT") {
 		// TODO: Validate defaultValue against min and max
 		if (
