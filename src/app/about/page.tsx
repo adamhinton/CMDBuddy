@@ -7,7 +7,6 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-// TODO: ToC appears over subtabs
 // TODO: Looks funny at small screen sizes
 // TODO: Use cases/ideas section
 // TODO: List Key features somewhere
