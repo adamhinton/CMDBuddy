@@ -119,7 +119,6 @@ const SubSubtitle = styled.h3`
 `;
 
 const ImageContainer = styled.div`
-	border: 2px solid ${({ theme }) => theme.aboutPage.imageBorder};
 	padding: 10px;
 	max-width: 100%;
 	height: auto;
@@ -133,6 +132,7 @@ const ImageContainer = styled.div`
 `;
 
 const StyledImage = styled(Image)`
+	border: 2px solid ${({ theme }) => theme.aboutPage.imageBorder};
 	max-width: 100%;
 	height: auto;
 `;
