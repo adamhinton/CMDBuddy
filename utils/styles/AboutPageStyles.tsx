@@ -7,6 +7,8 @@ const Title = styled.h1`
 
 const Subtitle = styled.h2`
 	color: ${({ theme }) => theme.aboutPage.subtitle};
+	padding-top: 10px;
+	border-top: 1px solid ${({ theme }) => theme.aboutPage.borderColor};
 `;
 
 const Text = styled.p`
@@ -37,7 +39,7 @@ const ContentContainer = styled.div`
 `;
 
 const Section = styled.section`
-	margin-bottom: 30px;
+	margin-bottom: 70px;
 `;
 
 const StyledTableOfContents = styled.nav`
@@ -105,8 +107,10 @@ const StyledTableOfContents = styled.nav`
 
 const SubSubtitle = styled.h3`
 	color: ${({ theme }) => theme.aboutPage.subSubtitle};
-	margin-top: 20px;
-	margin-bottom: 10px;
+	margin-top: 30px;
+	margin-bottom: 20px;
+	padding-top: 10px;
+	border-top: 1px dotted ${({ theme }) => theme.aboutPage.borderColor};
 `;
 
 const ImageContainer = styled.div`

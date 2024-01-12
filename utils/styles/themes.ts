@@ -85,6 +85,7 @@ export const lightTheme: DefaultTheme = {
 		imageBorder: "#B2EBF2",
 		imageBackground: "#E0F7FA",
 		toCSubHeading: "#78909C",
+		borderColor: "black",
 	},
 };
 
@@ -173,5 +174,6 @@ export const darkTheme: DefaultTheme = {
 		imageBorder: "#26A69A",
 		imageBackground: "#004D40",
 		tOCSubHeading: "#B0BEC5",
+		borderColor: "white",
 	},
 };

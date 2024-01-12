@@ -68,6 +68,18 @@ export const toCHeadings: TOCHeadings = [
 		title: "Generating your commands",
 	},
 	{
+		title: "Use Cases",
+		subHeadings: [
+			{
+				title: "End To End Testing",
+			},
+			{
+				title: "CI/CD",
+			},
+			{ title: "Automating Routine Tasks" },
+		],
+	},
+	{
 		title: "FAQ",
 	},
 ];

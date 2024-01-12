@@ -188,6 +188,30 @@ const About = () => {
 						If you made a default value, the parameter will default to that.
 					</Text>
 				</Section>
+
+				<Section id="Use Cases">
+					<Subtitle>Use Cases</Subtitle>
+
+					<SubSubtitle id="End To End Testing">End To End Testing</SubSubtitle>
+					<Text>
+						Many E2E tests requrie complex combinations of variables,
+						parameters, data sets and environment configs.
+					</Text>
+
+					<SubSubtitle id="CI/CD">CI/CD</SubSubtitle>
+					<Text>
+						Configure dynamic deployment scripts with parameters like branch
+						names, version tags, and deployment environments
+					</Text>
+
+					<SubSubtitle id="Automating Routine Tasks">
+						Automating Routine Tasks
+					</SubSubtitle>
+					<Text>
+						Store commands for server restarts, clearing caches, updating
+						software, and more!
+					</Text>
+				</Section>
 			</ContentContainer>
 		</AboutPageLayout>
 	);
