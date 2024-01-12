@@ -36,7 +36,6 @@ const validateParameterOnSubmit = (
 	const { setError } = methods;
 
 	if (parameter.type === "STRING") {
-		// TODO: Validate defaultValue against regex, and against min/max lengths
 		if (
 			parameter.minLength &&
 			parameter.maxLength &&
@@ -90,7 +89,6 @@ const validateParameterOnSubmit = (
 
 		// INT param validation
 	} else if (parameter.type === "INT") {
-		// TODO: Validate defaultValue against min and max
 		if (
 			parameter.minValue &&
 			parameter.maxValue &&
