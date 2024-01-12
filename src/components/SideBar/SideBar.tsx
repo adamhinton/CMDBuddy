@@ -31,6 +31,8 @@ import {
 import { SideBarContainer } from "../../../utils/SideBarUtils";
 import CommandInSideBar from "./CommandInSideBar";
 import Link from "next/link";
+import { CMDBuddyCommandFormValidation } from "../CommandCreationComponents/CommandCreationOrEditForm";
+import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 
 const { handleCommandTitlesEditSubmit, handleCommandDelete, handleDnDSave } =
 	SideBarUtils;
@@ -64,7 +66,13 @@ const SideBar = () => {
 	);
 
 	// localCommands is used to locally track drag and drop changes of the commands' order, before the user hits Save
-	const [localCommands, setLocalCommands] = useState(reduxStateCommands || []);
+	const [localCommands, setLocalCommands] = useState<CMDBuddyCommand[]>([]);
+
+	// Changes
+	useEffect(() => {
+		reduxStateCommands && setLocalCommands(reduxStateCommands);
+	}, [reduxStateCommands]);
+
 	// Track if user is currently editing order with DnD.
 	const [hasChanges, setHasChanges] = useState(false);
 

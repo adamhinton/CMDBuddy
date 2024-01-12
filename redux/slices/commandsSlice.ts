@@ -59,6 +59,7 @@ export const commandsSlice = createSlice({
 			const commandId = action.payload;
 			state.commands =
 				state.commands?.filter((cmd) => cmd.id !== commandId) || null;
+			console.log("state.commands:", state.commands);
 		},
 
 		// Each command has an `order` property that determines what order they appear in the UI
