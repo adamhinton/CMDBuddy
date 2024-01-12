@@ -260,7 +260,7 @@ export const DefaultValueInput = ({
 	type: ParameterCreationType;
 	register: UseFormRegister<any>;
 	index: number;
-	parameterErrors: any; // TODO: Specify the correct type here
+	parameterErrors: any;
 }) => {
 	switch (type) {
 		case "STRING":
