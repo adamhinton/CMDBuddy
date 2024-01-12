@@ -181,7 +181,6 @@ const ParameterCreationOrEditForm = ({
 						) : (
 							<StyledUpPlaceholder>Up</StyledUpPlaceholder>
 						)}
-						{/* TODO: Instate real trash icon */}
 						<CMDBuddyTooltip content="Delete Parameter">
 							<StyledTrashPlaceholder
 								onClick={(e) => {

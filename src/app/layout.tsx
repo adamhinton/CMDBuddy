@@ -1,9 +1,8 @@
 // TODO:
 // Any other toasts
 // DND for params
-// Collapse Params && Collapse All && Expand All
 // Error handling - specifically db submissions. Partially done
-// TODO: in /generate, fix default values funniness
+// TODO: in /generate, fix default values funniness. UPDATE 1.12.24: This seems to have gone away. Check again later.
 // TODO: Handle /generate validation
 
 // TODO CCF:
