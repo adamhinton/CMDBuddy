@@ -149,9 +149,6 @@ const submitNewCommandAndParamsToDB = async (
 	formData: CMDBuddyCommandFormValidation,
 	userID: string
 ): Promise<CMDBuddyCommand> => {
-	// Disable submit button and show toast
-	// disableSubmitButton();
-	// showToast("Submitting... Please do not close the page.");
 	let completeCommand: CMDBuddyCommand | null = null;
 
 	try {
