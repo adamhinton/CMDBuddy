@@ -39,7 +39,6 @@ const {
 	CodeBlock,
 	ImageContainer,
 	StyledImage,
-	StyledTableOfContents,
 } = AboutPageStyles;
 
 import { useSelector } from "react-redux";

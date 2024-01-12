@@ -1,3 +1,7 @@
+// README
+// This is the table of contents in /about/page.tsx
+// Each heading has a link to the corresponding section of the ToC, clicking it will jump you there.
+
 import Link from "next/link";
 import { AboutPageStyles } from "../../../utils/styles/AboutPageStyles";
 const { StyledTableOfContents } = AboutPageStyles;
