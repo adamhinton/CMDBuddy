@@ -7,9 +7,7 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-// TODO: Looks funny at small screen sizes
-// TODO: Use cases/ideas section
-// TODO: List Key features somewhere
+// TODO: Slight horizontal scroll bar at small screen sizes
 
 import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
