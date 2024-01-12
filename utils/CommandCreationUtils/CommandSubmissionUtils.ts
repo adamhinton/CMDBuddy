@@ -63,6 +63,7 @@ const validateParameterOnSubmit = (
 				}
 			}
 
+			// Ensure default value isn't longer than max length
 			if (
 				parameter.maxLength &&
 				parameter.defaultValue.length > parameter.maxLength
@@ -74,6 +75,7 @@ const validateParameterOnSubmit = (
 				isValid = false;
 			}
 
+			// Ensure default value isn't shorter than min length
 			if (
 				parameter.minLength &&
 				parameter.defaultValue.length < parameter.minLength
