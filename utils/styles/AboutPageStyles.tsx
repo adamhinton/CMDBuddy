@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Image from "next/image";
 
+// TODO: Better link color in /about/page
+
 const Title = styled.h1`
 	color: ${({ theme }) => theme.aboutPage.title};
 `;
