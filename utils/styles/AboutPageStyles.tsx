@@ -42,7 +42,7 @@ const Section = styled.section`
 
 const StyledTableOfContents = styled.nav`
 	flex: 0 0 200px;
-	z-index: 1;
+	z-index: 1; // Sub-Tabs were appearing under the ToC, so I gave them a higher z-index than ToC
 	max-height: 100vh;
 	overflow-y: auto; // scroll on overflow
 	position: sticky;
