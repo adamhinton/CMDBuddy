@@ -2,7 +2,7 @@ import { DefaultTheme } from "styled-components";
 
 export const lightTheme: DefaultTheme = {
 	colors: {
-		background: "#fff",
+		background: "#e0f7fa",
 		text: "#333",
 		tabBackground: "#e0e0e0",
 		activeTabBackground: "#c0c0c0",
@@ -71,6 +71,21 @@ export const lightTheme: DefaultTheme = {
 		formBackground: "#E3F2FD",
 		linkText: "#004D40",
 		linkHoverText: "#00796B",
+	},
+
+	aboutPage: {
+		title: "#0D47A1",
+		subtitle: "#004D40",
+		text: "#333333",
+		codeBlock: "#E8F5E9",
+		codeText: "#1B5E20",
+		tocBackground: "#E0F2F1",
+		tocText: "#00695C",
+		subSubtitle: "#006064",
+		imageBorder: "#B2EBF2",
+		imageBackground: "#E0F7FA",
+		toCSubHeading: "#78909C",
+		borderColor: "black",
 	},
 };
 
@@ -145,5 +160,20 @@ export const darkTheme: DefaultTheme = {
 		formBackground: "#37474F",
 		linkText: "#80CBC4",
 		linkHoverText: "#A7FFEB",
+	},
+
+	aboutPage: {
+		title: "#80CBC4",
+		subtitle: "#4DB6AC",
+		text: "#ECEFF1",
+		codeBlock: "#263238",
+		codeText: "#B2DFDB",
+		tocBackground: "#37474F",
+		tocText: "#80CBC4",
+		subSubtitle: "#80CBC4",
+		imageBorder: "#26A69A",
+		imageBackground: "#004D40",
+		tOCSubHeading: "#B0BEC5",
+		borderColor: "white",
 	},
 };
