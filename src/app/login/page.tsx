@@ -44,7 +44,7 @@ const Login = () => {
 	const handleLogin = async (user: any) => {
 		if (user) {
 			await setUserAndCommandsToState(user);
-			router.push("/commands");
+			router.push("/commands/generate");
 		}
 	};
 
@@ -60,7 +60,7 @@ const Login = () => {
 	};
 
 	const handleSuccess = () => {
-		router.push("/commands");
+		router.push("/commands/generate");
 	};
 
 	const toggleChangePassword = () => {
