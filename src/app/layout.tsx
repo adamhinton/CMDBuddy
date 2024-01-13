@@ -8,6 +8,7 @@
 // TODO: Figure out home page stuff - not even have a homepage probably
 // TODO: Figure out redirect on login
 // TODO: Background styling. Just universal backgrounds, should be easy
+// TODO: Capability to make commands in localstorage without auth
 
 // TODO CCF:
 // Fix ordering of new/edited commands
