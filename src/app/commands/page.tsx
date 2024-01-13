@@ -19,8 +19,11 @@ const Commands = () => {
 
 	const router = useRouter();
 
+	// Reroutes user to make a command if they don't have any; or to start generating commands if they already have some
 	useEffect(() => {
-		router.push(commands ? "/commands/generate" : "commands/create");
+		router.push(
+			commands && commands.length > 0 ? "/commands/generate" : "commands/create"
+		);
 	});
 
 	// The user should never actually see this
