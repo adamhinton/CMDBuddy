@@ -53,7 +53,7 @@ export default function AuthClientComponent(): null {
 			if (initUser) {
 				router.push("/commands");
 			} else {
-				router.push("/login");
+				router.push("/about");
 			}
 		};
 		fetchData();
