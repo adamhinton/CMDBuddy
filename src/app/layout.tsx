@@ -1,12 +1,8 @@
 // TODO:
-// Any other toasts
 // DND for params
-// Error handling - specifically db submissions. Partially done
 // TODO: in /generate, fix default values funniness. UPDATE 1.12.24: This seems to have gone away. Check again later.
 // TODO: Handle /generate validation
 // TODO: /commands/create cleanup
-// TODO: Figure out home page stuff - not even have a homepage probably
-// TODO: Figure out redirect on login
 // TODO: Background styling. Just universal backgrounds, should be easy
 // TODO: Capability to make commands in localstorage without auth
 
