@@ -5,6 +5,9 @@
 // Each Command has multiple Parameters; they fill out ParameterCreationOrEditForm once per Parameter
 // Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different fields for each
 
+// TODO Important:
+// Make sure no duplicates. No duplicates of param names, no duplicates of Command titles or baseCommands in db.
+
 // TODO:
 // If a param has validation issues on submit, make sure it's expanded or otherwise clear which param
 
