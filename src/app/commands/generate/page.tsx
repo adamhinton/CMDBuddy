@@ -28,7 +28,7 @@ export default function ActiveCommandsPage() {
 		[];
 
 	if (activeCommandIDs.length === 0) {
-		return <h3>Select some commands to start generating!</h3>;
+		return <h3>Select some commands in the Sidebar to start generating!</h3>;
 	}
 
 	return (
