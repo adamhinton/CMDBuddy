@@ -6,6 +6,8 @@
 // TODO: Background styling. Just universal backgrounds, should be easy
 // TODO: Capability to make commands in localstorage without auth
 
+// TODO Stretch: "Reminder" property in Parameter and Command that reminds the user what they're for on hover, like with tooltip.
+
 // TODO CCF:
 // Fix ordering of new/edited commands
 
