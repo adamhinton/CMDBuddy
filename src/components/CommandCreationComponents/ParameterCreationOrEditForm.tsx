@@ -9,6 +9,12 @@
 // FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
+// TODO: General PEF Cleanup
+// -- Better dropdown text input styling
+// -- Better borders, spacing etc
+// -- Clearer toolbar and icons
+// -- replace toolbar Parameter Name with actual Parameter name
+
 // TODO: Improve validation styling.
 // -- Collapse valid params
 // -- Highlight invalid params
