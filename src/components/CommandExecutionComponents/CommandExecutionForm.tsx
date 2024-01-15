@@ -38,8 +38,8 @@ const CEFCommandTitle = styled.h3`
 `;
 
 type CEFTextInputProps = {
-	// This key (inputtype) is all lowercase because React yelled at me for some reason, saying it had to be lower case.
 	inputtype: "STRING" | "INT" | "OTHER";
+	hasError?: boolean; // Optional boolean prop to indicate error state
 };
 
 export const CEFInput = styled.input<CEFTextInputProps>`
@@ -55,7 +55,11 @@ export const CEFInput = styled.input<CEFTextInputProps>`
 	box-sizing: border-box;
 	border: 1px solid ${({ theme }) => theme.commandGeneration.inputText};
 	border-radius: 4px;
-	background: ${({ theme }) => theme.commandGeneration.inputBackground};
+	background: ${({ theme, hasError }) =>
+		hasError
+			? "red"
+			: theme.commandGeneration
+					.inputBackground}; // Change background to red if there is an error
 	color: ${({ theme }) => theme.colors.text};
 `;
 
