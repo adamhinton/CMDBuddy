@@ -1,5 +1,11 @@
 "use client";
 
+// README:
+// This is a sub-component of CommandExecutionForm
+// Here, the user enters a value for an individual Parameter. This is part of the generated Command that is displayed in LiveCommandExecutionPreview
+
+// IMPORTANT NOTE about errors: The user has control of this process. The app validates their Parameter value inputs and alerts them if there's an error (e.g. the input is longer than their specified maxLength), but it doesn't stop the user from generating/copying the command. It's only a guideline.
+
 // TODO: PEFValidationUtils file or something, split this file up
 
 import React from "react";
