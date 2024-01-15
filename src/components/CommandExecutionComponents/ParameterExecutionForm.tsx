@@ -163,6 +163,7 @@ const ParameterExecutionForm = ({
 	};
 
 	return (
+		// Has red background and more stand-out styling if there's a validation error
 		<PEFContainer haserror={hasError}>
 			<CEFLabel htmlFor={parameter.name}>{parameter.name}</CEFLabel>
 			{renderInputField()}
