@@ -37,6 +37,7 @@ const ParameterExecutionForm = ({
 
 	// Validate parameter when user clicks/tabs/etc away from its input
 	// TODO: Make this toast or something
+	// TODO: Add this to other parameer types than String
 	const handleBlur = (
 		e: React.FocusEvent<HTMLInputElement>,
 		parameter: CMDBuddyParameter
@@ -53,6 +54,7 @@ const ParameterExecutionForm = ({
 	// Dummy param validation fxn
 	// TODO: Flesh this out and move it somewhere better
 	// TODO: If error exists, validate on every change without waiting for blur so user knows when it's fixed. Something like this pseudocode:  `onChange: hasError && validate...`
+	// Only has to be done for stuff that's not already in the input
 	const validateParameter = (
 		value: string,
 		parameter: CMDBuddyParameter
