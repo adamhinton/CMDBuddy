@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
@@ -21,14 +22,29 @@ const ParameterExecutionForm = ({
 		formState: { errors },
 	} = useFormContext();
 
+	// Validate parameter when user clicks/tabs/etc away from its input
+	// TODO: Make this toast or something
+	const handleBlur = (
+		e: React.FocusEvent<HTMLInputElement>,
+		parameter: CMDBuddyParameter
+	) => {
+		console.log("handling blur");
+		const error = validateParameter(e.target.value, parameter);
+		if (error) {
+			setError(parameter.name, { type: "manual", message: error });
+		} else {
+			clearErrors(parameter.name);
+		}
+	};
+
 	// Dummy param validation fxn
 	// TODO: Flesh this out and move it somewhere better
 	const validateParameter = (
 		value: string,
 		parameter: CMDBuddyParameter
 	): string | undefined => {
-		// Example: You can add real validation logic here later
 		if (parameter.type === "STRING" && value.length > 10) {
+			console.log("parameter validation failed because length > 10. Yay!");
 			return "String too long"; // Return error message
 		}
 		// No error
@@ -37,20 +53,6 @@ const ParameterExecutionForm = ({
 
 	// Render input based on parameter type
 	const renderInputField = () => {
-		const validateParameter = (value: string, parameter: CMDBuddyParameter) => {
-			// TODO: Flesh this out and put it somewhere better
-			// Dummy validation logic
-			if (
-				parameter.type === "STRING" &&
-				parameter.maxLength &&
-				value.length > parameter.maxLength
-			) {
-				return "String too long";
-			}
-			// Add more conditions based on the parameter type
-			return true;
-		};
-
 		switch (parameter.type) {
 			case "STRING":
 				return (
@@ -64,6 +66,7 @@ const ParameterExecutionForm = ({
 							pattern: parameter.validationRegex
 								? new RegExp(parameter.validationRegex)
 								: undefined,
+							onBlur: (e) => handleBlur(e, parameter),
 						})}
 					/>
 				);
