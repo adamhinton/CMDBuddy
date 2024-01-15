@@ -5,6 +5,7 @@
 // They should have already created a Command and its Parameters. If they haven't, see CommandCreationOrEditForm.tsx
 // This page dynamically generates the Command and its Parameters with the inputted values
 // And displays the completed command on the page.
+// IMPORTANT NOTE about errors: The user has control of this process. The app validates their Parameter value inputs and alerts them if there's an error (e.g. the input is longer than their specified maxLength), but it doesn't stop the user from generating/copying the command. It's only a guideline.
 
 // TODO: Persist CEF state when navigating away
 // TODO: Custom input in dropdown
