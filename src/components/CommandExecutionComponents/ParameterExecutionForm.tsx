@@ -14,10 +14,43 @@ const ParameterExecutionForm = ({
 }: {
 	parameter: CMDBuddyParameter;
 }) => {
-	const { register } = useFormContext();
+	const {
+		register,
+		setError,
+		clearErrors,
+		formState: { errors },
+	} = useFormContext();
+
+	// Dummy param validation fxn
+	// TODO: Flesh this out and move it somewhere better
+	const validateParameter = (
+		value: string,
+		parameter: CMDBuddyParameter
+	): string | undefined => {
+		// Example: You can add real validation logic here later
+		if (parameter.type === "STRING" && value.length > 10) {
+			return "String too long"; // Return error message
+		}
+		// No error
+		return undefined;
+	};
 
 	// Render input based on parameter type
 	const renderInputField = () => {
+		const validateParameter = (value: string, parameter: CMDBuddyParameter) => {
+			// TODO: Flesh this out and put it somewhere better
+			// Dummy validation logic
+			if (
+				parameter.type === "STRING" &&
+				parameter.maxLength &&
+				value.length > parameter.maxLength
+			) {
+				return "String too long";
+			}
+			// Add more conditions based on the parameter type
+			return true;
+		};
+
 		switch (parameter.type) {
 			case "STRING":
 				return (
