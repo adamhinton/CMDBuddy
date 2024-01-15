@@ -114,15 +114,18 @@ const removeCommandOnClick = (
 	e.preventDefault();
 	dispatch(removeSingleActiveCommand(commandID));
 };
-type DefaultValues = Record<string, any>;
+export type CEFDefaultValues = Record<string, any>;
 
 const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 	const methods = useForm({
 		// This looks weird but it just sets each parameter's initial value to its defaultValue (if any)
-		defaultValues: command.parameters?.reduce((acc: DefaultValues, param) => {
-			acc[param.name] = param.defaultValue || ""; // Set default value or fallback to empty string
-			return acc;
-		}, {} as DefaultValues),
+		defaultValues: command.parameters?.reduce(
+			(acc: CEFDefaultValues, param) => {
+				acc[param.name] = param.defaultValue || ""; // Set default value or fallback to empty string
+				return acc;
+			},
+			{} as CEFDefaultValues
+		),
 	});
 
 	const dispatch = useDispatch();
@@ -142,7 +145,13 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 				/>
 				<CEFParametersContainer>
 					{parameters?.map((param) => {
-						return <ParameterExecutionForm parameter={param} key={param.id} />;
+						return (
+							<ParameterExecutionForm
+								parameter={param}
+								key={param.id}
+								methods={methods}
+							/>
+						);
 					})}
 				</CEFParametersContainer>
 

@@ -9,20 +9,22 @@
 // TODO: PEFValidationUtils file or something, split this file up
 
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { DefaultValues, UseFormReturn, useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
 import {
+	CEFDefaultValues,
 	CEFInput,
 	CEFLabel,
 	CEFOption,
 	CEFSelect,
 } from "./CommandExecutionForm";
 import styled from "styled-components";
-
 const ParameterExecutionForm = ({
 	parameter,
+	methods,
 }: {
 	parameter: CMDBuddyParameter;
+	methods: UseFormReturn<CEFDefaultValues, any, undefined>;
 }) => {
 	const {
 		register,
@@ -78,7 +80,13 @@ const ParameterExecutionForm = ({
 							pattern: parameter.validationRegex
 								? new RegExp(parameter.validationRegex)
 								: undefined,
-							onBlur: (e) => handleBlur(e, parameter),
+							// Onblur is when the user clicks/tabs/etc away from the input
+							onBlur: (e) => {
+								// Built in form validation
+								methods.trigger(parameter.name);
+								// Additional custom validation
+								handleBlur(e, parameter);
+							},
 						})}
 					/>
 				);
