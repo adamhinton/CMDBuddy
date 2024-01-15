@@ -1,3 +1,5 @@
+"use client";
+
 // README:
 // In this form, the user enters in values for Parameters.
 // They should have already created a Command and its Parameters. If they haven't, see CommandCreationOrEditForm.tsx
@@ -6,6 +8,8 @@
 
 // TODO: Persist CEF state when navigating away
 // TODO: Custom input in dropdown
+
+// TODO: In PEF, on hover over a param, show its attributes (maxLength etc)
 
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import { removeSingleActiveCommand } from "../../../redux/slices/activeCommandsSlice";

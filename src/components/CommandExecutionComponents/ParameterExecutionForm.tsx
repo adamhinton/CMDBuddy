@@ -22,6 +22,8 @@ const ParameterExecutionForm = ({
 		formState: { errors },
 	} = useFormContext();
 
+	const hasError = errors[parameter.name] ? true : false;
+
 	// Validate parameter when user clicks/tabs/etc away from its input
 	// TODO: Make this toast or something
 	const handleBlur = (
@@ -39,6 +41,7 @@ const ParameterExecutionForm = ({
 
 	// Dummy param validation fxn
 	// TODO: Flesh this out and move it somewhere better
+	// TODO: If error exists, validate on every change without waiting for blur so user knows when it's fixed
 	const validateParameter = (
 		value: string,
 		parameter: CMDBuddyParameter
@@ -157,29 +160,36 @@ const ParameterExecutionForm = ({
 	};
 
 	return (
-		<PEFContainer>
+		<PEFContainer haserror={hasError}>
 			<CEFLabel htmlFor={parameter.name}>{parameter.name}</CEFLabel>
 			{renderInputField()}
 		</PEFContainer>
 	);
 };
 
-const PEFContainer = styled.div`
+// Pass in optional error
+// If there's an error we do additional styling to make that clear
+// React is making me spell haserror all lower case for some reason
+const PEFContainer = styled.div<{ haserror?: boolean }>`
 	display: flex;
 	flex-direction: row;
 	max-width: 400px;
-	background: ${({ theme }) => theme.commandGeneration.inputBackground};
+	background: ${({ theme, haserror }) =>
+		haserror
+			? "rgba(255, 0, 0, 0.1)"
+			: theme.commandGeneration.inputBackground};
 	padding: 0.2rem;
 	border-radius: 4px;
 	margin-bottom: 0.75rem;
-	border: 1px solid ${({ theme }) => theme.colors.text};
-	transition: box-shadow 0.3s ease;
+	border: ${({ theme, haserror }) =>
+		haserror ? "2px solid red" : `1px solid ${theme.colors.text}`};
+	transition: box-shadow 0.3s ease, border 0.3s ease, background-color 0.3s ease;
 
 	&:hover {
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Soft shadow on hover for interactivity
+		box-shadow: ${({ haserror }) =>
+			haserror ? "0 0 10px red" : "0 2px 4px rgba(0, 0, 0, 0.1)"};
 	}
 `;
-
 const FlagOrBooleanPEFLabel = styled.div`
 	display: flex;
 	align-items: center;
