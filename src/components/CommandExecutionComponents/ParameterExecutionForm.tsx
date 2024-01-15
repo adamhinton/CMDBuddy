@@ -50,7 +50,7 @@ const ParameterExecutionForm = ({
 
 	// Dummy param validation fxn
 	// TODO: Flesh this out and move it somewhere better
-	// TODO: If error exists, validate on every change without waiting for blur so user knows when it's fixed
+	// TODO: If error exists, validate on every change without waiting for blur so user knows when it's fixed. Something like this pseudocode:  `onChange: hasError && validate...`
 	const validateParameter = (
 		value: string,
 		parameter: CMDBuddyParameter
