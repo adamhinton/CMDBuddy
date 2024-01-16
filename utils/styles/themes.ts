@@ -53,6 +53,9 @@ export const lightTheme: DefaultTheme = {
 		selectText: "#333",
 		inputBorderColor: "#ccc",
 		inputHoverBorderColor: "#bbb",
+		errorBackground: "#FFF3F3",
+		errorItemBackground: "#FFEDED",
+		errorBorderLeftColor: "#FF5C5C",
 	},
 	login: {
 		buttonBackground: "#B3E5FC",
@@ -142,6 +145,9 @@ export const darkTheme: DefaultTheme = {
 		selectText: "#f5f5f5",
 		inputBorderColor: "#ccc",
 		inputHoverBorderColor: "#bbb",
+		errorBackground: "#2A2A2A",
+		errorItemBackground: "333333",
+		errorBorderLeftColor: "#E57373",
 	},
 	login: {
 		buttonBackground: "#546E7A",

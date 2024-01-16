@@ -49,7 +49,7 @@ const ErrorContainer = styled.ul`
 	list-style: none;
 	padding: 0;
 	margin: 0 0 1rem 0;
-	max-height: 100px; // To limit the display to a certain height, adjustable
+	max-height: 100px;
 	overflow-y: auto; // Allows scrolling if there are more errors than can be displayed
 	background-color: ${({ theme }) => theme.commandGeneration.errorBackground};
 `;
