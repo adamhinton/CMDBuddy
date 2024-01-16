@@ -37,6 +37,7 @@ const ParameterExecutionForm = ({
 
 	const hasError = errors[parameter.name] ? true : false;
 
+	// TODO: handleBlur and validateParameter may not be necessary, I think the in-built validation handles everything
 	// Validate parameter when user clicks/tabs/etc away from its input
 	// TODO: Make this toast or something
 	// TODO: Add this to other parameer types than String
