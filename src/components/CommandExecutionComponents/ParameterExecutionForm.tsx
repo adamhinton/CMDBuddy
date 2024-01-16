@@ -225,14 +225,14 @@ const ParameterExecutionForm = ({
 
 	return (
 		// Has red background and more stand-out styling if there's a validation error
-		<PEFContainer haserror={hasError}>
+		<PEFContainer haserror={hasError || undefined}>
 			<CEFLabel htmlFor={parameter.name}>{parameter.name}</CEFLabel>
 			{renderInputField()}
 		</PEFContainer>
 	);
 };
 
-// Pass in optional error
+// Pass in optional validation error
 // If there's an error we do additional styling to make that clear
 // React is making me spell haserror all lower case for some reason
 const PEFContainer = styled.div<{ haserror?: boolean }>`
