@@ -95,6 +95,7 @@ const ParameterExecutionForm = ({
 										message: `This field does not match the required pattern: ${parameter.validationRegex}`,
 								  }
 								: undefined,
+							// TODO: this onBlur may not be necessary; it would be for custom validation but I think the above validation stuff does everything I need.
 							onBlur: (e) => {
 								// Trigger the validation for this field on blur
 								methods.trigger(parameter.name);
