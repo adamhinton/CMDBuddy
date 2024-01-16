@@ -5,6 +5,7 @@
 // TODO: /commands/create cleanup
 // TODO: Background styling. Just universal backgrounds, should be easy
 // TODO: Capability to make commands in localstorage without auth
+// TODO: Max #commands per user and #params per command
 
 // TODO Stretch: "Reminder" property in Parameter and Command that reminds the user what they're for on hover, like with tooltip.
 
