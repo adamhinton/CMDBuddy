@@ -9,6 +9,7 @@
 
 // TODO: Persist CEF state when navigating away
 // TODO: Custom input in dropdown
+// TODO: Collapse CEF functionality
 
 // TODO: In PEF, on hover over a param, show its attributes (maxLength etc)
 
