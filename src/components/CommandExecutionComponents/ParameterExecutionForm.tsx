@@ -8,6 +8,8 @@
 
 // TODO: PEFValidationUtils file or something, split this file up
 
+// TODO: Optional null values in boolean and dropdown - right now they have to select something. Just if isNullable they can select no value
+
 import React from "react";
 import { DefaultValues, UseFormReturn, useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
@@ -57,9 +59,9 @@ const ParameterExecutionForm = ({
 	// Only has to be done for stuff that's not already in the input
 	const validateParameter = (
 		value: string,
-		parameter: CMDBuddyParameter
+		parameter: CMDBuddyParameterfsa
 	): string | undefined => {
-		if (parameter.type === "STRING" && value.length > 10) {
+		if (parameter.type === "STRING" && value.length < 10) {
 			console.log("parameter validation failed because length > 10. Yay!");
 			return "String too long"; // Return error message
 		}
@@ -101,6 +103,10 @@ const ParameterExecutionForm = ({
 							required: !parameter.isNullable,
 							max: parameter.maxValue,
 							min: parameter.minValue,
+							// Trigger validation when user clicks/tabs away
+							onBlur: (e) => {
+								methods.trigger(parameter.name);
+							},
 						})}
 					/>
 				);
@@ -113,6 +119,10 @@ const ParameterExecutionForm = ({
 								value="true"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
+									// Trigger validation when user clicks/tabs away
+									onBlur: (e) => {
+										methods.trigger(parameter.name);
+									},
 								})}
 								inputtype="OTHER"
 							/>
@@ -124,6 +134,10 @@ const ParameterExecutionForm = ({
 								value="false"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
+									// Trigger validation when user clicks/tabs away
+									onBlur: (e) => {
+										methods.trigger(parameter.name);
+									},
 								})}
 								inputtype="OTHER"
 							/>
@@ -137,6 +151,10 @@ const ParameterExecutionForm = ({
 						{...register(parameter.name, {
 							required: !parameter.isNullable,
 							value: parameter.defaultValue,
+							// Trigger validation when user clicks/tabs away
+							onBlur: (e) => {
+								methods.trigger(parameter.name);
+							},
 						})}
 					>
 						{parameter.allowedValues?.map((value) => (
@@ -155,6 +173,10 @@ const ParameterExecutionForm = ({
 								value="On"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
+									// Trigger validation when user clicks/tabs away
+									onBlur: (e) => {
+										methods.trigger(parameter.name);
+									},
 								})}
 								inputtype="OTHER"
 							/>
@@ -166,6 +188,10 @@ const ParameterExecutionForm = ({
 								value="Off"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
+									// Trigger validation when user clicks/tabs away
+									onBlur: (e) => {
+										methods.trigger(parameter.name);
+									},
 								})}
 								inputtype="OTHER"
 							/>

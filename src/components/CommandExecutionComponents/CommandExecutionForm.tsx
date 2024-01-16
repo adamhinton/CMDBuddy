@@ -17,7 +17,7 @@ import { removeSingleActiveCommand } from "../../../redux/slices/activeCommandsS
 import { useDispatch } from "react-redux";
 import ParameterExecutionForm from "./ParameterExecutionForm";
 import React from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import LiveCommandExecutionPreview from "./LiveCommandExecutionPreview";
 import styled from "styled-components";
 
@@ -40,6 +40,29 @@ const CEFCommandTitle = styled.h3`
 	font-size: 1.5rem;
 	color: ${({ theme }) => theme.commandGeneration.baseText};
 	margin: 0.5rem 0;
+`;
+
+// Error container that will hold multiple error messages
+// Will have a maximum of three ErrorItems
+const ErrorContainer = styled.ul`
+	list-style: none;
+	padding: 0;
+	margin: 0 0 1rem 0;
+	max-height: 100px; // To limit the display to a certain height, adjustable
+	overflow-y: auto; // Allows scrolling if there are more errors than can be displayed
+	background-color: ${({ theme }) => theme.commandGeneration.errorBackground};
+`;
+
+// Individual error message styling
+// Up to three of these at a time will be in Error Container
+const ErrorItem = styled.li`
+	color: ${({ theme }) => theme.commandGeneration.errorTextColor};
+	background-color: ${({ theme }) =>
+		theme.commandGeneration.errorItemBackground};
+	border-left: 4px solid
+		${({ theme }) => theme.commandGeneration.errorBorderLeftColor};
+	padding: 0.5rem;
+	margin-bottom: 0.5rem; // Gives space between individual errors
 `;
 
 type CEFTextInputProps = {
@@ -133,12 +156,26 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 
 	const { watch } = methods;
 
+	// Error handling
+	// Display parameter errors here rather than in individual Parameter inputs to reduce clutter
+	// This displays a max of three errors at a time
+	// Shows parameter's name and a brief error message
+	const errors = methods.formState.errors;
+	console.log("errors:", errors);
+	// This function will create a list of error elements
+	const errorList = Object.keys(errors)
+		.slice(0, 3) // Limit to a maximum of three errors
+		.map((key) => (
+			<ErrorItem key={key}>{`${key}: ${errors[key].message}`}</ErrorItem>
+		));
+
 	return (
 		<FormProvider {...methods}>
 			<CEFForm>
 				<CEFHeader>
 					<CEFCommandTitle>{command.title}</CEFCommandTitle>
 				</CEFHeader>
+				{errorList.length > 0 && <ErrorContainer>{errorList}</ErrorContainer>}
 				<LiveCommandExecutionPreview
 					baseCommand={command.baseCommand}
 					parameters={command.parameters}
