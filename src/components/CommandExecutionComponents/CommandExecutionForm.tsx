@@ -44,6 +44,7 @@ const CEFCommandTitle = styled.h3`
 
 // Error container that will hold multiple error messages
 // Will have a maximum of three ErrorItems
+// TODO: Define background color in theme object
 const ErrorContainer = styled.ul`
 	list-style: none;
 	padding: 0;
@@ -55,6 +56,7 @@ const ErrorContainer = styled.ul`
 
 // Individual error message styling
 // Up to three of these at a time will be in Error Container
+// TODO: Define border, text  color etc in theme object
 const ErrorItem = styled.li`
 	color: ${({ theme }) => theme.commandGeneration.errorTextColor};
 	background-color: ${({ theme }) =>

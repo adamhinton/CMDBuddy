@@ -110,11 +110,19 @@ const ParameterExecutionForm = ({
 						inputtype="INT"
 						type="number"
 						{...register(parameter.name, {
-							required: !parameter.isNullable,
-							max: parameter.maxValue,
-							min: parameter.minValue,
-							// Trigger validation when user clicks/tabs away
+							required: parameter.isNullable
+								? undefined
+								: "This field is required.",
+							max: {
+								value: Number(parameter.maxValue),
+								message: `The value cannot be greater than ${parameter.maxValue}.`,
+							},
+							min: {
+								value: Number(parameter.minValue),
+								message: `The value cannot be less than ${parameter.minValue}.`,
+							},
 							onBlur: (e) => {
+								// Trigger validation when the user clicks/tabs away from the input
 								methods.trigger(parameter.name);
 							},
 						})}
@@ -128,8 +136,8 @@ const ParameterExecutionForm = ({
 								type="radio"
 								value="true"
 								{...register(parameter.name, {
-									required: !parameter.isNullable,
-									// Trigger validation when user clicks/tabs away
+									// This validation shouldn't ever actually be triggered
+									required: "Please select an option.",
 									onBlur: (e) => {
 										methods.trigger(parameter.name);
 									},
@@ -143,8 +151,8 @@ const ParameterExecutionForm = ({
 								type="radio"
 								value="false"
 								{...register(parameter.name, {
-									required: !parameter.isNullable,
-									// Trigger validation when user clicks/tabs away
+									// This validation shouldn't ever actually be triggered
+									required: "Please select an option.",
 									onBlur: (e) => {
 										methods.trigger(parameter.name);
 									},
@@ -159,10 +167,11 @@ const ParameterExecutionForm = ({
 				return (
 					<CEFSelect
 						{...register(parameter.name, {
-							required: !parameter.isNullable,
-							value: parameter.defaultValue,
-							// Trigger validation when user clicks/tabs away
+							required: parameter.isNullable
+								? undefined
+								: "This field is required.",
 							onBlur: (e) => {
+								// Trigger validation when the user clicks/tabs away from the dropdown
 								methods.trigger(parameter.name);
 							},
 						})}
