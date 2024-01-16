@@ -59,7 +59,7 @@ const ParameterExecutionForm = ({
 	// Only has to be done for stuff that's not already in the input
 	const validateParameter = (
 		value: string,
-		parameter: CMDBuddyParameterfsa
+		parameter: CMDBuddyParameter
 	): string | undefined => {
 		if (parameter.type === "STRING" && value.length < 10) {
 			console.log("parameter validation failed because length > 10. Yay!");
@@ -78,18 +78,26 @@ const ParameterExecutionForm = ({
 						inputtype="STRING"
 						type="text"
 						{...register(parameter.name, {
-							required: !parameter.isNullable,
-							maxLength: parameter.maxLength,
-							minLength: parameter.minLength,
+							required: parameter.isNullable
+								? undefined
+								: "This field is required.",
+							maxLength: {
+								value: parameter.maxLength || Infinity,
+								message: `Maximum length is ${parameter.maxLength} characters.`,
+							},
+							minLength: {
+								value: parameter.minLength || 0,
+								message: `Minimum length is ${parameter.minLength} characters.`,
+							},
 							pattern: parameter.validationRegex
-								? new RegExp(parameter.validationRegex)
+								? {
+										value: new RegExp(parameter.validationRegex),
+										message: `This field does not match the required pattern: ${parameter.validationRegex}`,
+								  }
 								: undefined,
-							// Onblur is when the user clicks/tabs/etc away from the input
 							onBlur: (e) => {
-								// Built in form validation
+								// Trigger the validation for this field on blur
 								methods.trigger(parameter.name);
-								// Additional custom validation
-								handleBlur(e, parameter);
 							},
 						})}
 					/>
