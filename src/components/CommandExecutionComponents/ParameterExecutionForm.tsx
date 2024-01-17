@@ -6,19 +6,19 @@
 
 // IMPORTANT NOTE about errors: The user has control of this process. The app validates their Parameter value inputs and alerts them if there's an error (e.g. the input is longer than their specified maxLength), but it doesn't stop the user from generating/copying the command. It's only a guideline.
 
-// TODO: PEFValidationUtils file or something, split this file up
-
 import React from "react";
-import { DefaultValues, UseFormReturn, useFormContext } from "react-hook-form";
+import { UseFormReturn, useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
-import {
-	CEFDefaultValues,
+import CEFStyles from "../../../utils/CommandExecutionUtils/CommandExecutionStyles";
+const {
 	CEFInput,
 	CEFLabel,
 	CEFOption,
 	CEFSelect,
-} from "./CommandExecutionForm";
-import styled from "styled-components";
+	FlagOrBooleanPEFLabel,
+	PEFContainer,
+} = CEFStyles;
+import { CEFDefaultValues } from "./CommandExecutionForm";
 const ParameterExecutionForm = ({
 	parameter,
 	methods,
@@ -28,8 +28,6 @@ const ParameterExecutionForm = ({
 }) => {
 	const {
 		register,
-		setError,
-		clearErrors,
 		formState: { errors },
 	} = useFormContext();
 
@@ -219,34 +217,5 @@ const ParameterExecutionForm = ({
 		</PEFContainer>
 	);
 };
-
-// Pass in optional validation error
-// If there's an error we do additional styling to make that clear
-// React is making me spell haserror all lower case for some reason
-const PEFContainer = styled.div<{ haserror?: boolean }>`
-	display: flex;
-	flex-direction: row;
-	max-width: 400px;
-	background: ${({ theme, haserror }) =>
-		haserror
-			? "rgba(255, 0, 0, 0.1)"
-			: theme.commandGeneration.inputBackground};
-	padding: 0.2rem;
-	border-radius: 4px;
-	margin-bottom: 0.75rem;
-	border: ${({ theme, haserror }) =>
-		haserror ? "2px solid red" : `1px solid ${theme.colors.text}`};
-	transition: box-shadow 0.3s ease, border 0.3s ease, background-color 0.3s ease;
-
-	&:hover {
-		box-shadow: ${({ haserror }) =>
-			haserror ? "0 0 10px red" : "0 2px 4px rgba(0, 0, 0, 0.1)"};
-	}
-`;
-const FlagOrBooleanPEFLabel = styled.div`
-	display: flex;
-	align-items: center;
-	margin-right: 1rem;
-`;
 
 export default ParameterExecutionForm;
