@@ -59,6 +59,7 @@ type FormProps = {
 	isCollapsed: boolean;
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
 	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>;
+	dragHandleProps: any;
 };
 
 import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
@@ -75,6 +76,7 @@ import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
+import { DragHandle } from "../../../utils/SideBarUtils";
 
 const {
 	StringParameterFields,
@@ -100,6 +102,7 @@ const ParameterCreationOrEditForm = ({
 	setValue,
 	update,
 	getValues,
+	dragHandleProps,
 }: FormProps) => {
 	const {
 		register,
@@ -184,7 +187,11 @@ const ParameterCreationOrEditForm = ({
 						update(index, { ...param, isCollapsed: !isCollapsed });
 					}}
 				>
-					<ParameterName>ParameterName</ParameterName>
+					<ParameterName>{getValues(`parameters.${index}`).name}</ParameterName>
+
+					<DragHandle {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
+						⋮⋮
+					</DragHandle>
 					<IconWrapper>
 						{/* TODO: Instate real up/down icons */}
 						{isCollapsed ? (

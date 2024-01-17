@@ -38,7 +38,7 @@ import Link from "next/link";
 import { CommandCreationUIElements } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 import "tippy.js/dist/tippy.css";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
-import { DragDropContext, Droppable } from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { StrictModeDroppable } from "../SideBar/SideBar";
 
 const { AnyParameterSchema } = CommandCreationZodSchemas;
@@ -204,6 +204,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 	const onDragEnd = (result: any) => {
 		if (!result.destination) return;
+		console.log("result:", result);
 
 		// const items = Array.from(localCommands || []);
 		// const [reorderedItem] = items.splice(result.source.index, 1);
@@ -295,16 +296,32 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 							<div {...provided.droppableProps} ref={provided.innerRef}>
 								{fields.map((field, index) => {
 									return (
-										<ParameterCreationOrEditForm
+										<Draggable
 											key={field.id}
+											draggableId={field.id}
 											index={index}
-											removeParameter={() => remove(index)}
-											parameterCreationType={field.type}
-											setValue={setValue}
-											isCollapsed={field.isCollapsed!}
-											update={update}
-											getValues={methods.getValues}
-										/>
+										>
+											{(provided) => {
+												return (
+													<span
+														ref={provided.innerRef}
+														{...provided.draggableProps}
+													>
+														<ParameterCreationOrEditForm
+															key={field.id}
+															index={index}
+															removeParameter={() => remove(index)}
+															parameterCreationType={field.type}
+															setValue={setValue}
+															isCollapsed={field.isCollapsed!}
+															update={update}
+															getValues={methods.getValues}
+															dragHandleProps={provided.dragHandleProps}
+														/>
+													</span>
+												);
+											}}
+										</Draggable>
 									);
 								})}
 							</div>
