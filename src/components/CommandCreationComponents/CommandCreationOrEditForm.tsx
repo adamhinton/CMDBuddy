@@ -30,15 +30,12 @@ import {
 	StyledCCFInput,
 	StyledCCFError,
 	StyledCommandCreationDisclaimer,
-	StyledCCFButton,
-	StyledCommandInputContainer,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CommandSubmitUtils } from "../../../utils/CommandCreationUtils/CommandSubmissionUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { CommandCreationZodSchemas } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import Link from "next/link";
 import { CommandCreationUIElements } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
-import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css"; // optional
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 
