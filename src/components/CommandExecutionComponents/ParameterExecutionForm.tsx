@@ -37,39 +37,6 @@ const ParameterExecutionForm = ({
 
 	const hasError = errors[parameter.name] ? true : false;
 
-	// TODO: handleBlur and validateParameter may not be necessary, I think the in-built validation handles everything
-	// Validate parameter when user clicks/tabs/etc away from its input
-	// TODO: Make this toast or something
-	// TODO: Add this to other parameer types than String
-	const handleBlur = (
-		e: React.FocusEvent<HTMLInputElement>,
-		parameter: CMDBuddyParameter
-	) => {
-		console.log("handling blur");
-		const error = validateParameter(e.target.value, parameter);
-		if (error) {
-			setError(parameter.name, { type: "manual", message: error });
-		} else {
-			clearErrors(parameter.name);
-		}
-	};
-
-	// Dummy param validation fxn
-	// TODO: Flesh this out and move it somewhere better
-	// TODO: If error exists, validate on every change without waiting for blur so user knows when it's fixed. Something like this pseudocode:  `onChange: hasError && validate...`
-	// Only has to be done for stuff that's not already in the input
-	const validateParameter = (
-		value: string,
-		parameter: CMDBuddyParameter
-	): string | undefined => {
-		if (parameter.type === "STRING" && value.length < 10) {
-			console.log("parameter validation failed because length > 10. Yay!");
-			return "String too long"; // Return error message
-		}
-		// No error
-		return undefined;
-	};
-
 	// Render input based on parameter type
 	const renderInputField = () => {
 		switch (parameter.type) {
@@ -96,7 +63,6 @@ const ParameterExecutionForm = ({
 										message: `This field does not match the required pattern: ${parameter.validationRegex}`,
 								  }
 								: undefined,
-							// TODO: this onBlur may not be necessary; it would be for custom validation but I think the above validation stuff does everything I need.
 							onBlur: (e) => {
 								// Trigger the validation for this field on blur
 								methods.trigger(parameter.name);
