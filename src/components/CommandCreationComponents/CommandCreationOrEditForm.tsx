@@ -36,7 +36,7 @@ import LiveCommandPreview from "./LiveCommandCreationPreview";
 import { CommandCreationZodSchemas } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import Link from "next/link";
 import { CommandCreationUIElements } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
-import "tippy.js/dist/tippy.css"; // optional
+import "tippy.js/dist/tippy.css";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 
 const { AnyParameterSchema } = CommandCreationZodSchemas;
