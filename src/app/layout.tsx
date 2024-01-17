@@ -1,7 +1,5 @@
 // TODO:
 // DND for params
-// TODO: in /generate, fix default values funniness. UPDATE 1.12.24: This seems to have gone away. Check again later.
-// TODO: Handle /generate validation
 // TODO: /commands/create cleanup
 // TODO: Background styling. Just universal backgrounds, should be easy
 // TODO: Capability to make commands in localstorage without auth
@@ -23,6 +21,7 @@ import Tabs from "@/components/Tabs";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 // Using react-toastify to alert user of various things with toasts.
 import ToastWrapper from "../../utils/ToastWrapper";
+import { createGlobalStyle } from "styled-components";
 
 export const metadata = {
 	title: "Next.js",
