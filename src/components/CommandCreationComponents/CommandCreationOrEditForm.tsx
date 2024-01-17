@@ -38,6 +38,8 @@ import Link from "next/link";
 import { CommandCreationUIElements } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 import "tippy.js/dist/tippy.css";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
+import { DragDropContext, Droppable } from "@hello-pangea/dnd";
+import { StrictModeDroppable } from "../SideBar/SideBar";
 
 const { AnyParameterSchema } = CommandCreationZodSchemas;
 const { collapseAllParams, parameterCreationButtons } =
@@ -200,6 +202,17 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		}
 	};
 
+	const onDragEnd = (result: any) => {
+		if (!result.destination) return;
+
+		// const items = Array.from(localCommands || []);
+		// const [reorderedItem] = items.splice(result.source.index, 1);
+		// items.splice(result.destination.index, 0, reorderedItem);
+
+		// setLocalCommands(items);
+		// setHasChanges(true); // tracks if user is currently changing order of commands with DnD
+	};
+
 	return (
 		<FormProvider {...methods}>
 			<StyledCCFForm
@@ -276,25 +289,31 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				</div>
 				{/* As many parameter creation forms as user wants */}
 				{/* `fields` is what the function calls `parameters` */}
-				{fields.map((field, index) => {
-					return (
-						<ParameterCreationOrEditForm
-							key={field.id}
-							index={index}
-							removeParameter={() => remove(index)}
-							parameterCreationType={field.type}
-							setValue={setValue}
-							isCollapsed={field.isCollapsed!}
-							update={update}
-							getValues={methods.getValues}
-						/>
-					);
-				})}
-
-				{/* This shows an example of the Command the user has created. */}
+				<DragDropContext onDragEnd={onDragEnd}>
+					<StrictModeDroppable droppableId="parameters">
+						{(provided) => (
+							<div {...provided.droppableProps} ref={provided.innerRef}>
+								{fields.map((field, index) => {
+									return (
+										<ParameterCreationOrEditForm
+											key={field.id}
+											index={index}
+											removeParameter={() => remove(index)}
+											parameterCreationType={field.type}
+											setValue={setValue}
+											isCollapsed={field.isCollapsed!}
+											update={update}
+											getValues={methods.getValues}
+										/>
+									);
+								})}
+							</div>
+						)}
+					</StrictModeDroppable>
+				</DragDropContext>
+				s{/* This shows an example of the Command the user has created. */}
 				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}
 				<LiveCommandPreview watch={watch} />
-
 				{/*  Reusable parameter creation buttons: "Add new parameter", "Clear
 				form", "Submit", "Collapse All Params" */}
 				{/* Made a function for this because it's used twice in this component */}
