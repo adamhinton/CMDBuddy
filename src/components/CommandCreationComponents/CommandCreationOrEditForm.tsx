@@ -48,12 +48,7 @@ const { AnyParameterSchema } = CommandCreationZodSchemas;
 const { collapseAllParams, parameterCreationButtons } =
 	CommandCreationUIElements;
 
-const {
-	validateParameterOnSubmit,
-	submitParamEditsToDB,
-	submitNewCommandAndParamsToDB,
-	handleSubmit,
-} = CommandSubmitUtils;
+const { handleSubmit } = CommandSubmitUtils;
 
 // Creating a specific schema for command creation mode
 // This is because the user doesn't define things like `id` or `order`
@@ -337,7 +332,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						)}
 					</StrictModeDroppable>
 				</DragDropContext>
-				s{/* This shows an example of the Command the user has created. */}
+				{/* This shows an example of the Command the user has created. */}
 				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}
 				<LiveCommandPreview watch={watch} />
 				{/*  Reusable parameter creation buttons: "Add new parameter", "Clear

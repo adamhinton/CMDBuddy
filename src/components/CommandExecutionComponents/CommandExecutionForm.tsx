@@ -11,7 +11,7 @@
 // TODO: Custom input in dropdown
 // TODO: Collapse CEF functionality
 
-// TODO: In PEF, on hover over a param, show its attributes (maxLength etc)
+// TODO Stretch: In PEF, on hover over a param, show its attributes (maxLength etc)
 
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import { removeSingleActiveCommand } from "../../../redux/slices/activeCommandsSlice";
