@@ -104,6 +104,12 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 	const dispatch = useDispatch();
 
+	// Getting how many Commands the user has to pass to OnSubmit
+	// Because this app allows max 50 Commands per user to prevent spamming the DB
+	const numCommands = useSelector((state: RootState) => {
+		return state.commands.commands?.length;
+	});
+
 	const methods = useForm<CMDBuddyCommandFormValidation>({
 		// Form validation is either "edit" mode or "create" mode
 		resolver: zodResolver(
@@ -208,6 +214,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						commandToEdit: commandToEdit ? commandToEdit : null,
 						methods,
 						remove,
+						numCommands,
 					});
 				})}
 			>

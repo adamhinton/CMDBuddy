@@ -23,6 +23,10 @@ import {
 import { AnyAction, Dispatch } from "redux";
 import { CMDBuddyUser } from "../zod/UserSchema";
 import { UseFormReturn } from "react-hook-form";
+import {
+	MAX_COMMAND_LIMIT_PER_USER,
+	MAX_PARAM_LIMIT_PER_COMMAND,
+} from "../MiscellaneousGlobalVariables";
 
 // TODO: Make it clear where errors are. Expand Param; maybe toast saying param name and field?
 
@@ -334,6 +338,8 @@ const handleSubmit = async ({
 	commandToEdit,
 	methods,
 	remove,
+	// How many Commands the user already has
+	numCommands,
 }: {
 	data: CMDBuddyCommandFormValidation;
 	componentMode: ComponentMode;
@@ -343,6 +349,7 @@ const handleSubmit = async ({
 	commandToEdit: CMDBuddyCommand | null;
 	methods: UseFormReturn<CMDBuddyCommandFormValidation>;
 	remove: (index?: number | number[] | undefined) => void;
+	numCommands?: number;
 }) => {
 	setIsSubmitting(true);
 	toast(
@@ -350,6 +357,25 @@ const handleSubmit = async ({
 			? "Submitting new Command..."
 			: "Submitting edited Command..."
 	);
+
+	if (numCommands && numCommands > MAX_COMMAND_LIMIT_PER_USER) {
+		alert(
+			`Max of ${MAX_COMMAND_LIMIT_PER_USER} Commands per User allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`
+		);
+		setIsSubmitting(false);
+		return;
+	}
+
+	if (
+		data.parameters?.length &&
+		data.parameters.length > MAX_PARAM_LIMIT_PER_COMMAND
+	) {
+		alert(
+			`Max of ${MAX_PARAM_LIMIT_PER_COMMAND} Parameters per Command allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`
+		);
+		setIsSubmitting(false);
+		return;
+	}
 
 	data.order = 1; // Setting default order
 
