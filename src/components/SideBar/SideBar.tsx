@@ -28,7 +28,6 @@ import {
 import { SideBarContainer } from "../../../utils/SideBarUtils";
 import CommandInSideBar from "./CommandInSideBar";
 import Link from "next/link";
-import { CMDBuddyCommandFormValidation } from "../CommandCreationComponents/CommandCreationOrEditForm";
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 
 const { handleCommandTitlesEditSubmit, handleCommandDelete, handleDnDSave } =
