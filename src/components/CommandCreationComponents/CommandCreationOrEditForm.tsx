@@ -4,9 +4,12 @@
 // User fills out this form to create a Command
 // Each Command has multiple Parameters; they fill out ParameterCreationOrEditForm once per Parameter
 // Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different fields for each
+// User can Drag and Drop (DnD) Parameters
 
 // TODO Important:
 // Make sure no duplicates. No duplicates of param names, no duplicates of Command titles or baseCommands in db.
+
+// TODO: Clean up CEF DnD styling. Just make the DnD icon clearer, no biggie.
 
 // TODO:
 // If a param has validation issues on submit, make sure it's expanded or otherwise clear which param
@@ -202,6 +205,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		}
 	};
 
+	// This saves result to form state when user drags and drops Parameters
 	const onDragEnd = (result: any) => {
 		if (!result.destination) return;
 		console.log("result:", result);
@@ -213,7 +217,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		items.splice(result.destination.index, 0, reorderedItem);
 
 		methods.setValue("parameters", items);
-		// setHasChanges(true); // tracks if user is currently changing order of commands with DnD
 	};
 
 	return (
@@ -290,12 +293,13 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						</StyledCCFError>
 					)}
 				</div>
-				{/* As many parameter creation forms as user wants */}
-				{/* `fields` is what the function calls `parameters` */}
+				{/* All this DragDrop stuff is for drag and drop (DnD) of Parameters */}
 				<DragDropContext onDragEnd={onDragEnd}>
 					<StrictModeDroppable droppableId="parameters">
 						{(provided) => (
 							<div {...provided.droppableProps} ref={provided.innerRef}>
+								{/* As many parameter creation forms as user wants */}
+								{/* `fields` is what the function calls `parameters` */}
 								{fields.map((field, index) => {
 									return (
 										<Draggable
