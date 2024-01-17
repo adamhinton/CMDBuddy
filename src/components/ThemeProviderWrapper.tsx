@@ -1,6 +1,7 @@
 "use client";
 // README:
 // This component wraps around the app and passes in theming (lightMode and darkMode)
+// Also contains global styles
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";

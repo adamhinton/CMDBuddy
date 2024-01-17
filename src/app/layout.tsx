@@ -1,7 +1,6 @@
 // TODO:
 // DND for params
 // TODO: /commands/create cleanup
-// TODO: Background styling. Just universal backgrounds, should be easy
 // TODO: Capability to make commands in localstorage without auth
 // TODO: Max #commands per user and #params per command
 
@@ -21,7 +20,6 @@ import Tabs from "@/components/Tabs";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 // Using react-toastify to alert user of various things with toasts.
 import ToastWrapper from "../../utils/ToastWrapper";
-import { createGlobalStyle } from "styled-components";
 
 export const metadata = {
 	title: "Next.js",
