@@ -5,7 +5,7 @@
 // FLAG type Parameters go *after* the baseCommand; everything else goes *before* the baseCommand.
 // We use a similar component, called LiveCommandCreationPreview, in command creation.
 
-// TODO: Inline vs one per line LCEP
+// TODO Stretch: Inline vs one per line LCEP
 
 import React from "react";
 import { useFormContext } from "react-hook-form";
