@@ -7,8 +7,6 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-// TODO: Slight horizontal scroll bar at small screen sizes
-
 import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
 import Link from "next/link";

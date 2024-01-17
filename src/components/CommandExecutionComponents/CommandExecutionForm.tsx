@@ -7,7 +7,7 @@
 // And displays the completed command on the page.
 // IMPORTANT NOTE about errors: The user has control of this process. The app validates their Parameter value inputs and alerts them if there's an error (e.g. the input is longer than their specified maxLength), but it doesn't stop the user from generating/copying the command. It's only a guideline.
 
-// TODO: Persist CEF state when navigating away
+// TODO: Persist CEF state when navigating away. Maybe save form state as sub-value in activeCommands
 // TODO: Custom input in dropdown
 // TODO: Collapse CEF functionality
 
@@ -56,7 +56,6 @@ const ErrorContainer = styled.ul`
 
 // Individual error message styling
 // Up to three of these at a time will be in Error Container
-// TODO: Define border, text  color etc in theme object
 const ErrorItem = styled.li`
 	color: ${({ theme }) => theme.commandGeneration.errorTextColor};
 	background-color: ${({ theme }) =>

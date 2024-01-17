@@ -8,8 +8,6 @@
 
 // TODO: PEFValidationUtils file or something, split this file up
 
-// TODO: Optional null values in boolean and dropdown - right now they have to select something. Just if isNullable they can select no value
-
 import React from "react";
 import { DefaultValues, UseFormReturn, useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
