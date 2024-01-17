@@ -45,7 +45,6 @@ const CEFCommandTitle = styled.h3`
 
 // Error container that will hold multiple error messages
 // Will have a maximum of three ErrorItems
-// TODO: Define background color in theme object
 const ErrorContainer = styled.ul`
 	list-style: none;
 	padding: 0;
@@ -154,6 +153,10 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 		),
 	});
 
+	const { getValues } = methods;
+	const formState = getValues();
+	console.log("formState CEF:", formState);
+
 	const dispatch = useDispatch();
 	const parameters = command.parameters;
 
@@ -200,6 +203,15 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 					}}
 				>
 					Exit this command
+				</CEFButton>
+				{/* Resets inputs back to their defaultValues, or null if no defaultValue */}
+				<CEFButton
+					onClick={(e) => {
+						e.preventDefault();
+						methods.reset();
+					}}
+				>
+					Reset Inputs
 				</CEFButton>
 			</CEFForm>
 		</FormProvider>
