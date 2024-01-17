@@ -206,11 +206,13 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		if (!result.destination) return;
 		console.log("result:", result);
 
-		// const items = Array.from(localCommands || []);
-		// const [reorderedItem] = items.splice(result.source.index, 1);
-		// items.splice(result.destination.index, 0, reorderedItem);
+		const parameters = methods.getValues("parameters");
 
-		// setLocalCommands(items);
+		const items = Array.from(parameters || []);
+		const [reorderedItem] = items.splice(result.source.index, 1);
+		items.splice(result.destination.index, 0, reorderedItem);
+
+		methods.setValue("parameters", items);
 		// setHasChanges(true); // tracks if user is currently changing order of commands with DnD
 	};
 
