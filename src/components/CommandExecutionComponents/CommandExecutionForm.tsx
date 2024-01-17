@@ -164,12 +164,11 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 	// This displays a max of three errors at a time
 	// Shows parameter's name and a brief error message
 	const errors = methods.formState.errors;
-	console.log("errors:", errors);
 	// This function will create a list of error elements
 	const errorList = Object.keys(errors)
 		.slice(0, 3) // Limit to a maximum of three errors
 		.map((key) => (
-			<ErrorItem key={key}>{`${key}: ${errors[key].message}`}</ErrorItem>
+			<ErrorItem key={key}>{`${key}: ${errors[key]!.message}`}</ErrorItem>
 		));
 
 	return (
