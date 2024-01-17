@@ -1,6 +1,11 @@
 import { DefaultTheme } from "styled-components";
 
 export const lightTheme: DefaultTheme = {
+	global: {
+		backgroundColor: "#F4F8FA",
+		textColor: "#5A5A5A",
+	},
+
 	colors: {
 		background: "#e0f7fa",
 		text: "#333",
@@ -8,12 +13,14 @@ export const lightTheme: DefaultTheme = {
 		activeTabBackground: "#c0c0c0",
 		hoverTabBackground: "#d0d0d0",
 	},
+
 	header: {
 		background: "#E0F7FA",
 		text: "#0D47A1",
 		link: "#004D40",
 		toggleIcon: "#FFCA28",
 	},
+
 	tabs: {
 		background: "#e0e0e0",
 		text: "#333",
@@ -21,6 +28,7 @@ export const lightTheme: DefaultTheme = {
 		hoverBackground: "#d0d0d0",
 		activeBorder: "#0D47A1", // The tab the user is currently on
 	},
+
 	sidebar: {
 		background: "#f0f0f0",
 		text: "#333",
@@ -32,6 +40,7 @@ export const lightTheme: DefaultTheme = {
 			hoverBackground: "#B3E5FC",
 		},
 	},
+
 	commandCreation: {
 		formBackground: "#E3F2FD",
 		formText: "#0D47A1",
@@ -93,6 +102,11 @@ export const lightTheme: DefaultTheme = {
 };
 
 export const darkTheme: DefaultTheme = {
+	global: {
+		backgroundColor: "#2B3A42",
+		textColor: "#C0C2B8",
+	},
+
 	colors: {
 		background: "#1a1a1a",
 		text: "#f5f5f5",

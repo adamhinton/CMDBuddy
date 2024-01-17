@@ -38,6 +38,7 @@ export default async function RootLayout({
 			<body>
 				<ToastWrapper>
 					<Providers>
+						{/* ThemeProviderWrapper also contains GlobalStyles */}
 						<ThemeProviderWrapper>
 							<AuthClientComponent />
 							<Header />

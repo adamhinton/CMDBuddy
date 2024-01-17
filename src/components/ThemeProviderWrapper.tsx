@@ -4,21 +4,34 @@
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { ThemeProvider, createGlobalStyle } from "styled-components";
+import {
+	DefaultTheme,
+	ThemeProvider,
+	createGlobalStyle,
+} from "styled-components";
 import { RootState } from "../../redux/store";
 import { darkTheme, lightTheme } from "../../utils/styles/themes";
 
-export const GlobalStyles = createGlobalStyle`
+// I feel like there's a better way to pass in theme to GlobalStyles
+const GlobalStylesContainer = (theme: DefaultTheme) => {
+	const GlobalStyles = createGlobalStyle`
 *{
 	max-width: 100%;
 	box-sizing: border-box;
 }
   body {
-	color: red;
+	color: ${theme.theme.global.textColor};
+	background-color: ${theme.theme.global.backgroundColor};
     transition: background-color 0.3s linear, color 0.3s linear;
   }
-  // Add other global styles here if necessary
 `;
+
+	return (
+		<>
+			<GlobalStyles />
+		</>
+	);
+};
 
 // The props should be passed as a single object and destructured within the function parameter list
 const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -32,7 +45,7 @@ const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 	}, [isDarkMode]);
 	return (
 		<>
-			<GlobalStyles />
+			<GlobalStylesContainer theme={theme} />
 			<ThemeProvider theme={theme}>{children}</ThemeProvider>
 		</>
 	);
