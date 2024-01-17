@@ -101,6 +101,10 @@ const ParameterExecutionForm = ({
 								// Trigger the validation for this field on blur
 								methods.trigger(parameter.name);
 							},
+							// If there's an error, this runs validation every time the input changes
+							onChange: (e) => {
+								hasError && methods.trigger(parameter.name);
+							},
 						})}
 					/>
 				);
@@ -124,6 +128,10 @@ const ParameterExecutionForm = ({
 							onBlur: (e) => {
 								// Trigger validation when the user clicks/tabs away from the input
 								methods.trigger(parameter.name);
+							},
+							// If there's an error, this runs validation every time the input changes
+							onChange: (e) => {
+								hasError && methods.trigger(parameter.name);
 							},
 						})}
 					/>
@@ -156,6 +164,10 @@ const ParameterExecutionForm = ({
 									onBlur: (e) => {
 										methods.trigger(parameter.name);
 									},
+									// If there's an error, this runs validation every time the input changes
+									onChange: (e) => {
+										hasError && methods.trigger(parameter.name);
+									},
 								})}
 								inputtype="OTHER"
 							/>
@@ -173,6 +185,10 @@ const ParameterExecutionForm = ({
 							onBlur: (e) => {
 								// Trigger validation when the user clicks/tabs away from the dropdown
 								methods.trigger(parameter.name);
+							},
+							// If there's an error, this runs validation every time the input changes
+							onChange: (e) => {
+								hasError && methods.trigger(parameter.name);
 							},
 						})}
 					>
@@ -196,6 +212,10 @@ const ParameterExecutionForm = ({
 									onBlur: (e) => {
 										methods.trigger(parameter.name);
 									},
+									// If there's an error, this runs validation every time the input changes
+									onChange: (e) => {
+										hasError && methods.trigger(parameter.name);
+									},
 								})}
 								inputtype="OTHER"
 							/>
@@ -210,6 +230,10 @@ const ParameterExecutionForm = ({
 									// Trigger validation when user clicks/tabs away
 									onBlur: (e) => {
 										methods.trigger(parameter.name);
+									},
+									// If there's an error, this runs validation every time the input changes
+									onChange: (e) => {
+										hasError && methods.trigger(parameter.name);
 									},
 								})}
 								inputtype="OTHER"
