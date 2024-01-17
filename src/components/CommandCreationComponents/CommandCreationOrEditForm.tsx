@@ -302,6 +302,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 								{/* `fields` is what the function calls `parameters` */}
 								{fields.map((field, index) => {
 									return (
+										// DnD stuff
 										<Draggable
 											key={field.id}
 											draggableId={field.id}
@@ -310,6 +311,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 											{(provided) => {
 												return (
 													<span
+														// DnD params
 														ref={provided.innerRef}
 														{...provided.draggableProps}
 													>
@@ -322,6 +324,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 															isCollapsed={field.isCollapsed!}
 															update={update}
 															getValues={methods.getValues}
+															// DnD params
 															dragHandleProps={provided.dragHandleProps}
 														/>
 													</span>
