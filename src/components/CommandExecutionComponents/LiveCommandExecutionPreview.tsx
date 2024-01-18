@@ -10,10 +10,10 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
-import { CEFButton } from "./CommandExecutionForm";
 import styled from "styled-components";
+import CEFStyles from "../../../utils/CommandExecutionUtils/CommandExecutionStyles";
+const { CEFButton } = CEFStyles;
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
-
 const LCEPContainer = styled.section`
 	margin: 10px 0;
 `;
