@@ -285,6 +285,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						{...methods.register("title")}
 						maxLength={60}
 						required={true}
+						placeholder="Something you'll remember it by"
 					/>
 					{methods.formState.errors.title && (
 						<StyledCCFError>
