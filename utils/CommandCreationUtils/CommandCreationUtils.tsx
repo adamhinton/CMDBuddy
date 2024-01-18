@@ -23,7 +23,10 @@ CommandCreationZodSchemas;
 
 import { AnyParameter } from "./CommandCreationTypes";
 import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
-import { StyledCCFButton } from "../styles/CommandCreationStyles/CommandCreationStyles";
+import {
+	ParamCreationButtonsContainer,
+	StyledCCFButton,
+} from "../styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommand } from "../zod/CommandSchema";
 import styled from "styled-components";
 
@@ -407,7 +410,7 @@ const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
 					);
 				}}
 			>
-				Add Parameter
+				Add New Parameter
 			</StyledCCFButton>
 			<StyledCCFButton
 				onClick={(e) => {
@@ -426,13 +429,6 @@ const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
 		</ParamCreationButtonsContainer>
 	);
 };
-
-const ParamCreationButtonsContainer = styled.div`
-	display: flex;
-	margin: 1rem 0;
-	justify-content: space-between;
-	max-width: 500px;
-`;
 
 // export objects
 export const CommandCreationUIElements = {

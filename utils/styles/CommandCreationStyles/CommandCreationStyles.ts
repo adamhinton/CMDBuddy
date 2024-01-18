@@ -48,6 +48,13 @@ export const StyledCCFError = styled.p`
 	margin-bottom: 10px;
 `;
 
+export const ParamCreationButtonsContainer = styled.div`
+	display: flex;
+	margin: 1rem 0;
+	justify-content: space-between;
+	max-width: 500px;
+`;
+
 export const StyledCCFButton = styled.button`
 	background: ${({ theme }) => theme.commandCreation.buttonBackground};
 	color: ${({ theme }) => theme.commandCreation.formText};
