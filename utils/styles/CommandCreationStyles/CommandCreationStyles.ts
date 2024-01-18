@@ -1,6 +1,7 @@
 // README:
 // This is the styles page for Command Creation
 
+import Image from "next/image";
 import styled from "styled-components";
 
 export const StyledCCFForm = styled.form`
@@ -71,20 +72,21 @@ export const CollapsibleBar = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	max-width: 300px;
+	max-width: 350px;
 	padding: 10px;
 	cursor: pointer;
 	border: 1px solid ${({ theme }) => theme.commandCreation.buttonBackground};
 	border-radius: 4px;
 	margin-bottom: 5px;
-	background-color: ${({ theme }) => theme.commandCreation.formBackground};
+	background-color: ${({ theme }) =>
+		theme.commandCreation.collapsibleBarBackground};
 	color: ${({ theme }) => theme.commandCreation.formText};
 	transition: box-shadow 0.3s ease, background-color 0.3s ease;
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
 
 	&:hover {
 		background-color: ${({ theme }) =>
-			theme.commandCreation.buttonHoverBackground};
+			theme.commandCreation.collapsibleBarHoverBackground};
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15); // stronger shadow on hover
 	}
 `;
@@ -112,11 +114,16 @@ export const IconWrapper = styled.div`
 
 // Replace placeholders with actual icons for clarity
 export const StyledUpDownIcon = styled.i`
-	font-size: 16px; // icon size
-	color: ${({ theme }) => theme.commandCreation.formText};
+	width: 15px;
+	height: 15px;
+	font-size: 16px;
 	&:hover {
 		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
 	}
+`;
+export const StyledChevronImage = styled(Image)`
+	width: 100%;
+	height: 100%;
 `;
 
 // CollapsibleBar stuff

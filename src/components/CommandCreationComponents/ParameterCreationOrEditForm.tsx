@@ -47,7 +47,8 @@ import {
 	IntParameterErrors,
 	DropdownParameterErrors,
 } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
-
+import rightChevron from "../../../utils/images/chevrons/right-chevron.svg";
+import downChevron from "../../../utils/images/chevrons/down-chevron.svg";
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 
 type FormProps = {
@@ -66,12 +67,15 @@ import {
 	CollapsibleBar,
 	IconWrapper,
 	ParameterName,
+	StyledChevronImage,
 	StyledTrashIcon,
 	StyledUpDownIcon,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 import { DragHandle } from "../../../utils/SideBarUtils";
+import Image from "next/image";
+import styled from "styled-components";
 
 const {
 	StringParameterFields,
@@ -186,18 +190,21 @@ const ParameterCreationOrEditForm = ({
 						::
 					</DragHandle>
 
+					<CMDBuddyTooltip content={isCollapsed ? "Expand" : "Collapse"}>
+						<StyledUpDownIcon>
+							{/* TODO: White chevron for dark mode */}
+							<StyledChevronImage
+								src={isCollapsed ? downChevron : rightChevron}
+								alt={isCollapsed ? "Down Chevron" : "Right Chevron"}
+							/>
+						</StyledUpDownIcon>
+					</CMDBuddyTooltip>
+
 					<ParameterName>
 						{getValues(`parameters.${index}`).name || "Param Name"}
 					</ParameterName>
 
 					<IconWrapper>
-						<CMDBuddyTooltip content={isCollapsed ? "Expand" : "Collapse"}>
-							<StyledUpDownIcon
-								className={`fas fa-chevron-${isCollapsed ? "down" : "up"}`}
-							>
-								Chevron
-							</StyledUpDownIcon>
-						</CMDBuddyTooltip>
 						<CMDBuddyTooltip content="Delete Parameter">
 							<StyledTrashIcon
 								className="fas fa-trash-alt"

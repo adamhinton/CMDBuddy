@@ -49,6 +49,8 @@ export const lightTheme: DefaultTheme = {
 		errorText: "#D32F2F",
 		buttonBackground: "#B3E5FC",
 		buttonHoverBackground: "#81D4FA",
+		collapsibleBarBackground: "#f0f0f0",
+		collapsibleBarHoverBackground: "#e0e0e0",
 	},
 	commandGeneration: {
 		baseBackground: "#f0f0f0",
@@ -146,6 +148,8 @@ export const darkTheme: DefaultTheme = {
 		errorText: "#EF9A9A",
 		buttonBackground: "#546E7A",
 		buttonHoverBackground: "#78909C",
+		collapsibleBarBackground: "#3a3b3c",
+		collapsibleBarHoverBackground: "#4a4b4c",
 	},
 	commandGeneration: {
 		baseBackground: "#222",
