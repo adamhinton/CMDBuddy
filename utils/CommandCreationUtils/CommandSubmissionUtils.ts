@@ -358,7 +358,9 @@ const handleSubmit = async ({
 			: "Submitting edited Command..."
 	);
 
+	// Stop user from creating a zillion Commands
 	if (numCommands && numCommands > MAX_COMMAND_LIMIT_PER_USER) {
+		// Alert instead of toast because it's more pressing
 		alert(
 			`Max of ${MAX_COMMAND_LIMIT_PER_USER} Commands per User allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`
 		);
@@ -366,11 +368,13 @@ const handleSubmit = async ({
 		return;
 	}
 
+	// Stop user from creating a zillion Parameters
 	if (
 		data.parameters?.length &&
 		data.parameters.length > MAX_PARAM_LIMIT_PER_COMMAND
 	) {
 		alert(
+			// Alert instead of toast because it's more pressing
 			`Max of ${MAX_PARAM_LIMIT_PER_COMMAND} Parameters per Command allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`
 		);
 		setIsSubmitting(false);
