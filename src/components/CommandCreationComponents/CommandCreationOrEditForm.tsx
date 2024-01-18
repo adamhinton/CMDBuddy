@@ -11,7 +11,7 @@
 // TODO:
 // If a param has validation issues on submit, make sure it's expanded or otherwise clear which param
 
-// TODO IMPORTANT: RHF's in-built validation (like `required` etc) doesn't seem to run on collapsed Params. Like I can submit them without a `name`.
+// TODO IMPORTANT: RHF's in-built validation (like `required` etc) doesn't seem to run on collapsed Params. Like I can submit them without a `name`. Maybe expand error Param on onInvalid?
 
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
