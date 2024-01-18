@@ -3,7 +3,7 @@
 
 // TODO Stretch: "Reminder" property in Parameter and Command that reminds the user what they're for on hover, like with tooltip.
 
-// TODO CCF: Fix ordering of new/edited commands
+// TODO Stretch CCF: Fix ordering of new/edited commands
 
 import { Amplify, Auth } from "aws-amplify";
 import { Providers } from "../../redux/provider";
