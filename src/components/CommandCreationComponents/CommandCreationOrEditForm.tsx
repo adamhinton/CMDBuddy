@@ -6,9 +6,6 @@
 // Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different fields for each
 // User can Drag and Drop (DnD) Parameters
 
-// TODO Important:
-// Make sure no duplicates. No duplicates of param names, no duplicates of Command titles or baseCommands in db.
-
 // TODO: Clean up CEF DnD styling. Just make the DnD icon clearer, no biggie.
 
 // TODO:

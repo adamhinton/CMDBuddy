@@ -15,7 +15,7 @@ import {
 import { CMDBuddyParameter } from "../zod/ParameterSchema";
 import { customGetCommandWithParameters } from "../customGraphQLQueries";
 import { UpdateCommandInput } from "@/API";
-import { toast } from "react-toastify";
+import { ToastOptions, toast } from "react-toastify";
 import {
 	addCommand,
 	editSingleCommand,
@@ -327,7 +327,27 @@ async function editExistingCommand(
 }
 
 /**
- * Main function to handle form submission for both creating and editing commands.
+ * onSubmit helper that ensures no new/edited Parameters have duplicate `name` fields.
+ *
+ * returns boolean, and the name of duplicate param if any, like so: [isValid: boolean; duplicateName? string]
+ */
+function hasNoDuplicateParamNames(
+	parameters: AnyParameter[]
+): [isValid: boolean, duplicateName?: string] {
+	const seenNames = new Set<string>();
+
+	for (const param of parameters) {
+		if (seenNames.has(param.name)) {
+			return [false, param.name];
+		}
+		seenNames.add(param.name);
+	}
+
+	return [true]; // No duplicates
+}
+
+/**
+ * Main function to handle form validation and submission for both creating and editing commands.
  */
 const handleSubmit = async ({
 	data,
@@ -354,16 +374,22 @@ const handleSubmit = async ({
 	setIsSubmitting(true);
 	toast(
 		componentMode === "createNewCommand"
-			? "Submitting new Command..."
-			: "Submitting edited Command..."
+			? "Attempting to submit new Command..."
+			: "Attempting to submit edited Command..."
 	);
+
+	// Start with form data validation
 
 	// Stop user from creating a zillion Commands
 	if (numCommands && numCommands > MAX_COMMAND_LIMIT_PER_USER) {
 		// Alert instead of toast because it's more pressing
-		alert(
-			`Max of ${MAX_COMMAND_LIMIT_PER_USER} Commands per User allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`
+		toast(
+			`Max of ${MAX_COMMAND_LIMIT_PER_USER} Commands per User allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`,
+			{ autoClose: false }
 		);
+
+		const bob: ToastOptions = {};
+		toast("blah blah", {});
 		setIsSubmitting(false);
 		return;
 	}
@@ -373,15 +399,27 @@ const handleSubmit = async ({
 		data.parameters?.length &&
 		data.parameters.length > MAX_PARAM_LIMIT_PER_COMMAND
 	) {
-		alert(
+		toast(
 			// Alert instead of toast because it's more pressing
-			`Max of ${MAX_PARAM_LIMIT_PER_COMMAND} Parameters per Command allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`
+			`Max of ${MAX_PARAM_LIMIT_PER_COMMAND} Parameters per Command allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`,
+			{ autoClose: false }
 		);
 		setIsSubmitting(false);
 		return;
 	}
 
-	data.order = 1; // Setting default order
+	// Make sure no params have the same `name`
+	const [hasNoDuplicateNames, duplicateParamName] = hasNoDuplicateParamNames(
+		data.parameters || []
+	);
+	if (!hasNoDuplicateNames) {
+		toast(
+			`Parameter name ${duplicateParamName} is duplicated; this is not permitted`,
+			{ autoClose: false }
+		);
+		setIsSubmitting(false);
+		return;
+	}
 
 	let isFormValuesValid = validateAndUpdateParameters(
 		data.parameters || [],
@@ -389,11 +427,14 @@ const handleSubmit = async ({
 	);
 
 	if (!isFormValuesValid) {
-		console.error("Validation failed");
 		toast("Encountered validation issues");
 		setIsSubmitting(false);
 		return;
 	}
+
+	// Done with validation; we know data is valid now
+
+	data.order = 1; // Setting default order
 
 	try {
 		if (componentMode === "createNewCommand") {
