@@ -228,6 +228,9 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						numCommands,
 					});
 				})}
+				onInvalid={(e) => {
+					console.log("methods.formState onInvalid:", methods.formState);
+				}}
 			>
 				{/* Command Fields */}
 				<StyledCommandCreationHeader>
@@ -255,7 +258,9 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 					})}
 
 					<CMDBuddyTooltip content="The core command excluding any parameters; e.g. npx playwright test myTestName">
-						<StyledCCFLabel htmlFor="baseCommand">Base Command</StyledCCFLabel>
+						<StyledCCFLabel htmlFor="baseCommand">
+							Base Command *
+						</StyledCCFLabel>
 					</CMDBuddyTooltip>
 
 					<StyledCCFInput
@@ -272,7 +277,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				</div>
 				<div>
 					<CMDBuddyTooltip content="You select the command by its title in the sidebar.">
-						<StyledCCFLabel htmlFor="title">Title</StyledCCFLabel>
+						<StyledCCFLabel htmlFor="title">Title *</StyledCCFLabel>
 					</CMDBuddyTooltip>
 					<StyledCCFInput
 						{...methods.register("title")}

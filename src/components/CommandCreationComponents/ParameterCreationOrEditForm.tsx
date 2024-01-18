@@ -239,7 +239,7 @@ const ParameterCreationOrEditForm = ({
 
 					{/* Shared Name Field */}
 					<CMDBuddyTooltip content="Variable's name">
-						<ParameterCreationLabel>Name</ParameterCreationLabel>
+						<ParameterCreationLabel>Name *</ParameterCreationLabel>
 					</CMDBuddyTooltip>
 					<StyledPCFNameInput
 						{...register(`parameters.${index}.name`)}
