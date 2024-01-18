@@ -20,7 +20,7 @@
 // -- Toast
 
 // TODO:
-// In creation mdoe, add "What's this?" with link to explanation in /about. Particularly for Type
+// In creation mode, add "What's this?" with link to explanation in /about. Particularly for Type
 
 import React, { useState, useEffect } from "react";
 import {
@@ -66,14 +66,11 @@ import {
 	CollapsibleBar,
 	IconWrapper,
 	ParameterName,
-	StyledCCFButton,
 	StyledDownPlaceholder,
 	StyledTrashPlaceholder,
 	StyledUpPlaceholder,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
-import styled from "styled-components";
-import Tippy from "@tippyjs/react";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 import { DragHandle } from "../../../utils/SideBarUtils";
 
