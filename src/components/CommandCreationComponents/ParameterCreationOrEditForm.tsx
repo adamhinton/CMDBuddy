@@ -66,9 +66,8 @@ import {
 	CollapsibleBar,
 	IconWrapper,
 	ParameterName,
-	StyledDownPlaceholder,
-	StyledTrashPlaceholder,
-	StyledUpPlaceholder,
+	StyledTrashIcon,
+	StyledUpDownIcon,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
@@ -186,30 +185,27 @@ const ParameterCreationOrEditForm = ({
 					<ParameterName>{getValues(`parameters.${index}`).name}</ParameterName>
 
 					<DragHandle {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
-						⋮⋮
+						::
 					</DragHandle>
 					<IconWrapper>
-						{/* TODO: Instate real up/down icons */}
-						{isCollapsed ? (
-							<StyledDownPlaceholder>Down</StyledDownPlaceholder>
-						) : (
-							<StyledUpPlaceholder>Up</StyledUpPlaceholder>
-						)}
+						<CMDBuddyTooltip content={isCollapsed ? "Expand" : "Collapse"}>
+							<StyledUpDownIcon
+								className={`fas fa-chevron-${isCollapsed ? "down" : "up"}`}
+							/>
+						</CMDBuddyTooltip>
 						<CMDBuddyTooltip content="Delete Parameter">
-							<StyledTrashPlaceholder
+							<StyledTrashIcon
+								className="fas fa-trash-alt"
 								onClick={(e) => {
 									e.preventDefault();
 									e.stopPropagation();
 									removeParameter();
 								}}
-							>
-								🗑️
-							</StyledTrashPlaceholder>
+							/>
 						</CMDBuddyTooltip>
 					</IconWrapper>
 				</CollapsibleBar>
 			</CMDBuddyTooltip>
-
 			{!isCollapsed && (
 				<div>
 					{/* Parameter Type Selector */}

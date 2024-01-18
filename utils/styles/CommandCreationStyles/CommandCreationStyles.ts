@@ -71,6 +71,7 @@ export const CollapsibleBar = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	max-width: 300px;
 	padding: 10px;
 	cursor: pointer;
 	border: 1px solid ${({ theme }) => theme.commandCreation.buttonBackground};
@@ -78,11 +79,31 @@ export const CollapsibleBar = styled.div`
 	margin-bottom: 5px;
 	background-color: ${({ theme }) => theme.commandCreation.formBackground};
 	color: ${({ theme }) => theme.commandCreation.formText};
-	transition: background-color 0.3s ease;
+	transition: box-shadow 0.3s ease, background-color 0.3s ease;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1); // subtle shadow for distinction
 
 	&:hover {
 		background-color: ${({ theme }) =>
 			theme.commandCreation.buttonHoverBackground};
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15); // stronger shadow on hover
+	}
+`;
+
+export const DragHandle = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	font-size: 20px; // icon size
+	cursor: grab;
+
+	&:hover {
+		background-color: ${({ theme }) =>
+			theme.commandCreation.buttonHoverBackground};
+	}
+
+	&:active {
+		cursor: grabbing;
 	}
 `;
 
@@ -99,8 +120,9 @@ export const IconWrapper = styled.div`
 	gap: 10px;
 `;
 
-// CollapsibleBar stuff
-export const StyledDownPlaceholder = styled.span`
+// Replace placeholders with actual icons for clarity
+export const StyledUpDownIcon = styled.i`
+	font-size: 16px; // icon size
 	color: ${({ theme }) => theme.commandCreation.formText};
 	&:hover {
 		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
@@ -116,7 +138,8 @@ export const StyledUpPlaceholder = styled.span`
 `;
 
 // CollapsibleBar stuff
-export const StyledTrashPlaceholder = styled.span`
+export const StyledTrashIcon = styled.i`
+	font-size: 16px; // icon size
 	color: ${({ theme }) => theme.commandCreation.errorText};
 	&:hover {
 		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
