@@ -16,6 +16,7 @@ import {
 	ParameterCreationInput,
 	StyledPCFMinMaxContainer,
 	StyledPCFRadioInputContainer,
+	ParameterCreationButton,
 } from "../styles/CommandCreationStyles/ParameterCreationStyles";
 import { CommandCreationZodSchemas } from "./CommandCreationTypes";
 CommandCreationZodSchemas;
@@ -24,6 +25,7 @@ import { AnyParameter } from "./CommandCreationTypes";
 import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
 import { StyledCCFButton } from "../styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommand } from "../zod/CommandSchema";
+import styled from "styled-components";
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
@@ -394,15 +396,7 @@ const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
 	};
 
 	return (
-		<>
-			<StyledCCFButton
-				onClick={(e) => {
-					e.preventDefault();
-					collapseAllParams(update, getValues);
-				}}
-			>
-				Collapse All Params
-			</StyledCCFButton>
+		<ParamCreationButtonsContainer>
 			<StyledCCFButton
 				type="button"
 				onClick={() => {
@@ -415,15 +409,30 @@ const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
 			>
 				Add Parameter
 			</StyledCCFButton>
+			<StyledCCFButton
+				onClick={(e) => {
+					e.preventDefault();
+					collapseAllParams(update, getValues);
+				}}
+			>
+				Collapse All Params
+			</StyledCCFButton>
 			<StyledCCFButton type="button" onClick={clearForm}>
 				Clear Form
 			</StyledCCFButton>
 			<StyledCCFButton type="submit" disabled={isSubmitting}>
 				Submit
 			</StyledCCFButton>
-		</>
+		</ParamCreationButtonsContainer>
 	);
 };
+
+const ParamCreationButtonsContainer = styled.div`
+	display: flex;
+	margin: 1rem 0;
+	justify-content: space-between;
+	max-width: 500px;
+`;
 
 // export objects
 export const CommandCreationUIElements = {
