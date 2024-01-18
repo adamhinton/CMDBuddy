@@ -11,6 +11,7 @@
 // TODO: Custom input in dropdown
 // TODO: Collapse CEF functionality
 // TODO Stretch: DnD CEFs in commands/generate
+// TODO: Asterisk * next to non-optional params
 
 // TODO Stretch: In PEF, on hover over a param, show its attributes (maxLength etc)
 

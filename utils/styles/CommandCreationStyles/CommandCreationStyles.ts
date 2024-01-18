@@ -86,17 +86,20 @@ export const CollapsibleBar = styled.div`
 	}
 `;
 
+// CollapsibleBar stuff
 export const ParameterName = styled.span`
 	font-weight: bold;
 	color: ${({ theme }) => theme.commandCreation.inputText};
 `;
 
+// CollapsibleBar stuff
 export const IconWrapper = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 10px; // Distance between icons
+	gap: 10px;
 `;
 
+// CollapsibleBar stuff
 export const StyledDownPlaceholder = styled.span`
 	color: ${({ theme }) => theme.commandCreation.formText};
 	&:hover {
@@ -104,6 +107,7 @@ export const StyledDownPlaceholder = styled.span`
 	}
 `;
 
+// CollapsibleBar stuff
 export const StyledUpPlaceholder = styled.span`
 	color: ${({ theme }) => theme.commandCreation.formText};
 	&:hover {
@@ -111,6 +115,7 @@ export const StyledUpPlaceholder = styled.span`
 	}
 `;
 
+// CollapsibleBar stuff
 export const StyledTrashPlaceholder = styled.span`
 	color: ${({ theme }) => theme.commandCreation.errorText};
 	&:hover {
