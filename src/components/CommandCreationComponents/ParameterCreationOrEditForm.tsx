@@ -182,16 +182,21 @@ const ParameterCreationOrEditForm = ({
 						update(index, { ...param, isCollapsed: !isCollapsed });
 					}}
 				>
-					<ParameterName>{getValues(`parameters.${index}`).name}</ParameterName>
-
 					<DragHandle {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
 						::
 					</DragHandle>
+
+					<ParameterName>
+						{getValues(`parameters.${index}`).name || "Param Name"}
+					</ParameterName>
+
 					<IconWrapper>
 						<CMDBuddyTooltip content={isCollapsed ? "Expand" : "Collapse"}>
 							<StyledUpDownIcon
 								className={`fas fa-chevron-${isCollapsed ? "down" : "up"}`}
-							/>
+							>
+								Chevron
+							</StyledUpDownIcon>
 						</CMDBuddyTooltip>
 						<CMDBuddyTooltip content="Delete Parameter">
 							<StyledTrashIcon
@@ -201,7 +206,10 @@ const ParameterCreationOrEditForm = ({
 									e.stopPropagation();
 									removeParameter();
 								}}
-							/>
+							>
+								{/* TODO: Confirm icon for PCEF Delete */}
+								🗑️
+							</StyledTrashIcon>
 						</CMDBuddyTooltip>
 					</IconWrapper>
 				</CollapsibleBar>

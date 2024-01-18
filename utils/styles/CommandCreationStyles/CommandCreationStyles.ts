@@ -80,7 +80,7 @@ export const CollapsibleBar = styled.div`
 	background-color: ${({ theme }) => theme.commandCreation.formBackground};
 	color: ${({ theme }) => theme.commandCreation.formText};
 	transition: box-shadow 0.3s ease, background-color 0.3s ease;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1); // subtle shadow for distinction
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
 
 	&:hover {
 		background-color: ${({ theme }) =>
@@ -90,20 +90,10 @@ export const CollapsibleBar = styled.div`
 `;
 
 export const DragHandle = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 20px;
-	font-size: 20px; // icon size
-	cursor: grab;
-
+	color: ${({ theme }) => theme.commandCreation.inputText};
+	cursor: grab; // cursor change to indicate draggability
 	&:hover {
-		background-color: ${({ theme }) =>
-			theme.commandCreation.buttonHoverBackground};
-	}
-
-	&:active {
-		cursor: grabbing;
+		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
 	}
 `;
 
