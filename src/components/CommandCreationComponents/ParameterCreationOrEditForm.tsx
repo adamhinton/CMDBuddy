@@ -239,7 +239,7 @@ const ParameterCreationOrEditForm = ({
 					</CMDBuddyTooltip>
 					<StyledPCFNameInput
 						{...register(`parameters.${index}.name`)}
-						placeholder="Name"
+						placeholder="Variable Name"
 						required={true}
 						maxLength={30}
 					/>
