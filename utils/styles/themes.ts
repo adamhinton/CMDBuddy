@@ -60,6 +60,13 @@ export const lightTheme: DefaultTheme = {
 		submitButtonDisabledBackground: "#A6B1C2",
 		submitButtonDisabledText: "#E1E4E8",
 		submitButtonDisabledBorder: "#A6B1C2",
+		// Dropdown input stuff in PCEF
+		dropdownBackgroundColor: "#FFFFFF",
+		dropdownBorderColor: "#D1D5DB",
+		dropdownTextColor: "#111827",
+		dropdownTagBackgroundColor: "#E5E7EB",
+		dropdownTagTextColor: "#374151",
+		dropdownTagRemoveIconColor: "#9CA3AF",
 	},
 
 	commandGeneration: {
@@ -169,7 +176,15 @@ export const darkTheme: DefaultTheme = {
 		submitButtonDisabledBackground: "#5F7C8A",
 		submitButtonDisabledText: "#C7D0D9",
 		submitButtonDisabledBorder: "#5F7C8A",
+		// Dropdown input stuff in PCEF
+		dropdownBackgroundColor: "#111827",
+		dropdownBorderColor: "#374151",
+		dropdownTextColor: "#F9FAFB",
+		dropdownTagBackgroundColor: "#1F2937",
+		dropdownTagTextColor: "#F9FAFB",
+		dropdownTagRemoveIconColor: "#6B7280",
 	},
+
 	commandGeneration: {
 		baseBackground: "#222",
 		baseText: "#f5f5f5",
