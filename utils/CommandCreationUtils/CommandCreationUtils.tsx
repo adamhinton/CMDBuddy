@@ -25,6 +25,8 @@ import { AnyParameter } from "./CommandCreationTypes";
 import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
 import {
 	ParamCreationButtonsContainer,
+	PrimaryButton,
+	SecondaryButton,
 	StyledCCFButton,
 } from "../styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommand } from "../zod/CommandSchema";
@@ -400,7 +402,7 @@ const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
 
 	return (
 		<ParamCreationButtonsContainer>
-			<StyledCCFButton
+			<SecondaryButton
 				type="button"
 				onClick={() => {
 					append(
@@ -411,21 +413,21 @@ const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
 				}}
 			>
 				Add New Parameter
-			</StyledCCFButton>
-			<StyledCCFButton
+			</SecondaryButton>
+			<SecondaryButton
 				onClick={(e) => {
 					e.preventDefault();
 					collapseAllParams(update, getValues);
 				}}
 			>
 				Collapse All Params
-			</StyledCCFButton>
-			<StyledCCFButton type="button" onClick={clearForm}>
+			</SecondaryButton>
+			<SecondaryButton type="button" onClick={clearForm}>
 				Clear Form
-			</StyledCCFButton>
-			<StyledCCFButton type="submit" disabled={isSubmitting}>
+			</SecondaryButton>
+			<PrimaryButton type="submit" disabled={isSubmitting}>
 				Submit
-			</StyledCCFButton>
+			</PrimaryButton>
 		</ParamCreationButtonsContainer>
 	);
 };

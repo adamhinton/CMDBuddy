@@ -28,6 +28,10 @@ export const StyledCommandInputContainer = styled.div`
 	justify-content: center; // or align-items based on your design need
 `;
 
+export const CommandInputGroup = styled.section`
+	margin-bottom: 2rem; // Separate the command group from the parameters
+`;
+
 export const StyledCCFLabel = styled.label`
 	width: 200px;
 	display: block;
@@ -66,6 +70,39 @@ export const StyledCCFButton = styled.button`
 	&:hover {
 		background: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
 	}
+`;
+
+// Enhanced Button styles for visual hierarchy
+export const PrimaryButton = styled(StyledCCFButton)`
+	font-weight: bold;
+	border: 2px solid ${({ theme }) => theme.commandCreation.submitButtonBorder};
+	background: ${({ theme }) => theme.commandCreation.submitButtonBackground};
+	color: ${({ theme }) => theme.commandCreation.submitButtonText};
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease,
+		border-color 0.3s ease;
+
+	&:hover {
+		background: ${({ theme }) =>
+			theme.commandCreation.submitButtonHoverBackground};
+		color: ${({ theme }) => theme.commandCreation.submitButtonHoverText};
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	}
+
+	&:disabled {
+		background: ${({ theme }) =>
+			theme.commandCreation.submitButtonDisabledBackground};
+		color: ${({ theme }) => theme.commandCreation.submitButtonDisabledText};
+		border-color: ${({ theme }) =>
+			theme.commandCreation.submitButtonDisabledBorder};
+		box-shadow: none;
+		cursor: not-allowed;
+	}
+`;
+
+export const SecondaryButton = styled(StyledCCFButton)`
+	// Maintain the current style for secondary buttons
+	// Not sure this empty one is best practices
 `;
 
 export const CollapsibleBar = styled.div`

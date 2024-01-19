@@ -32,6 +32,7 @@ import {
 	StyledCCFInput,
 	StyledCCFError,
 	StyledCommandCreationDisclaimer,
+	CommandInputGroup,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CommandSubmitUtils } from "../../../utils/CommandCreationUtils/CommandSubmissionUtils";
 import LiveCommandPreview from "./LiveCommandCreationPreview";
@@ -243,22 +244,8 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				<StyledCommandCreationDisclaimer>
 					To generate commands go <Link href="/commands/generate">here</Link>
 				</StyledCommandCreationDisclaimer>
-				<LiveCommandPreview watch={watch} />
-				<div>
-					{/*  Reusable parameter creation buttons: "Add new parameter", "Clear
-				form", "Submit", "Collapse All Params" */}
-					{/* Made a function for this because it's used twice in this component */}
-					{parameterCreationButtons({
-						collapseAllParams,
-						update,
-						getValues: methods.getValues,
-						append,
-						clearForm,
-						isSubmitting,
-						componentMode,
-						commandToEdit: commandToEdit ? commandToEdit : null,
-					})}
 
+				<CommandInputGroup>
 					<CMDBuddyTooltip content="The core command excluding any parameters; e.g. npx playwright test myTestName">
 						<StyledCCFLabel htmlFor="baseCommand">
 							Base Command *
@@ -276,23 +263,42 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 							{methods.formState.errors.baseCommand.message}
 						</StyledCCFError>
 					)}
-				</div>
+					<div>
+						<CMDBuddyTooltip content="You select the command by its title in the sidebar.">
+							<StyledCCFLabel htmlFor="title">Title *</StyledCCFLabel>
+						</CMDBuddyTooltip>
+						<StyledCCFInput
+							{...methods.register("title")}
+							maxLength={60}
+							required={true}
+							placeholder="Something you'll remember it by"
+						/>
+						{methods.formState.errors.title && (
+							<StyledCCFError>
+								{methods.formState.errors.title.message}
+							</StyledCCFError>
+						)}
+					</div>
+				</CommandInputGroup>
+
+				<LiveCommandPreview watch={watch} />
+
 				<div>
-					<CMDBuddyTooltip content="You select the command by its title in the sidebar.">
-						<StyledCCFLabel htmlFor="title">Title *</StyledCCFLabel>
-					</CMDBuddyTooltip>
-					<StyledCCFInput
-						{...methods.register("title")}
-						maxLength={60}
-						required={true}
-						placeholder="Something you'll remember it by"
-					/>
-					{methods.formState.errors.title && (
-						<StyledCCFError>
-							{methods.formState.errors.title.message}
-						</StyledCCFError>
-					)}
+					{/*  Reusable parameter creation buttons: "Add new parameter", "Clear
+				form", "Submit", "Collapse All Params" */}
+					{/* Made a function for this because it's used twice in this component */}
+					{parameterCreationButtons({
+						collapseAllParams,
+						update,
+						getValues: methods.getValues,
+						append,
+						clearForm,
+						isSubmitting,
+						componentMode,
+						commandToEdit: commandToEdit ? commandToEdit : null,
+					})}
 				</div>
+
 				{/* All this DragDrop stuff is for drag and drop (DnD) of Parameters */}
 				<DragDropContext onDragEnd={onDragEnd}>
 					<StrictModeDroppable droppableId="parameters">
@@ -339,8 +345,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				</DragDropContext>
 				{/* This shows an example of the Command the user has created. */}
 				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}
-				<LiveCommandPreview watch={watch} />
-				{/*  Reusable parameter creation buttons: "Add new parameter", "Clear
+				{/*  Reusable parameter creatRion buttons: "Add new parameter", "Clear
 				form", "Submit", "Collapse All Params" */}
 				{/* Made a function for this because it's used twice in this component */}
 				{/* Only shows at bottom of page if user has made at least one param, seems unnecessary otherwisei */}

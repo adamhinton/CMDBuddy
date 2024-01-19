@@ -51,7 +51,17 @@ export const lightTheme: DefaultTheme = {
 		buttonHoverBackground: "#81D4FA",
 		collapsibleBarBackground: "#f0f0f0",
 		collapsibleBarHoverBackground: "#e0e0e0",
+		// Submit button stuff:
+		submitButtonBackground: "#3272D9",
+		submitButtonText: "#FFFFFF",
+		submitButtonBorder: "#2860B2",
+		submitButtonHoverBackground: "#1D4A8C",
+		submitButtonHoverText: "#FFFFFF",
+		submitButtonDisabledBackground: "#A6B1C2",
+		submitButtonDisabledText: "#E1E4E8",
+		submitButtonDisabledBorder: "#A6B1C2",
 	},
+
 	commandGeneration: {
 		baseBackground: "#f0f0f0",
 		baseText: "#333",
@@ -150,6 +160,15 @@ export const darkTheme: DefaultTheme = {
 		buttonHoverBackground: "#78909C",
 		collapsibleBarBackground: "#3a3b3c",
 		collapsibleBarHoverBackground: "#4a4b4c",
+		// Submit button stuff:
+		submitButtonBackground: "#4A90E2",
+		submitButtonText: "#FFFFFF",
+		submitButtonBorder: "#3178C6",
+		submitButtonHoverBackground: "#357ABD",
+		submitButtonHoverText: "#FFFFFF",
+		submitButtonDisabledBackground: "#5F7C8A",
+		submitButtonDisabledText: "#C7D0D9",
+		submitButtonDisabledBorder: "#5F7C8A",
 	},
 	commandGeneration: {
 		baseBackground: "#222",
