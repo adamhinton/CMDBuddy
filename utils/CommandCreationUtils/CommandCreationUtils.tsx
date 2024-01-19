@@ -2,6 +2,8 @@
 // This is the utils file for initial creation of user's Commands and each Command's Parameters to save to the db
 // Most of this is for Parameters which are somewhat complex since there are four different types of Parameter, and different fields to complete for each.
 
+// TODO: Break this up into PCU and CCU; file getting too long
+
 import {
 	UseFieldArrayUpdate,
 	UseFormGetValues,
@@ -31,6 +33,7 @@ import {
 } from "../styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommand } from "../zod/CommandSchema";
 import styled from "styled-components";
+import { SyntheticEvent, useState } from "react";
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
@@ -185,6 +188,47 @@ type DropdownParameterErrors = {
 	};
 };
 
+// TODO: Move these Dropdown styled componenents to ParameterCreationStyles.
+const TagInputContainer = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	background-color: ${({ theme }) =>
+		theme.commandCreation.dropdownBackgroundColor};
+	border: 1px solid ${({ theme }) => theme.commandCreation.dropdownBorderColor};
+	padding: 5px;
+	border-radius: 5px;
+`;
+
+const Tag = styled.span`
+	padding: 5px 8px;
+	background-color: ${({ theme }) =>
+		theme.commandCreation.dropdownTagBackgroundColor};
+	color: ${({ theme }) => theme.commandCreation.dropdownTagTextColor};
+	margin: 2px;
+	border-radius: 3px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+`;
+
+const RemoveTagIcon = styled.span`
+	cursor: pointer;
+	color: ${({ theme }) => theme.commandCreation.dropdownTagRemoveIconColor};
+`;
+
+const TagInput = styled.input`
+	flex: 1;
+	border: none;
+	outline: none;
+	padding: 5px;
+	color: ${({ theme }) => theme.commandCreation.dropdownTextColor};
+	background: transparent;
+`;
+
+/**
+ * Creating a Dropdown component to list possible values for user to select
+ * This is a Tag system; the user types a value and hits enter. They can also delete Tags.
+ */
 const DropdownParameterFields = ({
 	index,
 	parameterErrors,
@@ -192,30 +236,51 @@ const DropdownParameterFields = ({
 	index: number;
 	parameterErrors: DropdownParameterErrors;
 }) => {
-	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
+	type Tag = string;
+	type Tags = Tag[];
 
-	// Helper function to convert string to array
-	const stringToArray = (value: string) => {
-		// Value might already be an array if it's been submitted before
-		// Because submitting converted it to an array already
-		return typeof value === "string"
-			? value.split(",").map((val) => val.trim())
-			: value;
+	const { register, setValue, watch } = useFormContext();
+	const [tags, setTags] = useState<Tags>([]);
+
+	const allowedValues = watch(`parameters.${index}.allowedValues`);
+
+	/**
+	 * The user hits enter to add new possible values (aka Tags)
+	 */
+	const handleKeyDown = (event: any) => {
+		event.preventDefault();
+		console.log("event:", event);
+		if (event.key === "Enter" && event.target.value.trim()) {
+			const newTags = [...tags, event.target.value.trim()];
+			setTags(newTags);
+			setValue(`parameters.${index}.allowedValues`, newTags.join(", "));
+			event.target.value = ""; // Clear the input
+		}
+	};
+
+	// Remove a tag
+	const removeTag = (tagToRemove: Tag) => {
+		const newTags = tags.filter((tag) => tag !== tagToRemove);
+		setTags(newTags);
+		setValue(`parameters.${index}.allowedValues`, newTags.join(", "));
 	};
 
 	return (
 		<>
-			{/* Allowed Values Field */}
-			{/* Enter as many allowed values as they want, separated by commas */}
 			<ParameterCreationLabel>Allowed Values</ParameterCreationLabel>
-			<textarea
-				{...register(`parameters.${index}.allowedValues`, {
-					setValueAs: stringToArray,
-				})}
-				placeholder="Enter values separated by commas"
-				rows={4}
-				maxLength={5000}
-			/>
+			<TagInputContainer>
+				{tags.map((tag, index) => (
+					<Tag key={index}>
+						{tag}
+						<RemoveTagIcon onClick={() => removeTag(tag)}>✖</RemoveTagIcon>
+					</Tag>
+				))}
+				<TagInput
+					{...register(`parameters.${index}.allowedValues`)}
+					placeholder={tags.length ? "" : "Press enter to add new values"}
+					onKeyDown={handleKeyDown}
+				/>
+			</TagInputContainer>
 			{parameterErrors?.allowedValues && (
 				<ParameterCreationError>
 					{parameterErrors.allowedValues.message}
