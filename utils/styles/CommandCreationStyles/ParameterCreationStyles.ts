@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const ParameterCreationFormContainer = styled.div`
 	border: 1px solid blue;
+	max-width: 900px;
 	background: ${({ theme }) => theme.commandCreation.formBackground};
 	color: ${({ theme }) => theme.commandCreation.formText};
 	padding: 15px;
@@ -75,7 +76,7 @@ export const StyledPCFOptionalCheckbox = styled.div`
 `;
 
 export const StyledPCFLengthInput = styled(ParameterCreationInput)`
-	width: 100px;
+	width: 105px;
 	margin-right: 10px;
 `;
 
@@ -96,4 +97,5 @@ export const StyledPCFBooleanOptions = styled.div`
 export const StyledPCFMinMaxContainer = styled.div`
 	display: flex;
 	align-items: center;
+	max-width: 400px;
 `;
