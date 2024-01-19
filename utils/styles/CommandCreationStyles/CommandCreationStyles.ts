@@ -73,6 +73,7 @@ export const StyledCCFButton = styled.button`
 `;
 
 // Enhanced Button styles for visual hierarchy
+// This is the "Submit" button.
 export const PrimaryButton = styled(StyledCCFButton)`
 	font-weight: bold;
 	border: 2px solid ${({ theme }) => theme.commandCreation.submitButtonBorder};
