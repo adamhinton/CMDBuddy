@@ -63,35 +63,37 @@ const StringParameterFields = ({
 
 	return (
 		<>
-			{/* Min Length Field */}
-			<ParameterCreationLabel>Min Length</ParameterCreationLabel>
-			<StyledPCFLengthInput
-				type="number"
-				{...register(`parameters.${index}.minLength`, {
-					setValueAs: toNumberOrNullOrUndefined,
-				})}
-				placeholder="Min Length"
-			/>
-			{parameterErrors?.minLength && (
-				<ParameterCreationError>
-					{parameterErrors.minLength.message}
-				</ParameterCreationError>
-			)}
+			<StyledPCFMinMaxContainer>
+				{/* Min Length Field */}
+				<ParameterCreationLabel>Min Length</ParameterCreationLabel>
+				<StyledPCFLengthInput
+					type="number"
+					{...register(`parameters.${index}.minLength`, {
+						setValueAs: toNumberOrNullOrUndefined,
+					})}
+					placeholder="Min Length"
+				/>
+				{parameterErrors?.minLength && (
+					<ParameterCreationError>
+						{parameterErrors.minLength.message}
+					</ParameterCreationError>
+				)}
 
-			{/* Max Length Field */}
-			<ParameterCreationLabel>Max Length</ParameterCreationLabel>
-			<StyledPCFLengthInput
-				type="number"
-				{...register(`parameters.${index}.maxLength`, {
-					setValueAs: toNumberOrNullOrUndefined,
-				})}
-				placeholder="Max Length"
-			/>
-			{parameterErrors?.maxLength && (
-				<ParameterCreationError>
-					{parameterErrors.maxLength.message}
-				</ParameterCreationError>
-			)}
+				{/* Max Length Field */}
+				<ParameterCreationLabel>Max Length</ParameterCreationLabel>
+				<StyledPCFLengthInput
+					type="number"
+					{...register(`parameters.${index}.maxLength`, {
+						setValueAs: toNumberOrNullOrUndefined,
+					})}
+					placeholder="Max Length"
+				/>
+				{parameterErrors?.maxLength && (
+					<ParameterCreationError>
+						{parameterErrors.maxLength.message}
+					</ParameterCreationError>
+				)}
+			</StyledPCFMinMaxContainer>
 
 			{/* Validation Regex Field */}
 			<ParameterCreationLabel>Validation Regex</ParameterCreationLabel>
