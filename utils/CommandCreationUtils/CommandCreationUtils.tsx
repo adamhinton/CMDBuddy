@@ -28,8 +28,12 @@ import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationCompo
 import {
 	ParamCreationButtonsContainer,
 	PrimaryButton,
+	RemoveTagIcon,
 	SecondaryButton,
 	StyledCCFButton,
+	Tag,
+	TagInput,
+	TagInputContainer,
 } from "../styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommand } from "../zod/CommandSchema";
 import styled from "styled-components";
@@ -187,43 +191,6 @@ type DropdownParameterErrors = {
 		message: string;
 	};
 };
-
-// TODO: Move these Dropdown styled componenents to ParameterCreationStyles.
-const TagInputContainer = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	background-color: ${({ theme }) =>
-		theme.commandCreation.dropdownBackgroundColor};
-	border: 1px solid ${({ theme }) => theme.commandCreation.dropdownBorderColor};
-	padding: 5px;
-	border-radius: 5px;
-`;
-
-const Tag = styled.span`
-	padding: 5px 8px;
-	background-color: ${({ theme }) =>
-		theme.commandCreation.dropdownTagBackgroundColor};
-	color: ${({ theme }) => theme.commandCreation.dropdownTagTextColor};
-	margin: 2px;
-	border-radius: 3px;
-	display: flex;
-	align-items: center;
-	gap: 5px;
-`;
-
-const RemoveTagIcon = styled.span`
-	cursor: pointer;
-	color: ${({ theme }) => theme.commandCreation.dropdownTagRemoveIconColor};
-`;
-
-const TagInput = styled.input`
-	flex: 1;
-	border: none;
-	outline: none;
-	padding: 5px;
-	color: ${({ theme }) => theme.commandCreation.dropdownTextColor};
-	background: transparent;
-`;
 
 /**
  * Creating a Dropdown component to list possible values for user to select

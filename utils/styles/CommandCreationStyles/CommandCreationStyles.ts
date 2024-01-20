@@ -180,3 +180,44 @@ export const StyledTrashIcon = styled.i`
 		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
 	}
 `;
+
+// All this Tag stuff is PCEF dropdown utils
+// Each Tag is a user-inputted allowed item for dropdwon
+export const TagInputContainer = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	background-color: ${({ theme }) =>
+		theme.commandCreation.dropdownBackgroundColor};
+	border: 1px solid ${({ theme }) => theme.commandCreation.dropdownBorderColor};
+	padding: 5px;
+	border-radius: 5px;
+`;
+
+// Dropdown stuff
+export const Tag = styled.span`
+	padding: 5px 8px;
+	background-color: ${({ theme }) =>
+		theme.commandCreation.dropdownTagBackgroundColor};
+	color: ${({ theme }) => theme.commandCreation.dropdownTagTextColor};
+	margin: 2px;
+	border-radius: 3px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+`;
+
+// Dropdown stuff
+export const RemoveTagIcon = styled.span`
+	cursor: pointer;
+	color: ${({ theme }) => theme.commandCreation.dropdownTagRemoveIconColor};
+`;
+
+// Dropdown stuff
+export const TagInput = styled.input`
+	flex: 1;
+	border: none;
+	outline: none;
+	padding: 5px;
+	color: ${({ theme }) => theme.commandCreation.dropdownTextColor};
+	background: transparent;
+`;
