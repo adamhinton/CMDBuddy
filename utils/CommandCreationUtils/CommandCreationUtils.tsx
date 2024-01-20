@@ -5,6 +5,7 @@
 // TODO: Break this up into PCU and CCU; file getting too long
 
 import {
+	UseFieldArrayAppend,
 	UseFieldArrayUpdate,
 	UseFormGetValues,
 	useFormContext,
@@ -24,7 +25,10 @@ import { CommandCreationZodSchemas } from "./CommandCreationTypes";
 CommandCreationZodSchemas;
 
 import { AnyParameter } from "./CommandCreationTypes";
-import { CMDBuddyCommandFormValidation } from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
+import {
+	CMDBuddyCommandFormValidation,
+	ComponentMode,
+} from "@/components/CommandCreationComponents/CommandCreationOrEditForm";
 import {
 	ParamCreationButtonsContainer,
 	PrimaryButton,
@@ -411,12 +415,12 @@ export const DefaultValueInput = ({
 
 type ParameterCreationButtonProps = {
 	collapseAllParams: (update: any, getValues: any) => void;
-	update: any;
-	getValues: any;
-	append: (value: any) => void;
+	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
+	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>;
+	append: UseFieldArrayAppend<CMDBuddyCommandFormValidation>;
 	clearForm: () => void;
 	isSubmitting: boolean;
-	componentMode: "createNewCommand" | "editExistingCommand";
+	componentMode: ComponentMode;
 	commandToEdit: CMDBuddyCommand | null;
 };
 
@@ -451,6 +455,7 @@ const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
 				type="button"
 				onClick={() => {
 					append(
+						// @ts-ignore -- not sure why ts doesn't like this
 						componentMode === "createNewCommand"
 							? appendValueIfCreationMode
 							: appendValueIfEditMode
