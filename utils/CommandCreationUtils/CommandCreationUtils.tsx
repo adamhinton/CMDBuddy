@@ -33,7 +33,7 @@ import {
 } from "../styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommand } from "../zod/CommandSchema";
 import styled from "styled-components";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
@@ -227,6 +227,7 @@ const TagInput = styled.input`
 
 /**
  * Creating a Dropdown component to list possible values for user to select
+ *
  * This is a Tag system; the user types a value and hits enter. They can also delete Tags.
  */
 const DropdownParameterFields = ({
@@ -236,29 +237,40 @@ const DropdownParameterFields = ({
 	index: number;
 	parameterErrors: DropdownParameterErrors;
 }) => {
+	/**A single allowed dropdown value that the user inputs */
 	type Tag = string;
+	/**The list of user-inputted alowed dropdown values */
 	type Tags = Tag[];
 
-	const { register, setValue, watch, getValues } = useFormContext();
+	const { register, setValue, getValues, watch } = useFormContext();
 	const initialTags: Tags =
 		getValues(`parameters.${index}.allowedValues`) || [];
 	const [tags, setTags] = useState<Tags>(initialTags);
+	const [inputValue, setInputValue] = useState<string>("");
+
+	// Watch for external changes in allowedValues
+	const watchedValues = watch(`parameters.${index}.allowedValues`);
+	useEffect(() => {
+		if (Array.isArray(watchedValues)) {
+			setTags(watchedValues);
+		}
+	}, [watchedValues]);
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === "Enter" && event.currentTarget.value.trim()) {
+		if (event.key === "Enter" && inputValue.trim()) {
 			event.preventDefault();
-			const newTag = event.currentTarget.value.trim();
+			const newTag = inputValue.trim();
 			const newTags = [...tags, newTag];
 			setTags(newTags);
-			setValue(`parameters.${index}.allowedValues`, newTags);
-			event.currentTarget.value = ""; // Clear the input
+			setValue(`parameters.${index}.allowedValues`, newTags); // Set as array
+			setInputValue(""); // Clear the input
 		}
 	};
 
 	const removeTag = (tagToRemove: Tag) => {
 		const newTags = tags.filter((tag) => tag !== tagToRemove);
 		setTags(newTags);
-		setValue(`parameters.${index}.allowedValues`, newTags);
+		setValue(`parameters.${index}.allowedValues`, newTags); // Set as array
 	};
 
 	return (
@@ -273,6 +285,8 @@ const DropdownParameterFields = ({
 				))}
 				<TagInput
 					{...register(`parameters.${index}.allowedValues`)}
+					value={inputValue}
+					onChange={(e) => setInputValue(e.target.value)}
 					placeholder={tags.length ? "" : "Press enter to add new values"}
 					onKeyDown={handleKeyDown}
 				/>
