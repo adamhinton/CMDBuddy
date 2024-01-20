@@ -219,10 +219,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			<StyledCCFForm
 				// Handles submit differently if it's in "edit existing command" mode or "create new command" mode
 				onSubmit={methods.handleSubmit((data, e) => {
-					console.log(
-						"allowedValues:",
-						methods.getValues("parameters.0.allowedValues")
-					);
 					handleSubmit({
 						data,
 						componentMode,
