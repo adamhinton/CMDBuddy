@@ -411,13 +411,13 @@ export const DefaultValueInput = ({
 
 type ParameterCreationButtonProps = {
 	collapseAllParams: (update: any, getValues: any) => void;
-	update: any; // Define more specific type if known
-	getValues: any; // Define more specific type if known
-	append: (value: any) => void; // Define more specific type if known
+	update: any;
+	getValues: any;
+	append: (value: any) => void;
 	clearForm: () => void;
 	isSubmitting: boolean;
-	componentMode: "createNewCommand" | "editExistingCommand"; // Assuming these are the two modes
-	commandToEdit: CMDBuddyCommand | null; // Assuming it can be null if not in edit mode
+	componentMode: "createNewCommand" | "editExistingCommand";
+	commandToEdit: CMDBuddyCommand | null;
 };
 
 // Reusable parameter creation buttons: "Add new parameter", "Clear form", "Submit", "Collapse All Params"
