@@ -15,7 +15,7 @@ import {
 import { CMDBuddyParameter } from "../zod/ParameterSchema";
 import { customGetCommandWithParameters } from "../customGraphQLQueries";
 import { UpdateCommandInput } from "@/API";
-import { ToastOptions, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import {
 	addCommand,
 	editSingleCommand,
