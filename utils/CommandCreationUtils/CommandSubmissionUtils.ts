@@ -27,6 +27,7 @@ import {
 	MAX_COMMAND_LIMIT_PER_USER,
 	MAX_PARAM_LIMIT_PER_COMMAND,
 } from "../MiscellaneousGlobalVariables";
+import { set } from "zod";
 
 // TODO: Make it clear where errors are. Expand Param; maybe toast saying param name and field?
 
@@ -142,6 +143,16 @@ const validateParameterOnSubmit = (
 			});
 			isValid = false;
 		}
+
+		// Enter at least one possible dropdown value
+		if (parameter.allowedValues?.length && parameter.allowedValues.length < 1) {
+			setError(`parameters.${index}.allowedValues`, {
+				type: "manual",
+				message: "Add at least one allowed value",
+			});
+			isValid = false;
+		}
+
 		// Couldn't think of any additional FLAG validations
 	}
 	return isValid;
