@@ -35,7 +35,7 @@ import { set } from "zod";
 const validateParameterOnSubmit = (
 	parameter: AnyParameter,
 	index: number,
-	methods: any,
+	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
 	isValid: boolean
 ): boolean => {
 	const { setError } = methods;
@@ -46,10 +46,16 @@ const validateParameterOnSubmit = (
 			parameter.maxLength &&
 			parameter.minLength > parameter.maxLength
 		) {
-			setError(`parameters.${index}.minLength`, {
-				type: "manual",
-				message: "Min length cannot be greater than max length.",
-			});
+			setError(
+				`parameters.${index}.minLength`,
+				{
+					type: "manual",
+					message: "Min length cannot be greater than max length.",
+				},
+				{
+					shouldFocus: true,
+				}
+			);
 			isValid = false;
 		}
 
@@ -59,10 +65,16 @@ const validateParameterOnSubmit = (
 			if (parameter.validationRegex) {
 				const regex = new RegExp(parameter.validationRegex);
 				if (!regex.test(parameter.defaultValue)) {
-					setError(`parameters.${index}.defaultValue`, {
-						type: "manual",
-						message: "Provided default value does not match provided regex",
-					});
+					setError(
+						`parameters.${index}.defaultValue`,
+						{
+							type: "manual",
+							message: "Provided default value does not match provided regex",
+						},
+						{
+							shouldFocus: true,
+						}
+					);
 					isValid = false;
 				}
 			}
@@ -72,10 +84,16 @@ const validateParameterOnSubmit = (
 				parameter.maxLength &&
 				parameter.defaultValue.length > parameter.maxLength
 			) {
-				setError(`parameters.${index}.defaultValue`, {
-					type: "manual",
-					message: "Provided default value is longer than max length",
-				});
+				setError(
+					`parameters.${index}.defaultValue`,
+					{
+						type: "manual",
+						message: "Provided default value is longer than max length",
+					},
+					{
+						shouldFocus: true,
+					}
+				);
 				isValid = false;
 			}
 
@@ -84,10 +102,16 @@ const validateParameterOnSubmit = (
 				parameter.minLength &&
 				parameter.defaultValue.length < parameter.minLength
 			) {
-				setError(`parameters.${index}.defaultValue`, {
-					type: "manual",
-					message: "Provided default value is shorter than min length",
-				});
+				setError(
+					`parameters.${index}.defaultValue`,
+					{
+						type: "manual",
+						message: "Provided default value is shorter than min length",
+					},
+					{
+						shouldFocus: true,
+					}
+				);
 				isValid = false;
 			}
 		}
@@ -99,10 +123,16 @@ const validateParameterOnSubmit = (
 			parameter.maxValue &&
 			parameter.minValue > parameter.maxValue
 		) {
-			setError(`parameters.${index}.minValue`, {
-				type: "manual",
-				message: "Min value cannot be greater than max value.",
-			});
+			setError(
+				`parameters.${index}.minValue`,
+				{
+					type: "manual",
+					message: "Min value cannot be greater than max value.",
+				},
+				{
+					shouldFocus: true,
+				}
+			);
 			isValid = false;
 		}
 
@@ -112,10 +142,16 @@ const validateParameterOnSubmit = (
 				parameter.maxValue &&
 				Number(parameter.defaultValue) > parameter.maxValue
 			) {
-				setError(`parameters.${index}.defaultValue`, {
-					type: "manual",
-					message: "Default value cannot exceed max value",
-				});
+				setError(
+					`parameters.${index}.defaultValue`,
+					{
+						type: "manual",
+						message: "Default value cannot exceed max value",
+					},
+					{
+						shouldFocus: true,
+					}
+				);
 				isValid = false;
 			}
 
@@ -123,10 +159,16 @@ const validateParameterOnSubmit = (
 				parameter.minValue &&
 				Number(parameter.defaultValue) < parameter.minValue
 			) {
-				setError(`parameters.${index}.defaultValue`, {
-					type: "manual",
-					message: "Default value cannot be less than min value",
-				});
+				setError(
+					`parameters.${index}.defaultValue`,
+					{
+						type: "manual",
+						message: "Default value cannot be less than min value",
+					},
+					{
+						shouldFocus: true,
+					}
+				);
 				isValid = false;
 			}
 		}
@@ -137,19 +179,29 @@ const validateParameterOnSubmit = (
 			parameter.defaultValue &&
 			!parameter.allowedValues?.includes(parameter.defaultValue)
 		) {
-			setError(`parameters.${index}.defaultValue`, {
-				type: "manual",
-				message: "Default value must be in allowed values.",
-			});
+			setError(
+				`parameters.${index}.defaultValue`,
+				{
+					type: "manual",
+					message: "Default value must be in allowed values.",
+				},
+				{
+					shouldFocus: true,
+				}
+			);
 			isValid = false;
 		}
 
 		// Enter at least one possible dropdown value
 		if (parameter.allowedValues!.length < 1) {
-			setError(`parameters.${index}.allowedValues`, {
-				type: "manual",
-				message: "Add at least one allowed value",
-			});
+			setError(
+				`parameters.${index}.allowedValues`,
+				{
+					type: "manual",
+					message: "Add at least one allowed value",
+				},
+				{ shouldFocus: true }
+			);
 			isValid = false;
 		}
 
@@ -267,7 +319,7 @@ const fetchCommandWithParameters = async (commandID: string) => {
  */
 function validateAndUpdateParameters(
 	parameters: AnyParameter[],
-	methods: any
+	methods: UseFormReturn<CMDBuddyCommandFormValidation>
 ): boolean {
 	let nonFlagOrder = 1;
 	let flagOrder = 1;
