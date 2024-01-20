@@ -29,9 +29,8 @@ import {
 } from "../MiscellaneousGlobalVariables";
 import { set } from "zod";
 
-// TODO: Make it clear where errors are. Expand Param; maybe toast saying param name and field?
-
 // This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
+// It also focuses the UI on the first error when user hits Submit.
 const validateParameterOnSubmit = (
 	parameter: AnyParameter,
 	index: number,
