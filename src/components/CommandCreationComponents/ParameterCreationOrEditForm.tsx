@@ -266,6 +266,7 @@ const ParameterCreationOrEditForm = ({
 						index={index}
 						parameterErrors={parameterErrors}
 					></DefaultValueInput>
+
 					{/* IsNullable (Optional) Checkbox */}
 					{/* This isn't needed in FLAG type */}
 					{parameterType !== "FLAG" && (
@@ -277,8 +278,9 @@ const ParameterCreationOrEditForm = ({
 							/>
 						</StyledPCFOptionalCheckbox>
 					)}
+
+					{/* Render stuff specific to each Parameter's type */}
 					{renderParameterSpecificFields()}
-					{/* Delete Parameter Button */}
 				</div>
 			)}
 		</ParameterCreationFormContainer>
