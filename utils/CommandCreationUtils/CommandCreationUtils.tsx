@@ -245,7 +245,9 @@ const DropdownParameterFields = ({
 	const { register, setValue, getValues, watch } = useFormContext();
 	const initialTags: Tags =
 		getValues(`parameters.${index}.allowedValues`) || [];
+	// tags is the list of values the user has already entered
 	const [tags, setTags] = useState<Tags>(initialTags);
+	// Whereas inputValue is the current value the user is typing but hasn't hit enter yet
 	const [inputValue, setInputValue] = useState<string>("");
 
 	// Watch for external changes in allowedValues
@@ -256,6 +258,7 @@ const DropdownParameterFields = ({
 		}
 	}, [watchedValues]);
 
+	/**User hits enter on every input */
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === "Enter" && inputValue.trim()) {
 			event.preventDefault();
@@ -277,12 +280,14 @@ const DropdownParameterFields = ({
 		<>
 			<ParameterCreationLabel>Allowed Values</ParameterCreationLabel>
 			<TagInputContainer>
+				{/* Display list of allowed dropdown values (tags) the user has inputted */}
 				{tags.map((tag, index) => (
 					<Tag key={index}>
 						{tag}
 						<RemoveTagIcon onClick={() => removeTag(tag)}>✖</RemoveTagIcon>
 					</Tag>
 				))}
+				{/* User inputs a new allowed dropdown value (tag) here */}
 				<TagInput
 					{...register(`parameters.${index}.allowedValues`)}
 					value={inputValue}
