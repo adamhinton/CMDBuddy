@@ -250,13 +250,10 @@ const DropdownParameterFields = ({
 	// Whereas inputValue is the current value the user is typing but hasn't hit enter yet
 	const [inputValue, setInputValue] = useState<string>("");
 
-	// Watch for external changes in allowedValues
-	const watchedValues = watch(`parameters.${index}.allowedValues`);
+	// Ensures that the already-inputted allowed values are set to form state, rather than the ongoing value in the input.
 	useEffect(() => {
-		if (Array.isArray(watchedValues)) {
-			setTags(watchedValues);
-		}
-	}, [watchedValues]);
+		setValue(`parameters.${index}.allowedValues`, tags);
+	}, [tags, setValue, index]);
 
 	/**User hits enter on every input */
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -289,7 +286,6 @@ const DropdownParameterFields = ({
 				))}
 				{/* User inputs a new allowed dropdown value (tag) here */}
 				<TagInput
-					{...register(`parameters.${index}.allowedValues`)}
 					value={inputValue}
 					onChange={(e) => setInputValue(e.target.value)}
 					placeholder={tags.length ? "" : "Press enter to add new values"}
