@@ -239,30 +239,26 @@ const DropdownParameterFields = ({
 	type Tag = string;
 	type Tags = Tag[];
 
-	const { register, setValue, watch } = useFormContext();
-	const [tags, setTags] = useState<Tags>([]);
+	const { register, setValue, watch, getValues } = useFormContext();
+	const initialTags: Tags =
+		getValues(`parameters.${index}.allowedValues`) || [];
+	const [tags, setTags] = useState<Tags>(initialTags);
 
-	const allowedValues = watch(`parameters.${index}.allowedValues`);
-
-	/**
-	 * The user hits enter to add new possible values (aka Tags)
-	 */
-	const handleKeyDown = (event: any) => {
-		event.preventDefault();
-		console.log("event:", event);
-		if (event.key === "Enter" && event.target.value.trim()) {
-			const newTags = [...tags, event.target.value.trim()];
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === "Enter" && event.currentTarget.value.trim()) {
+			event.preventDefault();
+			const newTag = event.currentTarget.value.trim();
+			const newTags = [...tags, newTag];
 			setTags(newTags);
-			setValue(`parameters.${index}.allowedValues`, newTags.join(", "));
-			event.target.value = ""; // Clear the input
+			setValue(`parameters.${index}.allowedValues`, newTags);
+			event.currentTarget.value = ""; // Clear the input
 		}
 	};
 
-	// Remove a tag
 	const removeTag = (tagToRemove: Tag) => {
 		const newTags = tags.filter((tag) => tag !== tagToRemove);
 		setTags(newTags);
-		setValue(`parameters.${index}.allowedValues`, newTags.join(", "));
+		setValue(`parameters.${index}.allowedValues`, newTags);
 	};
 
 	return (
