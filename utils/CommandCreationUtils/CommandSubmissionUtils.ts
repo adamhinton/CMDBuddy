@@ -145,7 +145,7 @@ const validateParameterOnSubmit = (
 		}
 
 		// Enter at least one possible dropdown value
-		if (parameter.allowedValues?.length && parameter.allowedValues.length < 1) {
+		if (parameter.allowedValues!.length < 1) {
 			setError(`parameters.${index}.allowedValues`, {
 				type: "manual",
 				message: "Add at least one allowed value",
