@@ -399,8 +399,6 @@ const handleSubmit = async ({
 			{ autoClose: false }
 		);
 
-		const bob: ToastOptions = {};
-		toast("blah blah", {});
 		setIsSubmitting(false);
 		return;
 	}
