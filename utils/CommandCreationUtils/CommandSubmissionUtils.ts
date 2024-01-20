@@ -200,7 +200,10 @@ const validateParameterOnSubmit = (
 					type: "manual",
 					message: "Add at least one allowed value",
 				},
-				{ shouldFocus: true }
+				{
+					// TODO: This isn't focusing but the other shouldFocuses work fine
+					shouldFocus: true,
+				}
 			);
 			isValid = false;
 		}
