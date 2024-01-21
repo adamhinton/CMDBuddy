@@ -10,14 +10,8 @@
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
 // TODO: General PCF Cleanup
-// -- Better dropdown text input styling
 // -- Better borders, spacing etc
 // -- Clearer toolbar and icons
-
-// TODO: Improve validation styling.
-// -- Collapse valid params
-// -- Highlight invalid params
-// -- Toast
 
 // TODO:
 // In creation mode, add "What's this?" with link to explanation in /about. Particularly for Type
@@ -190,7 +184,6 @@ const ParameterCreationOrEditForm = ({
 
 					<CMDBuddyTooltip content={isCollapsed ? "Expand" : "Collapse"}>
 						<StyledUpDownIcon>
-							{/* TODO: White chevron for dark mode */}
 							<StyledChevronImage
 								src={isCollapsed ? downChevron : rightChevron}
 								alt={isCollapsed ? "Down Chevron" : "Right Chevron"}
