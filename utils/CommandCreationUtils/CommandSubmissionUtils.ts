@@ -29,13 +29,16 @@ import {
 } from "../MiscellaneousGlobalVariables";
 import { set } from "zod";
 
+// TODO: Error on collapsed param uncollapses it, but doesn't focus to the param with error.
+
 // This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
 // It also focuses the UI on the first error when user hits Submit.
 const validateParameterOnSubmit = (
 	parameter: AnyParameter,
 	index: number,
 	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
-	isValid: boolean
+	isValid: boolean,
+	update: Function
 ): boolean => {
 	const { setError } = methods;
 
@@ -45,6 +48,11 @@ const validateParameterOnSubmit = (
 			parameter.maxLength &&
 			parameter.minLength > parameter.maxLength
 		) {
+			update(index, {
+				...parameter,
+				isCollapsed: false,
+			});
+
 			setError(
 				`parameters.${index}.minLength`,
 				{
@@ -64,6 +72,11 @@ const validateParameterOnSubmit = (
 			if (parameter.validationRegex) {
 				const regex = new RegExp(parameter.validationRegex);
 				if (!regex.test(parameter.defaultValue)) {
+					update(index, {
+						...parameter,
+						isCollapsed: false,
+					});
+
 					setError(
 						`parameters.${index}.defaultValue`,
 						{
@@ -83,6 +96,11 @@ const validateParameterOnSubmit = (
 				parameter.maxLength &&
 				parameter.defaultValue.length > parameter.maxLength
 			) {
+				update(index, {
+					...parameter,
+					isCollapsed: false,
+				});
+
 				setError(
 					`parameters.${index}.defaultValue`,
 					{
@@ -101,6 +119,11 @@ const validateParameterOnSubmit = (
 				parameter.minLength &&
 				parameter.defaultValue.length < parameter.minLength
 			) {
+				update(index, {
+					...parameter,
+					isCollapsed: false,
+				});
+
 				setError(
 					`parameters.${index}.defaultValue`,
 					{
@@ -122,6 +145,11 @@ const validateParameterOnSubmit = (
 			parameter.maxValue &&
 			parameter.minValue > parameter.maxValue
 		) {
+			update(index, {
+				...parameter,
+				isCollapsed: false,
+			});
+
 			setError(
 				`parameters.${index}.minValue`,
 				{
@@ -141,6 +169,11 @@ const validateParameterOnSubmit = (
 				parameter.maxValue &&
 				Number(parameter.defaultValue) > parameter.maxValue
 			) {
+				update(index, {
+					...parameter,
+					isCollapsed: false,
+				});
+
 				setError(
 					`parameters.${index}.defaultValue`,
 					{
@@ -158,6 +191,11 @@ const validateParameterOnSubmit = (
 				parameter.minValue &&
 				Number(parameter.defaultValue) < parameter.minValue
 			) {
+				update(index, {
+					...parameter,
+					isCollapsed: false,
+				});
+
 				setError(
 					`parameters.${index}.defaultValue`,
 					{
@@ -178,6 +216,11 @@ const validateParameterOnSubmit = (
 			parameter.defaultValue &&
 			!parameter.allowedValues?.includes(parameter.defaultValue)
 		) {
+			update(index, {
+				...parameter,
+				isCollapsed: false,
+			});
+
 			setError(
 				`parameters.${index}.defaultValue`,
 				{
@@ -193,6 +236,11 @@ const validateParameterOnSubmit = (
 
 		// Enter at least one possible dropdown value
 		if (parameter.allowedValues!.length < 1) {
+			update(index, {
+				...parameter,
+				isCollapsed: false,
+			});
+
 			setError(
 				`parameters.${index}.allowedValues`,
 				{
@@ -321,7 +369,8 @@ const fetchCommandWithParameters = async (commandID: string) => {
  */
 function validateAndUpdateParameters(
 	parameters: AnyParameter[],
-	methods: UseFormReturn<CMDBuddyCommandFormValidation>
+	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
+	update: Function
 ): boolean {
 	let nonFlagOrder = 1;
 	let flagOrder = 1;
@@ -334,7 +383,8 @@ function validateAndUpdateParameters(
 			parameter,
 			index,
 			methods,
-			isFormValuesValid
+			isFormValuesValid,
+			update
 		);
 		if (!isParameterValid) {
 			isFormValuesValid = false;
@@ -425,6 +475,7 @@ const handleSubmit = async ({
 	remove,
 	// How many Commands the user already has
 	numCommands,
+	update,
 }: {
 	data: CMDBuddyCommandFormValidation;
 	componentMode: ComponentMode;
@@ -435,6 +486,7 @@ const handleSubmit = async ({
 	methods: UseFormReturn<CMDBuddyCommandFormValidation>;
 	remove: (index?: number | number[] | undefined) => void;
 	numCommands?: number;
+	update: Function;
 }) => {
 	setIsSubmitting(true);
 	toast(
@@ -486,7 +538,8 @@ const handleSubmit = async ({
 
 	let isFormValuesValid = validateAndUpdateParameters(
 		data.parameters || [],
-		methods
+		methods,
+		update
 	);
 
 	if (!isFormValuesValid) {

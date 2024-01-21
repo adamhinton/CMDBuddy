@@ -8,9 +8,6 @@
 
 // TODO: Clean up CEF DnD styling. Just make the DnD icon clearer, no biggie.
 
-// TODO:
-// If a param has validation issues on submit, make sure it's expanded or otherwise clear which param
-
 // TODO IMPORTANT: RHF's in-built validation (like `required` etc) doesn't seem to run on collapsed Params. Like I can submit them without a `name`. Maybe expand error Param on onInvalid?
 
 import React, { useState, useEffect } from "react";
@@ -133,6 +130,21 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		remove();
 	}, [methods, commandToEdit, remove]);
 
+	// Finds first parameter with errors (if any) and un-collapses its UI. RHF then focuses on that element with shouldFocus: true
+	// TODO: Delete this if I don't do something with it
+	useEffect(() => {
+		const parameterErrors = methods.formState.errors.parameters;
+		console.log("parameterErrors:", parameterErrors);
+		if (parameterErrors?.length && parameterErrors?.length > 0) {
+			parameterErrors!.forEach((error, index) => {
+				if (error) {
+					setValue(`parameters.${index}.isCollapsed`, false);
+					methods.setFocus(`parameters.${index}`);
+				}
+			});
+		}
+	}, [methods.formState.errors.parameters, methods, setValue]);
+
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
 	useEffect(() => {
@@ -229,6 +241,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						methods,
 						remove,
 						numCommands,
+						update,
 					});
 				})}
 				onInvalid={(e) => {
