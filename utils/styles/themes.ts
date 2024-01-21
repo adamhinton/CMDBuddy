@@ -51,6 +51,9 @@ export const lightTheme: DefaultTheme = {
 		buttonHoverBackground: "#81D4FA",
 		collapsibleBarBackground: "#f0f0f0",
 		collapsibleBarHoverBackground: "#e0e0e0",
+		PCEFBackground: "#ffffff",
+		PCEFColor: "333333",
+		PCEFBoxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
 		// Submit button stuff:
 		submitButtonBackground: "#3272D9",
 		submitButtonText: "#FFFFFF",
@@ -167,6 +170,9 @@ export const darkTheme: DefaultTheme = {
 		buttonHoverBackground: "#78909C",
 		collapsibleBarBackground: "#3a3b3c",
 		collapsibleBarHoverBackground: "#4a4b4c",
+		PCEFBackground: "#1e1e1e",
+		PCEFColor: "#ffffff",
+		PCEFBoxShadow: "0 4px 8px rgba(255, 255, 255, 0.1)",
 		// Submit button stuff:
 		submitButtonBackground: "#4A90E2",
 		submitButtonText: "#FFFFFF",
