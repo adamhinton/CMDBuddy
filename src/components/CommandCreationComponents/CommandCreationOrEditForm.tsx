@@ -3,7 +3,7 @@
 // README:
 // User fills out this form to create a Command
 // Each Command has multiple Parameters; they fill out ParameterCreationOrEditForm once per Parameter
-// Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different fields for each
+// Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different parameterList for each
 // User can Drag and Drop (DnD) Parameters
 
 // TODO: Clean up CEF DnD styling. Just make the DnD icon clearer, no biggie.
@@ -125,6 +125,11 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		name: "parameters",
 	});
 
+	// `fields` is the array of created Parameters
+	// I rename it to ParameterList here to be clear what it is
+	/**The list of user-created Parameters in this form. */
+	const parameterList = fields;
+
 	// Delete any values leftover from editing of previous commands
 	useEffect(() => {
 		methods.reset();
@@ -137,23 +142,24 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		const parameterErrors = methods.formState.errors.parameters;
 
 		if (parameterErrors?.length && parameterErrors?.length > 0) {
-			for (let i = 0; i < fields.length; i++) {
-				console.log("paramError in forEach:", parameterErrors[i]);
+			for (let i = 0; i < parameterList.length; i++) {
+				// Expand Parameter with error
 				if (parameterErrors[i]) {
 					setFocus(`parameters.${i}`);
 					update(i, {
-						...fields[i],
+						...parameterList[i],
 						isCollapsed: false,
 					});
+					// Collapse Parameter without error
 				} else {
 					update(i, {
-						...fields[i],
+						...parameterList[i],
 						isCollapsed: true,
 					});
 				}
 			}
 		}
-		// Disabling exhaustive-deps because we don't need to run this every time `fields` (the list of Parameters) is updated
+		// Disabling exhaustive-deps because we don't need to run this every time `parameterList` (the list of Parameters) is updated
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [methods.formState.errors, setFocus, update]);
 
@@ -226,7 +232,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		if (
 			window.confirm("Are you sure you want to DELETE all values in this form?")
 		) {
-			remove(); // Removes all parameter fields
+			remove(); // Removes all parameter parameterList
 			methods.reset(); // Resets the form to default values
 		}
 	};
@@ -267,7 +273,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 					console.log("methods.formState onInvalid:", methods.formState);
 				}}
 			>
-				{/* Command Fields */}
+				{/* Command parameterList */}
 				<StyledCommandCreationHeader>
 					{componentMode === "createNewCommand"
 						? "Create New Command"
@@ -337,8 +343,8 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						{(provided) => (
 							<div {...provided.droppableProps} ref={provided.innerRef}>
 								{/* As many parameter creation forms as user wants */}
-								{/* `fields` is what the function calls `parameters` */}
-								{fields.map((field, index) => {
+								{/* `parameterList` is what the function calls `parameters` */}
+								{parameterList.map((field, index) => {
 									return (
 										// DnD stuff
 										<Draggable
@@ -381,7 +387,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				form", "Submit", "Collapse All Params" */}
 				{/* Made a function for this because it's used twice in this component */}
 				{/* Only shows at bottom of page if user has made at least one param, seems unnecessary otherwisei */}
-				{fields.length > 0 &&
+				{parameterList.length > 0 &&
 					parameterCreationButtons({
 						collapseAllParams,
 						update,
