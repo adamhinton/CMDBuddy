@@ -115,15 +115,6 @@ const ParameterCreationOrEditForm = ({
 
 	const parameterErrors = errors.parameters?.[index];
 
-	// TODO: Delete this
-	// useEffect(() => {
-	// 	if (parameterErrors) {
-	// 		setValue(`parameters.${index}.isCollapsed`, false);
-	// 	}
-	// }, [index, parameterErrors, setValue]);
-
-	// This updates the necessary fields when user clicks a different parameter type
-	// Name here refers to the name of the field, not the `name` key in Parameters
 	useEffect(() => {
 		const subscription = watch((value, { name, type }) => {
 			const parameter = value.parameters ? value.parameters[index] : null;
@@ -143,11 +134,6 @@ const ParameterCreationOrEditForm = ({
 		});
 		return () => subscription.unsubscribe();
 	}, [watch, index, setValue]);
-
-	// TODO: Delete this
-	useEffect(() => {
-		console.log("isCollapsed:", isCollapsed);
-	}, [isCollapsed]);
 
 	// User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN
 	const renderParameterSpecificFields = () => {
@@ -300,16 +286,3 @@ const ParameterCreationOrEditForm = ({
 };
 
 export default ParameterCreationOrEditForm;
-
-// TODO: Delete these things
-// type PCCProps = {
-// 	iscollapsed: boolean;
-// };
-// const PossiblyCollapsedContainer = styled.div<PCCProps>`
-// 	visibility: ${({ iscollapsed }) => {
-// 		return iscollapsed ? "hidden" : "visible";
-// 	}};
-// 	height: ${({ iscollapsed }) => {
-// 		return iscollapsed ? "0" : "100%";
-// 	}};
-// `;
