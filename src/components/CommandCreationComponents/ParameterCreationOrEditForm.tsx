@@ -9,10 +9,6 @@
 // FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
-// TODO: General PCF Cleanup
-// -- Better borders, spacing etc
-// -- Clearer toolbar and icons
-
 // TODO:
 // In creation mode, add "What's this?" with link to explanation in /about. Particularly for Type
 
@@ -205,7 +201,6 @@ const ParameterCreationOrEditForm = ({
 									removeParameter();
 								}}
 							>
-								{/* TODO: Confirm icon for PCEF Delete */}
 								🗑️
 							</StyledTrashIcon>
 						</CMDBuddyTooltip>
