@@ -132,24 +132,30 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		remove();
 	}, [methods, commandToEdit, remove]);
 
-	// TODO: Delete this if not useful
+	// On Submit, this collapses Params that don't have errors, and expands ones that do have errors.
 	useEffect(() => {
 		const parameterErrors = methods.formState.errors.parameters;
-		console.log("parameterErrors in CCEF useEffect:", parameterErrors);
 
 		if (parameterErrors?.length && parameterErrors?.length > 0) {
-			parameterErrors.forEach((paramError, index) => {
-				console.log("paramError in forEach:", paramError);
-				if (paramError) {
-					setValue(`parameters.${index}.isCollapsed`, false);
-					setFocus(`parameters.${index}`);
+			for (let i = 0; i < fields.length; i++) {
+				console.log("paramError in forEach:", parameterErrors[i]);
+				if (parameterErrors[i]) {
+					setFocus(`parameters.${i}`);
+					update(i, {
+						...fields[i],
+						isCollapsed: false,
+					});
 				} else {
-					console.log("blah blah blah");
-					setValue(`parameters.${index}.isCollapsed`, true);
+					update(i, {
+						...fields[i],
+						isCollapsed: true,
+					});
 				}
-			});
+			}
 		}
-	}, [methods.formState.errors, setValue, setFocus]);
+		// Disabling exhaustive-deps because we don't need to run this every time `fields` (the list of Parameters) is updated
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [methods.formState.errors, setFocus, update]);
 
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
