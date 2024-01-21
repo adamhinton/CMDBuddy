@@ -220,6 +220,7 @@ const validateParameterOnSubmit = (
 	return isValid;
 };
 
+/**Submit new Command, then submit its associated Parameters one by one */
 const submitNewCommandAndParamsToDB = async (
 	formData: CMDBuddyCommandFormValidation,
 	userID: string
@@ -271,8 +272,9 @@ const submitNewCommandAndParamsToDB = async (
 	}
 };
 
-// When user edits a Command, this tells the code if its params are newly created, updated, or deleted
-// Params that haven't changed are left out of the returned object
+/**  When user edits a Command, this tells the code if its params are newly created, updated, or deleted. 
+ 
+ Params that haven't changed are left out of the returned object  */
 const sortSubmittedEditedParams = (
 	data: CMDBuddyCommandFormValidation,
 	commandToEdit: CMDBuddyCommand
