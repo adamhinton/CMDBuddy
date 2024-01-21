@@ -27,7 +27,6 @@ import {
 	MAX_COMMAND_LIMIT_PER_USER,
 	MAX_PARAM_LIMIT_PER_COMMAND,
 } from "../MiscellaneousGlobalVariables";
-import { set } from "zod";
 
 // TODO: Error on collapsed param uncollapses it, but doesn't focus to the param
 
