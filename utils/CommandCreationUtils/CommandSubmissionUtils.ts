@@ -48,11 +48,6 @@ const validateParameterOnSubmit = (
 			parameter.maxLength &&
 			parameter.minLength > parameter.maxLength
 		) {
-			// update(index, {
-			// 	...parameter,
-			// 	isCollapsed: false,
-			// });
-
 			setError(
 				`parameters.${index}.minLength`,
 				{
@@ -96,11 +91,6 @@ const validateParameterOnSubmit = (
 				parameter.maxLength &&
 				parameter.defaultValue.length > parameter.maxLength
 			) {
-				update(index, {
-					...parameter,
-					isCollapsed: false,
-				});
-
 				setError(
 					`parameters.${index}.defaultValue`,
 					{
@@ -119,11 +109,6 @@ const validateParameterOnSubmit = (
 				parameter.minLength &&
 				parameter.defaultValue.length < parameter.minLength
 			) {
-				update(index, {
-					...parameter,
-					isCollapsed: false,
-				});
-
 				setError(
 					`parameters.${index}.defaultValue`,
 					{
@@ -145,11 +130,6 @@ const validateParameterOnSubmit = (
 			parameter.maxValue &&
 			parameter.minValue > parameter.maxValue
 		) {
-			// update(index, {
-			// 	...parameter,
-			// 	isCollapsed: false,
-			// });
-
 			setError(
 				`parameters.${index}.minValue`,
 				{
@@ -169,11 +149,6 @@ const validateParameterOnSubmit = (
 				parameter.maxValue &&
 				Number(parameter.defaultValue) > parameter.maxValue
 			) {
-				update(index, {
-					...parameter,
-					isCollapsed: false,
-				});
-
 				setError(
 					`parameters.${index}.defaultValue`,
 					{
@@ -191,11 +166,6 @@ const validateParameterOnSubmit = (
 				parameter.minValue &&
 				Number(parameter.defaultValue) < parameter.minValue
 			) {
-				update(index, {
-					...parameter,
-					isCollapsed: false,
-				});
-
 				setError(
 					`parameters.${index}.defaultValue`,
 					{
@@ -216,11 +186,6 @@ const validateParameterOnSubmit = (
 			parameter.defaultValue &&
 			!parameter.allowedValues?.includes(parameter.defaultValue)
 		) {
-			// update(index, {
-			// 	...parameter,
-			// 	isCollapsed: false,
-			// });
-
 			setError(
 				`parameters.${index}.defaultValue`,
 				{
@@ -236,11 +201,6 @@ const validateParameterOnSubmit = (
 
 		// Enter at least one possible dropdown value
 		if (parameter.allowedValues!.length < 1) {
-			// update(index, {
-			// 	...parameter,
-			// 	isCollapsed: false,
-			// });
-
 			setError(
 				`parameters.${index}.allowedValues`,
 				{
