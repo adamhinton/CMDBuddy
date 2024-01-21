@@ -424,7 +424,7 @@ type ParameterCreationButtonProps = {
 	commandToEdit: CMDBuddyCommand | null;
 };
 
-// Reusable parameter creation buttons: "Add new parameter", "Clear form", "Submit", "Collapse All Params"
+/**Reusable parameter creation buttons: "Add new parameter", "Clear form", "Submit", "Collapse All Params" */
 const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
 	collapseAllParams,
 	update,

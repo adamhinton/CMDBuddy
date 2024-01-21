@@ -8,8 +8,6 @@
 
 // TODO: Clean up CEF DnD styling. Just make the DnD icon clearer, no biggie.
 
-// TODO IMPORTANT: RHF's in-built validation (like `required` etc) doesn't seem to run on collapsed Params. Like I can submit them without a `name`. Maybe expand error Param on onInvalid?
-
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
@@ -47,8 +45,9 @@ const { collapseAllParams, parameterCreationButtons } =
 
 const { handleSubmit } = CommandSubmitUtils;
 
-// Creating a specific schema for command creation mode
-// This is because the user doesn't define things like `id` or `order`
+/**Creating a specific schema for command creation mode, adding in `id` and `order`.
+ *
+ * This is because the user doesn't define things like `id` or `order` */
 export const CommandCreationFormSchema = CommandSchema.omit({
 	id: true,
 	userID: true,
@@ -74,13 +73,13 @@ export type CMDBuddyCommandFormValidation = z.infer<
 
 export type ComponentMode = "editExistingCommand" | "createNewCommand";
 
-// If using this component to edit an existing Command, a command to edit must be passed in
+/**If using this component to edit an existing Command, a command to edit must be passed in */
 interface FormPropsEditExistingCommand {
 	componentMode: "editExistingCommand";
 	commandToEdit: NonNullable<CMDBuddyCommand>;
 }
 
-// If using this component to add a new command, this tell that to th code
+/**If using this component to add a new command, this tell that to the code */
 interface FormPropsCreateCommand {
 	componentMode: "createNewCommand";
 	// No command to edit because we're creating a new command
@@ -145,6 +144,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			for (let i = 0; i < parameterList.length; i++) {
 				// Expand Parameter with error
 				if (parameterErrors[i]) {
+					// TODO: Focus not being set to param with error if param is collapsed
 					setFocus(`parameters.${i}`);
 					update(i, {
 						...parameterList[i],
@@ -220,14 +220,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		return () => subscription.unsubscribe();
 	}, [watch]);
 
-	useEffect(() => {
-		const formErrors = methods.formState.errors;
-		const parameterErrors = formErrors.parameters;
-
-		console.log("parameterErrors in CCEF useEffect:", parameterErrors);
-	});
-
-	// Maybe refactor this to also clear form on submit. Wouldn't need the user conf then.
 	const clearForm = () => {
 		if (
 			window.confirm("Are you sure you want to DELETE all values in this form?")
@@ -237,10 +229,9 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		}
 	};
 
-	// This saves result to form state when user drags and drops Parameters
+	/**This saves result to form state when user drags and drops Parameters */
 	const onDragEnd = (result: any) => {
 		if (!result.destination) return;
-		console.log("result:", result);
 
 		const parameters = methods.getValues("parameters");
 
@@ -343,7 +334,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						{(provided) => (
 							<div {...provided.droppableProps} ref={provided.innerRef}>
 								{/* As many parameter creation forms as user wants */}
-								{/* `parameterList` is what the function calls `parameters` */}
 								{parameterList.map((field, index) => {
 									return (
 										// DnD stuff
@@ -381,12 +371,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						)}
 					</StrictModeDroppable>
 				</DragDropContext>
-				{/* This shows an example of the Command the user has created. */}
-				{/* Example: `companyName= zipCode= npx playwright test createCompany --headed` */}
-				{/*  Reusable parameter creatRion buttons: "Add new parameter", "Clear
-				form", "Submit", "Collapse All Params" */}
-				{/* Made a function for this because it's used twice in this component */}
-				{/* Only shows at bottom of page if user has made at least one param, seems unnecessary otherwisei */}
+
 				{parameterList.length > 0 &&
 					parameterCreationButtons({
 						collapseAllParams,
