@@ -29,7 +29,7 @@ import {
 } from "../MiscellaneousGlobalVariables";
 import { set } from "zod";
 
-// TODO: Error on collapsed param uncollapses it, but doesn't focus to the param with error.
+// TODO: Error on collapsed param uncollapses it, but doesn't focus to the param
 
 // This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
 // It also focuses the UI on the first error when user hits Submit.
@@ -48,10 +48,10 @@ const validateParameterOnSubmit = (
 			parameter.maxLength &&
 			parameter.minLength > parameter.maxLength
 		) {
-			update(index, {
-				...parameter,
-				isCollapsed: false,
-			});
+			// update(index, {
+			// 	...parameter,
+			// 	isCollapsed: false,
+			// });
 
 			setError(
 				`parameters.${index}.minLength`,
@@ -145,10 +145,10 @@ const validateParameterOnSubmit = (
 			parameter.maxValue &&
 			parameter.minValue > parameter.maxValue
 		) {
-			update(index, {
-				...parameter,
-				isCollapsed: false,
-			});
+			// update(index, {
+			// 	...parameter,
+			// 	isCollapsed: false,
+			// });
 
 			setError(
 				`parameters.${index}.minValue`,
@@ -216,10 +216,10 @@ const validateParameterOnSubmit = (
 			parameter.defaultValue &&
 			!parameter.allowedValues?.includes(parameter.defaultValue)
 		) {
-			update(index, {
-				...parameter,
-				isCollapsed: false,
-			});
+			// update(index, {
+			// 	...parameter,
+			// 	isCollapsed: false,
+			// });
 
 			setError(
 				`parameters.${index}.defaultValue`,
@@ -236,10 +236,10 @@ const validateParameterOnSubmit = (
 
 		// Enter at least one possible dropdown value
 		if (parameter.allowedValues!.length < 1) {
-			update(index, {
-				...parameter,
-				isCollapsed: false,
-			});
+			// update(index, {
+			// 	...parameter,
+			// 	isCollapsed: false,
+			// });
 
 			setError(
 				`parameters.${index}.allowedValues`,

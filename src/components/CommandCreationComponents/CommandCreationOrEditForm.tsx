@@ -116,6 +116,8 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		),
 	});
 
+	const { setFocus } = useForm<CMDBuddyCommandFormValidation>();
+
 	const { setValue } = methods;
 
 	const { fields, append, remove, update } = useFieldArray({
@@ -130,20 +132,24 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		remove();
 	}, [methods, commandToEdit, remove]);
 
-	// Finds first parameter with errors (if any) and un-collapses its UI. RHF then focuses on that element with shouldFocus: true
-	// TODO: Delete this if I don't do something with it
+	// TODO: Delete this if not useful
 	useEffect(() => {
 		const parameterErrors = methods.formState.errors.parameters;
-		console.log("parameterErrors:", parameterErrors);
+		console.log("parameterErrors in CCEF useEffect:", parameterErrors);
+
 		if (parameterErrors?.length && parameterErrors?.length > 0) {
-			parameterErrors!.forEach((error, index) => {
-				if (error) {
+			parameterErrors.forEach((paramError, index) => {
+				console.log("paramError in forEach:", paramError);
+				if (paramError) {
 					setValue(`parameters.${index}.isCollapsed`, false);
-					methods.setFocus(`parameters.${index}`);
+					setFocus(`parameters.${index}`);
+				} else {
+					console.log("blah blah blah");
+					setValue(`parameters.${index}.isCollapsed`, true);
 				}
 			});
 		}
-	}, [methods.formState.errors.parameters, methods, setValue]);
+	}, [methods.formState.errors, setValue, setFocus]);
 
 	// If component mode is "editExistingCommand", this adds that command to form state
 	// If mode is "createNewCommand", this does nothing.
@@ -201,6 +207,13 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		});
 		return () => subscription.unsubscribe();
 	}, [watch]);
+
+	useEffect(() => {
+		const formErrors = methods.formState.errors;
+		const parameterErrors = formErrors.parameters;
+
+		console.log("parameterErrors in CCEF useEffect:", parameterErrors);
+	});
 
 	// Maybe refactor this to also clear form on submit. Wouldn't need the user conf then.
 	const clearForm = () => {
