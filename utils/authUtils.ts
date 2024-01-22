@@ -47,7 +47,7 @@ export const useAuthActions = () => {
 		}
 	};
 
-	const logOut = (router: AppRouterInstance) => {
+	const logOutRedux = (router: AppRouterInstance) => {
 		try {
 			// Reset all state to null
 			dispatch(logOutCommands());
@@ -60,5 +60,5 @@ export const useAuthActions = () => {
 		}
 	};
 
-	return { setUserAndCommandsToState, logOut };
+	return { setUserAndCommandsToState, logOutRedux };
 };
