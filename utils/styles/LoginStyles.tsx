@@ -47,6 +47,7 @@ const StyledAccountManagementContainer = styled.section`
 `;
 
 // Styled Authenticator component to override default styles in Amplify's built in Auth component
+// This was a huge hassle and I hope I never have to do this again
 const StyledAuthenticator = styled(Authenticator)`
 	--amplify-components-main-background-color: ${({ theme }) =>
 		theme.colors.background};
