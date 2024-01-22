@@ -82,7 +82,7 @@ interface FormPropsEditExistingCommand {
 	commandToEdit: NonNullable<CMDBuddyCommand>;
 }
 
-/**If using this component to add a new command, this tell that to the code */
+/**If using this component to add a new command, this tells that to the code */
 interface FormPropsCreateCommand {
 	componentMode: "createNewCommand";
 	// No command to edit because we're creating a new command
@@ -128,7 +128,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		name: "parameters",
 	});
 
-	// `fields` is the array of created Parameters
+	// `fields` is the array of created Parameters which we get from react-hook-form
 	// I rename it to ParameterList here to be clear what it is
 	/**The list of user-created Parameters in this form. */
 	const parameterList = fields;
@@ -146,7 +146,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 		if (parameterErrors?.length && parameterErrors?.length > 0) {
 			for (let i = 0; i < parameterList.length; i++) {
-				// Expand Parameter with error
+				// Expand Parameters that have errors
 				if (parameterErrors[i]) {
 					// TODO: Focus not being set to param with error if param is collapsed
 					setFocus(`parameters.${i}`);
@@ -154,7 +154,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						...parameterList[i],
 						isCollapsed: false,
 					});
-					// Collapse Parameter without error
+					// Collapse Parameters that don't have errors
 				} else {
 					update(i, {
 						...parameterList[i],
@@ -264,9 +264,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						update,
 					});
 				})}
-				onInvalid={(e) => {
-					console.log("methods.formState onInvalid:", methods.formState);
-				}}
 			>
 				{/* Command parameterList */}
 				<StyledCommandCreationHeader>
