@@ -335,12 +335,12 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 						{(provided) => (
 							<div {...provided.droppableProps} ref={provided.innerRef}>
 								{/* As many parameter creation forms as user wants */}
-								{parameterList.map((field, index) => {
+								{parameterList.map((cmdBuddyParameter, index) => {
 									return (
 										// DnD stuff
 										<Draggable
-											key={field.id}
-											draggableId={field.id}
+											key={cmdBuddyParameter.id}
+											draggableId={cmdBuddyParameter.id}
 											index={index}
 										>
 											{(provided) => {
@@ -351,12 +351,12 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 														{...provided.draggableProps}
 													>
 														<ParameterCreationOrEditForm
-															key={field.id}
+															key={cmdBuddyParameter.id}
 															index={index}
 															removeParameter={() => remove(index)}
-															parameterCreationType={field.type}
+															parameterCreationType={cmdBuddyParameter.type}
 															setValue={setValue}
-															isCollapsed={field.isCollapsed!}
+															isCollapsed={cmdBuddyParameter.isCollapsed!}
 															update={update}
 															getValues={methods.getValues}
 															// DnD params
