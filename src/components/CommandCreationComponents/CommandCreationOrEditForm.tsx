@@ -163,7 +163,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				}
 			}
 		}
-		// Disabling exhaustive-deps because we don't need to run this every time `parameterList` (the list of Parameters) is updated
+		// Disabling exhaustive-deps because we don't need to run this every time `parameterList` is updated
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [methods.formState.errors, setFocus, update]);
 
