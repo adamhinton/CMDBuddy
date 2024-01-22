@@ -194,7 +194,6 @@ const ParameterCreationOrEditForm = ({
 					<IconWrapper>
 						<CMDBuddyTooltip content="Delete Parameter">
 							<StyledTrashIcon
-								className="fas fa-trash-alt"
 								onClick={(e) => {
 									e.preventDefault();
 									e.stopPropagation();
