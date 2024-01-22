@@ -40,7 +40,7 @@ import {
 import { CMDBuddyCommand } from "../zod/CommandSchema";
 import { useEffect, useState } from "react";
 
-// Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
+/**Helper function to convert empty string to null bc schema expects null for some inputs if they're empty */
 const toNumberOrNullOrUndefined = (value: string) =>
 	value === "" ? undefined : Number(value);
 
@@ -303,7 +303,7 @@ const collapseAllParams = (
 	}
 };
 
-// "Default Value" input fields will be a little different depending on Parameter type.
+/**"Default Value" input fields will be a little different depending on Parameter type. */
 export const DefaultValueInput = ({
 	type,
 	register,
@@ -479,7 +479,6 @@ const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
 	);
 };
 
-// export objects
 export const CommandCreationUIElements = {
 	StringParameterFields,
 	IntParameterFields,
