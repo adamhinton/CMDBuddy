@@ -7,6 +7,8 @@
 
 // TODO Stretch: Inline vs one per line LCEP
 
+// TODO: CEF Styling cleanup. Box shadows, spacing etc. It's close, shouldn't be too arduous.
+
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";

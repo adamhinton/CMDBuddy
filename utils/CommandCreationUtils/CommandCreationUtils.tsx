@@ -19,7 +19,6 @@ import {
 	ParameterCreationInput,
 	StyledPCFMinMaxContainer,
 	StyledPCFRadioInputContainer,
-	ParameterCreationButton,
 } from "../styles/CommandCreationStyles/ParameterCreationStyles";
 import { CommandCreationZodSchemas } from "./CommandCreationTypes";
 CommandCreationZodSchemas;
@@ -34,14 +33,12 @@ import {
 	PrimaryButton,
 	RemoveTagIcon,
 	SecondaryButton,
-	StyledCCFButton,
 	Tag,
 	TagInput,
 	TagInputContainer,
 } from "../styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommand } from "../zod/CommandSchema";
-import styled from "styled-components";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 // Helper function to convert empty string to null bc schema expects null for some inputs if they're empty
 const toNumberOrNullOrUndefined = (value: string) =>
