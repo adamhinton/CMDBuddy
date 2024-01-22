@@ -48,6 +48,7 @@ const Login = () => {
 		}
 	};
 
+	/**Handles Amplify signout; logOutRedux() handles Redux side of it */
 	const handleSignOut = async (signOut?: any) => {
 		try {
 			if (signOut) {

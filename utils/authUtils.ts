@@ -47,6 +47,10 @@ export const useAuthActions = () => {
 		}
 	};
 
+	/**Redux logout actions.
+	 *
+	 * Set user and Commands/Parameters global state to null.
+	 */
 	const logOutRedux = (router: AppRouterInstance) => {
 		try {
 			// Reset all state to null

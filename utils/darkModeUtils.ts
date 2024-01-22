@@ -9,8 +9,6 @@ const localStorageDarkModeKey = "isDarkMode";
 export function getUserDarkModePreference(
 	user: CMDBuddyUser | null = null
 ): boolean {
-	let darkModePreference: boolean;
-
 	// Check user preference in db first
 	if (user?.darkMode !== undefined) {
 		return user.darkMode;
