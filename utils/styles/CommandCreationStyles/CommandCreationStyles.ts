@@ -25,11 +25,11 @@ export const StyledCommandCreationDisclaimer = styled.p`
 
 export const StyledCommandInputContainer = styled.div`
 	display: flex;
-	justify-content: center; // or align-items based on your design need
+	justify-content: center;
 `;
 
 export const CommandInputGroup = styled.section`
-	margin-bottom: 2rem; // Separate the command group from the parameters
+	margin-bottom: 2rem;
 `;
 
 export const StyledCCFLabel = styled.label`
@@ -72,8 +72,7 @@ export const StyledCCFButton = styled.button`
 	}
 `;
 
-// Enhanced Button styles for visual hierarchy
-// This is the "Submit" button.
+/**Submit button gets enhanced styling here */
 export const PrimaryButton = styled(StyledCCFButton)`
 	font-weight: bold;
 	border: 2px solid ${({ theme }) => theme.commandCreation.submitButtonBorder};
@@ -129,6 +128,7 @@ export const CollapsibleBar = styled.div`
 	}
 `;
 
+/**Icon that the user grabs to Drag and Drop */
 export const DragHandle = styled.div`
 	color: ${({ theme }) => theme.commandCreation.inputText};
 	cursor: grab; // cursor change to indicate draggability
@@ -150,7 +150,6 @@ export const IconWrapper = styled.div`
 	gap: 10px;
 `;
 
-// Replace placeholders with actual icons for clarity
 export const StyledUpDownIcon = styled.i`
 	width: 15px;
 	height: 15px;
@@ -159,6 +158,7 @@ export const StyledUpDownIcon = styled.i`
 		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
 	}
 `;
+
 export const StyledChevronImage = styled(Image)`
 	width: 100%;
 	height: 100%;
@@ -194,6 +194,10 @@ export const TagInputContainer = styled.div`
 `;
 
 // Dropdown stuff
+/**A single item the user has inputted as a Dropdown value.
+ *
+ * User hits Enter to confirm item; it'll show as a tag with an X to delete.
+ */
 export const Tag = styled.span`
 	padding: 5px 8px;
 	background-color: ${({ theme }) =>

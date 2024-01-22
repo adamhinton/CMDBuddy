@@ -103,10 +103,10 @@ const StyledTableOfContents = styled.nav`
 
 	/* Subheadings stuff */
 	li > ul > li > a {
-		font-weight: normal; // Less emphasis on subheadings
-		font-size: 0.85em; // Slightly smaller font size for subheadings
-		color: ${({ theme }) => theme.aboutPage.tOCSubHeading}; // Subheading color
-		padding-left: 15px; // Further indent subheadings
+		font-weight: normal;
+		font-size: 0.85em;
+		color: ${({ theme }) => theme.aboutPage.tOCSubHeading};
+		padding-left: 15px; // Indent subheadings
 		padding-top: 3px;
 		padding-bottom: 3px;
 	}
