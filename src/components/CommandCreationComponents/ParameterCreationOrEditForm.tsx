@@ -9,7 +9,7 @@
 // FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
-// TODO:
+// TODO Stretch:
 // In creation mode, add "What's this?" with link to explanation in /about. Particularly for Type
 
 import React, { useState, useEffect } from "react";
