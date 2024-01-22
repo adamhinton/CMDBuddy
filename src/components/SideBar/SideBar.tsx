@@ -33,8 +33,9 @@ import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 const { handleCommandTitlesEditSubmit, handleCommandDelete, handleDnDSave } =
 	SideBarUtils;
 
-// This is a fix for an issue where DnD didn't play nice with Strict Mode. plays a quick animation before performing the action.
-// Don't ask me why this is necessary, I just got an error and copied the solution off of Google.
+/**This is a fix for an issue where DnD didn't play nice with Strict Mode. plays a quick animation before performing the action.
+ *
+ * Don't ask me why this is necessary, I just got an error and copied the solution off of Google. */
 export const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
 	const [enabled, setEnabled] = useState(false);
 
@@ -79,6 +80,7 @@ const SideBar = () => {
 			setLocalCommands(reduxStateCommands);
 	}, [reduxStateCommands]);
 
+	/**What happens when the user is done drag n' dropping a single item */
 	const onDragEnd = (result: any) => {
 		if (!result.destination) return;
 
@@ -90,7 +92,7 @@ const SideBar = () => {
 		setHasChanges(true); // tracks if user is currently changing order of commands with DnD
 	};
 
-	// Cancel command order edits and revert the localCommands to match Redux state
+	/** Cancel command order edits and revert the localCommands to match Redux state */
 	const handleDnDCancel = () => {
 		setLocalCommands(reduxStateCommands!);
 		setHasChanges(false);

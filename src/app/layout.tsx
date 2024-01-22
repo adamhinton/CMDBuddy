@@ -1,4 +1,3 @@
-// TODO: /commands/create cleanup
 // TODO Stretch: Capability to make commands in localstorage without auth
 
 // TODO Stretch: "Reminder" property in Parameter and Command that reminds the user what they're for on hover, like with tooltip.

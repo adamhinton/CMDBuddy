@@ -34,7 +34,7 @@ const GlobalStylesContainer = (theme: DefaultTheme) => {
 	);
 };
 
-// The props should be passed as a single object and destructured within the function parameter list
+/**The UI is wrapped in this so dark/light mode stuff can be passed down */
 const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 	const isDarkMode = useSelector(
 		(state: RootState) => state.darkMode.isDarkMode

@@ -5,6 +5,7 @@
 // Each Command has multiple Parameters; they fill out ParameterCreationOrEditForm once per Parameter
 // Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different parameterList for each
 // User can Drag and Drop (DnD) Parameters
+// User can also collapse one or all Parameters; collapsed Params will only show a bar with util buttons and the Param's name.
 
 // TODO: Clean up collapse on error code; I think I duplicated some stuff
 
@@ -38,7 +39,7 @@ import Link from "next/link";
 import { CommandCreationUIElements } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 import "tippy.js/dist/tippy.css";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
-import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { DragDropContext, Draggable } from "@hello-pangea/dnd";
 import { StrictModeDroppable } from "../SideBar/SideBar";
 
 const { AnyParameterSchema } = CommandCreationZodSchemas;
@@ -47,7 +48,7 @@ const { collapseAllParams, parameterCreationButtons } =
 
 const { handleSubmit } = CommandSubmitUtils;
 
-/**Creating a specific schema for command creation mode, adding in `id` and `order`.
+/**Creating a specific schema for command creation mode, excluding `id` and `order`.
  *
  * This is because the user doesn't define things like `id` or `order` */
 export const CommandCreationFormSchema = CommandSchema.omit({
@@ -89,13 +90,14 @@ interface FormPropsCreateCommand {
 	commandToEdit?: null;
 }
 
+// Slightly different props based on if it's "edit" or "create" mode
 type FormProps = FormPropsCreateCommand | FormPropsEditExistingCommand;
 
-// Slightly different props based on if it's "edit" or "create" mode
-// type FormProps = FormPropsCreateCommand | FormPropsEditExistingCommand;
-
-// Can either be in "Create new command" mode or "Edit existing command" mode
-// Differences are minimal, edit mode just populates existing command's details, and submitting in edit mode updates that command instead of making a new one
+/**
+ * Can either be in "Create new command" mode or "Edit existing command" mode.
+ *
+ * UI differences are minimal, edit mode just populates existing command's details, and submitting in edit mode updates that command instead of making a new one
+ */
 const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	// There will only be a commandToEdit if we're in edit mode
 	const { componentMode, commandToEdit } = props;
