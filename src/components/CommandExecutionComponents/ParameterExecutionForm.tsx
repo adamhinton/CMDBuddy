@@ -1,20 +1,37 @@
+"use client";
+
+// README:
+// This is a sub-component of CommandExecutionForm
+// Here, the user enters a value for an individual Parameter. This is part of the generated Command that is displayed in LiveCommandExecutionPreview
+
+// IMPORTANT NOTE about errors: The user has control of this process. The app validates their Parameter value inputs and alerts them if there's an error (e.g. the input is longer than their specified maxLength), but it doesn't stop the user from generating/copying the command. It's only a guideline.
+
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { UseFormReturn, useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
-import {
+import CEFStyles from "../../../utils/CommandExecutionUtils/CommandExecutionStyles";
+const {
 	CEFInput,
 	CEFLabel,
 	CEFOption,
 	CEFSelect,
-} from "./CommandExecutionForm";
-import styled from "styled-components";
-
+	FlagOrBooleanPEFLabel,
+	PEFContainer,
+} = CEFStyles;
+import { CEFDefaultValues } from "./CommandExecutionForm";
 const ParameterExecutionForm = ({
 	parameter,
+	methods,
 }: {
 	parameter: CMDBuddyParameter;
+	methods: UseFormReturn<CEFDefaultValues, any, undefined>;
 }) => {
-	const { register } = useFormContext();
+	const {
+		register,
+		formState: { errors },
+	} = useFormContext();
+
+	const hasError = errors[parameter.name] ? true : false;
 
 	// Render input based on parameter type
 	const renderInputField = () => {
@@ -25,12 +42,31 @@ const ParameterExecutionForm = ({
 						inputtype="STRING"
 						type="text"
 						{...register(parameter.name, {
-							required: !parameter.isNullable,
-							maxLength: parameter.maxLength,
-							minLength: parameter.minLength,
+							required: parameter.isNullable
+								? undefined
+								: "This field is required.",
+							maxLength: {
+								value: parameter.maxLength || Infinity,
+								message: `Maximum length is ${parameter.maxLength} characters.`,
+							},
+							minLength: {
+								value: parameter.minLength || 0,
+								message: `Minimum length is ${parameter.minLength} characters.`,
+							},
 							pattern: parameter.validationRegex
-								? new RegExp(parameter.validationRegex)
+								? {
+										value: new RegExp(parameter.validationRegex),
+										message: `This field does not match the required pattern: ${parameter.validationRegex}`,
+								  }
 								: undefined,
+							onBlur: (e) => {
+								// Trigger the validation for this field on blur
+								methods.trigger(parameter.name);
+							},
+							// If there's an error, this runs validation every time the input changes
+							onChange: (e) => {
+								hasError && methods.trigger(parameter.name);
+							},
 						})}
 					/>
 				);
@@ -40,9 +76,25 @@ const ParameterExecutionForm = ({
 						inputtype="INT"
 						type="number"
 						{...register(parameter.name, {
-							required: !parameter.isNullable,
-							max: parameter.maxValue,
-							min: parameter.minValue,
+							required: parameter.isNullable
+								? undefined
+								: "This field is required.",
+							max: {
+								value: Number(parameter.maxValue),
+								message: `The value cannot be greater than ${parameter.maxValue}.`,
+							},
+							min: {
+								value: Number(parameter.minValue),
+								message: `The value cannot be less than ${parameter.minValue}.`,
+							},
+							onBlur: (e) => {
+								// Trigger validation when the user clicks/tabs away from the input
+								methods.trigger(parameter.name);
+							},
+							// If there's an error, this runs validation every time the input changes
+							onChange: (e) => {
+								hasError && methods.trigger(parameter.name);
+							},
 						})}
 					/>
 				);
@@ -54,7 +106,11 @@ const ParameterExecutionForm = ({
 								type="radio"
 								value="true"
 								{...register(parameter.name, {
-									required: !parameter.isNullable,
+									// This validation shouldn't ever actually be triggered
+									required: "Please select an option.",
+									onBlur: (e) => {
+										methods.trigger(parameter.name);
+									},
 								})}
 								inputtype="OTHER"
 							/>
@@ -65,7 +121,15 @@ const ParameterExecutionForm = ({
 								type="radio"
 								value="false"
 								{...register(parameter.name, {
-									required: !parameter.isNullable,
+									// This validation shouldn't ever actually be triggered
+									required: "Please select an option.",
+									onBlur: (e) => {
+										methods.trigger(parameter.name);
+									},
+									// If there's an error, this runs validation every time the input changes
+									onChange: (e) => {
+										hasError && methods.trigger(parameter.name);
+									},
 								})}
 								inputtype="OTHER"
 							/>
@@ -77,8 +141,17 @@ const ParameterExecutionForm = ({
 				return (
 					<CEFSelect
 						{...register(parameter.name, {
-							required: !parameter.isNullable,
-							value: parameter.defaultValue,
+							required: parameter.isNullable
+								? undefined
+								: "This field is required.",
+							onBlur: (e) => {
+								// Trigger validation when the user clicks/tabs away from the dropdown
+								methods.trigger(parameter.name);
+							},
+							// If there's an error, this runs validation every time the input changes
+							onChange: (e) => {
+								hasError && methods.trigger(parameter.name);
+							},
 						})}
 					>
 						{parameter.allowedValues?.map((value) => (
@@ -97,6 +170,14 @@ const ParameterExecutionForm = ({
 								value="On"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
+									// Trigger validation when user clicks/tabs away
+									onBlur: (e) => {
+										methods.trigger(parameter.name);
+									},
+									// If there's an error, this runs validation every time the input changes
+									onChange: (e) => {
+										hasError && methods.trigger(parameter.name);
+									},
 								})}
 								inputtype="OTHER"
 							/>
@@ -108,6 +189,14 @@ const ParameterExecutionForm = ({
 								value="Off"
 								{...register(parameter.name, {
 									required: !parameter.isNullable,
+									// Trigger validation when user clicks/tabs away
+									onBlur: (e) => {
+										methods.trigger(parameter.name);
+									},
+									// If there's an error, this runs validation every time the input changes
+									onChange: (e) => {
+										hasError && methods.trigger(parameter.name);
+									},
 								})}
 								inputtype="OTHER"
 							/>
@@ -121,33 +210,15 @@ const ParameterExecutionForm = ({
 	};
 
 	return (
-		<PEFContainer>
-			<CEFLabel htmlFor={parameter.name}>{parameter.name}</CEFLabel>
+		// Has red background and more stand-out styling if there's a validation error
+		<PEFContainer haserror={hasError || undefined}>
+			<CEFLabel htmlFor={parameter.name}>
+				{/* Asterisk  next to param's name if param is required */}
+				{parameter.name} {!parameter.isNullable && "*"}
+			</CEFLabel>
 			{renderInputField()}
 		</PEFContainer>
 	);
 };
-
-const PEFContainer = styled.div`
-	display: flex;
-	flex-direction: row;
-	max-width: 400px;
-	background: ${({ theme }) => theme.commandGeneration.inputBackground};
-	padding: 0.2rem;
-	border-radius: 4px;
-	margin-bottom: 0.75rem;
-	border: 1px solid ${({ theme }) => theme.colors.text};
-	transition: box-shadow 0.3s ease;
-
-	&:hover {
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Soft shadow on hover for interactivity
-	}
-`;
-
-const FlagOrBooleanPEFLabel = styled.div`
-	display: flex;
-	align-items: center;
-	margin-right: 1rem;
-`;
 
 export default ParameterExecutionForm;

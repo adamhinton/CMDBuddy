@@ -23,41 +23,155 @@ import {
 import { AnyAction, Dispatch } from "redux";
 import { CMDBuddyUser } from "../zod/UserSchema";
 import { UseFormReturn } from "react-hook-form";
+import {
+	MAX_COMMAND_LIMIT_PER_USER,
+	MAX_PARAM_LIMIT_PER_COMMAND,
+} from "../MiscellaneousGlobalVariables";
+
+// TODO: Error on collapsed param uncollapses it, but doesn't focus to the param
 
 // This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
+// It also focuses the UI on the first error when user hits Submit.
 const validateParameterOnSubmit = (
 	parameter: AnyParameter,
 	index: number,
-	methods: any,
-	isValid: boolean
+	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
+	isValid: boolean,
+	update: Function
 ): boolean => {
 	const { setError } = methods;
 
 	if (parameter.type === "STRING") {
-		// TODO: Validate defaultValue against regex
 		if (
 			parameter.minLength &&
 			parameter.maxLength &&
 			parameter.minLength > parameter.maxLength
 		) {
-			setError(`parameters.${index}.minLength`, {
-				type: "manual",
-				message: "Min length cannot be greater than max length.",
-			});
+			setError(
+				`parameters.${index}.minLength`,
+				{
+					type: "manual",
+					message: "Min length cannot be greater than max length.",
+				},
+				{
+					shouldFocus: true,
+				}
+			);
 			isValid = false;
 		}
+
+		// Default value validation
+		if (parameter.defaultValue) {
+			// Make sure default value matches validation regex
+			if (parameter.validationRegex) {
+				const regex = new RegExp(parameter.validationRegex);
+				if (!regex.test(parameter.defaultValue)) {
+					setError(
+						`parameters.${index}.defaultValue`,
+						{
+							type: "manual",
+							message: "Provided default value does not match provided regex",
+						},
+						{
+							shouldFocus: true,
+						}
+					);
+					isValid = false;
+				}
+			}
+
+			// Ensure default value isn't longer than max length
+			if (
+				parameter.maxLength &&
+				parameter.defaultValue.length > parameter.maxLength
+			) {
+				setError(
+					`parameters.${index}.defaultValue`,
+					{
+						type: "manual",
+						message: "Provided default value is longer than max length",
+					},
+					{
+						shouldFocus: true,
+					}
+				);
+				isValid = false;
+			}
+
+			// Ensure default value isn't shorter than min length
+			if (
+				parameter.minLength &&
+				parameter.defaultValue.length < parameter.minLength
+			) {
+				setError(
+					`parameters.${index}.defaultValue`,
+					{
+						type: "manual",
+						message: "Provided default value is shorter than min length",
+					},
+					{
+						shouldFocus: true,
+					}
+				);
+				isValid = false;
+			}
+		}
+
+		// INT param validation
 	} else if (parameter.type === "INT") {
-		// TODO: Validate defaultValue against min and max
 		if (
 			parameter.minValue &&
 			parameter.maxValue &&
 			parameter.minValue > parameter.maxValue
 		) {
-			setError(`parameters.${index}.minValue`, {
-				type: "manual",
-				message: "Min value cannot be greater than max value.",
-			});
+			setError(
+				`parameters.${index}.minValue`,
+				{
+					type: "manual",
+					message: "Min value cannot be greater than max value.",
+				},
+				{
+					shouldFocus: true,
+				}
+			);
 			isValid = false;
+		}
+
+		// Ensure default value is not greater than max value or less than min value
+		if (parameter.defaultValue) {
+			if (
+				parameter.maxValue &&
+				Number(parameter.defaultValue) > parameter.maxValue
+			) {
+				setError(
+					`parameters.${index}.defaultValue`,
+					{
+						type: "manual",
+						message: "Default value cannot exceed max value",
+					},
+					{
+						shouldFocus: true,
+					}
+				);
+				isValid = false;
+			}
+
+			if (
+				parameter.minValue &&
+				Number(parameter.defaultValue) < parameter.minValue
+			) {
+				setError(
+					`parameters.${index}.defaultValue`,
+					{
+						type: "manual",
+						message: "Default value cannot be less than min value",
+					},
+					{
+						shouldFocus: true,
+					}
+				);
+				isValid = false;
+			}
 		}
 
 		// Couldn't think of any additional BOOLEAN validations
@@ -66,24 +180,45 @@ const validateParameterOnSubmit = (
 			parameter.defaultValue &&
 			!parameter.allowedValues?.includes(parameter.defaultValue)
 		) {
-			setError(`parameters.${index}.defaultValue`, {
-				type: "manual",
-				message: "Default value must be in allowed values.",
-			});
+			setError(
+				`parameters.${index}.defaultValue`,
+				{
+					type: "manual",
+					message: "Default value must be in allowed values.",
+				},
+				{
+					shouldFocus: true,
+				}
+			);
 			isValid = false;
 		}
+
+		// Enter at least one possible dropdown value
+		if (parameter.allowedValues!.length < 1) {
+			setError(
+				`parameters.${index}.allowedValues`,
+				{
+					type: "manual",
+					message: "Add at least one allowed value",
+				},
+				{
+					// TODO: This isn't focusing but the other shouldFocuses work fine
+					shouldFocus: true,
+				}
+			);
+			isValid = false;
+		}
+
 		// Couldn't think of any additional FLAG validations
 	}
 	return isValid;
 };
 
+/**Submit new Command, then submit its associated Parameters one by one */
 const submitNewCommandAndParamsToDB = async (
 	formData: CMDBuddyCommandFormValidation,
 	userID: string
 ): Promise<CMDBuddyCommand> => {
-	// Disable submit button and show toast
-	// disableSubmitButton();
-	// showToast("Submitting... Please do not close the page.");
 	let completeCommand: CMDBuddyCommand | null = null;
 
 	try {
@@ -131,8 +266,8 @@ const submitNewCommandAndParamsToDB = async (
 	}
 };
 
-// When user edits a Command, this tells the code if its params are newly created, updated, or deleted
-// Params that haven't changed are left out of the returned object
+/**  When user edits a Command, this tells the code if its params are newly created, updated, or deleted. 
+ Params that haven't changed are left out of the returned object  */
 const sortSubmittedEditedParams = (
 	data: CMDBuddyCommandFormValidation,
 	commandToEdit: CMDBuddyCommand
@@ -144,7 +279,7 @@ const sortSubmittedEditedParams = (
 	const newParameters = data.parameters?.filter((p) => !p.id);
 
 	// Update these original parameter ids with new data
-	// These are params that existed already but have been updated.
+	/**params that existed already but have been updated. */
 	const updatedParameters = data.parameters?.filter(
 		(p) =>
 			p.id &&
@@ -189,7 +324,8 @@ const fetchCommandWithParameters = async (commandID: string) => {
  */
 function validateAndUpdateParameters(
 	parameters: AnyParameter[],
-	methods: any
+	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
+	update: Function
 ): boolean {
 	let nonFlagOrder = 1;
 	let flagOrder = 1;
@@ -202,7 +338,8 @@ function validateAndUpdateParameters(
 			parameter,
 			index,
 			methods,
-			isFormValuesValid
+			isFormValuesValid,
+			update
 		);
 		if (!isParameterValid) {
 			isFormValuesValid = false;
@@ -260,7 +397,27 @@ async function editExistingCommand(
 }
 
 /**
- * Main function to handle form submission for both creating and editing commands.
+ * onSubmit helper that ensures no new/edited Parameters have duplicate `name` fields.
+ *
+ * returns boolean, and the name of duplicate param if any, like so: [isValid: boolean; duplicateName? string]
+ */
+function hasNoDuplicateParamNames(
+	parameters: AnyParameter[]
+): [isValid: boolean, duplicateName?: string] {
+	const seenNames = new Set<string>();
+
+	for (const param of parameters) {
+		if (seenNames.has(param.name)) {
+			return [false, param.name];
+		}
+		seenNames.add(param.name);
+	}
+
+	return [true]; // No duplicates
+}
+
+/**
+ * Main function to handle form validation and submission for both creating and editing commands.
  */
 const handleSubmit = async ({
 	data,
@@ -271,6 +428,9 @@ const handleSubmit = async ({
 	commandToEdit,
 	methods,
 	remove,
+	// How many Commands the user already has
+	numCommands,
+	update,
 }: {
 	data: CMDBuddyCommandFormValidation;
 	componentMode: ComponentMode;
@@ -280,27 +440,70 @@ const handleSubmit = async ({
 	commandToEdit: CMDBuddyCommand | null;
 	methods: UseFormReturn<CMDBuddyCommandFormValidation>;
 	remove: (index?: number | number[] | undefined) => void;
+	numCommands?: number;
+	update: Function;
 }) => {
 	setIsSubmitting(true);
 	toast(
 		componentMode === "createNewCommand"
-			? "Submitting new Command..."
-			: "Submitting edited Command..."
+			? "Attempting to submit new Command..."
+			: "Attempting to submit edited Command..."
 	);
 
-	data.order = 1; // Setting default order
+	// Start with form data validation
+
+	// Stop user from creating a zillion Commands
+	if (numCommands && numCommands > MAX_COMMAND_LIMIT_PER_USER) {
+		toast(
+			`Max of ${MAX_COMMAND_LIMIT_PER_USER} Commands per User allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`,
+			{ autoClose: false }
+		);
+
+		setIsSubmitting(false);
+		return;
+	}
+
+	// Stop user from creating a zillion Parameters
+	if (
+		data.parameters?.length &&
+		data.parameters.length > MAX_PARAM_LIMIT_PER_COMMAND
+	) {
+		toast(
+			`Max of ${MAX_PARAM_LIMIT_PER_COMMAND} Parameters per Command allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`,
+			{ autoClose: false }
+		);
+		setIsSubmitting(false);
+		return;
+	}
+
+	// Make sure no params have the same `name`
+	const [hasNoDuplicateNames, duplicateParamName] = hasNoDuplicateParamNames(
+		data.parameters || []
+	);
+	if (!hasNoDuplicateNames) {
+		toast(
+			`Parameter name ${duplicateParamName} is duplicated; this is not permitted`,
+			{ autoClose: false }
+		);
+		setIsSubmitting(false);
+		return;
+	}
 
 	let isFormValuesValid = validateAndUpdateParameters(
 		data.parameters || [],
-		methods
+		methods,
+		update
 	);
 
 	if (!isFormValuesValid) {
-		console.error("Validation failed");
 		toast("Encountered validation issues");
 		setIsSubmitting(false);
 		return;
 	}
+
+	// Done with validation; we know data is valid now
+
+	data.order = 1; // Setting default order
 
 	try {
 		if (componentMode === "createNewCommand") {
@@ -368,11 +571,14 @@ const submitParamEditsToDB = async (
 
 	updatedParameters?.forEach(async (param) => {
 		const updateParameterInput = param;
-		// DB
 
+		// hasBeenEdited and isCollapsed only exist on the frontend, so leaving them in the DB input would invalidate DB submission
 		delete updateParameterInput["hasBeenEdited"];
 		delete updateParameterInput["isCollapsed"];
-		await API.graphql(graphqlOperation(updateParameter, { input: param }));
+
+		await API.graphql(
+			graphqlOperation(updateParameter, { input: updateParameterInput })
+		);
 	});
 };
 

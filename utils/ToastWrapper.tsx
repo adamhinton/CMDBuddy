@@ -10,6 +10,7 @@ interface ToastProviderProps {
 	children: React.ReactNode;
 }
 
+/**UI has to be wrapped in this for Toast purposes */
 export default function ToastWrapper({ children }: ToastProviderProps) {
 	return (
 		<>
@@ -19,10 +20,9 @@ export default function ToastWrapper({ children }: ToastProviderProps) {
 	);
 }
 
-// Include this with every toast call
-// Example: useToast("My toast message!", customToastConfig)
+/**Include this with every toast call
+ *
+ * Example: useToast("My toast message!", customToastConfig); */
 export const customToastConfig: ToastOptions = {
 	delay: 7,
 };
-
-customToastConfig.draggable;

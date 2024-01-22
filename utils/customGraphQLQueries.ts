@@ -1,10 +1,9 @@
 import { graphqlOperation, API } from "aws-amplify";
 
-import { GraphQLResult } from "@aws-amplify/api";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
 import { CMDBuddyUser } from "./zod/UserSchema";
 
-// Gets Commands by userID along with Commands' Parameters
+/**Gets Commands by userID along with Commands' Parameters */
 export const customCommandsAndParametersByUserID = /* GraphQL */ `
 	query CommandsByUserID($userID: ID!) {
 		commandsByUserID(userID: $userID) {

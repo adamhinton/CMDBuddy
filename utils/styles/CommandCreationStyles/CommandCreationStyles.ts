@@ -1,6 +1,7 @@
 // README:
 // This is the styles page for Command Creation
 
+import Image from "next/image";
 import styled from "styled-components";
 
 export const StyledCCFForm = styled.form`
@@ -24,7 +25,11 @@ export const StyledCommandCreationDisclaimer = styled.p`
 
 export const StyledCommandInputContainer = styled.div`
 	display: flex;
-	justify-content: center; // or align-items based on your design need
+	justify-content: center;
+`;
+
+export const CommandInputGroup = styled.section`
+	margin-bottom: 2rem;
 `;
 
 export const StyledCCFLabel = styled.label`
@@ -48,6 +53,13 @@ export const StyledCCFError = styled.p`
 	margin-bottom: 10px;
 `;
 
+export const ParamCreationButtonsContainer = styled.div`
+	display: flex;
+	margin: 1rem 0;
+	justify-content: space-between;
+	max-width: 500px;
+`;
+
 export const StyledCCFButton = styled.button`
 	background: ${({ theme }) => theme.commandCreation.buttonBackground};
 	color: ${({ theme }) => theme.commandCreation.formText};
@@ -60,43 +72,99 @@ export const StyledCCFButton = styled.button`
 	}
 `;
 
+/**Submit button gets enhanced styling here */
+export const PrimaryButton = styled(StyledCCFButton)`
+	font-weight: bold;
+	border: 2px solid ${({ theme }) => theme.commandCreation.submitButtonBorder};
+	background: ${({ theme }) => theme.commandCreation.submitButtonBackground};
+	color: ${({ theme }) => theme.commandCreation.submitButtonText};
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease,
+		border-color 0.3s ease;
+
+	&:hover {
+		background: ${({ theme }) =>
+			theme.commandCreation.submitButtonHoverBackground};
+		color: ${({ theme }) => theme.commandCreation.submitButtonHoverText};
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	}
+
+	&:disabled {
+		background: ${({ theme }) =>
+			theme.commandCreation.submitButtonDisabledBackground};
+		color: ${({ theme }) => theme.commandCreation.submitButtonDisabledText};
+		border-color: ${({ theme }) =>
+			theme.commandCreation.submitButtonDisabledBorder};
+		box-shadow: none;
+		cursor: not-allowed;
+	}
+`;
+
+export const SecondaryButton = styled(StyledCCFButton)`
+	// Maintain the current style for secondary buttons
+	// Not sure this empty one is best practices
+`;
+
 export const CollapsibleBar = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	max-width: 350px;
 	padding: 10px;
 	cursor: pointer;
 	border: 1px solid ${({ theme }) => theme.commandCreation.buttonBackground};
 	border-radius: 4px;
 	margin-bottom: 5px;
-	background-color: ${({ theme }) => theme.commandCreation.formBackground};
+	background-color: ${({ theme }) =>
+		theme.commandCreation.collapsibleBarBackground};
 	color: ${({ theme }) => theme.commandCreation.formText};
-	transition: background-color 0.3s ease;
+	transition: box-shadow 0.3s ease, background-color 0.3s ease;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
 
 	&:hover {
 		background-color: ${({ theme }) =>
-			theme.commandCreation.buttonHoverBackground};
+			theme.commandCreation.collapsibleBarHoverBackground};
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15); // stronger shadow on hover
 	}
 `;
 
-export const ParameterName = styled.span`
-	font-weight: bold;
+/**Icon that the user grabs to Drag and Drop */
+export const DragHandle = styled.div`
 	color: ${({ theme }) => theme.commandCreation.inputText};
-`;
-
-export const IconWrapper = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 10px; // Distance between icons
-`;
-
-export const StyledDownPlaceholder = styled.span`
-	color: ${({ theme }) => theme.commandCreation.formText};
+	cursor: grab; // cursor change to indicate draggability
 	&:hover {
 		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
 	}
 `;
 
+// CollapsibleBar stuff
+export const ParameterName = styled.span`
+	font-weight: bold;
+	color: ${({ theme }) => theme.commandCreation.inputText};
+`;
+
+// CollapsibleBar stuff
+export const IconWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 10px;
+`;
+
+export const StyledUpDownIcon = styled.i`
+	width: 15px;
+	height: 15px;
+	font-size: 16px;
+	&:hover {
+		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
+	}
+`;
+
+export const StyledChevronImage = styled(Image)`
+	width: 100%;
+	height: 100%;
+`;
+
+// CollapsibleBar stuff
 export const StyledUpPlaceholder = styled.span`
 	color: ${({ theme }) => theme.commandCreation.formText};
 	&:hover {
@@ -104,9 +172,56 @@ export const StyledUpPlaceholder = styled.span`
 	}
 `;
 
-export const StyledTrashPlaceholder = styled.span`
+// CollapsibleBar stuff
+export const StyledTrashIcon = styled.i`
+	font-size: 16px; // icon size
 	color: ${({ theme }) => theme.commandCreation.errorText};
 	&:hover {
 		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
 	}
+`;
+
+// All this Tag stuff is PCEF dropdown utils
+// Each Tag is a user-inputted allowed item for dropdwon
+export const TagInputContainer = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	background-color: ${({ theme }) =>
+		theme.commandCreation.dropdownBackgroundColor};
+	border: 1px solid ${({ theme }) => theme.commandCreation.dropdownBorderColor};
+	padding: 5px;
+	border-radius: 5px;
+`;
+
+// Dropdown stuff
+/**A single item the user has inputted as a Dropdown value.
+ *
+ * User hits Enter to confirm item; it'll show as a tag with an X to delete.
+ */
+export const Tag = styled.span`
+	padding: 5px 8px;
+	background-color: ${({ theme }) =>
+		theme.commandCreation.dropdownTagBackgroundColor};
+	color: ${({ theme }) => theme.commandCreation.dropdownTagTextColor};
+	margin: 2px;
+	border-radius: 3px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+`;
+
+// Dropdown stuff
+export const RemoveTagIcon = styled.span`
+	cursor: pointer;
+	color: ${({ theme }) => theme.commandCreation.dropdownTagRemoveIconColor};
+`;
+
+// Dropdown stuff
+export const TagInput = styled.input`
+	flex: 1;
+	border: none;
+	outline: none;
+	padding: 5px;
+	color: ${({ theme }) => theme.commandCreation.dropdownTextColor};
+	background: transparent;
 `;

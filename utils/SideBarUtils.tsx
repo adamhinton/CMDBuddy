@@ -12,7 +12,6 @@ import { editCommandTitle, deleteCommand } from "../redux/slices/commandsSlice";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
 import { reorderCommands } from "../redux/slices/commandsSlice";
 
-// Styled components
 export const SideBarContainer = styled.div`
 	width: 300px;
 	background: ${({ theme }) => theme.sidebar.background};
@@ -24,7 +23,7 @@ export const SideBarContainer = styled.div`
 	font-size: 0.9rem;
 `;
 
-// Button on right of Command to initiate drag and drop
+/**Button on right of Command to initiate drag and drop */
 export const DragHandle = styled.div`
 	width: 15px;
 	max-width: 15px;
@@ -43,7 +42,7 @@ export const DragHandle = styled.div`
 	}
 `;
 
-// Parent container of a single Command
+/**Parent container of a single Command */
 export const CommandContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -61,7 +60,7 @@ export const IconContainer = styled.div`
 	align-items: center;
 `;
 
-// Input for editing command's title
+/**Input for editing command's title */
 export const EditInput = styled.input`
 	flex-grow: 1;
 	border: 2px solid blue;
@@ -72,7 +71,7 @@ export const EditInput = styled.input`
 	max-width: 60%;
 `;
 
-// Command's Title
+/** Command's Title */
 export const Title = styled.span`
 	flex-grow: 1;
 	overflow: hidden;
@@ -112,7 +111,7 @@ export const EditButton = styled.button`
 	}
 `;
 
-// Trash icon to delete Command
+/**Trash icon to delete Command */
 export const DeleteButton = styled.button`
 	background: none;
 	border: none;
@@ -122,7 +121,7 @@ export const DeleteButton = styled.button`
 	}
 `;
 
-// Confirm deleting Command
+/**Confirm deleting Command */
 export const ConfirmIcon = styled.span`
 	margin-left: 5px;
 	cursor: pointer;
@@ -130,7 +129,7 @@ export const ConfirmIcon = styled.span`
 
 // Utility functions
 
-// User has saved their DnD changes to command order, so save that to redux state and db
+/**User has saved their DnD changes to command order, so save that to redux state and db */
 const handleDnDSave = async (
 	localCommands: CMDBuddyCommand[],
 	dispatch: Function,

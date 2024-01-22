@@ -1,13 +1,8 @@
-// TODO:
-// Any other toasts
-// DND for params
-// Collapse Params && Collapse All && Expand All
-// Error handling - specifically db submissions. Partially done
-// TODO: in /generate, fix default values funniness
-// TODO: Handle /generate validation
+// TODO Stretch: Capability to make commands in localstorage without auth
 
-// TODO CCF:
-// Fix ordering of new/edited commands
+// TODO Stretch: "Reminder" property in Parameter and Command that reminds the user what they're for on hover, like with tooltip.
+
+// TODO Stretch CCF: Fix ordering of new/edited commands
 
 import { Amplify, Auth } from "aws-amplify";
 import { Providers } from "../../redux/provider";
@@ -36,6 +31,7 @@ export default async function RootLayout({
 			<body>
 				<ToastWrapper>
 					<Providers>
+						{/* ThemeProviderWrapper also contains GlobalStyles */}
 						<ThemeProviderWrapper>
 							<AuthClientComponent />
 							<Header />

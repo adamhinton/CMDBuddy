@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Image from "next/image";
 
+// TODO: Better link color in /about/page
+
 const Title = styled.h1`
 	color: ${({ theme }) => theme.aboutPage.title};
 `;
@@ -101,10 +103,10 @@ const StyledTableOfContents = styled.nav`
 
 	/* Subheadings stuff */
 	li > ul > li > a {
-		font-weight: normal; // Less emphasis on subheadings
-		font-size: 0.85em; // Slightly smaller font size for subheadings
-		color: ${({ theme }) => theme.aboutPage.tOCSubHeading}; // Subheading color
-		padding-left: 15px; // Further indent subheadings
+		font-weight: normal;
+		font-size: 0.85em;
+		color: ${({ theme }) => theme.aboutPage.tOCSubHeading};
+		padding-left: 15px; // Indent subheadings
 		padding-top: 3px;
 		padding-bottom: 3px;
 	}
@@ -119,10 +121,8 @@ const SubSubtitle = styled.h3`
 `;
 
 const ImageContainer = styled.div`
-	border: 2px solid ${({ theme }) => theme.aboutPage.imageBorder};
-	background-color: ${({ theme }) => theme.aboutPage.imageBackground};
 	padding: 10px;
-	max-width: 500px;
+	max-width: 100%;
 	height: auto;
 	margin-top: 20px;
 	margin-bottom: 20px;
@@ -134,7 +134,8 @@ const ImageContainer = styled.div`
 `;
 
 const StyledImage = styled(Image)`
-	width: 100%;
+	border: 2px solid ${({ theme }) => theme.aboutPage.imageBorder};
+	max-width: 100%;
 	height: auto;
 `;
 

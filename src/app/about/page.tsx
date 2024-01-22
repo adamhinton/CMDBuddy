@@ -7,19 +7,20 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-// TODO: Slight horizontal scroll bar at small screen sizes
-
 import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
 import Link from "next/link";
 Amplify.configure({ ...config, ssr: true });
 import Image from "next/image";
+
 // These two image show command generation UI
 import darkModeGenMakeNewPersonIMG from "../../../utils/images/generatemakenewperson-darkmode.png";
 import lightModeGenMakeNewPersonIMG from "../../../utils/images/generatemakenewperson-lightmode.png";
+
 // These two images show command creation UI for baseCommand and title
 import darkModeCreateBaseComandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-darkmode.png";
 import lightModeCreateBaseComandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-lightmode.png";
+
 // These two images show Parameter creation UI
 import lightModePCFIMG from "../../../utils/images/PCF-lightmode.png";
 import darkModePCFIMG from "../../../utils/images/PCF-darkmode.png";

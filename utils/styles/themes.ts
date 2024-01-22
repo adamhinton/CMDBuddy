@@ -1,6 +1,11 @@
 import { DefaultTheme } from "styled-components";
 
 export const lightTheme: DefaultTheme = {
+	global: {
+		backgroundColor: "#F4F8FA",
+		textColor: "#5A5A5A",
+	},
+
 	colors: {
 		background: "#e0f7fa",
 		text: "#333",
@@ -8,12 +13,14 @@ export const lightTheme: DefaultTheme = {
 		activeTabBackground: "#c0c0c0",
 		hoverTabBackground: "#d0d0d0",
 	},
+
 	header: {
 		background: "#E0F7FA",
 		text: "#0D47A1",
 		link: "#004D40",
 		toggleIcon: "#FFCA28",
 	},
+
 	tabs: {
 		background: "#e0e0e0",
 		text: "#333",
@@ -21,6 +28,7 @@ export const lightTheme: DefaultTheme = {
 		hoverBackground: "#d0d0d0",
 		activeBorder: "#0D47A1", // The tab the user is currently on
 	},
+
 	sidebar: {
 		background: "#f0f0f0",
 		text: "#333",
@@ -32,6 +40,7 @@ export const lightTheme: DefaultTheme = {
 			hoverBackground: "#B3E5FC",
 		},
 	},
+
 	commandCreation: {
 		formBackground: "#E3F2FD",
 		formText: "#0D47A1",
@@ -40,7 +49,29 @@ export const lightTheme: DefaultTheme = {
 		errorText: "#D32F2F",
 		buttonBackground: "#B3E5FC",
 		buttonHoverBackground: "#81D4FA",
+		collapsibleBarBackground: "#f0f0f0",
+		collapsibleBarHoverBackground: "#e0e0e0",
+		PCEFBackground: "#ffffff",
+		PCEFColor: "333333",
+		PCEFBoxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+		// Submit button stuff:
+		submitButtonBackground: "#3272D9",
+		submitButtonText: "#FFFFFF",
+		submitButtonBorder: "#2860B2",
+		submitButtonHoverBackground: "#1D4A8C",
+		submitButtonHoverText: "#FFFFFF",
+		submitButtonDisabledBackground: "#A6B1C2",
+		submitButtonDisabledText: "#E1E4E8",
+		submitButtonDisabledBorder: "#A6B1C2",
+		// Dropdown input stuff in PCEF
+		dropdownBackgroundColor: "#FFFFFF",
+		dropdownBorderColor: "#D1D5DB",
+		dropdownTextColor: "#111827",
+		dropdownTagBackgroundColor: "#E5E7EB",
+		dropdownTagTextColor: "#374151",
+		dropdownTagRemoveIconColor: "#9CA3AF",
 	},
+
 	commandGeneration: {
 		baseBackground: "#f0f0f0",
 		baseText: "#333",
@@ -53,6 +84,9 @@ export const lightTheme: DefaultTheme = {
 		selectText: "#333",
 		inputBorderColor: "#ccc",
 		inputHoverBorderColor: "#bbb",
+		errorBackground: "#FFF3F3",
+		errorItemBackground: "#FFEDED",
+		errorBorderLeftColor: "#FF5C5C",
 	},
 	login: {
 		buttonBackground: "#B3E5FC",
@@ -90,6 +124,11 @@ export const lightTheme: DefaultTheme = {
 };
 
 export const darkTheme: DefaultTheme = {
+	global: {
+		backgroundColor: "#2B3A42",
+		textColor: "#C0C2B8",
+	},
+
 	colors: {
 		background: "#1a1a1a",
 		text: "#f5f5f5",
@@ -129,7 +168,29 @@ export const darkTheme: DefaultTheme = {
 		errorText: "#EF9A9A",
 		buttonBackground: "#546E7A",
 		buttonHoverBackground: "#78909C",
+		collapsibleBarBackground: "#3a3b3c",
+		collapsibleBarHoverBackground: "#4a4b4c",
+		PCEFBackground: "#1e1e1e",
+		PCEFColor: "#ffffff",
+		PCEFBoxShadow: "0 4px 8px rgba(255, 255, 255, 0.1)",
+		// Submit button stuff:
+		submitButtonBackground: "#4A90E2",
+		submitButtonText: "#FFFFFF",
+		submitButtonBorder: "#3178C6",
+		submitButtonHoverBackground: "#357ABD",
+		submitButtonHoverText: "#FFFFFF",
+		submitButtonDisabledBackground: "#5F7C8A",
+		submitButtonDisabledText: "#C7D0D9",
+		submitButtonDisabledBorder: "#5F7C8A",
+		// Dropdown input stuff in PCEF
+		dropdownBackgroundColor: "#111827",
+		dropdownBorderColor: "#374151",
+		dropdownTextColor: "#F9FAFB",
+		dropdownTagBackgroundColor: "#1F2937",
+		dropdownTagTextColor: "#F9FAFB",
+		dropdownTagRemoveIconColor: "#6B7280",
 	},
+
 	commandGeneration: {
 		baseBackground: "#222",
 		baseText: "#f5f5f5",
@@ -142,6 +203,9 @@ export const darkTheme: DefaultTheme = {
 		selectText: "#f5f5f5",
 		inputBorderColor: "#ccc",
 		inputHoverBorderColor: "#bbb",
+		errorBackground: "#2A2A2A",
+		errorItemBackground: "333333",
+		errorBorderLeftColor: "#E57373",
 	},
 	login: {
 		buttonBackground: "#546E7A",

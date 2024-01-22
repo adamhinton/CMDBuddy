@@ -24,7 +24,7 @@ const {
 
 const Login = () => {
 	const currentUser = useSelector((state: RootState) => state.auth.user);
-	const { setUserAndCommandsToState, logOut } = useAuthActions();
+	const { setUserAndCommandsToState, logOutRedux } = useAuthActions();
 	const [showChangePassword, setShowChangePassword] = useState(false);
 	const [showDeleteAccount, setShowDeleteAccount] = useState(false);
 	const router = useRouter();
@@ -35,32 +35,33 @@ const Login = () => {
 				() => null
 			);
 			if (!amplifyUser && currentUser) {
-				logOut(router);
+				logOutRedux(router);
 			}
 		};
 		checkUser();
-	}, [currentUser, logOut, router]);
+	}, [currentUser, logOutRedux, router]);
 
 	const handleLogin = async (user: any) => {
 		if (user) {
 			await setUserAndCommandsToState(user);
-			router.push("/commands");
+			router.push("/commands/generate");
 		}
 	};
 
+	/**Handles Amplify signout; logOutRedux() handles Redux side of it */
 	const handleSignOut = async (signOut?: any) => {
 		try {
 			if (signOut) {
 				await signOut();
 			}
-			logOut(router);
+			logOutRedux(router);
 		} catch (error) {
 			console.error("Error signing out: ", error);
 		}
 	};
 
 	const handleSuccess = () => {
-		router.push("/commands");
+		router.push("/commands/generate");
 	};
 
 	const toggleChangePassword = () => {
@@ -82,7 +83,7 @@ const Login = () => {
 					})
 				);
 			}
-			logOut(router);
+			logOutRedux(router);
 			router.push("login");
 		} catch (error) {
 			console.error("Error deleting user from database: ", error);

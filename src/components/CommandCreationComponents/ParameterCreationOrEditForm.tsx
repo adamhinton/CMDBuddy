@@ -9,8 +9,8 @@
 // FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
-// TODO:
-// In creation mdoe, add "What's this?" with link to explanation in /about. Particularly for Type
+// TODO Stretch:
+// In creation mode, add "What's this?" with link to explanation in /about. Particularly for Type
 
 import React, { useState, useEffect } from "react";
 import {
@@ -37,7 +37,8 @@ import {
 	IntParameterErrors,
 	DropdownParameterErrors,
 } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
-
+import rightChevron from "../../../utils/images/chevrons/right-chevron.svg";
+import downChevron from "../../../utils/images/chevrons/down-chevron.svg";
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 
 type FormProps = {
@@ -48,6 +49,7 @@ type FormProps = {
 	isCollapsed: boolean;
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
 	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>;
+	dragHandleProps: any;
 };
 
 import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
@@ -55,15 +57,15 @@ import {
 	CollapsibleBar,
 	IconWrapper,
 	ParameterName,
-	StyledCCFButton,
-	StyledDownPlaceholder,
-	StyledTrashPlaceholder,
-	StyledUpPlaceholder,
+	StyledChevronImage,
+	StyledTrashIcon,
+	StyledUpDownIcon,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
-import styled from "styled-components";
-import Tippy from "@tippyjs/react";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
+import { DragHandle } from "../../../utils/SideBarUtils";
+import Image from "next/image";
+import styled from "styled-components";
 
 const {
 	StringParameterFields,
@@ -89,6 +91,7 @@ const ParameterCreationOrEditForm = ({
 	setValue,
 	update,
 	getValues,
+	dragHandleProps,
 }: FormProps) => {
 	const {
 		register,
@@ -102,8 +105,6 @@ const ParameterCreationOrEditForm = ({
 
 	const parameterErrors = errors.parameters?.[index];
 
-	// This updates the necessary fields when user clicks a different parameter type
-	// Name here refers to the name of the field, not the `name` key in Parameters
 	useEffect(() => {
 		const subscription = watch((value, { name, type }) => {
 			const parameter = value.parameters ? value.parameters[index] : null;
@@ -173,17 +174,26 @@ const ParameterCreationOrEditForm = ({
 						update(index, { ...param, isCollapsed: !isCollapsed });
 					}}
 				>
-					<ParameterName>ParameterName</ParameterName>
+					<DragHandle {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
+						::
+					</DragHandle>
+
+					<CMDBuddyTooltip content={isCollapsed ? "Expand" : "Collapse"}>
+						<StyledUpDownIcon>
+							<StyledChevronImage
+								src={isCollapsed ? downChevron : rightChevron}
+								alt={isCollapsed ? "Click to expand" : "Click to Collapse"}
+							/>
+						</StyledUpDownIcon>
+					</CMDBuddyTooltip>
+
+					<ParameterName>
+						{getValues(`parameters.${index}`).name || "Param Name"}
+					</ParameterName>
+
 					<IconWrapper>
-						{/* TODO: Instate real up/down icons */}
-						{isCollapsed ? (
-							<StyledDownPlaceholder>Down</StyledDownPlaceholder>
-						) : (
-							<StyledUpPlaceholder>Up</StyledUpPlaceholder>
-						)}
-						{/* TODO: Instate real trash icon */}
 						<CMDBuddyTooltip content="Delete Parameter">
-							<StyledTrashPlaceholder
+							<StyledTrashIcon
 								onClick={(e) => {
 									e.preventDefault();
 									e.stopPropagation();
@@ -191,12 +201,11 @@ const ParameterCreationOrEditForm = ({
 								}}
 							>
 								🗑️
-							</StyledTrashPlaceholder>
+							</StyledTrashIcon>
 						</CMDBuddyTooltip>
 					</IconWrapper>
 				</CollapsibleBar>
 			</CMDBuddyTooltip>
-
 			{!isCollapsed && (
 				<div>
 					{/* Parameter Type Selector */}
@@ -222,11 +231,11 @@ const ParameterCreationOrEditForm = ({
 
 					{/* Shared Name Field */}
 					<CMDBuddyTooltip content="Variable's name">
-						<ParameterCreationLabel>Name</ParameterCreationLabel>
+						<ParameterCreationLabel>Name *</ParameterCreationLabel>
 					</CMDBuddyTooltip>
 					<StyledPCFNameInput
 						{...register(`parameters.${index}.name`)}
-						placeholder="Name"
+						placeholder="Variable Name"
 						required={true}
 						maxLength={30}
 					/>
@@ -242,6 +251,7 @@ const ParameterCreationOrEditForm = ({
 						index={index}
 						parameterErrors={parameterErrors}
 					></DefaultValueInput>
+
 					{/* IsNullable (Optional) Checkbox */}
 					{/* This isn't needed in FLAG type */}
 					{parameterType !== "FLAG" && (
@@ -253,8 +263,9 @@ const ParameterCreationOrEditForm = ({
 							/>
 						</StyledPCFOptionalCheckbox>
 					)}
+
+					{/* Render stuff specific to each Parameter's type */}
 					{renderParameterSpecificFields()}
-					{/* Delete Parameter Button */}
 				</div>
 			)}
 		</ParameterCreationFormContainer>

@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
 export const ParameterCreationFormContainer = styled.div`
-	border: 1px solid blue;
-	background: ${({ theme }) => theme.commandCreation.formBackground};
-	color: ${({ theme }) => theme.commandCreation.formText};
+	border: 2px solid #007bff;
+	border-radius: 8px;
+	max-width: 900px;
+	background: ${({ theme }) => theme.commandCreation.PCEFBackground};
+	color: ${({ theme }) => theme.commandCreation.PCEFColor};
+	box-shadow: ${({ theme }) => theme.commandCreation.PCEFBoxShadow};
 	padding: 15px;
 	margin-bottom: 15px;
 	border-radius: 8px;
@@ -17,6 +20,7 @@ export const ParameterCreationLabel = styled.label`
 `;
 
 export const ParameterCreationInput = styled.input`
+	box-shadow: ${({ theme }) => theme.commandCreation.PCEFBoxShadow};
 	max-width: 100%;
 	display: block;
 	padding: 8px;
@@ -75,7 +79,7 @@ export const StyledPCFOptionalCheckbox = styled.div`
 `;
 
 export const StyledPCFLengthInput = styled(ParameterCreationInput)`
-	width: 100px;
+	width: 105px;
 	margin-right: 10px;
 `;
 
@@ -96,4 +100,5 @@ export const StyledPCFBooleanOptions = styled.div`
 export const StyledPCFMinMaxContainer = styled.div`
 	display: flex;
 	align-items: center;
+	max-width: 400px;
 `;

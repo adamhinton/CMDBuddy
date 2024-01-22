@@ -5,13 +5,17 @@
 // FLAG type Parameters go *after* the baseCommand; everything else goes *before* the baseCommand.
 // We use a similar component, called LiveCommandCreationPreview, in command creation.
 
+// TODO Stretch: Inline vs one per line LCEP
+
+// TODO: CEF Styling cleanup. Box shadows, spacing etc. It's close, shouldn't be too arduous.
+
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
-import { CEFButton } from "./CommandExecutionForm";
 import styled from "styled-components";
+import CEFStyles from "../../../utils/CommandExecutionUtils/CommandExecutionStyles";
+const { CEFButton } = CEFStyles;
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
-
 const LCEPContainer = styled.section`
 	margin: 10px 0;
 `;
