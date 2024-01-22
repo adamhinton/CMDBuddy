@@ -182,7 +182,7 @@ const ParameterCreationOrEditForm = ({
 						<StyledUpDownIcon>
 							<StyledChevronImage
 								src={isCollapsed ? downChevron : rightChevron}
-								alt={isCollapsed ? "Down Chevron" : "Right Chevron"}
+								alt={isCollapsed ? "Click to expand" : "Click to Collapse"}
 							/>
 						</StyledUpDownIcon>
 					</CMDBuddyTooltip>

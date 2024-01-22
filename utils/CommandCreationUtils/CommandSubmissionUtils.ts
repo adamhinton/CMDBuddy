@@ -66,11 +66,6 @@ const validateParameterOnSubmit = (
 			if (parameter.validationRegex) {
 				const regex = new RegExp(parameter.validationRegex);
 				if (!regex.test(parameter.defaultValue)) {
-					update(index, {
-						...parameter,
-						isCollapsed: false,
-					});
-
 					setError(
 						`parameters.${index}.defaultValue`,
 						{
@@ -272,7 +267,6 @@ const submitNewCommandAndParamsToDB = async (
 };
 
 /**  When user edits a Command, this tells the code if its params are newly created, updated, or deleted. 
- 
  Params that haven't changed are left out of the returned object  */
 const sortSubmittedEditedParams = (
 	data: CMDBuddyCommandFormValidation,
@@ -285,7 +279,7 @@ const sortSubmittedEditedParams = (
 	const newParameters = data.parameters?.filter((p) => !p.id);
 
 	// Update these original parameter ids with new data
-	// These are params that existed already but have been updated.
+	/**params that existed already but have been updated. */
 	const updatedParameters = data.parameters?.filter(
 		(p) =>
 			p.id &&
@@ -460,7 +454,6 @@ const handleSubmit = async ({
 
 	// Stop user from creating a zillion Commands
 	if (numCommands && numCommands > MAX_COMMAND_LIMIT_PER_USER) {
-		// Alert instead of toast because it's more pressing
 		toast(
 			`Max of ${MAX_COMMAND_LIMIT_PER_USER} Commands per User allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`,
 			{ autoClose: false }
@@ -476,7 +469,6 @@ const handleSubmit = async ({
 		data.parameters.length > MAX_PARAM_LIMIT_PER_COMMAND
 	) {
 		toast(
-			// Alert instead of toast because it's more pressing
 			`Max of ${MAX_PARAM_LIMIT_PER_COMMAND} Parameters per Command allowed. This is to prevent API spam; please contact me if you need more and I'll be happy to raise the limit.`,
 			{ autoClose: false }
 		);
@@ -579,11 +571,14 @@ const submitParamEditsToDB = async (
 
 	updatedParameters?.forEach(async (param) => {
 		const updateParameterInput = param;
-		// DB
 
+		// hasBeenEdited and isCollapsed only exist on the frontend, so leaving them in the DB input would invalidate DB submission
 		delete updateParameterInput["hasBeenEdited"];
 		delete updateParameterInput["isCollapsed"];
-		await API.graphql(graphqlOperation(updateParameter, { input: param }));
+
+		await API.graphql(
+			graphqlOperation(updateParameter, { input: updateParameterInput })
+		);
 	});
 };
 
