@@ -6,6 +6,8 @@
 // Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different parameterList for each
 // User can Drag and Drop (DnD) Parameters
 
+// TODO: Clean up collapse on error code; I think I duplicated some stuff
+
 // TODO: Clean up CEF DnD styling. Just make the DnD icon clearer, no biggie.
 
 import React, { useState, useEffect } from "react";
