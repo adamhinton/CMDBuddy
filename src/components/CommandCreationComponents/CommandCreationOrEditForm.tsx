@@ -146,7 +146,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			for (let i = 0; i < parameterList.length; i++) {
 				// Expand Parameters that have errors
 				if (parameterErrors[i]) {
-					// TODO: Focus not being set to param with error if param is collapsed
+					// TODO Stretch: Focus not being set to param with error if param is collapsed
 					setFocus(`parameters.${i}`);
 					update(i, {
 						...parameterList[i],

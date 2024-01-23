@@ -28,7 +28,7 @@ import {
 	MAX_PARAM_LIMIT_PER_COMMAND,
 } from "../MiscellaneousGlobalVariables";
 
-// TODO: Error on collapsed param uncollapses it, but doesn't focus to the param
+// TODO Stretch: Error on collapsed param uncollapses it, but doesn't focus to the param
 
 // This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
 // It also focuses the UI on the first error when user hits Submit.
