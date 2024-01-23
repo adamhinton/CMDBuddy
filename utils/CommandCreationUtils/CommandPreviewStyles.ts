@@ -13,6 +13,7 @@ export const CommandPreviewContainer = styled.section`
 	padding: 10px;
 	margin: 10px 0;
 	border-radius: 5px;
+	box-shadow: ${({ theme }) => theme.commandPreview.boxShadow};
 	background-color: ${({ theme }) => theme.commandPreview.background};
 	color: ${({ theme }) => theme.commandPreview.text};
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);

@@ -93,6 +93,7 @@ export const lightTheme: DefaultTheme = {
 	commandPreview: {
 		background: "#f7f7f7",
 		text: "#333333",
+		boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
 		buttonBackground: "#a3cef1",
 		buttonText: "#ffffff",
 		buttonHoverBackground: "#7fb2e5",
@@ -225,6 +226,7 @@ export const darkTheme: DefaultTheme = {
 		text: "#ecf0f1",
 		buttonBackground: "#5c7f94",
 		buttonText: "#ecf0f1",
+		boxShadow: "0 2px 5px rgba(255, 255, 255, 0.1)",
 		buttonHoverBackground: "#3c6e71",
 		focusShadow: "0 0 0 2px #5c7f94",
 	},
