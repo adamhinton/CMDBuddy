@@ -7,6 +7,8 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
+// TODO: Update /about images with new UI
+
 import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
 import Link from "next/link";
