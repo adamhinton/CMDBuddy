@@ -88,6 +88,17 @@ export const lightTheme: DefaultTheme = {
 		errorItemBackground: "#FFEDED",
 		errorBorderLeftColor: "#FF5C5C",
 	},
+
+	// Shared styling between LiveCommandCreationPreview and LiveCommandExecution preview because they do much the same thing
+	commandPreview: {
+		background: "#f7f7f7",
+		text: "#333333",
+		buttonBackground: "#a3cef1",
+		buttonText: "#ffffff",
+		buttonHoverBackground: "#7fb2e5",
+		focusShadow: "0 0 0 2px #a3cef1",
+	},
+
 	login: {
 		buttonBackground: "#B3E5FC",
 		buttonText: "#0D47A1",
@@ -207,6 +218,17 @@ export const darkTheme: DefaultTheme = {
 		errorItemBackground: "333333",
 		errorBorderLeftColor: "#E57373",
 	},
+
+	// Shared styling between LiveCommandCreationPreview and LiveCommandExecution preview because they do much the same thing
+	commandPreview: {
+		background: "#2c3e50",
+		text: "#ecf0f1",
+		buttonBackground: "#5c7f94",
+		buttonText: "#ecf0f1",
+		buttonHoverBackground: "#3c6e71",
+		focusShadow: "0 0 0 2px #5c7f94",
+	},
+
 	login: {
 		buttonBackground: "#546E7A",
 		buttonText: "#ECEFF1",
