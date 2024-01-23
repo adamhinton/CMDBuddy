@@ -1,14 +1,14 @@
 "use client";
 
-import { UseFormWatch } from "react-hook-form";
 // README:
 // This component shows a preview of the Command you've created (or edited). Like it'll show `companyName= zipCode= npx playwright test createCompany --headed`
 // It's updated every time a user inputs a value in baseCommand, or a parameter's name or defaultValue.
 // NOTE: This is when the user initially CREATING a Command, like when the user fills out a form with parameters' names, baseCommand etc.
-// Dynamic Command generation goes in LiveCommandExecutionPreview.tsx.
+// Dynamic Command generation goes in LiveCommandExecutionPreview.tsx. These files produce much the same UI, but the methods to achieve that are different enough that I made two components.
 // STYLING:
 // -- Since the UI is much the same, styling is shared between this and LiveCommandExecutionPreview.tsx
 
+import { UseFormWatch } from "react-hook-form";
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import { CommandPreviewContainer } from "../CommandExecutionComponents/LiveCommandExecutionPreview";
