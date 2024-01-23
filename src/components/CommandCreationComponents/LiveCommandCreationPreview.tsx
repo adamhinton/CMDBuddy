@@ -11,7 +11,7 @@
 import { UseFormWatch } from "react-hook-form";
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
-import { CommandPreviewContainer } from "../CommandExecutionComponents/LiveCommandExecutionPreview";
+import { CommandPreviewContainer } from "../../../utils/CommandCreationUtils/CommandPreviewStyles";
 
 type LiveCommandPreviewProps = {
 	watch: UseFormWatch<CMDBuddyCommandFormValidation>;
