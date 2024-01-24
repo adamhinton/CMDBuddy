@@ -55,8 +55,6 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 		),
 	});
 
-	const { getValues } = methods;
-
 	const dispatch = useDispatch();
 	const parameters = command.parameters;
 
