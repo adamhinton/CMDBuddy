@@ -19,6 +19,9 @@ import {
 	CommandPreviewContainer,
 	CopyButton,
 } from "../../../utils/CommandCreationUtils/CommandPreviewStyles";
+import copyToClipboardIcon from "../../../utils/images/copy-to-clipboard-icon.png";
+import Image from "next/image";
+import styled from "styled-components";
 
 const LiveCommandExecutionPreview = ({
 	baseCommand,
@@ -68,15 +71,31 @@ const LiveCommandExecutionPreview = ({
 				<CMDBuddyTooltip content="Copy generated Command to clipboard">
 					<CopyButton
 						onClick={(e) => copyCommandToClipboard(e, commandPreview)}
+						aria-label="Copy to clipboard"
 					>
-						{/* TODO: Put an icon here instead of a button saying "Copy" */}
-						Copy{" "}
+						<ClipboardCopyIconContainer>
+							<Image
+								src={copyToClipboardIcon}
+								alt="Copy to clipboard"
+								width={24} // Adjust the width as needed
+								height={24} // Adjust the height as needed
+								layout="intrinsic" // This can be adjusted based on your design
+							/>
+						</ClipboardCopyIconContainer>
 					</CopyButton>
 				</CMDBuddyTooltip>
 			</div>
 		</CommandPreviewContainer>
 	);
 };
+
+const ClipboardCopyIconContainer = styled.div`
+	max-width: 100%;
+	max-height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
 
 export default LiveCommandExecutionPreview;
 

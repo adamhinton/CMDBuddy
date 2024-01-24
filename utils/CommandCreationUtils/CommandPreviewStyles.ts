@@ -36,9 +36,14 @@ export const CopyButton = styled.button`
 	border: none;
 	background-color: ${({ theme }) => theme.commandPreview.buttonBackground};
 	color: ${({ theme }) => theme.commandPreview.buttonText};
-	padding: 5px 10px;
-	border-radius: 3px;
-	margin-left: 10px;
+	width: 30px;
+	height: 30px;
+	padding: 5px; // Padding to shrink the clickable area a bit
+	border-radius: 5px; // Rounded corners for modern look
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box; // Ensures padding doesn't affect the final size
 
 	&:hover {
 		background-color: ${({ theme }) =>
