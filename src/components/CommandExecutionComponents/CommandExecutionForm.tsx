@@ -56,12 +56,9 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 	});
 
 	const { getValues } = methods;
-	const formState = getValues();
 
 	const dispatch = useDispatch();
 	const parameters = command.parameters;
-
-	const { watch } = methods;
 
 	// Error handling
 	// Display parameter errors here rather than in individual Parameter inputs to reduce clutter
