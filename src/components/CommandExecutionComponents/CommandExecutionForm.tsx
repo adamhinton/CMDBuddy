@@ -19,7 +19,7 @@ import { removeSingleActiveCommand } from "../../../redux/slices/activeCommandsS
 import { useDispatch } from "react-redux";
 import ParameterExecutionForm from "./ParameterExecutionForm";
 import React from "react";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import LiveCommandExecutionPreview from "./LiveCommandExecutionPreview";
 import CEFStyles from "../../../utils/CommandExecutionUtils/CommandExecutionStyles";
 
