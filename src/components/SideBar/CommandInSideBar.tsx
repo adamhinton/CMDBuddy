@@ -27,6 +27,9 @@ import {
 	setCommandToEdit,
 } from "../../../redux/slices/editCommandSlice";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
+import Image from "next/image";
+import DragNDropHandleIcon from "../../../utils/images/drag-drop-handle.svg";
+import { DragNDropIconImage } from "../../../utils/DragNDropUtils";
 
 const CommandInSideBar = ({
 	command,
@@ -79,7 +82,10 @@ const CommandInSideBar = ({
 			{/* Drag and drop stuff */}
 			<CMDBuddyTooltip content="Drag to re-order commands">
 				<DragHandle {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
-					⋮⋮
+					<DragNDropIconImage
+						src={DragNDropHandleIcon}
+						alt="Drag and drop icon; hold down to drag"
+					/>
 				</DragHandle>
 			</CMDBuddyTooltip>
 			<Title>{title}</Title>

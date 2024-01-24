@@ -40,6 +40,7 @@ import {
 import rightChevron from "../../../utils/images/chevrons/right-chevron.svg";
 import downChevron from "../../../utils/images/chevrons/down-chevron.svg";
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
+import DragNDropHandleIcon from "../../../utils/images/drag-drop-handle.svg";
 
 type FormProps = {
 	index: number;
@@ -65,7 +66,7 @@ import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 import { DragHandle } from "../../../utils/SideBarUtils";
 import Image from "next/image";
-import styled from "styled-components";
+import { DragNDropIconImage } from "../../../utils/DragNDropUtils";
 
 const {
 	StringParameterFields,
@@ -175,7 +176,10 @@ const ParameterCreationOrEditForm = ({
 					}}
 				>
 					<DragHandle {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
-						::
+						<DragNDropIconImage
+							src={DragNDropHandleIcon}
+							alt="Drag and drop icon; hold down to drag"
+						/>
 					</DragHandle>
 
 					<CMDBuddyTooltip content={isCollapsed ? "Expand" : "Collapse"}>
