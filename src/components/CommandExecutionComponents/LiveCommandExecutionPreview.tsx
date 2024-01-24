@@ -16,6 +16,7 @@ import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 import {
+	ClipboardCopyIconContainer,
 	CommandPreviewContainer,
 	CopyButton,
 } from "../../../utils/CommandCreationUtils/CommandPreviewStyles";
@@ -88,14 +89,6 @@ const LiveCommandExecutionPreview = ({
 		</CommandPreviewContainer>
 	);
 };
-
-const ClipboardCopyIconContainer = styled.div`
-	max-width: 100%;
-	max-height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-`;
 
 export default LiveCommandExecutionPreview;
 

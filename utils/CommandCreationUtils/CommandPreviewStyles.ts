@@ -29,6 +29,14 @@ export const CommandPreviewContainer = styled.section<{ isVisible: boolean }>`
 	}
 `;
 
+export const ClipboardCopyIconContainer = styled.div`
+	max-width: 100%;
+	max-height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+
 // Unlike CommandPreviewContainer, this button is only used in LiveCommandExecutionPreview.tsx
 /**Button to copy genetated CLI command to clipboard. */
 export const CopyButton = styled.button`
@@ -38,12 +46,12 @@ export const CopyButton = styled.button`
 	color: ${({ theme }) => theme.commandPreview.buttonText};
 	width: 30px;
 	height: 30px;
-	padding: 5px; // Padding to shrink the clickable area a bit
-	border-radius: 5px; // Rounded corners for modern look
+	padding: 5px;
+	border-radius: 5px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-sizing: border-box; // Ensures padding doesn't affect the final size
+	box-sizing: border-box;
 
 	&:hover {
 		background-color: ${({ theme }) =>
