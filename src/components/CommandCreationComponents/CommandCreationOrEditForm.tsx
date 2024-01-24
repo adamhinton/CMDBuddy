@@ -7,8 +7,6 @@
 // User can Drag and Drop (DnD) Parameters
 // User can also collapse one or all Parameters; collapsed Params will only show a bar with util buttons and the Param's name.
 
-// TODO: Clean up CEF DnD styling. Just make the DnD icon clearer, no biggie.
-
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
