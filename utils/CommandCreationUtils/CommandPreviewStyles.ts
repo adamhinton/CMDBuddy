@@ -9,7 +9,10 @@ import styled from "styled-components";
 /**Displays a preview of the generated CLI command.
  *
  * Put the generated command in < code > html tags within this component. */
-export const CommandPreviewContainer = styled.section`
+export const CommandPreviewContainer = styled.section<{ isVisible: boolean }>`
+	opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+	visibility: ${({ isVisible }) => (isVisible ? "visible" : "hidden")};
+	transition: opacity 0.5s, visibility 0.5s;
 	padding: 10px;
 	margin: 10px 0;
 	border-radius: 5px;

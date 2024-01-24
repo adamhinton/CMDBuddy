@@ -11,7 +11,7 @@
 
 // TODO Stretch: Inline vs one per line LCEP
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
@@ -47,8 +47,20 @@ const LiveCommandExecutionPreview = ({
 	const commandPreview =
 		`${preCommandParams.trim()} ${baseCommand} ${postCommandFlags.trim()}`.trim();
 
+	// Only show command preview when there's a baseCommand, parameters to show etc. Otherwise it would just be a blank element
+	const [isVisible, setIsVisible] = useState(false);
+	useEffect(() => {
+		if (commandPreview.length > 0) {
+			setIsVisible(true);
+		} else {
+			// We set a timeout equal to the transition time before hiding the container
+			const timeout = setTimeout(() => setIsVisible(false), 500);
+			return () => clearTimeout(timeout);
+		}
+	}, [commandPreview]);
+
 	return (
-		<CommandPreviewContainer>
+		<CommandPreviewContainer isVisible>
 			<code>{commandPreview}</code>
 			{/* Clicking this button copies generated Command to clipboard */}
 			<div>

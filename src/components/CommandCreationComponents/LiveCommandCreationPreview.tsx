@@ -12,6 +12,7 @@ import { UseFormWatch } from "react-hook-form";
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import { CommandPreviewContainer } from "../../../utils/CommandCreationUtils/CommandPreviewStyles";
+import { useEffect, useState } from "react";
 
 type LiveCommandPreviewProps = {
 	watch: UseFormWatch<CMDBuddyCommandFormValidation>;
@@ -38,8 +39,20 @@ const LiveCommandPreview = ({ watch }: LiveCommandPreviewProps) => {
 	const commandPreview =
 		`${nonFlagParams} ${watchedBaseCommand} ${flagParams}`.trim();
 
+	// Only show command preview when there's a baseCommand, parameters to show etc. Otherwise it would just be a blank element
+	const [isVisible, setIsVisible] = useState(false);
+	useEffect(() => {
+		if (commandPreview.length > 0) {
+			setIsVisible(true);
+		} else {
+			// We set a timeout equal to the transition time before hiding the container
+			const timeout = setTimeout(() => setIsVisible(false), 500);
+			return () => clearTimeout(timeout);
+		}
+	}, [commandPreview]);
+
 	return (
-		<CommandPreviewContainer>
+		<CommandPreviewContainer isVisible={isVisible}>
 			<code>{commandPreview}</code>
 		</CommandPreviewContainer>
 	);
