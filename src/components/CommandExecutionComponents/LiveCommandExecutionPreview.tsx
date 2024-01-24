@@ -22,7 +22,6 @@ import {
 } from "../../../utils/CommandCreationUtils/CommandPreviewStyles";
 import copyToClipboardIcon from "../../../utils/images/copy-to-clipboard-icon.png";
 import Image from "next/image";
-import styled from "styled-components";
 
 const LiveCommandExecutionPreview = ({
 	baseCommand,
