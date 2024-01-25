@@ -9,7 +9,7 @@ import CommandExecutionForm from "@/components/CommandExecutionComponents/Comman
 import styled from "styled-components";
 Amplify.configure({ ...config, ssr: true });
 
-/**Need isCollapsed value for this particular page, so we added that on top of other values */
+/**Need isCollapsed value for this particular page, so we added that to CMDBuddyCommand type */
 export interface CMDBuddyCommandWithIsCollapsed extends CMDBuddyCommand {
 	isCollapsed?: boolean;
 }
