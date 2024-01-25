@@ -22,10 +22,6 @@ export const activeCommandsSlice = createSlice({
 	name: "activeCommands",
 	initialState,
 	reducers: {
-		setActiveCommands: (state, action: PayloadAction<ActiveCommandID[]>) => {
-			const newActiveCommandsList = action.payload;
-			state.activeCommands = newActiveCommandsList;
-		},
 		addNewActiveCommand: (state, action: PayloadAction<ActiveCommandID>) => {
 			const commandIDToAdd = action.payload;
 
@@ -53,7 +49,6 @@ export const activeCommandsSlice = createSlice({
 });
 
 export const {
-	setActiveCommands,
 	addNewActiveCommand,
 	removeSingleActiveCommand,
 	deleteAllActiveCommands,
