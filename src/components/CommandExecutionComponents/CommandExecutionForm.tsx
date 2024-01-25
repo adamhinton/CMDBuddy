@@ -18,10 +18,6 @@
 //  -- Make the whole UI of it smaller when collapsed, like smaller fonts etc
 //  -- probably put copy button in collapsible bar
 
-// TODO: CEF Errors with integer. These had default values and no default values; no max or min. Figure it out and fix it.
-// numBobs nodef: The value cannot be greater than null.
-// numBobsDef4: The value cannot be greater than null.
-
 import {
 	removeSingleActiveCommandByID,
 	toggleCommandCollapseByID,
