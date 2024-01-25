@@ -80,11 +80,15 @@ const ParameterExecutionForm = ({
 								? undefined
 								: "This field is required.",
 							max: {
-								value: Number(parameter.maxValue),
+								value: parameter.maxValue
+									? Number(parameter.maxValue)
+									: Infinity,
 								message: `The value cannot be greater than ${parameter.maxValue}.`,
 							},
 							min: {
-								value: Number(parameter.minValue),
+								value: parameter.minValue
+									? Number(parameter.minValue)
+									: -Infinity,
 								message: `The value cannot be less than ${parameter.minValue}.`,
 							},
 							onBlur: (e) => {

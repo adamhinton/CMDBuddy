@@ -16,6 +16,11 @@
 // TODO: Clean up CEF collapse styling:
 //	-- Figure out collapsibleBar look
 //  -- Make the whole UI of it smaller when collapsed, like smaller fonts etc
+//  -- probably put copy button in collapsible bar
+
+// TODO: CEF Errors with integer. These had default values and no default values; no max or min. Figure it out and fix it.
+// numBobs nodef: The value cannot be greater than null.
+// numBobsDef4: The value cannot be greater than null.
 
 import {
 	removeSingleActiveCommandByID,
@@ -94,69 +99,72 @@ const CommandExecutionForm = ({
 				<CEFHeader>
 					<CEFCommandTitle>{command.title}</CEFCommandTitle>
 				</CEFHeader>
-				{errorList.length > 0 && <ErrorContainer>{errorList}</ErrorContainer>}
-				<LiveCommandExecutionPreview
-					baseCommand={command.baseCommand}
-					parameters={command.parameters}
-				/>
 
-				<CMDBuddyTooltip content="Click to expand/collapse command generation UI">
-					<CollapsibleBar
+				<CollapsibleBar
+					onClick={(e) => {
+						e.preventDefault();
+						dispatch(toggleCommandCollapseByID(command.id));
+					}}
+				>
+					<CMDBuddyTooltip
+						content={command.isCollapsed ? "Expand" : "Collapse"}
+					>
+						<StyledUpDownIcon>
+							<StyledChevronImage
+								src={command.isCollapsed ? downChevron : rightChevron}
+								alt={
+									command.isCollapsed ? "Click to expand" : "Click to Collapse"
+								}
+							/>
+						</StyledUpDownIcon>
+					</CMDBuddyTooltip>
+
+					{/* TODO: Make this an icon, and wrap it in IconWrapper */}
+					<CEFButton
 						onClick={(e) => {
+							e.stopPropagation();
 							e.preventDefault();
-							dispatch(toggleCommandCollapseByID(command.id));
+							// Stop click from bubbling up to the "collapse" onClick, which would toggle collapse unintentionally
+							methods.reset();
 						}}
 					>
-						<CMDBuddyTooltip
-							content={command.isCollapsed ? "Expand" : "Collapse"}
-						>
-							<StyledUpDownIcon>
-								<StyledChevronImage
-									src={!command.isCollapsed ? downChevron : rightChevron}
-									alt={
-										command.isCollapsed
-											? "Click to expand"
-											: "Click to Collapse"
-									}
-								/>
-							</StyledUpDownIcon>
-						</CMDBuddyTooltip>
+						Reset Inputs
+					</CEFButton>
 
-						{/* TODO: Make this an icon, and wrap it in IconWrapper */}
+					{/* TODO: Make this an icon, and wrap it in IconWrapper */}
+					<CMDBuddyTooltip content="Exit this command">
 						<CEFButton
 							onClick={(e) => {
-								e.preventDefault();
-								methods.reset();
+								removeCommandOnClick(e, command.id, dispatch);
 							}}
 						>
-							Reset Inputs
+							X
 						</CEFButton>
+					</CMDBuddyTooltip>
+				</CollapsibleBar>
 
-						{/* TODO: Make this an icon, and wrap it in IconWrapper */}
-						<CMDBuddyTooltip content="Exit this command">
-							<CEFButton
-								onClick={(e) => {
-									removeCommandOnClick(e, command.id, dispatch);
-								}}
-							>
-								X
-							</CEFButton>
-						</CMDBuddyTooltip>
-					</CollapsibleBar>
-				</CMDBuddyTooltip>
+				{!command.isCollapsed && (
+					<>
+						{errorList.length > 0 && (
+							<ErrorContainer>{errorList}</ErrorContainer>
+						)}
+						<LiveCommandExecutionPreview
+							baseCommand={command.baseCommand}
+							parameters={command.parameters}
+						/>
 
-				{command.isCollapsed && (
-					<CEFParametersContainer>
-						{parameters?.map((param) => {
-							return (
-								<ParameterExecutionForm
-									parameter={param}
-									key={param.id}
-									methods={methods}
-								/>
-							);
-						})}
-					</CEFParametersContainer>
+						<CEFParametersContainer>
+							{parameters?.map((param) => {
+								return (
+									<ParameterExecutionForm
+										parameter={param}
+										key={param.id}
+										methods={methods}
+									/>
+								);
+							})}
+						</CEFParametersContainer>
+					</>
 				)}
 			</CEFForm>
 		</FormProvider>

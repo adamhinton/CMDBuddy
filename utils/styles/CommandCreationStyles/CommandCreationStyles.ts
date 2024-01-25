@@ -105,6 +105,12 @@ export const SecondaryButton = styled(StyledCCFButton)`
 	// Not sure this empty one is best practices
 `;
 
+/**Toolbar that user can click to collapse/expand certain UI.
+ *
+ * Can contain trash icons, parameter names etc etc
+ *
+ * Note, this is used in both CommandExecutionForm and CommandCreationForm; make sure you look at both before messing with this.
+ */
 export const CollapsibleBar = styled.div`
 	display: flex;
 	align-items: center;
