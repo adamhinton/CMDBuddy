@@ -9,7 +9,6 @@
 
 // TODO: Persist CEF state when navigating away. Maybe save form state as sub-value in activeCommands
 // TODO: Custom input in dropdown
-// TODO: Collapse CEF functionality
 // TODO Stretch: DnD CEFs in commands/generate
 
 // TODO Stretch: In PEF, on hover over a param, show its attributes (maxLength etc)

@@ -48,8 +48,6 @@ export default function ActiveCommandsPage() {
 		return <h3>Select some commands in the Sidebar to start generating!</h3>;
 	}
 
-	console.log("filteredActiveCommands:", filteredActiveCommands);
-
 	return (
 		<CEFSectionContainer>
 			{filteredActiveCommands.map((command) => (
