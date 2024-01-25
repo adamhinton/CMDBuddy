@@ -73,7 +73,7 @@ const CommandInSideBar = ({
 	// Activates command generation form for this command
 	const activateCommand = (e: React.MouseEvent) => {
 		e.stopPropagation();
-		dispatch(addNewActiveCommand(command.id));
+		dispatch(addNewActiveCommand({ id: command.id, isCollapsed: false }));
 		router.push("/commands/generate");
 	};
 

@@ -15,7 +15,7 @@
 // TODO Stretch: In PEF, on hover over a param, show its attributes (maxLength etc)
 
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
-import { removeSingleActiveCommand } from "../../../redux/slices/activeCommandsSlice";
+import { removeSingleActiveCommandByID } from "../../../redux/slices/activeCommandsSlice";
 import { useDispatch } from "react-redux";
 import ParameterExecutionForm from "./ParameterExecutionForm";
 import React from "react";
@@ -39,7 +39,7 @@ const removeCommandOnClick = (
 	dispatch: Function
 ): void => {
 	e.preventDefault();
-	dispatch(removeSingleActiveCommand(commandID));
+	dispatch(removeSingleActiveCommandByID(commandID));
 };
 export type CEFDefaultValues = Record<string, any>;
 
