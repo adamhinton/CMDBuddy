@@ -9,6 +9,11 @@ import CommandExecutionForm from "@/components/CommandExecutionComponents/Comman
 import styled from "styled-components";
 Amplify.configure({ ...config, ssr: true });
 
+/**Need isCollapsed value for this particular page, so we added that on top of other values */
+export interface CMDBuddyCommandWithIsCollapsed extends CMDBuddyCommand {
+	isCollapsed?: boolean;
+}
+
 export default function ActiveCommandsPage() {
 	/**An array of objects with just a commandID and isCollapsed */
 	const activeCommands = useSelector((state: RootState) => {
@@ -16,7 +21,7 @@ export default function ActiveCommandsPage() {
 	});
 
 	// This is all the user's commands
-	const allCommands: CMDBuddyCommand[] | null = useSelector(
+	const allCommands: CMDBuddyCommandWithIsCollapsed[] | null = useSelector(
 		(state: RootState) => {
 			return state.commands.commands;
 		}
@@ -26,14 +31,24 @@ export default function ActiveCommandsPage() {
 	 *
 	 * Has to be filtered like this because activeCommands is just an array of objects with `id` and `isCollapsed`
 	 */
-	const filteredActiveCommands: CMDBuddyCommand[] =
-		allCommands?.filter((command) =>
-			activeCommands.some((activeCommand) => activeCommand.id === command.id)
-		) || [];
+	const filteredActiveCommands: CMDBuddyCommandWithIsCollapsed[] =
+		allCommands
+			?.map((command) => {
+				// Find the active command object that corresponds to this command
+				const activeCommand = activeCommands.find((ac) => ac.id === command.id);
+				// If found, return a new object combining the command properties and the isCollapsed state
+				return activeCommand
+					? { ...command, isCollapsed: activeCommand.isCollapsed }
+					: command;
+			})
+			.filter((command) => activeCommands.some((ac) => ac.id === command.id)) ||
+		[];
 
 	if (filteredActiveCommands.length === 0) {
 		return <h3>Select some commands in the Sidebar to start generating!</h3>;
 	}
+
+	console.log("filteredActiveCommands:", filteredActiveCommands);
 
 	return (
 		<CEFSectionContainer>

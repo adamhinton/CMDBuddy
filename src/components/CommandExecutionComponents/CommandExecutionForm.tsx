@@ -15,13 +15,27 @@
 // TODO Stretch: In PEF, on hover over a param, show its attributes (maxLength etc)
 
 import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
-import { removeSingleActiveCommandByID } from "../../../redux/slices/activeCommandsSlice";
+import {
+	removeSingleActiveCommandByID,
+	toggleCommandCollapseByID,
+} from "../../../redux/slices/activeCommandsSlice";
 import { useDispatch } from "react-redux";
 import ParameterExecutionForm from "./ParameterExecutionForm";
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import LiveCommandExecutionPreview from "./LiveCommandExecutionPreview";
 import CEFStyles from "../../../utils/CommandExecutionUtils/CommandExecutionStyles";
+import { CMDBuddyCommandWithIsCollapsed } from "@/app/commands/generate/page";
+import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
+import {
+	CollapsibleBar,
+	IconWrapper,
+	StyledChevronImage,
+	StyledTrashIcon,
+	StyledUpDownIcon,
+} from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
+import downChevron from "../../../utils/images/chevrons/down-chevron.svg";
+import rightChevron from "../../../utils/images/chevrons/right-chevron.svg";
 
 const {
 	ErrorItem,
@@ -43,7 +57,11 @@ const removeCommandOnClick = (
 };
 export type CEFDefaultValues = Record<string, any>;
 
-const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
+const CommandExecutionForm = ({
+	command,
+}: {
+	command: CMDBuddyCommandWithIsCollapsed;
+}) => {
 	const methods = useForm({
 		// This looks weird but it just sets each parameter's initial value to its defaultValue (if any)
 		defaultValues: command.parameters?.reduce(
@@ -81,34 +99,65 @@ const CommandExecutionForm = ({ command }: { command: CMDBuddyCommand }) => {
 					baseCommand={command.baseCommand}
 					parameters={command.parameters}
 				/>
-				<CEFParametersContainer>
-					{parameters?.map((param) => {
-						return (
-							<ParameterExecutionForm
-								parameter={param}
-								key={param.id}
-								methods={methods}
-							/>
-						);
-					})}
-				</CEFParametersContainer>
 
-				<CEFButton
-					onClick={(e) => {
-						removeCommandOnClick(e, command.id, dispatch);
-					}}
-				>
-					Exit this command
-				</CEFButton>
-				{/* Resets inputs back to their defaultValues, or null if no defaultValue */}
-				<CEFButton
-					onClick={(e) => {
-						e.preventDefault();
-						methods.reset();
-					}}
-				>
-					Reset Inputs
-				</CEFButton>
+				<CMDBuddyTooltip content="Click to expand/collapse command generation UI">
+					<CollapsibleBar
+						onClick={(e) => {
+							e.preventDefault();
+							dispatch(toggleCommandCollapseByID(command.id));
+						}}
+					>
+						<CMDBuddyTooltip
+							content={command.isCollapsed ? "Expand" : "Collapse"}
+						>
+							<StyledUpDownIcon>
+								<StyledChevronImage
+									src={!command.isCollapsed ? downChevron : rightChevron}
+									alt={
+										command.isCollapsed
+											? "Click to expand"
+											: "Click to Collapse"
+									}
+								/>
+							</StyledUpDownIcon>
+						</CMDBuddyTooltip>
+
+						{/* TODO: Make this an icon, and wrap it in IconWrapper */}
+						<CEFButton
+							onClick={(e) => {
+								e.preventDefault();
+								methods.reset();
+							}}
+						>
+							Reset Inputs
+						</CEFButton>
+
+						{/* TODO: Make this an icon, and wrap it in IconWrapper */}
+						<CMDBuddyTooltip content="Exit this command">
+							<CEFButton
+								onClick={(e) => {
+									removeCommandOnClick(e, command.id, dispatch);
+								}}
+							>
+								X
+							</CEFButton>
+						</CMDBuddyTooltip>
+					</CollapsibleBar>
+				</CMDBuddyTooltip>
+
+				{command.isCollapsed && (
+					<CEFParametersContainer>
+						{parameters?.map((param) => {
+							return (
+								<ParameterExecutionForm
+									parameter={param}
+									key={param.id}
+									methods={methods}
+								/>
+							);
+						})}
+					</CEFParametersContainer>
+				)}
 			</CEFForm>
 		</FormProvider>
 	);

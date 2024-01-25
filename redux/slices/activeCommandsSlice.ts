@@ -55,14 +55,18 @@ export const activeCommandsSlice = createSlice({
 
 		/**Toggle isCollapsed state of active command */
 		toggleCommandCollapseByID: (state, action: PayloadAction<string>) => {
+			console.log("toggling");
 			const commandIDToToggle = action.payload;
 			const commandIndex = state.activeCommands.findIndex(
 				(command) => command.id === commandIDToToggle
 			);
+			console.log("commandIndex:", commandIndex);
 			if (commandIndex !== -1) {
 				// Check if the command exists
 				state.activeCommands[commandIndex].isCollapsed =
 					!state.activeCommands[commandIndex].isCollapsed;
+
+				console.log("state:", state);
 			}
 		},
 	},
