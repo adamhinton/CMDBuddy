@@ -18,7 +18,6 @@
 //	-- Figure out collapsibleBar look
 //  -- Make the whole UI of it smaller when collapsed, like smaller fonts etc
 
-import { CMDBuddyCommand } from "../../../utils/zod/CommandSchema";
 import {
 	removeSingleActiveCommandByID,
 	toggleCommandCollapseByID,
@@ -33,9 +32,7 @@ import { CMDBuddyCommandWithIsCollapsed } from "@/app/commands/generate/page";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 import {
 	CollapsibleBar,
-	IconWrapper,
 	StyledChevronImage,
-	StyledTrashIcon,
 	StyledUpDownIcon,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import downChevron from "../../../utils/images/chevrons/down-chevron.svg";
