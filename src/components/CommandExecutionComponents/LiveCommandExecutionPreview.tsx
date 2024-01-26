@@ -63,7 +63,7 @@ const LiveCommandExecutionPreview = ({
 	}, [commandPreview]);
 
 	return (
-		<CommandPreviewContainer isVisible>
+		<CommandPreviewContainer isvisible={isVisible ? "true" : "false"}>
 			<code>{commandPreview}</code>
 			{/* Clicking this button copies generated Command to clipboard */}
 			<div>

@@ -52,7 +52,7 @@ const LiveCommandPreview = ({ watch }: LiveCommandPreviewProps) => {
 	}, [commandPreview]);
 
 	return (
-		<CommandPreviewContainer isVisible={isVisible}>
+		<CommandPreviewContainer isvisible={isVisible ? "true" : "false"}>
 			<code>{commandPreview}</code>
 		</CommandPreviewContainer>
 	);
