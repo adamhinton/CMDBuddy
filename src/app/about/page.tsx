@@ -195,7 +195,7 @@ const About = () => {
 
 					<SubSubtitle id="End To End Testing">End To End Testing</SubSubtitle>
 					<Text>
-						Many E2E tests requrie complex combinations of variables,
+						Many E2E tests requrire complex combinations of variables,
 						parameters, data sets and environment configs.
 					</Text>
 

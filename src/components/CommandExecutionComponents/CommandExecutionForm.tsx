@@ -34,14 +34,12 @@ import {
 	CollapsibleBar,
 	IconWrapper,
 	StyledChevronImage,
-	StyledIcon,
 	StyledGeneralIcon,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import downChevron from "../../../utils/images/chevrons/down-chevron.svg";
 import rightChevron from "../../../utils/images/chevrons/right-chevron.svg";
 import exitIconLightMode from "../../../utils/images/exit-icon-lightmode.svg";
 import exitIconDarkMode from "../../../utils/images/exit-icon-darkmode.svg";
-import Image from "next/image";
 import { RootState } from "../../../redux/store";
 import resetIconLightMode from "../../../utils/images/reset icons/reset-icon-lightmode.svg";
 import resetIconDarkMode from "../../../utils/images/reset icons/reset-icon-darkmode.svg";
