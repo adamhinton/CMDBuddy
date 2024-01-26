@@ -70,6 +70,7 @@ const ParameterExecutionForm = ({
 						})}
 					/>
 				);
+
 			case "INT":
 				return (
 					<CEFInput
@@ -102,6 +103,7 @@ const ParameterExecutionForm = ({
 						})}
 					/>
 				);
+
 			case "BOOLEAN":
 				return (
 					<FlagOrBooleanPEFLabel>
@@ -141,6 +143,7 @@ const ParameterExecutionForm = ({
 						</CEFLabel>
 					</FlagOrBooleanPEFLabel>
 				);
+
 			case "DROPDOWN":
 				return (
 					<CEFSelect
@@ -165,6 +168,7 @@ const ParameterExecutionForm = ({
 						))}
 					</CEFSelect>
 				);
+
 			case "FLAG":
 				return (
 					<FlagOrBooleanPEFLabel>
