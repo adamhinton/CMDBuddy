@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { API, graphqlOperation } from "aws-amplify";
 import { deleteUser as deleteUserMutation } from "@/graphql/mutations";
 import LoginStyles from "../../../utils/styles/LoginStyles";
+import { CognitoLoggedInUser } from "@/components/Auth.client";
 
 Amplify.configure({ ...config, ssr: true });
 
@@ -49,7 +50,7 @@ const Login = () => {
 	};
 
 	/**Handles Amplify signout; logOutRedux() handles Redux side of it */
-	const handleSignOut = async (signOut?: any) => {
+	const handleSignOut = async (signOut?: Function) => {
 		try {
 			if (signOut) {
 				await signOut();

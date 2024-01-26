@@ -27,6 +27,7 @@ import {
 	MAX_COMMAND_LIMIT_PER_USER,
 	MAX_PARAM_LIMIT_PER_COMMAND,
 } from "../MiscellaneousGlobalVariables";
+import { DispatchProp } from "react-redux";
 
 // TODO Stretch: Error on collapsed param uncollapses it, but doesn't focus to the param
 
@@ -354,7 +355,7 @@ function validateAndUpdateParameters(
  */
 async function createNewCommand(
 	data: CMDBuddyCommandFormValidation,
-	dispatch: any,
+	dispatch: Dispatch<AnyAction>,
 	loggedInUserId: string
 ) {
 	try {

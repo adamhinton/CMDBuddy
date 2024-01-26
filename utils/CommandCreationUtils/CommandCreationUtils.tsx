@@ -311,7 +311,7 @@ export const DefaultValueInput = ({
 	parameterErrors,
 }: {
 	type: ParameterCreationType;
-	register: UseFormRegister<any>;
+	register: UseFormRegister<CMDBuddyCommandFormValidation>;
 	index: number;
 	parameterErrors: any;
 }) => {
@@ -411,7 +411,10 @@ export const DefaultValueInput = ({
 };
 
 type ParameterCreationButtonProps = {
-	collapseAllParams: (update: any, getValues: any) => void;
+	collapseAllParams: (
+		update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>,
+		getValues: UseFormGetValues<CMDBuddyCommandFormValidation>
+	) => void;
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
 	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>;
 	append: UseFieldArrayAppend<CMDBuddyCommandFormValidation>;

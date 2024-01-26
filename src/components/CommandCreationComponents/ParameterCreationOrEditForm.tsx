@@ -50,7 +50,7 @@ type FormProps = {
 	isCollapsed: boolean;
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
 	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>;
-	dragHandleProps: any;
+	dragHandleProps: DraggableProvidedDragHandleProps;
 };
 
 import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
@@ -67,6 +67,7 @@ import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 import { DragHandle } from "../../../utils/SideBarUtils";
 import Image from "next/image";
 import { DragNDropIconImage } from "../../../utils/DragNDropUtils";
+import { DraggableProvidedDragHandleProps } from "@hello-pangea/dnd";
 
 const {
 	StringParameterFields,

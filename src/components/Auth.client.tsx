@@ -20,8 +20,8 @@ import { CognitoLoggedInUserAttributes } from "../../utils/authUtils";
 Amplify.configure({ config, ssr: true });
 Auth.configure({ config, ssr: true });
 
-interface CognitoLoggedInUser {
-	storage: any;
+export interface CognitoLoggedInUser {
+	storage: unknown;
 	attributes: CognitoLoggedInUserAttributes;
 }
 

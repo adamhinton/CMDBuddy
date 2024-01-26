@@ -27,16 +27,16 @@ import {
 	setCommandToEdit,
 } from "../../../redux/slices/editCommandSlice";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
-import Image from "next/image";
 import DragNDropHandleIcon from "../../../utils/images/drag-drop-handle.svg";
 import { DragNDropIconImage } from "../../../utils/DragNDropUtils";
+import { DraggableProvidedDragHandleProps } from "@hello-pangea/dnd";
 
 const CommandInSideBar = ({
 	command,
 	dragHandleProps,
 }: {
 	command: CMDBuddyCommand;
-	dragHandleProps: any;
+	dragHandleProps: DraggableProvidedDragHandleProps;
 }) => {
 	const { title } = command;
 	const dispatch = useDispatch();

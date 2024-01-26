@@ -35,7 +35,7 @@ import Link from "next/link";
 import { CommandCreationUIElements } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 import "tippy.js/dist/tippy.css";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
-import { DragDropContext, Draggable } from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, DropResult } from "@hello-pangea/dnd";
 import { StrictModeDroppable } from "../SideBar/SideBar";
 
 const { AnyParameterSchema } = CommandCreationZodSchemas;
@@ -230,7 +230,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	};
 
 	/**This saves result to form state when user drags and drops Parameters */
-	const onDragEnd = (result: any) => {
+	const onDragEnd = (result: DropResult) => {
 		if (!result.destination) return;
 
 		const parameters = methods.getValues("parameters");
@@ -356,7 +356,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 															update={update}
 															getValues={methods.getValues}
 															// DnD params
-															dragHandleProps={provided.dragHandleProps}
+															dragHandleProps={provided.dragHandleProps!}
 														/>
 													</span>
 												);
