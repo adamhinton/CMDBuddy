@@ -22,7 +22,7 @@ import {
 	removeSingleActiveCommandByID,
 	toggleCommandCollapseByID,
 } from "../../../redux/slices/activeCommandsSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ParameterExecutionForm from "./ParameterExecutionForm";
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
@@ -32,11 +32,19 @@ import { CMDBuddyCommandWithIsCollapsed } from "@/app/commands/generate/page";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 import {
 	CollapsibleBar,
+	IconWrapper,
 	StyledChevronImage,
-	StyledUpDownIcon,
+	StyledIcon,
+	StyledGeneralIcon,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import downChevron from "../../../utils/images/chevrons/down-chevron.svg";
 import rightChevron from "../../../utils/images/chevrons/right-chevron.svg";
+import exitIconLightMode from "../../../utils/images/exit-icon-lightmode.svg";
+import exitIconDarkMode from "../../../utils/images/exit-icon-darkmode.svg";
+import Image from "next/image";
+import { RootState } from "../../../redux/store";
+import resetIconLightMode from "../../../utils/images/reset icons/reset-icon-lightmode.svg";
+import resetIconDarkMode from "../../../utils/images/reset icons/reset-icon-darkmode.svg";
 
 const {
 	ErrorItem,
@@ -77,6 +85,10 @@ const CommandExecutionForm = ({
 	const dispatch = useDispatch();
 	const parameters = command.parameters;
 
+	const isDarkMode = useSelector(
+		(state: RootState) => state.darkMode.isDarkMode
+	);
+
 	// Error handling
 	// Display parameter errors here rather than in individual Parameter inputs to reduce clutter
 	// This displays a max of three errors at a time
@@ -105,38 +117,48 @@ const CommandExecutionForm = ({
 					<CMDBuddyTooltip
 						content={command.isCollapsed ? "Expand" : "Collapse"}
 					>
-						<StyledUpDownIcon>
+						<StyledGeneralIcon>
 							<StyledChevronImage
 								src={command.isCollapsed ? downChevron : rightChevron}
 								alt={
 									command.isCollapsed ? "Click to expand" : "Click to Collapse"
 								}
 							/>
-						</StyledUpDownIcon>
+						</StyledGeneralIcon>
 					</CMDBuddyTooltip>
 
-					{/* TODO: Make this an icon, and wrap it in IconWrapper */}
-					<CEFButton
-						onClick={(e) => {
-							e.stopPropagation();
-							e.preventDefault();
-							// Stop click from bubbling up to the "collapse" onClick, which would toggle collapse unintentionally
-							methods.reset();
-						}}
-					>
-						Reset Inputs
-					</CEFButton>
+					<IconWrapper>
+						<CMDBuddyTooltip content="Reset to default values">
+							<StyledGeneralIcon>
+								<StyledChevronImage
+									src={isDarkMode ? resetIconDarkMode : resetIconLightMode}
+									alt="Reset to default values"
+									onClick={(e) => {
+										e.stopPropagation();
+										e.preventDefault();
+										// Stop click from bubbling up to the "collapse" onClick, which would toggle collapse unintentionally
+										methods.reset();
+									}}
+								/>
+							</StyledGeneralIcon>
+						</CMDBuddyTooltip>
+					</IconWrapper>
 
-					{/* TODO: Make this an icon, and wrap it in IconWrapper */}
-					<CMDBuddyTooltip content="Exit this command">
-						<CEFButton
-							onClick={(e) => {
-								removeCommandOnClick(e, command.id, dispatch);
-							}}
-						>
-							X
-						</CEFButton>
-					</CMDBuddyTooltip>
+					<IconWrapper>
+						<CMDBuddyTooltip content="Exit this command">
+							<StyledGeneralIcon
+								onClick={(e) => {
+									// @ts-ignore
+									removeCommandOnClick(e, command.id, dispatch);
+								}}
+							>
+								<StyledChevronImage
+									src={isDarkMode ? exitIconDarkMode : exitIconLightMode}
+									alt="Exit this command"
+								/>
+							</StyledGeneralIcon>
+						</CMDBuddyTooltip>
+					</IconWrapper>
 				</CollapsibleBar>
 
 				{!command.isCollapsed && (

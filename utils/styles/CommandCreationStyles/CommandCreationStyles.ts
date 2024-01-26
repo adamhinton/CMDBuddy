@@ -156,7 +156,7 @@ export const IconWrapper = styled.div`
 	gap: 10px;
 `;
 
-export const StyledUpDownIcon = styled.i`
+export const StyledGeneralIcon = styled.i`
 	width: 15px;
 	height: 15px;
 	font-size: 16px;
@@ -179,7 +179,8 @@ export const StyledUpPlaceholder = styled.span`
 `;
 
 // CollapsibleBar stuff
-export const StyledTrashIcon = styled.i`
+/**General purpose container for icons. Put the icon in an <Image> tag within this. */
+export const StyledIcon = styled.span`
 	font-size: 16px; // icon size
 	color: ${({ theme }) => theme.commandCreation.errorText};
 	&:hover {

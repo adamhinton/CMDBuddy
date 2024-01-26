@@ -59,8 +59,8 @@ import {
 	IconWrapper,
 	ParameterName,
 	StyledChevronImage,
-	StyledTrashIcon,
-	StyledUpDownIcon,
+	StyledIcon,
+	StyledGeneralIcon,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
@@ -183,12 +183,12 @@ const ParameterCreationOrEditForm = ({
 					</DragHandle>
 
 					<CMDBuddyTooltip content={isCollapsed ? "Expand" : "Collapse"}>
-						<StyledUpDownIcon>
+						<StyledGeneralIcon>
 							<StyledChevronImage
 								src={isCollapsed ? downChevron : rightChevron}
 								alt={isCollapsed ? "Click to expand" : "Click to Collapse"}
 							/>
-						</StyledUpDownIcon>
+						</StyledGeneralIcon>
 					</CMDBuddyTooltip>
 
 					<ParameterName>
@@ -197,7 +197,7 @@ const ParameterCreationOrEditForm = ({
 
 					<IconWrapper>
 						<CMDBuddyTooltip content="Delete Parameter">
-							<StyledTrashIcon
+							<StyledIcon
 								onClick={(e) => {
 									e.preventDefault();
 									e.stopPropagation();
@@ -205,7 +205,7 @@ const ParameterCreationOrEditForm = ({
 								}}
 							>
 								🗑️
-							</StyledTrashIcon>
+							</StyledIcon>
 						</CMDBuddyTooltip>
 					</IconWrapper>
 				</CollapsibleBar>

@@ -66,6 +66,7 @@ const LiveCommandExecutionPreview = ({
 		<CommandPreviewContainer isvisible={isVisible ? "true" : "false"}>
 			<code>{commandPreview}</code>
 			{/* Clicking this button copies generated Command to clipboard */}
+			{/* TODO: Put LCEP copy button on same line as generated Command */}
 			<div>
 				{" "}
 				<CMDBuddyTooltip content="Copy generated Command to clipboard">
@@ -77,9 +78,9 @@ const LiveCommandExecutionPreview = ({
 							<Image
 								src={copyToClipboardIcon}
 								alt="Copy to clipboard"
-								width={24} // Adjust the width as needed
-								height={24} // Adjust the height as needed
-								layout="intrinsic" // This can be adjusted based on your design
+								width={24}
+								height={24}
+								layout="intrinsic"
 							/>
 						</ClipboardCopyIconContainer>
 					</CopyButton>
