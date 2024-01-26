@@ -5,11 +5,19 @@
 
 import styled from "styled-components";
 
+// Not totally sure why I need to pass this in as a string, but it made errors go away
+type CommandPreviewContainerProps = {
+	isvisible: "true" | "false";
+};
+
 // NOTE: See Readme. This component is used in two different files to do the same thing.
 /**Displays a preview of the generated CLI command.
  *
- * Put the generated command in < code > html tags within this component. */
-export const CommandPreviewContainer = styled.section<{ isvisible: string }>`
+ * Put the generated command in < code > html tags within this component.
+ *
+ * isvisible prop is all lowercase because React yelled at me otherwise, not sure why.
+ *  */
+export const CommandPreviewContainer = styled.section<CommandPreviewContainerProps>`
 	opacity: ${({ isvisible }) => (isvisible === "true" ? 1 : 0)};
 	visibility: ${({ isvisible }) =>
 		isvisible === "true" ? "visible" : "hidden"};
