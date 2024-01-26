@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
 
-// TODO: Better link color in /about/page
-
 const Title = styled.h1`
 	color: ${({ theme }) => theme.aboutPage.title};
 `;
@@ -32,6 +30,9 @@ const AboutPageLayout = styled.div`
 	align-items: flex-start;
 	@media (max-width: 768px) {
 		flex-direction: column;
+	}
+	a {
+		color: green;
 	}
 `;
 
