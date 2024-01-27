@@ -37,8 +37,8 @@ import {
 	StyledChevronImage,
 	StyledGeneralIcon,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
-import downChevron from "../../../utils/images/chevrons/down-chevron.svg";
-import rightChevron from "../../../utils/images/chevrons/right-chevron.svg";
+import downChevronLightMode from "../../../utils/images/chevrons/down-chevron-lightmode.svg";
+import downChevronDarkMode from "../../../utils/images/chevrons/down-chevron-darkmode.svg";
 import exitIconLightMode from "../../../utils/images/exit-icon-lightmode.svg";
 import exitIconDarkMode from "../../../utils/images/exit-icon-darkmode.svg";
 import { RootState } from "../../../redux/store";
@@ -118,10 +118,11 @@ const CommandExecutionForm = ({
 					>
 						<StyledGeneralIcon>
 							<StyledChevronImage
-								src={command.isCollapsed ? downChevron : rightChevron}
+								src={isDarkMode ? downChevronDarkMode : downChevronLightMode}
 								alt={
 									command.isCollapsed ? "Click to expand" : "Click to Collapse"
 								}
+								iscollapsed={command.isCollapsed}
 							/>
 						</StyledGeneralIcon>
 					</CMDBuddyTooltip>

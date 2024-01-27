@@ -165,17 +165,17 @@ export const StyledGeneralIcon = styled.i`
 	}
 `;
 
-export const StyledChevronImage = styled(Image)`
+type StyledChevronImageProps = {
+	iscollapsed?: boolean;
+};
+
+/**This can be a collapse icon. If so, pass in isCollapsed - if it's collapsed, the chevron points up.
+ *
+ * It can also be other kinds of icon which shouldn't be rotated, in which case don't pass in isCollapsed. */
+export const StyledChevronImage = styled(Image)<StyledChevronImageProps>`
 	width: 100%;
 	height: 100%;
-`;
-
-// CollapsibleBar stuff
-export const StyledUpPlaceholder = styled.span`
-	color: ${({ theme }) => theme.commandCreation.formText};
-	&:hover {
-		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
-	}
+	rotate: ${({ iscollapsed }) => (iscollapsed === false ? "180deg	" : "none")};
 `;
 
 // CollapsibleBar stuff

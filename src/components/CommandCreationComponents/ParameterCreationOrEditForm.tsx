@@ -37,8 +37,8 @@ import {
 	IntParameterErrors,
 	DropdownParameterErrors,
 } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
-import rightChevron from "../../../utils/images/chevrons/right-chevron.svg";
-import downChevron from "../../../utils/images/chevrons/down-chevron.svg";
+import downChevronLightMode from "../../../utils/images/chevrons/down-chevron-lightmode.svg";
+import downChevronDarkMode from "../../../utils/images/chevrons/down-chevron-darkmode.svg";
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import DragNDropHandleIcon from "../../../utils/images/drag-drop-handle.svg";
 
@@ -68,6 +68,9 @@ import { DragHandle } from "../../../utils/SideBarUtils";
 import Image from "next/image";
 import { DragNDropIconImage } from "../../../utils/DragNDropUtils";
 import { DraggableProvidedDragHandleProps } from "@hello-pangea/dnd";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
+import { commandsByUserID } from "@/graphql/queries";
 
 const {
 	StringParameterFields,
@@ -106,6 +109,10 @@ const ParameterCreationOrEditForm = ({
 	);
 
 	const parameterErrors = errors.parameters?.[index];
+
+	const isDarkMode = useSelector(
+		(state: RootState) => state.darkMode.isDarkMode
+	);
 
 	useEffect(() => {
 		const subscription = watch((value, { name, type }) => {
@@ -186,8 +193,9 @@ const ParameterCreationOrEditForm = ({
 					<CMDBuddyTooltip content={isCollapsed ? "Expand" : "Collapse"}>
 						<StyledGeneralIcon>
 							<StyledChevronImage
-								src={isCollapsed ? downChevron : rightChevron}
+								src={isDarkMode ? downChevronDarkMode : downChevronLightMode}
 								alt={isCollapsed ? "Click to expand" : "Click to Collapse"}
+								iscollapsed={isCollapsed}
 							/>
 						</StyledGeneralIcon>
 					</CMDBuddyTooltip>
