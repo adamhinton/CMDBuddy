@@ -65,7 +65,7 @@ export const CommandEditFormSchema = CommandSchema.extend({
 	parameters: z.array(AnyParameterSchema).optional(),
 });
 
-// Either edit mode or create mode
+/**Either edit mode or create mode */
 export type CMDBuddyCommandFormValidation = z.infer<
 	typeof CommandCreationFormSchema | typeof CommandEditFormSchema
 >;

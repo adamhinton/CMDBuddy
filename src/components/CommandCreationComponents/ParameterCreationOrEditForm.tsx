@@ -65,12 +65,10 @@ import {
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 import { DragHandle } from "../../../utils/SideBarUtils";
-import Image from "next/image";
 import { DragNDropIconImage } from "../../../utils/DragNDropUtils";
 import { DraggableProvidedDragHandleProps } from "@hello-pangea/dnd";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { commandsByUserID } from "@/graphql/queries";
 
 const {
 	StringParameterFields,
@@ -80,6 +78,10 @@ const {
 	FlagParameterFields,
 } = CommandCreationUIElements;
 
+/**A Parameter can be one of five types
+ *
+ * This is a union of the string names for those types.
+ */
 export type ParameterCreationType =
 	| "STRING"
 	| "INT"
@@ -87,7 +89,7 @@ export type ParameterCreationType =
 	| "DROPDOWN"
 	| "FLAG";
 
-// User fills this out once for every Parameter they create
+/**User fills this out once for every Parameter they create */
 const ParameterCreationOrEditForm = ({
 	index,
 	removeParameter,
@@ -134,7 +136,7 @@ const ParameterCreationOrEditForm = ({
 		return () => subscription.unsubscribe();
 	}, [watch, index, setValue]);
 
-	// User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN
+	/**User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN */
 	const renderParameterSpecificFields = () => {
 		switch (parameterType) {
 			case "STRING":

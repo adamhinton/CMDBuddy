@@ -79,6 +79,7 @@ export const Title = styled.span`
 	white-space: nowrap;
 `;
 
+/**Contains "Save" and "Cancel" buttons */
 export const SaveCancelDNDContainer = styled.div`
 	display: flex;
 	justify-content: center;
@@ -101,6 +102,7 @@ export const SaveCancelDNDButton = styled.button`
 	}
 `;
 
+/**Icon to edit Command */
 export const EditButton = styled.button`
 	margin-right: 5px;
 	background: none;

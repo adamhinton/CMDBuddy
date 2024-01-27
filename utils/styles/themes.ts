@@ -1,3 +1,7 @@
+// README:
+// Pretty straightforward. Contains lightTheme and darkTheme which are passed in to our styled-components
+// These themes have the same properties, just with different color values.
+
 import { DefaultTheme } from "styled-components";
 
 export const lightTheme: DefaultTheme = {

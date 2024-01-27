@@ -116,6 +116,10 @@ type BooleanParameter = z.infer<typeof BooleanParameterSchema>;
 type DropdownParameter = z.infer<typeof DropdownParameterSchema>;
 type FlagParameter = z.infer<typeof FlagParameterSchema>;
 
+/**A union of the five different kinds of Parameter: STRING, INT, BOOLEAN, DROPDOWN and FLAG.
+ *
+ * Assert what type of parameter it is by setting its `type` value. This will let TS's type checker guide you.
+ */
 type AnyParameter =
 	| StringParameter
 	| IntParameter
