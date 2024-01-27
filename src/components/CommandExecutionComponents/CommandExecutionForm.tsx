@@ -8,7 +8,7 @@
 // IMPORTANT NOTE about errors: The user has control of this process. The app validates their Parameter value inputs and alerts them if there's an error (e.g. the input is longer than their specified maxLength), but it doesn't stop the user from generating/copying the command. It's only a guideline.
 
 // TODO: Persist CEF state when navigating away. Maybe save form state as sub-value in activeCommands
-// TODO: Custom input in dropdown
+// TODO Stretch: Custom input in dropdown. Already have some WIP stashed
 // TODO Stretch: DnD CEFs in commands/generate
 
 // TODO Stretch: In PEF, on hover over a param, show its attributes (maxLength etc)
