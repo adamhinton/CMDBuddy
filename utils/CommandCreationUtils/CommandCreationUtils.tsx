@@ -4,8 +4,6 @@
 
 // TODO Stretch: Break this up into PCU and CCU; file getting too long
 
-// TODO: White chevron in darkmode
-
 import {
 	UseFieldArrayAppend,
 	UseFieldArrayUpdate,
