@@ -1,5 +1,7 @@
 // TODO Stretch: Capability to make commands in localstorage without auth
 
+// TODO Stretch: Pre-saved filled out commands. Different from defaultValues in that it's a specific set of param values, like if I consistently come back to making a 25yo male from PA.
+
 // TODO Stretch: "Reminder" property in Parameter and Command that reminds the user what they're for on hover, like with tooltip.
 
 // TODO Stretch CCF: Fix ordering of new/edited commands
