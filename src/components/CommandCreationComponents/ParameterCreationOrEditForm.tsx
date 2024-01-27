@@ -58,7 +58,7 @@ import {
 	CollapsibleBar,
 	IconWrapper,
 	ParameterName,
-	StyledChevronImage,
+	StyledIconImage,
 	StyledIcon,
 	StyledGeneralIcon,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
@@ -192,7 +192,7 @@ const ParameterCreationOrEditForm = ({
 
 					<CMDBuddyTooltip content={isCollapsed ? "Expand" : "Collapse"}>
 						<StyledGeneralIcon>
-							<StyledChevronImage
+							<StyledIconImage
 								src={isDarkMode ? downChevronDarkMode : downChevronLightMode}
 								alt={isCollapsed ? "Click to expand" : "Click to Collapse"}
 								iscollapsed={isCollapsed}

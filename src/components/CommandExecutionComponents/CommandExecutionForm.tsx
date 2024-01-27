@@ -34,7 +34,7 @@ import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 import {
 	CollapsibleBar,
 	IconWrapper,
-	StyledChevronImage,
+	StyledIconImage,
 	StyledGeneralIcon,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import downChevronLightMode from "../../../utils/images/chevrons/down-chevron-lightmode.svg";
@@ -117,7 +117,7 @@ const CommandExecutionForm = ({
 						content={command.isCollapsed ? "Expand" : "Collapse"}
 					>
 						<StyledGeneralIcon>
-							<StyledChevronImage
+							<StyledIconImage
 								src={isDarkMode ? downChevronDarkMode : downChevronLightMode}
 								alt={
 									command.isCollapsed ? "Click to expand" : "Click to Collapse"
@@ -130,7 +130,7 @@ const CommandExecutionForm = ({
 					<IconWrapper>
 						<CMDBuddyTooltip content="Reset to default values">
 							<StyledGeneralIcon>
-								<StyledChevronImage
+								<StyledIconImage
 									src={isDarkMode ? resetIconDarkMode : resetIconLightMode}
 									alt="Reset to default values"
 									onClick={(e) => {
@@ -152,7 +152,7 @@ const CommandExecutionForm = ({
 									removeCommandOnClick(e, command.id, dispatch);
 								}}
 							>
-								<StyledChevronImage
+								<StyledIconImage
 									src={isDarkMode ? exitIconDarkMode : exitIconLightMode}
 									alt="Exit this command"
 								/>

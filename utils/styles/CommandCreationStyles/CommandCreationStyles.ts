@@ -165,14 +165,14 @@ export const StyledGeneralIcon = styled.i`
 	}
 `;
 
-type StyledChevronImageProps = {
+type StyledIconImageProps = {
 	iscollapsed?: boolean;
 };
 
 /**This can be a collapse icon. If so, pass in isCollapsed - if it's collapsed, the chevron points up.
  *
  * It can also be other kinds of icon which shouldn't be rotated, in which case don't pass in isCollapsed. */
-export const StyledChevronImage = styled(Image)<StyledChevronImageProps>`
+export const StyledIconImage = styled(Image)<StyledIconImageProps>`
 	width: 100%;
 	height: 100%;
 	rotate: ${({ iscollapsed }) => (iscollapsed === false ? "180deg	" : "none")};
