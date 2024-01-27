@@ -313,7 +313,9 @@ export const DefaultValueInput = ({
 	parameterErrors,
 }: {
 	type: ParameterCreationType;
-	register: UseFormRegister<CMDBuddyCommandFormValidation>;
+	register: UseFormRegister<{
+		parameters: AnyParameter[];
+	}>;
 	index: number;
 	parameterErrors: any;
 }) => {
