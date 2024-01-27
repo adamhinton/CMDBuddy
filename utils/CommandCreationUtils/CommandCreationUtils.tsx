@@ -454,6 +454,7 @@ const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
 			<SecondaryButton
 				type="button"
 				onClick={() => {
+					collapseAllParams(update, getValues);
 					append(
 						// @ts-ignore -- not sure why ts doesn't like this
 						componentMode === "createNewCommand"
