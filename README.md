@@ -6,7 +6,7 @@
 
 CMDBuddy is a full-stack application designed to help users create, manage, and customize CLI commands and their associated parameters.
 
-This is designed for developers who often find themselves running the same CLI commands over and over, often with different dynamic variables. CMDBuddy streamlines that by letting them save commands, input values for the parameters to the UI, and quickly copy the generated commands.
+This is meant for developers who often find themselves running the same CLI commands over and over, often with different dynamic variables. CMDBuddy streamlines that by letting them save commands, input values for the commands' parameters to the UI, and quickly copy the generated commands.
 
 ### Backend Overview
 
@@ -59,12 +59,12 @@ npm install
 
 ### Frontend
 
-- **Next13**: For routing, server components, data management and more.
+- **NextJS 13**: For routing, server components, data management and more.
 - **React with TypeScript**: To build a dynamic, component-based user interface.
 - **Styled-components**: For component-specific styles and theming.
 - **Redux**: For state management, including the management of user-generated commands and parameters.
 - **Zod**: For frontend type validation.
-- **React-Router-Dom**: For application routing and navigation.
+- **Next13's App Router**: For application routing and navigation.
 
 ## Features
 
@@ -75,7 +75,7 @@ npm install
 - Handle CRUD operations (Create, Read, Update, Delete) for commands and parameters.
 - Lambda sync functions between Cognito auth and User DB table
 
-#### User Authentication
+#### User Authentication (/login)
 
 - User registration and login functionalities using AWS Amplify and Amazon Cognito.
 - Cognito handles authentication/authorization. All User CRUD operations are synced between User table and Cognito.
@@ -91,11 +91,14 @@ npm install
 
 - User starts by creating a new Command
 - NOTE: This isn't where they fill out the values of Parameters and copy the generated command in to the CLI; that happens in commands/generate
-- Each Command has a baseCommand, title, and many Parameters see (#Tables-and-Relationships)
-- User clicks "Add New Parameter" and adds parameters one by one.
-- e.g. if the command is `npx playwright test createPerson`, they might add parameters like `age`, `location`, `profession`.
-- Parameters can be STRING, INT, BOOLEAN, DROPDOWN or FLAG
-- UI displays a live preview of the command the user has created
+- Each Command has a baseCommand, title, and many Parameters (see (#Tables-and-Relationships))
+- **Add New Parameter**: User clicks "Add New Parameter" and adds parameters one by one.
+  - e.g. if the command is `npx playwright test createPerson`, they might add parameters like `age`, `location`, `profession`.
+- **Parameter Type**: Parameters can be STRING, INT, BOOLEAN, DROPDOWN or FLAG
+- **Live Preview**: UI displays a live preview of the command the user has created
+- **DragNDrop**: User can drag and drop Parameters to change their order
+- **Collapsible**: User can collapse individual Parameters for easier organization.
+- **Toolbar**: Each Parameter has a Toolbar with icons for collapse/uncollapse, DragnDrop and deletion.
 
 - **Relevant Files**
   - CommandCreationOrEditForm.tsx
@@ -113,8 +116,15 @@ npm install
 #### Command Generation (/commands/generate)
 
 - The meat and potatoes of CMDBuddy
-- User clicks a command in the sidebar, fills in values for the parameters they created in /command/create, and copies the generated CLI command to paste in to their command line
-- Has real time validation based on specs the user inputted in commands/create, such as max length, validation regex, and more
+- **Navigation**: User clicks a command in the sidebar, fills in values for the parameters they created in /command/create, and copies the generated CLI command to paste in to their command line
+- **Validation**: Has real time validation based on specs the user inputted in commands/create, such as max length, validation regex, and more
+- **Collapsible**: User can temporarily collapse individual Commands to focus on the ones they're currently using. They can also exit a Command, to only show the Commands on screen they want to use.
+
+#### Commands Sidebar
+
+- In commands/create, commands/edit and commands/generate
+- Lists the user's Commands, with icons for deleting, editing, or generating said Commands
+- Users can also Drag and Drop to change the order of Commands
 
 #### Dark/Light mode
 
@@ -122,11 +132,12 @@ npm install
 - This saves their preference to their account, or to localStorage if they're not logged in
 - CMDBuddy remembers their preference when they visit the page in the future
 
-#### User Authentication
+#### User Authentication (/login)
 
 - Combined login/registration page.
 - Profile management page for updating settings or details.
-- Guest user functionality with certain limitations.
+- User can delete or change their account, login or register.
+- Authentication/authorization handled by AWS's Cognito
 
 #### Data Interaction
 
@@ -141,6 +152,7 @@ npm install
 
 - A basic how-to page to guide users.
 - Contains use cases, UI examples, FAQ and more
+- Has a Table of Contents for easy navigation
 
 ## Technical Information
 
@@ -195,10 +207,6 @@ npm install
 #### Styling
 
 - **Styled-components** : Takes in user's dark/light mode preference to dynamically display theming. App is wrapped in styled-components' ThemeProvider to enable this.
-
-#### Component Structure
-
-TODO Stretch: Fill out component structures
 
 #### State Management
 
