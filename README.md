@@ -1,3 +1,5 @@
+<!-- TODO: Update Readme ToC -->
+
 # CMDBuddy
 
 ## Introduction
@@ -87,9 +89,9 @@ npm install
 
 ### Frontend Features
 
-#### Command Creation (/commands/create)
+#### Command Creation/Editin (/commands/create || commands/edit)
 
-- User starts by creating a new Command
+- User starts by creating a new Command, or editing an existing one
 - NOTE: This isn't where they fill out the values of Parameters and copy the generated command in to the CLI; that happens in commands/generate
 - Each Command has a baseCommand, title, and many Parameters (see (#Tables-and-Relationships))
 - **Add New Parameter**: User clicks "Add New Parameter" and adds parameters one by one.
@@ -99,6 +101,7 @@ npm install
 - **DragNDrop**: User can drag and drop Parameters to change their order
 - **Collapsible**: User can collapse individual Parameters for easier organization.
 - **Toolbar**: Each Parameter has a Toolbar with icons for collapse/uncollapse, DragnDrop and deletion.
+- **Editing**: The UI is the exact same in edit mode, just with pre-filled data.
 
 - **Relevant Files**
   - CommandCreationOrEditForm.tsx
@@ -110,18 +113,33 @@ npm install
     - TS types for command creation
   - CommandCreationUtils.ts
     -Various command creation helper utils
+  - CommandSubmissionUtils.ts
+    -Helpers for submitting edited/created commands to DB
   - LiveCommandCreationPreview.tsx
     - displays a live preview of the command the user is creating
 
 #### Command Generation (/commands/generate)
 
 - The meat and potatoes of CMDBuddy
-- **Navigation**: User clicks a command in the sidebar, fills in values for the parameters they created in /command/create, and copies the generated CLI command to paste in to their command line
+- **HowTo**: Use is simple. The user clicks a Command from the Sidebar that they previously created; and fills in values for the Parameters. A preview displays the generated Command. The user clicks the "Copy" icon to copy to clipboard.
 - **Validation**: Has real time validation based on specs the user inputted in commands/create, such as max length, validation regex, and more
-- **Collapsible**: User can temporarily collapse individual Commands to focus on the ones they're currently using. They can also exit a Command, to only show the Commands on screen they want to use.
+- **Collapsible**: User can temporarily collapse individual Commands to focus on the ones they're currently using. They can also exit a Command, to only show the Commands on screen they want to use
+- **Preview**: The generated Command (LiveCommandExecutionPreview.tsx) displays for the user to easily copy
+
+- **Relevant Files**
+  - CommandExecutionForm.tsx
+    - Parent component
+    - Calls ParameterExecutionForm.tsx which populates input for each Parameter
+  - ParameterExecutionForm.tsx
+    -Has a different input for each Parameter type (STRING, INT, BOOLEAN, DROPDOWN or FLAG)
+  - CommandExecutionStyles.ts
+    - Styled-components
+  - LiveCommandExecutionPreview.tsx
+    - The generated Commanddisplays for the user to easily copy
 
 #### Commands Sidebar
 
+- Sidebar.tsx (parent component) and CommandInSideBar.tsx (individual Commands)
 - In commands/create, commands/edit and commands/generate
 - Lists the user's Commands, with icons for deleting, editing, or generating said Commands
 - Users can also Drag and Drop to change the order of Commands
@@ -218,10 +236,15 @@ npm install
 - **Redux**: Used for managing the state of user-generated commands and parameters. Holds the list of commands, dark mode preference, auth information.
 - **Local State**: React's useState and useContext for component-level state.
 
-##### Routing
+#### Routing
 
 - **Next13's App Router**: Manages application routing and navigation. Takes advantage of Next's folder-based routing.
 
-##### Data Validation
+#### Data Validation
 
 - **Zod**: Used for frontend type validation to ensure data integrity before sending to the backend.
+
+#### Drag and Drop (DnD)
+
+- Library: **hello-pangea/dnd**
+- Used in Sidebar and CommandExecutionForm to rearrange commands

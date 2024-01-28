@@ -1,6 +1,7 @@
 "use client";
 
 // README:
+// This can be creation mode, where the user creates an entirely new command; or edit mode, where they edit an existing command. The only UI difference is the props passed in, and that in edit mode, the command's fields are pre-filled.
 // User fills out this form to create a Command
 // Each Command has multiple Parameters; they fill out ParameterCreationOrEditForm once per Parameter
 // Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different parameterList for each

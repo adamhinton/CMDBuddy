@@ -31,6 +31,7 @@ import LiveCommandExecutionPreview from "./LiveCommandExecutionPreview";
 import CEFStyles from "../../../utils/CommandExecutionUtils/CommandExecutionStyles";
 import { CMDBuddyCommandWithIsCollapsed } from "@/app/commands/generate/page";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
+// These items are shared with CommandCreationForm as well
 import {
 	CollapsibleBar,
 	IconWrapper,
@@ -51,7 +52,6 @@ const {
 	CEFForm,
 	CEFHeader,
 	CEFCommandTitle,
-	CEFButton,
 	CEFParametersContainer,
 } = CEFStyles;
 
