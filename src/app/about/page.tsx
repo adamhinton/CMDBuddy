@@ -1,11 +1,11 @@
+/* eslint-disable react/no-unescaped-entities */
+"use client";
+
 // README:
 // Pretty straightforward About page.
 // ToC on the left has headings that, on click, jump user to relevant section
 // Has Subtitles and SubSubtitles
 // When you change headings, make sure to update in the ToC and add an href to their title
-
-/* eslint-disable react/no-unescaped-entities */
-"use client";
 
 // TODO: Update /about images with new UI
 
