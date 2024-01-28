@@ -165,8 +165,9 @@ export const StyledGeneralIcon = styled.i`
 	}
 `;
 
+// React requires this to be a string, and lower case
 type StyledIconImageProps = {
-	iscollapsed?: boolean;
+	iscollapsed?: "true" | "false";
 };
 
 /**This can be a collapse icon. If so, pass in isCollapsed - if it's collapsed, the chevron points up.
@@ -175,7 +176,8 @@ type StyledIconImageProps = {
 export const StyledIconImage = styled(Image)<StyledIconImageProps>`
 	width: 100%;
 	height: 100%;
-	rotate: ${({ iscollapsed }) => (iscollapsed === false ? "180deg	" : "none")};
+	/* Turn the chevron upside down if UI is collapsed */
+	rotate: ${({ iscollapsed }) => (iscollapsed === "false" ? "180deg	" : "none")};
 `;
 
 // CollapsibleBar stuff

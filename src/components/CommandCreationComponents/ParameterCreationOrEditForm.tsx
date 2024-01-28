@@ -197,7 +197,8 @@ const ParameterCreationOrEditForm = ({
 							<StyledIconImage
 								src={isDarkMode ? downChevronDarkMode : downChevronLightMode}
 								alt={isCollapsed ? "Click to expand" : "Click to Collapse"}
-								iscollapsed={isCollapsed}
+								// React makes me pass in a string here
+								iscollapsed={isCollapsed ? "true" : "false"}
 							/>
 						</StyledGeneralIcon>
 					</CMDBuddyTooltip>

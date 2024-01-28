@@ -122,7 +122,8 @@ const CommandExecutionForm = ({
 								alt={
 									command.isCollapsed ? "Click to expand" : "Click to Collapse"
 								}
-								iscollapsed={command.isCollapsed}
+								// React makes me pass in a string here
+								iscollapsed={command.isCollapsed ? "true" : "false"}
 							/>
 						</StyledGeneralIcon>
 					</CMDBuddyTooltip>
