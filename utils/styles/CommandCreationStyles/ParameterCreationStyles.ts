@@ -79,7 +79,7 @@ export const StyledPCFOptionalCheckbox = styled.div`
 `;
 
 export const StyledPCFLengthInput = styled(ParameterCreationInput)`
-	width: 105px;
+	max-width: 105px;
 	margin-right: 10px;
 `;
 
@@ -100,5 +100,5 @@ export const StyledPCFBooleanOptions = styled.div`
 export const StyledPCFMinMaxContainer = styled.div`
 	display: flex;
 	align-items: center;
-	max-width: 400px;
+	max-width: 100%;
 `;
