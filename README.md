@@ -8,7 +8,7 @@ CMDBuddy is a full-stack application designed to help users create, manage, and 
 
 This is designed for developers who often find themselves running the same CLI commands over and over, often with different dynamic variables. CMDBuddy streamlines that by letting them save commands, input values for the parameters to the UI, and quickly copy the generated commands.
 
-### Backend
+### Backend Overview
 
 The backend is built with **AWS Amplify** and **GraphQL**, offering a robust and scalable architecture for data management and user authentication.
 
@@ -68,34 +68,38 @@ npm install
 
 ## Features
 
-### Backend
+### Backend Features
 
 #### Data Management
 
 - Handle CRUD operations (Create, Read, Update, Delete) for commands and parameters.
-- Implement data validation logic, including user-defined regex patterns.
+- Lambda sync functions between Cognito auth and User DB table
 
 #### User Authentication
 
-- Implement user registration and login functionalities using AWS Amplify and Amazon Cognito.
-- Security measures such as encrypted passwords and secure tokens.
+- User registration and login functionalities using AWS Amplify and Amazon Cognito.
+- Cognito handles authentication/authorization. All User CRUD operations are synced between User table and Cognito.
 
 #### Data Storage
 
-- Store user data, commands, parameters, and potential saved commands.
-- Ensure data integrity and consistency.
+- Database is hosted with AWS's DynamoDB
+- GraphQL endpoints and queries are used to talk to the backend.
 
-#### Guest User Features
+### Frontend Features
 
-- Design allows for functionalities that don't strictly require authentication.
+#### Command Creation (/commands/create)
 
-### Frontend (Planned)
+- User starts by creating a new Command
+- Each Command has a baseCommand, title, and many Parameters see (#Tables-and-Relationships)
+- User clicks "Add New Parameter" and adds parameters one by one.
+- e.g. if the command is `npx playwright test createPerson`, they might add parameters like `age`, `location`, `profession`.
+- Parameters can be STRING, INT, BOOLEAN, DROPDOWN or FLAG
 
-#### User Interface
+#### Command Generation (/commands/generate)
 
-- Dynamic command input and display modules.
-- Drag-and-drop functionality for reordering commands and parameters.
-- Dark mode toggle based on user preference.
+- The meat and potatoes of CMDBuddy
+- User clicks a command in the sidebar, fills in values for the parameters they created in /command/create, and copies the generated CLI command to paste in to their command line
+- Has real time validation based on specs the user inputted in commands/create, such as max length, validation regex, and more
 
 #### User Authentication
 
@@ -165,11 +169,11 @@ npm install
 - **Queries and Mutations**: GraphQL queries are used to fetch data, and mutations are used to modify data.
 - **Security**: Utilizes AWS Amplify's built-in authentication to secure GraphQL endpoints.
 
-#### Frontend (Planned)
+### Frontend Technical Information
 
 ##### Component Structure
 
-TODO: Fill out component structures
+TODO Stretch: Fill out component structures
 
 ##### State Management
 
@@ -178,7 +182,7 @@ TODO: Fill out component structures
 
 ##### Routing
 
-- **React-Router-Dom**: Manages application routing and navigation.
+- **Next13's App Router**: Manages application routing and navigation.
 
 ##### Data Validation
 
