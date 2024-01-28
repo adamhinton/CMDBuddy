@@ -15,7 +15,6 @@ Amplify.configure({ ...config, ssr: true });
 
 const Commands = () => {
 	const commands = useSelector((state: RootState) => state.commands.commands);
-	console.log("commands:", commands);
 
 	const router = useRouter();
 

@@ -105,6 +105,12 @@ export const SecondaryButton = styled(StyledCCFButton)`
 	// Not sure this empty one is best practices
 `;
 
+/**Toolbar that user can click to collapse/expand certain UI.
+ *
+ * Can contain trash icons, parameter names etc etc
+ *
+ * Note, this is used in both CommandExecutionForm and CommandCreationForm; make sure you look at both before messing with this.
+ */
 export const CollapsibleBar = styled.div`
 	display: flex;
 	align-items: center;
@@ -150,7 +156,7 @@ export const IconWrapper = styled.div`
 	gap: 10px;
 `;
 
-export const StyledUpDownIcon = styled.i`
+export const StyledGeneralIcon = styled.i`
 	width: 15px;
 	height: 15px;
 	font-size: 16px;
@@ -159,21 +165,24 @@ export const StyledUpDownIcon = styled.i`
 	}
 `;
 
-export const StyledChevronImage = styled(Image)`
+// React requires this to be a string, and lower case
+type StyledIconImageProps = {
+	iscollapsed?: "true" | "false";
+};
+
+/**This can be a collapse icon. If so, pass in isCollapsed - if it's collapsed, the chevron points up.
+ *
+ * It can also be other kinds of icon which shouldn't be rotated, in which case don't pass in isCollapsed. */
+export const StyledIconImage = styled(Image)<StyledIconImageProps>`
 	width: 100%;
 	height: 100%;
+	/* Turn the chevron upside down if UI is collapsed */
+	rotate: ${({ iscollapsed }) => (iscollapsed === "false" ? "180deg	" : "none")};
 `;
 
 // CollapsibleBar stuff
-export const StyledUpPlaceholder = styled.span`
-	color: ${({ theme }) => theme.commandCreation.formText};
-	&:hover {
-		color: ${({ theme }) => theme.commandCreation.buttonHoverBackground};
-	}
-`;
-
-// CollapsibleBar stuff
-export const StyledTrashIcon = styled.i`
+/**General purpose container for icons. Put the icon in an <Image> tag within this. */
+export const StyledIcon = styled.span`
 	font-size: 16px; // icon size
 	color: ${({ theme }) => theme.commandCreation.errorText};
 	&:hover {

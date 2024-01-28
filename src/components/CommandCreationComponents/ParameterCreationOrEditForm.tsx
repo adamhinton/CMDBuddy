@@ -37,9 +37,10 @@ import {
 	IntParameterErrors,
 	DropdownParameterErrors,
 } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
-import rightChevron from "../../../utils/images/chevrons/right-chevron.svg";
-import downChevron from "../../../utils/images/chevrons/down-chevron.svg";
+import downChevronLightMode from "../../../utils/images/chevrons/down-chevron-lightmode.svg";
+import downChevronDarkMode from "../../../utils/images/chevrons/down-chevron-darkmode.svg";
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
+import DragNDropHandleIcon from "../../../utils/images/drag-drop-handle.svg";
 
 type FormProps = {
 	index: number;
@@ -49,7 +50,7 @@ type FormProps = {
 	isCollapsed: boolean;
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
 	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>;
-	dragHandleProps: any;
+	dragHandleProps: DraggableProvidedDragHandleProps;
 };
 
 import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
@@ -57,15 +58,17 @@ import {
 	CollapsibleBar,
 	IconWrapper,
 	ParameterName,
-	StyledChevronImage,
-	StyledTrashIcon,
-	StyledUpDownIcon,
+	StyledIconImage,
+	StyledIcon,
+	StyledGeneralIcon,
 } from "../../../utils/styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 import { DragHandle } from "../../../utils/SideBarUtils";
-import Image from "next/image";
-import styled from "styled-components";
+import { DragNDropIconImage } from "../../../utils/DragNDropUtils";
+import { DraggableProvidedDragHandleProps } from "@hello-pangea/dnd";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const {
 	StringParameterFields,
@@ -75,6 +78,10 @@ const {
 	FlagParameterFields,
 } = CommandCreationUIElements;
 
+/**A Parameter can be one of five types
+ *
+ * This is a union of the string names for those types.
+ */
 export type ParameterCreationType =
 	| "STRING"
 	| "INT"
@@ -82,7 +89,7 @@ export type ParameterCreationType =
 	| "DROPDOWN"
 	| "FLAG";
 
-// User fills this out once for every Parameter they create
+/**User fills this out once for every Parameter they create */
 const ParameterCreationOrEditForm = ({
 	index,
 	removeParameter,
@@ -105,6 +112,10 @@ const ParameterCreationOrEditForm = ({
 
 	const parameterErrors = errors.parameters?.[index];
 
+	const isDarkMode = useSelector(
+		(state: RootState) => state.darkMode.isDarkMode
+	);
+
 	useEffect(() => {
 		const subscription = watch((value, { name, type }) => {
 			const parameter = value.parameters ? value.parameters[index] : null;
@@ -125,7 +136,7 @@ const ParameterCreationOrEditForm = ({
 		return () => subscription.unsubscribe();
 	}, [watch, index, setValue]);
 
-	// User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN
+	/**User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN */
 	const renderParameterSpecificFields = () => {
 		switch (parameterType) {
 			case "STRING":
@@ -175,16 +186,21 @@ const ParameterCreationOrEditForm = ({
 					}}
 				>
 					<DragHandle {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
-						::
+						<DragNDropIconImage
+							src={DragNDropHandleIcon}
+							alt="Drag and drop icon; hold down to drag"
+						/>
 					</DragHandle>
 
 					<CMDBuddyTooltip content={isCollapsed ? "Expand" : "Collapse"}>
-						<StyledUpDownIcon>
-							<StyledChevronImage
-								src={isCollapsed ? downChevron : rightChevron}
+						<StyledGeneralIcon>
+							<StyledIconImage
+								src={isDarkMode ? downChevronDarkMode : downChevronLightMode}
 								alt={isCollapsed ? "Click to expand" : "Click to Collapse"}
+								// React makes me pass in a string here
+								iscollapsed={isCollapsed ? "true" : "false"}
 							/>
-						</StyledUpDownIcon>
+						</StyledGeneralIcon>
 					</CMDBuddyTooltip>
 
 					<ParameterName>
@@ -193,7 +209,7 @@ const ParameterCreationOrEditForm = ({
 
 					<IconWrapper>
 						<CMDBuddyTooltip content="Delete Parameter">
-							<StyledTrashIcon
+							<StyledIcon
 								onClick={(e) => {
 									e.preventDefault();
 									e.stopPropagation();
@@ -201,7 +217,7 @@ const ParameterCreationOrEditForm = ({
 								}}
 							>
 								🗑️
-							</StyledTrashIcon>
+							</StyledIcon>
 						</CMDBuddyTooltip>
 					</IconWrapper>
 				</CollapsibleBar>

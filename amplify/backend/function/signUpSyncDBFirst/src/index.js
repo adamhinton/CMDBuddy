@@ -93,8 +93,6 @@ async function createUserInCognito(email) {
 	const command = new AdminCreateUserCommand(params);
 	const cognitoAddUserResponse = await cognitoClient.send(command);
 	console.log("cognitoAddUserResponse:", cognitoAddUserResponse);
-	console.log(
-		"TODO: Delete empty createUserInCognito return statement if it doesnt help"
-	);
+
 	return "";
 }

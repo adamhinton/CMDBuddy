@@ -8,10 +8,14 @@
 // If they want to make a new Command with new Parameter keys, they should be filling out CommandCreationForm.tsx
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type ActiveCommandID = string;
+// Adjusting the ActiveCommand type to include isCollapsed
+type ActiveCommand = {
+	id: string;
+	isCollapsed: boolean;
+};
 
 interface ActiveCommandsState {
-	activeCommands: ActiveCommandID[];
+	activeCommands: ActiveCommand[];
 }
 
 const initialState: ActiveCommandsState = {
@@ -22,41 +26,53 @@ export const activeCommandsSlice = createSlice({
 	name: "activeCommands",
 	initialState,
 	reducers: {
-		setActiveCommands: (state, action: PayloadAction<ActiveCommandID[]>) => {
-			const newActiveCommandsList = action.payload;
-			state.activeCommands = newActiveCommandsList;
-		},
-		addNewActiveCommand: (state, action: PayloadAction<ActiveCommandID>) => {
-			const commandIDToAdd = action.payload;
+		addNewActiveCommand: (state, action: PayloadAction<ActiveCommand>) => {
+			const { id: commandIDToAdd } = action.payload;
 
 			// Check if the command ID already exists in the activeCommands array
-			if (!state.activeCommands.includes(commandIDToAdd)) {
-				// If it doesn't exist, add the new commandID
-				state.activeCommands.unshift(commandIDToAdd);
+			if (
+				!state.activeCommands.find((command) => command.id === commandIDToAdd)
+			) {
+				// If it doesn't exist, add the new ActiveCommand object
+				state.activeCommands.unshift(action.payload); // Now unshifting the whole object
 			}
 			// If the ID already exists, do nothing
 		},
-		removeSingleActiveCommand: (
-			state,
-			action: PayloadAction<ActiveCommandID>
-		) => {
+
+		/**Only removes the command from active command generation; doesn't delete them from the DB */
+		removeSingleActiveCommandByID: (state, action: PayloadAction<string>) => {
 			const commandIDToRemove = action.payload;
-			// Remove a command ID from the array
+			// Filter based on command ID
 			state.activeCommands = state.activeCommands.filter(
-				(id) => id !== commandIDToRemove
+				(command) => command.id !== commandIDToRemove
 			);
 		},
+
+		/**Only removes them from active command generation; doesn't delete them from the DB */
 		deleteAllActiveCommands: (state) => {
 			state.activeCommands = [];
+		},
+
+		/**Toggle isCollapsed state of active command */
+		toggleCommandCollapseByID: (state, action: PayloadAction<string>) => {
+			const commandIDToToggle = action.payload;
+			const commandIndex = state.activeCommands.findIndex(
+				(command) => command.id === commandIDToToggle
+			);
+			if (commandIndex !== -1) {
+				// Check if the command exists
+				state.activeCommands[commandIndex].isCollapsed =
+					!state.activeCommands[commandIndex].isCollapsed;
+			}
 		},
 	},
 });
 
 export const {
-	setActiveCommands,
 	addNewActiveCommand,
-	removeSingleActiveCommand,
+	removeSingleActiveCommandByID,
 	deleteAllActiveCommands,
+	toggleCommandCollapseByID,
 } = activeCommandsSlice.actions;
 
 export default activeCommandsSlice.reducer;

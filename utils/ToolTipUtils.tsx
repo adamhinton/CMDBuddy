@@ -7,6 +7,7 @@ interface CMDBuddyTooltipProps {
 	children: React.ReactElement;
 }
 
+/**Custom container of tooltip; just pass in `content` string of your tooltip text */
 const CMDBuddyTooltip: React.FC<CMDBuddyTooltipProps> = ({
 	content,
 	children,
@@ -20,7 +21,7 @@ const CMDBuddyTooltip: React.FC<CMDBuddyTooltipProps> = ({
 					{
 						name: "offset",
 						options: {
-							offset: [0, 10], // Adjust x and y offsets as needed
+							offset: [0, 10],
 						},
 					},
 				],

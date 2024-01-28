@@ -21,7 +21,7 @@ const CommandsEditPage = () => {
 	});
 
 	return (
-		<section>
+		<>
 			{!commandToEdit && <h3>Click edit icon in sidebar to edit a command</h3>}
 			{commandToEdit && (
 				<CommandEditForm
@@ -29,7 +29,7 @@ const CommandsEditPage = () => {
 					commandToEdit={commandToEdit}
 				></CommandEditForm>
 			)}
-		</section>
+		</>
 	);
 };
 

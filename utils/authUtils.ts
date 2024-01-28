@@ -7,6 +7,7 @@ import { setIsDarkMode } from "../redux/slices/darkModeSlice";
 import { deleteCommandToEdit } from "../redux/slices/editCommandSlice";
 import { deleteAllActiveCommands } from "../redux/slices/activeCommandsSlice";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { toast } from "react-toastify";
 
 export interface CognitoLoggedInUserAttributes {
 	sub: string;
@@ -60,7 +61,7 @@ export const useAuthActions = () => {
 			dispatch(deleteAllActiveCommands());
 			router.push("login");
 		} catch (error) {
-			console.error("Error logging out:", error);
+			toast("Error logging out; please contact if this persists.");
 		}
 	};
 

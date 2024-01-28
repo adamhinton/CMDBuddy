@@ -27,13 +27,16 @@ import {
 	setCommandToEdit,
 } from "../../../redux/slices/editCommandSlice";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
+import DragNDropHandleIcon from "../../../utils/images/drag-drop-handle.svg";
+import { DragNDropIconImage } from "../../../utils/DragNDropUtils";
+import { DraggableProvidedDragHandleProps } from "@hello-pangea/dnd";
 
 const CommandInSideBar = ({
 	command,
 	dragHandleProps,
 }: {
 	command: CMDBuddyCommand;
-	dragHandleProps: any;
+	dragHandleProps: DraggableProvidedDragHandleProps;
 }) => {
 	const { title } = command;
 	const dispatch = useDispatch();
@@ -70,7 +73,7 @@ const CommandInSideBar = ({
 	// Activates command generation form for this command
 	const activateCommand = (e: React.MouseEvent) => {
 		e.stopPropagation();
-		dispatch(addNewActiveCommand(command.id));
+		dispatch(addNewActiveCommand({ id: command.id, isCollapsed: false }));
 		router.push("/commands/generate");
 	};
 
@@ -79,7 +82,10 @@ const CommandInSideBar = ({
 			{/* Drag and drop stuff */}
 			<CMDBuddyTooltip content="Drag to re-order commands">
 				<DragHandle {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
-					⋮⋮
+					<DragNDropIconImage
+						src={DragNDropHandleIcon}
+						alt="Drag and drop icon; hold down to drag"
+					/>
 				</DragHandle>
 			</CMDBuddyTooltip>
 			<Title>{title}</Title>

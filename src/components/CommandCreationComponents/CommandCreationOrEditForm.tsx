@@ -1,13 +1,12 @@
 "use client";
 
 // README:
+// This can be creation mode, where the user creates an entirely new command; or edit mode, where they edit an existing command. The only UI difference is the props passed in, and that in edit mode, the command's fields are pre-filled.
 // User fills out this form to create a Command
 // Each Command has multiple Parameters; they fill out ParameterCreationOrEditForm once per Parameter
 // Parameters can be of type STRING, INT, BOOLEAN, DROPDOWN or FLAG, there will be different parameterList for each
 // User can Drag and Drop (DnD) Parameters
 // User can also collapse one or all Parameters; collapsed Params will only show a bar with util buttons and the Param's name.
-
-// TODO: Clean up CEF DnD styling. Just make the DnD icon clearer, no biggie.
 
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -37,7 +36,7 @@ import Link from "next/link";
 import { CommandCreationUIElements } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 import "tippy.js/dist/tippy.css";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
-import { DragDropContext, Draggable } from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, DropResult } from "@hello-pangea/dnd";
 import { StrictModeDroppable } from "../SideBar/SideBar";
 
 const { AnyParameterSchema } = CommandCreationZodSchemas;
@@ -67,7 +66,7 @@ export const CommandEditFormSchema = CommandSchema.extend({
 	parameters: z.array(AnyParameterSchema).optional(),
 });
 
-// Either edit mode or create mode
+/**Either edit mode or create mode */
 export type CMDBuddyCommandFormValidation = z.infer<
 	typeof CommandCreationFormSchema | typeof CommandEditFormSchema
 >;
@@ -146,7 +145,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 			for (let i = 0; i < parameterList.length; i++) {
 				// Expand Parameters that have errors
 				if (parameterErrors[i]) {
-					// TODO: Focus not being set to param with error if param is collapsed
+					// TODO Stretch: Focus not being set to param with error if param is collapsed
 					setFocus(`parameters.${i}`);
 					update(i, {
 						...parameterList[i],
@@ -232,7 +231,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 	};
 
 	/**This saves result to form state when user drags and drops Parameters */
-	const onDragEnd = (result: any) => {
+	const onDragEnd = (result: DropResult) => {
 		if (!result.destination) return;
 
 		const parameters = methods.getValues("parameters");
@@ -358,7 +357,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 															update={update}
 															getValues={methods.getValues}
 															// DnD params
-															dragHandleProps={provided.dragHandleProps}
+															dragHandleProps={provided.dragHandleProps!}
 														/>
 													</span>
 												);

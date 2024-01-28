@@ -27,8 +27,9 @@ import {
 	MAX_COMMAND_LIMIT_PER_USER,
 	MAX_PARAM_LIMIT_PER_COMMAND,
 } from "../MiscellaneousGlobalVariables";
+import { DispatchProp } from "react-redux";
 
-// TODO: Error on collapsed param uncollapses it, but doesn't focus to the param
+// TODO Stretch: Error on collapsed param uncollapses it, but doesn't focus to the param
 
 // This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
 // It also focuses the UI on the first error when user hits Submit.
@@ -202,7 +203,7 @@ const validateParameterOnSubmit = (
 					message: "Add at least one allowed value",
 				},
 				{
-					// TODO: This isn't focusing but the other shouldFocuses work fine
+					// TODO Stretch: This isn't focusing but the other shouldFocuses work fine
 					shouldFocus: true,
 				}
 			);
@@ -354,7 +355,7 @@ function validateAndUpdateParameters(
  */
 async function createNewCommand(
 	data: CMDBuddyCommandFormValidation,
-	dispatch: any,
+	dispatch: Dispatch<AnyAction>,
 	loggedInUserId: string
 ) {
 	try {

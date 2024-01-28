@@ -6,6 +6,10 @@ import { toast } from "react-toastify";
 
 const localStorageDarkModeKey = "isDarkMode";
 
+/**Attempts to determine user's dark mode preference.
+ *
+ * Checks (in order): Account preference, localStorage, system preference
+ */
 export function getUserDarkModePreference(
 	user: CMDBuddyUser | null = null
 ): boolean {
@@ -34,8 +38,6 @@ function getSystemDarkModePreference(): boolean {
 	// This app will be dark mode by default if no preference
 	return true;
 }
-// The Redux dispatch can be done where this function is invoked
-// dispatch(setDarkModePreference(getUserDarkModePreference(user)));
 
 export function setDarkModeLocalStorage(isDarkMode: boolean): void {
 	try {

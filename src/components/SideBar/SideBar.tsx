@@ -22,6 +22,7 @@ import {
 	Droppable,
 	Draggable,
 	DroppableProps,
+	DropResult,
 } from "@hello-pangea/dnd";
 
 // Styled components
@@ -81,7 +82,7 @@ const SideBar = () => {
 	}, [reduxStateCommands]);
 
 	/**What happens when the user is done drag n' dropping a single item */
-	const onDragEnd = (result: any) => {
+	const onDragEnd = (result: DropResult) => {
 		if (!result.destination) return;
 
 		const items = Array.from(localCommands || []);
@@ -148,7 +149,7 @@ const SideBar = () => {
 											{/* This is an individual Command */}
 											<CommandInSideBar
 												command={command}
-												dragHandleProps={provided.dragHandleProps}
+												dragHandleProps={provided.dragHandleProps!}
 											/>
 										</div>
 									);
