@@ -57,11 +57,11 @@ npm install
 - **AWS Amplify**: Used for hosting the backend and creating and deploying the GraphQL API.
 - **GraphQL**: Responsible for defining the data schema and creating resolvers to handle specific data requests and mutations.
 
-### Frontend (Planned)
+### Frontend
 
+- **Next13**: For routing, server components, data management and more.
 - **React with TypeScript**: To build a dynamic, component-based user interface.
 - **Styled-components**: For component-specific styles and theming.
-- **Vite**: As the build and development tool.
 - **Redux**: For state management, including the management of user-generated commands and parameters.
 - **Zod**: For frontend type validation.
 - **React-Router-Dom**: For application routing and navigation.
@@ -90,16 +90,37 @@ npm install
 #### Command Creation (/commands/create)
 
 - User starts by creating a new Command
+- NOTE: This isn't where they fill out the values of Parameters and copy the generated command in to the CLI; that happens in commands/generate
 - Each Command has a baseCommand, title, and many Parameters see (#Tables-and-Relationships)
 - User clicks "Add New Parameter" and adds parameters one by one.
 - e.g. if the command is `npx playwright test createPerson`, they might add parameters like `age`, `location`, `profession`.
 - Parameters can be STRING, INT, BOOLEAN, DROPDOWN or FLAG
+- UI displays a live preview of the command the user has created
+
+- **Relevant Files**
+  - CommandCreationOrEditForm.tsx
+    - Parent component; has form UI to create base Command
+    - Calls ParameterCreationOrEditForm.tsx when user clicks Add New Parameter
+  - ParameterCreationOrEditForm.tsx
+    -User selects a Parameter type (STRING, INT, BOOLEAN, DROPDOWN or FLAG) and the UI displays customized options for each of those types
+  - CommandCreationTypes.ts
+    - TS types for command creation
+  - CommandCreationUtils.ts
+    -Various command creation helper utils
+  - LiveCommandCreationPreview.tsx
+    - displays a live preview of the command the user is creating
 
 #### Command Generation (/commands/generate)
 
 - The meat and potatoes of CMDBuddy
 - User clicks a command in the sidebar, fills in values for the parameters they created in /command/create, and copies the generated CLI command to paste in to their command line
 - Has real time validation based on specs the user inputted in commands/create, such as max length, validation regex, and more
+
+#### Dark/Light mode
+
+- User clicks the dark mode preference icon in the header
+- This saves their preference to their account, or to localStorage if they're not logged in
+- CMDBuddy remembers their preference when they visit the page in the future
 
 #### User Authentication
 
@@ -116,10 +137,10 @@ npm install
 
 - Implement shortcuts for common actions like copying a command.
 
-#### How-to Guide & User Feedback (Stretch)
+#### About Page (/about)
 
 - A basic how-to page to guide users.
-- A simple feedback or suggestions form.
+- Contains use cases, UI examples, FAQ and more
 
 ## Technical Information
 
@@ -171,18 +192,22 @@ npm install
 
 ### Frontend Technical Information
 
-##### Component Structure
+#### Styling
+
+- **Styled-components** : Takes in user's dark/light mode preference to dynamically display theming. App is wrapped in styled-components' ThemeProvider to enable this.
+
+#### Component Structure
 
 TODO Stretch: Fill out component structures
 
-##### State Management
+#### State Management
 
-- **Redux**: Used for managing the state of user-generated commands and parameters.
+- **Redux**: Used for managing the state of user-generated commands and parameters. Holds the list of commands, dark mode preference, auth information.
 - **Local State**: React's useState and useContext for component-level state.
 
 ##### Routing
 
-- **Next13's App Router**: Manages application routing and navigation.
+- **Next13's App Router**: Manages application routing and navigation. Takes advantage of Next's folder-based routing.
 
 ##### Data Validation
 
