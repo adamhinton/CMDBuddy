@@ -1,5 +1,3 @@
-"use client";
-
 // README:
 // Using react-toastify to alert user of various things with toasts.
 

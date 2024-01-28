@@ -24,7 +24,6 @@ import {
 	DroppableProps,
 	DropResult,
 } from "@hello-pangea/dnd";
-import DragNDropHandleIcon from "../../../utils/images/drag-drop-handle.svg";
 
 // Styled components
 import { SideBarContainer } from "../../../utils/SideBarUtils";
