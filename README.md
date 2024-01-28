@@ -208,6 +208,11 @@ npm install
 
 - **Styled-components** : Takes in user's dark/light mode preference to dynamically display theming. App is wrapped in styled-components' ThemeProvider to enable this.
 
+#### Form Management
+
+- **react-hook-form**: Uses r-h-f's powerful form management tools for submission and validation
+- **zod**: Uses Zod schemas based on the graphQL tables to validate submitted Commands and Parameters
+
 #### State Management
 
 - **Redux**: Used for managing the state of user-generated commands and parameters. Holds the list of commands, dark mode preference, auth information.
