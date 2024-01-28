@@ -1,6 +1,23 @@
-<!-- TODO: Update Readme ToC -->
-
 # CMDBuddy
+
+## Table of Contents
+
+- [Introduction](#introduction)
+  - [What is CMDBuddy?](#what-is-cmdbuddy)
+  - [Backend Overview](#backend-overview)
+  - [Frontend Overview](#frontend)
+  - [Use Cases](#what-are-the-use-cases)
+- [Tech Stack](#tech-stack)
+  - [Backend](#backend)
+  - [Frontend](#frontend-1)
+- [Features](#features)
+  - [Backend Features](#backend-features)
+  - [Frontend Features](#frontend-features)
+- [Technical Information](#technical-information)
+  - [Backend](#backend-2)
+  - [Frontend](#frontend-2)
+- [Requirements](#requirements)
+- [Installation](#installation)
 
 ## Introduction
 
@@ -25,32 +42,6 @@ QA Engineers who want to run E2E tests in different environments, with different
 Configuring different CI/CD deployment scripts
 
 Automating routine tasks: savings commands for server restarts, deployment scripts, clearing caches, and more!
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Tech Stack](#tech-stack)
-- [Features](#features)
-- [Technical Information](#technical-information)
-  - [Backend](#backend)
-  - [Frontend (Planned)](#frontend-planned)
-
-## Requirements
-
-For development, you will need Node.js and npm installed on your environment.
-
-## Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/adamhinton/CMDBuddy.git
-# Navigate to the project directory
-cd CMDBuddy
-# Install dependencies
-npm install
-```
 
 ## Tech Stack
 
@@ -248,3 +239,18 @@ npm install
 
 - Library: **hello-pangea/dnd**
 - Used in Sidebar and CommandExecutionForm to rearrange commands
+
+## Requirements
+
+For development, you will need Node.js and npm installed on your environment.
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/adamhinton/CMDBuddy.git
+# Navigate to the project directory
+cd CMDBuddy
+# Install dependencies
+npm install
+```
