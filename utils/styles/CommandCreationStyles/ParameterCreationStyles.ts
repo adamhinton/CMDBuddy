@@ -15,7 +15,7 @@ export const ParameterCreationFormContainer = styled.div`
 export const ParameterCreationLabel = styled.label`
 	display: block;
 	margin-bottom: 5px;
-	max-width: 120px;
+	max-width: 130px;
 	margin-right: 5px;
 `;
 

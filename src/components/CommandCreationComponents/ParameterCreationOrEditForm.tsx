@@ -11,6 +11,8 @@
 
 // TODO: In creation mode, add "What's this?" with link to explanation in /about. Particularly for Type. Or maybe better tooltips for each type. Probably both.
 
+// TODO Bug: Submitting in command/create with custom validation issues (not like, required but my validation functions) resets all PCFs, including ones that don't have errors
+
 import React, { useState, useEffect } from "react";
 import {
 	UseFieldArrayUpdate,
@@ -68,6 +70,7 @@ import { DragNDropIconImage } from "../../../utils/DragNDropUtils";
 import { DraggableProvidedDragHandleProps } from "@hello-pangea/dnd";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import { StyledLink } from "../Header";
 
 const {
 	StringParameterFields,
@@ -225,7 +228,12 @@ const ParameterCreationOrEditForm = ({
 				<div>
 					{/* Parameter Type Selector */}
 					<CMDBuddyTooltip content="Parameter type options">
-						<ParameterCreationLabel>Type</ParameterCreationLabel>
+						<ParameterCreationLabel>
+							Type (
+							<StyledLink href="/about/parameter-types">
+								{"What's this?)"}
+							</StyledLink>
+						</ParameterCreationLabel>
 					</CMDBuddyTooltip>
 					<ParameterCreationSelect
 						{...register(`parameters.${index}.type`)}
