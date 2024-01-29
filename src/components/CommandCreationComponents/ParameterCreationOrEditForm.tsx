@@ -9,8 +9,6 @@
 // FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
-// TODO: In creation mode, add "What's this?" with link to explanation in /about. Particularly for Type. Or maybe better tooltips for each type. Probably both.
-
 // TODO Bug: Submitting in command/create with custom validation issues (not like, required but my validation functions) resets all PCFs, including ones that don't have errors
 
 import React, { useState, useEffect } from "react";
@@ -229,8 +227,9 @@ const ParameterCreationOrEditForm = ({
 					{/* Parameter Type Selector */}
 					<CMDBuddyTooltip content="Parameter type options">
 						<ParameterCreationLabel>
-							Type (
-							<StyledLink href="/about/parameter-types">
+							{/* Open in new tab because CCEF state isn't persisted right now */}
+							{/* TODO Stretch: Remove target blank after we persist CEF state */}
+							<StyledLink href="/about#String%20Parameter" target="_blank">
 								{"What's this?)"}
 							</StyledLink>
 						</ParameterCreationLabel>

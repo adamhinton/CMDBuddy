@@ -107,9 +107,6 @@ const Nav = styled.nav`
 export const StyledLink = styled.a`
 	color: ${({ theme }) => theme.header.link};
 	text-decoration: underline;
-	&:hover {
-		text-decoration: underline;
-	}
 `;
 
 const DarkModeToggle = styled.button`
