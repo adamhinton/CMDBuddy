@@ -9,8 +9,7 @@
 // FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
-// TODO Stretch:
-// In creation mode, add "What's this?" with link to explanation in /about. Particularly for Type
+// TODO: Bug: Submitting in command/create with custom validation issues (not like, required but my validation functions) resets all PCFs, including ones that don't have errors
 
 import React, { useState, useEffect } from "react";
 import {
@@ -69,6 +68,7 @@ import { DragNDropIconImage } from "../../../utils/DragNDropUtils";
 import { DraggableProvidedDragHandleProps } from "@hello-pangea/dnd";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import { StyledLink } from "../Header";
 
 const {
 	StringParameterFields,
@@ -226,7 +226,13 @@ const ParameterCreationOrEditForm = ({
 				<div>
 					{/* Parameter Type Selector */}
 					<CMDBuddyTooltip content="Parameter type options">
-						<ParameterCreationLabel>Type</ParameterCreationLabel>
+						<ParameterCreationLabel>
+							{/* Open in new tab because CCEF state isn't persisted right now */}
+							{/* TODO Stretch: Remove target blank after we persist CEF state */}
+							<StyledLink href="/about#String%20Parameter" target="_blank">
+								{"What's this?)"}
+							</StyledLink>
+						</ParameterCreationLabel>
 					</CMDBuddyTooltip>
 					<ParameterCreationSelect
 						{...register(`parameters.${index}.type`)}

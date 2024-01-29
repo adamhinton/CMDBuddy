@@ -5,10 +5,6 @@ import darkModeReducer from "./slices/darkModeSlice";
 import activeCommandsReducer from "./slices/activeCommandsSlice";
 import editCommandReducer from "./slices/editCommandSlice";
 
-if (typeof authReducer !== "function") {
-	console.error("authReducer is not a valid reducer function");
-}
-
 export const store = configureStore({
 	reducer: {
 		auth: authReducer,

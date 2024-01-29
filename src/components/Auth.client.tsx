@@ -14,7 +14,7 @@ import { useAuthActions } from "../../utils/authUtils";
 import { useDispatch } from "react-redux";
 import { setIsDarkMode } from "../../redux/slices/darkModeSlice";
 import { getUserDarkModePreference } from "../../utils/darkModeUtils";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { CognitoLoggedInUserAttributes } from "../../utils/authUtils";
 
 Amplify.configure({ config, ssr: true });
@@ -44,20 +44,26 @@ export default function AuthClientComponent(): null {
 		useState<CognitoLoggedInUser | null>(null);
 	const { setUserAndCommandsToState } = useAuthActions();
 
+	const [pathName] = useState(usePathname());
+
 	useEffect(() => {
 		const fetchData = async () => {
 			const initUser = await getMyUser();
 			setCognitoLoggedInUser(initUser);
-			// If user is logged in on page load, redirect to /commands.
-			// Else, redirect to login
-			if (initUser) {
-				router.push("/commands");
-			} else {
-				router.push("/about");
+
+			// There is no "/" root path; redirect user if/when they land there
+			if (pathName === "/") {
+				if (initUser) {
+					// If user is logged in on page load, redirect to /commands.
+					// Else, redirect to about page
+					router.push("/commands");
+				} else {
+					router.push("/about");
+				}
 			}
 		};
 		fetchData();
-	}, [router]);
+	}, [router, pathName]);
 
 	useEffect(() => {
 		const updateState = async () => {

@@ -57,10 +57,22 @@ export const toCHeadings: TOCHeadings = [
 		title: "Building your Commands",
 		subHeadings: [
 			{
-				title: "Parameter Options",
+				title: "Parameter Options Explained",
 			},
 			{
-				title: "Further Refinement",
+				title: "String Parameter",
+			},
+			{
+				title: "Integer Parameter",
+			},
+			{
+				title: "Boolean Parameter",
+			},
+			{
+				title: "Dropdown Parameter",
+			},
+			{
+				title: "Flag Parameter",
 			},
 		],
 	},

@@ -139,7 +139,9 @@ const About = () => {
 						that you pass in from the CLI.
 					</Text>
 
-					<SubSubtitle id="Parameter Options">Parameter Options</SubSubtitle>
+					<SubSubtitle id="Parameter Options Explained">
+						Parameter Options Explained
+					</SubSubtitle>
 					<Text>
 						There are five parameter types available: STRING, INTEGER, BOOLEAN,
 						FLAG, and DROPDOWN. Each has different options for validation.
@@ -154,16 +156,105 @@ const About = () => {
 						STRING, INTEGER, BOOLEAN, and DROPDOWN parameters precede the base
 						command in your generated command.
 					</Text>
-					<Text>
-						FLAG parameters are different; they appear after the base command,
-						like `--headed` in test files, or `--template typescript` in
-						create-react-app.
-					</Text>
-					<SubSubtitle id="Further Refinement">Further Refinement</SubSubtitle>
-					<Text>
-						Customize your Parameters with default values, max/min values, regex
-						and more.
-					</Text>
+
+					<SubSubtitle id="String Parameter">String Parameter</SubSubtitle>
+					<ul>
+						<li>
+							<Text>Parameters whose value will be a string</Text>
+						</li>
+						<li>
+							<Text>Examples: personsName, favoriteFood, location</Text>
+						</li>
+						<li>
+							<Text>
+								Customize with options like min/max length, validation regex,
+								and default value
+							</Text>
+						</li>
+						<li>
+							<Text>Always goes before your base Command</Text>
+						</li>
+					</ul>
+
+					<SubSubtitle id="Integer Parameter">Integer Parameter</SubSubtitle>
+					<ul>
+						<li>
+							<Text>
+								Parameters whose value will be any number (not just a whole
+								number)
+							</Text>
+						</li>
+						<li>
+							<Text>Examples: age, numDollars, kilometersPerHour</Text>
+						</li>
+						<li>
+							<Text>
+								Customize with options like min/max value and default value
+							</Text>
+						</li>
+						<li>
+							<Text>Always goes before your base Command</Text>
+						</li>
+					</ul>
+
+					<SubSubtitle id="Boolean Parameter">Boolean Parameter</SubSubtitle>
+					<ul>
+						<li>
+							<Text>Parameters whose value will be a boolean</Text>
+						</li>
+						<li>
+							<Text>Examples: isEmployed, hasMotorcycle, isEligible</Text>
+						</li>
+						<li>
+							<Text>Customize with default value</Text>
+						</li>
+						<li>
+							<Text>Always goes before your base Command</Text>
+						</li>
+					</ul>
+
+					<SubSubtitle id="Dropdown Parameter">Dropdown Parameter</SubSubtitle>
+					<ul>
+						<li>
+							<Text>
+								Parameters with certain possible values you know ahead of time
+							</Text>
+						</li>
+						<li>
+							<Text>
+								Enter these values when creating the Command, and you'll select
+								from them when generating the Command to copy
+							</Text>
+						</li>
+						<li>
+							<Text>
+								Examples: lists of authorization types, company departments,
+								deployment environments
+							</Text>
+						</li>
+						<li>
+							<Text>Customize with default value</Text>
+						</li>
+						<li>
+							<Text>Always goes before your base Command</Text>
+						</li>
+					</ul>
+
+					<SubSubtitle id="Flag Parameter">Flag Parameter</SubSubtitle>
+					<ul>
+						<li>
+							<Text>Flags that go after your base command.</Text>
+						</li>
+						<li>
+							<Text>Examples: --headed , --save-dev, --use-typescript</Text>
+						</li>
+						<li>
+							<Text>Customize with default value</Text>
+						</li>
+						<li>
+							<Text>Always goes after your base Command</Text>
+						</li>
+					</ul>
 				</Section>
 
 				<Section id="Generating your commands">
