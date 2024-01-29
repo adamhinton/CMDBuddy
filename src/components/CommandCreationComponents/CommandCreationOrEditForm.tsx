@@ -239,13 +239,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		methods.setValue("parameters", items);
 	};
 
-	const formValues = methods.getValues();
-
-	// TODO: Delete this old useEffect
-	// useEffect(() => {
-	// 	console.log("formValues:", formValues);
-	// }, [formValues]);
-
 	return (
 		<FormProvider {...methods}>
 			<StyledCCFForm
