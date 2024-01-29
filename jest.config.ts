@@ -3,13 +3,13 @@
  * https://jestjs.io/docs/configuration
  */
 
-const nextJest = require("next/jest");
+import nextJest from "next/jest.js";
+import type { Config } from "jest";
 
-const nextJestConfig = nextJest({
+const createJestConfig = nextJest({
+	// Provide the path to your Next.js app to load next.config.js and .env files in your test environment
 	dir: "./",
 });
-
-import type { Config } from "jest";
 
 const config: Config = {
 	// All imported modules in your tests should be mocked automatically
@@ -39,7 +39,7 @@ const config: Config = {
 	// ],
 
 	// Indicates which provider should be used to instrument code for coverage
-	coverageProvider: "v8",
+	// coverageProvider: "babel",
 
 	// A list of reporter names that Jest uses when writing coverage reports
 	// coverageReporters: [
@@ -152,7 +152,7 @@ const config: Config = {
 	// snapshotSerializers: [],
 
 	// The test environment that will be used for testing
-	// testEnvironment: "jest-environment-node",
+	testEnvironment: "jsdom",
 
 	// Options that will be passed to the testEnvironment
 	// testEnvironmentOptions: {},
@@ -202,4 +202,5 @@ const config: Config = {
 	// watchman: true,
 };
 
-export default nextJestConfig(config);
+// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
+export default createJestConfig(config);
