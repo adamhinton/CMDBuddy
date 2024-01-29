@@ -11,6 +11,8 @@
 
 // TODO: Bug: Submitting in command/create with custom validation issues (not like, required but my validation functions) resets all PCFs, including ones that don't have errors
 
+// TODO stretch:
+
 import React, { useState, useEffect } from "react";
 import {
 	UseFieldArrayUpdate,
@@ -94,7 +96,6 @@ const ParameterCreationOrEditForm = ({
 	index,
 	removeParameter,
 	parameterCreationType,
-	isCollapsed,
 	setValue,
 	update,
 	getValues,
@@ -136,6 +137,8 @@ const ParameterCreationOrEditForm = ({
 		});
 		return () => subscription.unsubscribe();
 	}, [watch, index, setValue]);
+
+	const isCollapsed = getValues(`parameters.${index}.isCollapsed`);
 
 	/**User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN */
 	// TODO Stretch: Just pass in the param type here and deal with the case logic in the function. To make PCEF code cleaner

@@ -499,11 +499,17 @@ const handleSubmit = async ({
 	// I collapsed an error param, submitted it, got validation issues fine, then submitted again uncollapsed and it didn't reset.
 	// Additionally, just collapsing a param once, then uncollapsing, then Submitting stops the reset issue forever.
 	// Commented out type: "manual" and it still happened
+	// Reinstalling packages didn't work
+	// issue also happening in prod
+	// Tried deleting methods from dependency array in CCEF that resets when commandToEdit changes
 
 	// NARROWING:
 	// Commenting out setError in validation function seems to stop the reset
 	// Just setting isFormValuesValid to false without calling validateAnd... stops the reset
 	// So we think the issue is in setError
+
+	// DX:
+	// Issue seems to be somewhere on CCEF's second useEffect, line 149 which collapses/uncollapses parameters without/with errors. Look in to this further.
 
 	let isFormValuesValid = validateAndUpdateParameters(
 		data.parameters || [],
