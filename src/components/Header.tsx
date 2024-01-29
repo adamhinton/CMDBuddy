@@ -103,9 +103,10 @@ const Nav = styled.nav`
 	gap: 1rem;
 `;
 
-const StyledLink = styled.a`
+/**This is used in both PCEF and Header because I'm lazy, make sure you look at both before messing with this */
+export const StyledLink = styled.a`
 	color: ${({ theme }) => theme.header.link};
-	text-decoration: none;
+	text-decoration: underline;
 	&:hover {
 		text-decoration: underline;
 	}
