@@ -9,7 +9,7 @@
 // FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
-// TODO Bug: Submitting in command/create with custom validation issues (not like, required but my validation functions) resets all PCFs, including ones that don't have errors
+// TODO: Bug: Submitting in command/create with custom validation issues (not like, required but my validation functions) resets all PCFs, including ones that don't have errors
 
 import React, { useState, useEffect } from "react";
 import {
