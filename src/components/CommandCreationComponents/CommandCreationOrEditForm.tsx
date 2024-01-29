@@ -148,30 +148,10 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 				// Expand Parameters that have errors
 				if (parameterErrors[i] !== undefined) {
-					// TODO Stretch: Focus not being set to param with error if param is collapsed
-
-					// Seems I have to delete both of these to fix the issue; deleting one or the other doesn't seem to solve
-
-					// Tried:
-					// Reversing the order of these
-					// Deleting only one or the other
-					// Deleting the else statement instead
-
-					// Works:
-					// Deleting both, but that busts the collapse feature
-
-					// Solution:
-					// setValue instead of update seems to work ---- BUT YOU NEED TO TEST THIS
-
 					setValue(`parameters.${i}.isCollapsed`, false);
-
 					setFocus(`parameters.${i}`);
-					// update(i, {
-					// 	...parameterList[i],
-					// 	isCollapsed: false,
-					// });
-					// Collapse Parameters that don't have errors
 				} else {
+					// Collapse Parameters that don't have errors
 					setValue(`parameters.${i}.isCollapsed`, true);
 				}
 			}
@@ -376,7 +356,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 															removeParameter={() => remove(index)}
 															parameterCreationType={cmdBuddyParameter.type}
 															setValue={setValue}
-															isCollapsed={cmdBuddyParameter.isCollapsed!}
 															update={update}
 															getValues={methods.getValues}
 															// DnD params

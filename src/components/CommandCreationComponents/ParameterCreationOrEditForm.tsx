@@ -9,9 +9,7 @@
 // FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
-// TODO: Bug: Submitting in command/create with custom validation issues (not like, required but my validation functions) resets all PCFs, including ones that don't have errors
-
-// TODO stretch:
+// TODO Stretch: Red border or something around PCEF when it has error
 
 import React, { useState, useEffect } from "react";
 import {
@@ -48,7 +46,6 @@ type FormProps = {
 	removeParameter: Function;
 	parameterCreationType: ParameterCreationType;
 	setValue: Function;
-	isCollapsed: boolean;
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
 	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>;
 	dragHandleProps: DraggableProvidedDragHandleProps;
@@ -138,6 +135,12 @@ const ParameterCreationOrEditForm = ({
 		return () => subscription.unsubscribe();
 	}, [watch, index, setValue]);
 
+	/**User can toggle collapse/uncollapse of this form
+	 *
+	 * When collapsed it'll just show a toolbar
+	 *
+	 * On form submit, if a param has an error, that param will auto-expand; all params without errors will auto-collapse
+	 */
 	const isCollapsed = getValues(`parameters.${index}.isCollapsed`);
 
 	/**User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN */
