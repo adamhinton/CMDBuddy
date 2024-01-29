@@ -491,11 +491,19 @@ const handleSubmit = async ({
 	}
 
 	// NOTES:
-	// Just setting isFormValuesValid to false and skipping the validateAnd... function stops the issue
+
+	// RULING OUT:
 	// Issue also doesn't happen when invalid param is collapsed
 	// Seems to happen on any param type
 	// Doesn't seem to be shouldFocus, I commented that out and issue persisted
 	// I collapsed an error param, submitted it, got validation issues fine, then submitted again uncollapsed and it didn't reset.
+	// Additionally, just collapsing a param once, then uncollapsing, then Submitting stops the reset issue forever.
+	// Commented out type: "manual" and it still happened
+
+	// NARROWING:
+	// Commenting out setError in validation function seems to stop the reset
+	// Just setting isFormValuesValid to false without calling validateAnd... stops the reset
+	// So we think the issue is in setError
 
 	let isFormValuesValid = validateAndUpdateParameters(
 		data.parameters || [],

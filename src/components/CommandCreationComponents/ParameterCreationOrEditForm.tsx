@@ -229,10 +229,11 @@ const ParameterCreationOrEditForm = ({
 					{/* Parameter Type Selector */}
 					<CMDBuddyTooltip content="Parameter type options">
 						<ParameterCreationLabel>
+							Type{" "}
 							{/* Open in new tab because CCEF state isn't persisted right now */}
 							{/* TODO Stretch: Remove target blank after we persist CEF state */}
 							<StyledLink href="/about#String%20Parameter" target="_blank">
-								{"What's this?)"}
+								{"(What's this?)"}
 							</StyledLink>
 						</ParameterCreationLabel>
 					</CMDBuddyTooltip>
