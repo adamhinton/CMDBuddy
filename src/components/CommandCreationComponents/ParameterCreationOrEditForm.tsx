@@ -9,7 +9,7 @@
 // FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
-// TODO: Bug: Submitting in command/create with custom validation issues (not like, required but my validation functions) resets all PCFs, including ones that don't have errors
+// TODO Stretch: Red border or something around PCEF when it has error
 
 import React, { useState, useEffect } from "react";
 import {
@@ -46,7 +46,6 @@ type FormProps = {
 	removeParameter: Function;
 	parameterCreationType: ParameterCreationType;
 	setValue: Function;
-	isCollapsed: boolean;
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
 	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>;
 	dragHandleProps: DraggableProvidedDragHandleProps;
@@ -94,7 +93,6 @@ const ParameterCreationOrEditForm = ({
 	index,
 	removeParameter,
 	parameterCreationType,
-	isCollapsed,
 	setValue,
 	update,
 	getValues,
@@ -116,6 +114,7 @@ const ParameterCreationOrEditForm = ({
 		(state: RootState) => state.darkMode.isDarkMode
 	);
 
+	// Handle user changing parameter type (String, Int, Dropdown etc)
 	useEffect(() => {
 		const subscription = watch((value, { name, type }) => {
 			const parameter = value.parameters ? value.parameters[index] : null;
@@ -136,7 +135,16 @@ const ParameterCreationOrEditForm = ({
 		return () => subscription.unsubscribe();
 	}, [watch, index, setValue]);
 
+	/**User can toggle collapse/uncollapse of this form
+	 *
+	 * When collapsed it'll just show a toolbar
+	 *
+	 * On form submit, if a param has an error, that param will auto-expand; all params without errors will auto-collapse
+	 */
+	const isCollapsed = getValues(`parameters.${index}.isCollapsed`);
+
 	/**User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN */
+	// TODO Stretch: Just pass in the param type here and deal with the case logic in the function. To make PCEF code cleaner
 	const renderParameterSpecificFields = () => {
 		switch (parameterType) {
 			case "STRING":
@@ -227,10 +235,11 @@ const ParameterCreationOrEditForm = ({
 					{/* Parameter Type Selector */}
 					<CMDBuddyTooltip content="Parameter type options">
 						<ParameterCreationLabel>
+							Type{" "}
 							{/* Open in new tab because CCEF state isn't persisted right now */}
 							{/* TODO Stretch: Remove target blank after we persist CEF state */}
 							<StyledLink href="/about#String%20Parameter" target="_blank">
-								{"What's this?)"}
+								{"(What's this?)"}
 							</StyledLink>
 						</ParameterCreationLabel>
 					</CMDBuddyTooltip>

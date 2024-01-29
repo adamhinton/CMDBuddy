@@ -142,21 +142,17 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 		const parameterErrors = methods.formState.errors.parameters;
 
 		if (parameterErrors?.length && parameterErrors?.length > 0) {
+			console.log("parameterErrors:", parameterErrors);
 			for (let i = 0; i < parameterList.length; i++) {
+				console.log("parameterList[i]:", parameterList[i]);
+
 				// Expand Parameters that have errors
-				if (parameterErrors[i]) {
-					// TODO Stretch: Focus not being set to param with error if param is collapsed
+				if (parameterErrors[i] !== undefined) {
+					setValue(`parameters.${i}.isCollapsed`, false);
 					setFocus(`parameters.${i}`);
-					update(i, {
-						...parameterList[i],
-						isCollapsed: false,
-					});
-					// Collapse Parameters that don't have errors
 				} else {
-					update(i, {
-						...parameterList[i],
-						isCollapsed: true,
-					});
+					// Collapse Parameters that don't have errors
+					setValue(`parameters.${i}.isCollapsed`, true);
 				}
 			}
 		}
@@ -242,6 +238,13 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 		methods.setValue("parameters", items);
 	};
+
+	const formValues = methods.getValues();
+
+	// TODO: Delete this old useEffect
+	// useEffect(() => {
+	// 	console.log("formValues:", formValues);
+	// }, [formValues]);
 
 	return (
 		<FormProvider {...methods}>
@@ -353,7 +356,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 															removeParameter={() => remove(index)}
 															parameterCreationType={cmdBuddyParameter.type}
 															setValue={setValue}
-															isCollapsed={cmdBuddyParameter.isCollapsed!}
 															update={update}
 															getValues={methods.getValues}
 															// DnD params
