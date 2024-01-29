@@ -116,6 +116,7 @@ const ParameterCreationOrEditForm = ({
 		(state: RootState) => state.darkMode.isDarkMode
 	);
 
+	// Handle user changing parameter type (String, Int, Dropdown etc)
 	useEffect(() => {
 		const subscription = watch((value, { name, type }) => {
 			const parameter = value.parameters ? value.parameters[index] : null;
