@@ -137,6 +137,7 @@ const ParameterCreationOrEditForm = ({
 	}, [watch, index, setValue]);
 
 	/**User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN */
+	// TODO Stretch: Just pass in the param type here and deal with the case logic in the function. To make PCEF code cleaner
 	const renderParameterSpecificFields = () => {
 		switch (parameterType) {
 			case "STRING":
