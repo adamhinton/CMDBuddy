@@ -490,11 +490,20 @@ const handleSubmit = async ({
 		return;
 	}
 
+	// NOTES:
+	// Just setting isFormValuesValid to false and skipping the validateAnd... function stops the issue
+	// Issue also doesn't happen when invalid param is collapsed
+	// Seems to happen on any param type
+	// Doesn't seem to be shouldFocus, I commented that out and issue persisted
+	// I collapsed an error param, submitted it, got validation issues fine, then submitted again uncollapsed and it didn't reset.
+
 	let isFormValuesValid = validateAndUpdateParameters(
 		data.parameters || [],
 		methods,
 		update
 	);
+
+	// let isFormValuesValid = false;
 
 	if (!isFormValuesValid) {
 		toast("Encountered validation issues");
