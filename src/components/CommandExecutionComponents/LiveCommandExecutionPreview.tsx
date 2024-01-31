@@ -70,7 +70,8 @@ const LiveCommandExecutionPreview = ({
 
 	return (
 		<CommandPreviewContainer isvisible={isVisible ? "true" : "false"}>
-			{/* Clicking this button copies generated Command to clipboard */}{" "}
+			{/* Clicking this button copies generated Command to clipboard */}
+			{/* This copy icon is also used in CEF.tsx */}
 			<CMDBuddyTooltip content="Copy generated Command to clipboard">
 				<CopyButton
 					onClick={(e) => copyCommandToClipboard(e, commandPreview)}

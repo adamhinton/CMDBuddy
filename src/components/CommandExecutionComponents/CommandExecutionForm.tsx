@@ -135,6 +135,7 @@ const CommandExecutionForm = ({
 
 					{/* Show "copy to clipboard" icon --- but only when form is collapsed, because the copy icon already shows elsewhere when not collapsed */}
 					{command.isCollapsed && (
+						// This copy icon is also used in LCEP.tsx
 						<CMDBuddyTooltip content="Copy generated Command to clipboard">
 							<CopyButton
 								onClick={(e) =>
