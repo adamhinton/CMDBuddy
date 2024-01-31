@@ -26,9 +26,11 @@ import Image from "next/image";
 const LiveCommandExecutionPreview = ({
 	baseCommand,
 	parameters,
+	setGeneratedCommandPreview,
 }: {
 	baseCommand: string;
 	parameters: CMDBuddyParameter[] | undefined;
+	setGeneratedCommandPreview: Function;
 }) => {
 	const { watch } = useFormContext();
 
@@ -49,6 +51,10 @@ const LiveCommandExecutionPreview = ({
 	// This is the preview of the generated Command
 	const commandPreview =
 		`${preCommandParams.trim()} ${baseCommand} ${postCommandFlags.trim()}`.trim();
+
+	useEffect(() => {
+		setGeneratedCommandPreview(commandPreview);
+	});
 
 	// Only show command preview when there's a baseCommand, parameters to show etc. Otherwise it would just be a blank element
 	const [isVisible, setIsVisible] = useState(false);
@@ -93,6 +99,7 @@ export const copyCommandToClipboard = async (
 	e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	commandText: string
 ) => {
+	e.stopPropagation();
 	e.preventDefault();
 	try {
 		await navigator.clipboard.writeText(commandText);

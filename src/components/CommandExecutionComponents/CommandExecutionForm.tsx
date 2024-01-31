@@ -14,18 +14,13 @@
 
 // TODO Stretch: In PEF, on hover over a param, show its attributes (maxLength etc)
 
-// TODO: Clean up CEF collapse styling:
-//	-- Figure out collapsibleBar look
-//  -- Make the whole UI of it smaller when collapsed, like smaller fonts etc
-//  -- probably put copy button in collapsible bar
-
 import {
 	removeSingleActiveCommandByID,
 	toggleCommandCollapseByID,
 } from "../../../redux/slices/activeCommandsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ParameterExecutionForm from "./ParameterExecutionForm";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import LiveCommandExecutionPreview, {
 	copyCommandToClipboard,
@@ -96,6 +91,8 @@ const CommandExecutionForm = ({
 		(state: RootState) => state.darkMode.isDarkMode
 	);
 
+	const [generatedCommandPreview, setGeneratedCommandPreview] = useState("");
+
 	// Error handling
 	// Display parameter errors here rather than in individual Parameter inputs to reduce clutter
 	// This displays a max of three errors at a time
@@ -136,22 +133,26 @@ const CommandExecutionForm = ({
 						</StyledGeneralIcon>
 					</CMDBuddyTooltip>
 
-					<CMDBuddyTooltip content="Copy generated Command to clipboard">
-						<CopyButton
-							onClick={(e) => copyCommandToClipboard(e, command)}
-							aria-label="Copy to clipboard"
-						>
-							<ClipboardCopyIconContainer>
-								<Image
-									src={copyToClipboardIcon}
-									alt="Copy to clipboard"
-									width={24}
-									height={24}
-									layout="intrinsic"
-								/>
-							</ClipboardCopyIconContainer>
-						</CopyButton>
-					</CMDBuddyTooltip>
+					{command.isCollapsed && (
+						<CMDBuddyTooltip content="Copy generated Command to clipboard">
+							<CopyButton
+								onClick={(e) =>
+									copyCommandToClipboard(e, generatedCommandPreview)
+								}
+								aria-label="Copy to clipboard"
+							>
+								<ClipboardCopyIconContainer>
+									<Image
+										src={copyToClipboardIcon}
+										alt="Copy to clipboard"
+										width={24}
+										height={24}
+										layout="intrinsic"
+									/>
+								</ClipboardCopyIconContainer>
+							</CopyButton>
+						</CMDBuddyTooltip>
+					)}
 
 					<IconWrapper>
 						<CMDBuddyTooltip content="Reset to default values">
@@ -195,6 +196,7 @@ const CommandExecutionForm = ({
 						<LiveCommandExecutionPreview
 							baseCommand={command.baseCommand}
 							parameters={command.parameters}
+							setGeneratedCommandPreview={setGeneratedCommandPreview}
 						/>
 
 						<CEFParametersContainer>
