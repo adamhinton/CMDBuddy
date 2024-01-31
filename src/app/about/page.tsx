@@ -7,8 +7,6 @@
 // Has Subtitles and SubSubtitles
 // When you change headings, make sure to update in the ToC and add an href to their title
 
-// TODO: Update /about images with new UI
-
 import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
 import Link from "next/link";
@@ -20,8 +18,8 @@ import darkModeGenMakeNewPersonIMG from "../../../utils/images/generatemakenewpe
 import lightModeGenMakeNewPersonIMG from "../../../utils/images/generatemakenewperson-lightmode.png";
 
 // These two images show command creation UI for baseCommand and title
-import darkModeCreateBaseComandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-darkmode.png";
-import lightModeCreateBaseComandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-lightmode.png";
+import darkModeCreateBaseCommandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-darkmode.png";
+import lightModeCreateBaseCommandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-lightmode.png";
 
 // These two images show Parameter creation UI
 import lightModePCFIMG from "../../../utils/images/PCF-lightmode.png";
@@ -117,8 +115,8 @@ const About = () => {
 						<Image
 							src={
 								isDarkMode
-									? darkModeCreateBaseComandTitleIMG
-									: lightModeCreateBaseComandTitleIMG
+									? darkModeCreateBaseCommandTitleIMG
+									: lightModeCreateBaseCommandTitleIMG
 							}
 							alt="Inputs to create a new Command with title and base command"
 						/>
@@ -262,10 +260,16 @@ const About = () => {
 					<Text>
 						Select your command from the sidebar within the commands section.
 					</Text>
+
 					<Text>
 						Enter values for each parameter and copy the generated command to
 						your terminal. You can also set default values for each parameter.
 					</Text>
+
+					<Text>
+						If you made a default value, the parameter will default to that.
+					</Text>
+
 					<ImageContainer>
 						<StyledImage
 							src={
@@ -276,9 +280,6 @@ const About = () => {
 							alt="Command generation UI. Command is `npx create human` with parameter inputs for personsName, isEmployed, and age"
 						/>
 					</ImageContainer>
-					<Text>
-						If you made a default value, the parameter will default to that.
-					</Text>
 				</Section>
 
 				<Section id="Use Cases">

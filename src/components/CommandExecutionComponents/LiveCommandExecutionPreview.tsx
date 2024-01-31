@@ -26,9 +26,11 @@ import Image from "next/image";
 const LiveCommandExecutionPreview = ({
 	baseCommand,
 	parameters,
+	setGeneratedCommandPreview,
 }: {
 	baseCommand: string;
 	parameters: CMDBuddyParameter[] | undefined;
+	setGeneratedCommandPreview: Function;
 }) => {
 	const { watch } = useFormContext();
 
@@ -50,6 +52,10 @@ const LiveCommandExecutionPreview = ({
 	const commandPreview =
 		`${preCommandParams.trim()} ${baseCommand} ${postCommandFlags.trim()}`.trim();
 
+	useEffect(() => {
+		setGeneratedCommandPreview(commandPreview);
+	});
+
 	// Only show command preview when there's a baseCommand, parameters to show etc. Otherwise it would just be a blank element
 	const [isVisible, setIsVisible] = useState(false);
 	useEffect(() => {
@@ -64,27 +70,25 @@ const LiveCommandExecutionPreview = ({
 
 	return (
 		<CommandPreviewContainer isvisible={isVisible ? "true" : "false"}>
-			<code>{commandPreview}</code>
 			{/* Clicking this button copies generated Command to clipboard */}
-			<div>
-				{" "}
-				<CMDBuddyTooltip content="Copy generated Command to clipboard">
-					<CopyButton
-						onClick={(e) => copyCommandToClipboard(e, commandPreview)}
-						aria-label="Copy to clipboard"
-					>
-						<ClipboardCopyIconContainer>
-							<Image
-								src={copyToClipboardIcon}
-								alt="Copy to clipboard"
-								width={24}
-								height={24}
-								layout="intrinsic"
-							/>
-						</ClipboardCopyIconContainer>
-					</CopyButton>
-				</CMDBuddyTooltip>
-			</div>
+			{/* This copy icon is also used in CEF.tsx */}
+			<CMDBuddyTooltip content="Copy generated Command to clipboard">
+				<CopyButton
+					onClick={(e) => copyCommandToClipboard(e, commandPreview)}
+					aria-label="Copy to clipboard"
+				>
+					<ClipboardCopyIconContainer>
+						<Image
+							src={copyToClipboardIcon}
+							alt="Copy to clipboard"
+							width={24}
+							height={24}
+							layout="intrinsic"
+						/>
+					</ClipboardCopyIconContainer>
+				</CopyButton>
+			</CMDBuddyTooltip>
+			<code>{commandPreview}</code>
 		</CommandPreviewContainer>
 	);
 };
@@ -92,10 +96,11 @@ const LiveCommandExecutionPreview = ({
 export default LiveCommandExecutionPreview;
 
 // Onclick to copy generated Command to clipboard
-const copyCommandToClipboard = async (
+export const copyCommandToClipboard = async (
 	e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	commandText: string
 ) => {
+	e.stopPropagation();
 	e.preventDefault();
 	try {
 		await navigator.clipboard.writeText(commandText);
