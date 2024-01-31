@@ -20,8 +20,8 @@ import darkModeGenMakeNewPersonIMG from "../../../utils/images/generatemakenewpe
 import lightModeGenMakeNewPersonIMG from "../../../utils/images/generatemakenewperson-lightmode.png";
 
 // These two images show command creation UI for baseCommand and title
-import darkModeCreateBaseComandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-darkmode.png";
-import lightModeCreateBaseComandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-lightmode.png";
+import darkModeCreateBaseCommandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-darkmode.png";
+import lightModeCreateBaseCommandTitleIMG from "../../../utils/images/createcommand-basecommandandtitle-lightmode.png";
 
 // These two images show Parameter creation UI
 import lightModePCFIMG from "../../../utils/images/PCF-lightmode.png";
@@ -117,8 +117,8 @@ const About = () => {
 						<Image
 							src={
 								isDarkMode
-									? darkModeCreateBaseComandTitleIMG
-									: lightModeCreateBaseComandTitleIMG
+									? darkModeCreateBaseCommandTitleIMG
+									: lightModeCreateBaseCommandTitleIMG
 							}
 							alt="Inputs to create a new Command with title and base command"
 						/>
