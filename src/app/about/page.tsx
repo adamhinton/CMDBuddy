@@ -262,10 +262,16 @@ const About = () => {
 					<Text>
 						Select your command from the sidebar within the commands section.
 					</Text>
+
 					<Text>
 						Enter values for each parameter and copy the generated command to
 						your terminal. You can also set default values for each parameter.
 					</Text>
+
+					<Text>
+						If you made a default value, the parameter will default to that.
+					</Text>
+
 					<ImageContainer>
 						<StyledImage
 							src={
@@ -276,9 +282,6 @@ const About = () => {
 							alt="Command generation UI. Command is `npx create human` with parameter inputs for personsName, isEmployed, and age"
 						/>
 					</ImageContainer>
-					<Text>
-						If you made a default value, the parameter will default to that.
-					</Text>
 				</Section>
 
 				<Section id="Use Cases">
