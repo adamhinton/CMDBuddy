@@ -27,13 +27,12 @@ import {
 	MAX_COMMAND_LIMIT_PER_USER,
 	MAX_PARAM_LIMIT_PER_COMMAND,
 } from "../MiscellaneousGlobalVariables";
-import { DispatchProp } from "react-redux";
 
 // TODO Stretch: Error on collapsed param uncollapses it, but doesn't focus to the param
 
 // This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
 // It also focuses the UI on the first error when user hits Submit.
-const validateParameterOnSubmit = (
+export const validateParameterOnSubmit = (
 	parameter: AnyParameter,
 	index: number,
 	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
