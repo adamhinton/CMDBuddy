@@ -133,6 +133,7 @@ const CommandExecutionForm = ({
 						</StyledGeneralIcon>
 					</CMDBuddyTooltip>
 
+					{/* Show "copy to clipboard" icon --- but only when form is collapsed, because the copy icon already shows elsewhere when not collapsed */}
 					{command.isCollapsed && (
 						<CMDBuddyTooltip content="Copy generated Command to clipboard">
 							<CopyButton
