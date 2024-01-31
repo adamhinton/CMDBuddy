@@ -156,22 +156,25 @@ const CommandExecutionForm = ({
 						</CMDBuddyTooltip>
 					)}
 
-					<IconWrapper>
-						<CMDBuddyTooltip content="Reset to default values">
-							<StyledGeneralIcon>
-								<StyledIconImage
-									src={isDarkMode ? resetIconDarkMode : resetIconLightMode}
-									alt="Reset to default values"
-									onClick={(e) => {
-										e.stopPropagation();
-										e.preventDefault();
-										// Stop click from bubbling up to the "collapse" onClick, which would toggle collapse unintentionally
-										methods.reset();
-									}}
-								/>
-							</StyledGeneralIcon>
-						</CMDBuddyTooltip>
-					</IconWrapper>
+					{/* Only show "reset" icon when command isn't collapsed */}
+					{!command.isCollapsed && (
+						<IconWrapper>
+							<CMDBuddyTooltip content="Reset to default values">
+								<StyledGeneralIcon>
+									<StyledIconImage
+										src={isDarkMode ? resetIconDarkMode : resetIconLightMode}
+										alt="Reset to default values"
+										onClick={(e) => {
+											e.stopPropagation();
+											e.preventDefault();
+											// Stop click from bubbling up to the "collapse" onClick, which would toggle collapse unintentionally
+											methods.reset();
+										}}
+									/>
+								</StyledGeneralIcon>
+							</CMDBuddyTooltip>
+						</IconWrapper>
+					)}
 
 					<IconWrapper>
 						<CMDBuddyTooltip content="Exit this command">
