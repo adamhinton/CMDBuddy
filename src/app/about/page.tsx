@@ -7,8 +7,6 @@
 // Has Subtitles and SubSubtitles
 // When you change headings, make sure to update in the ToC and add an href to their title
 
-// TODO: Update /about images with new UI
-
 import { Amplify } from "aws-amplify";
 import config from "../../aws-exports";
 import Link from "next/link";
