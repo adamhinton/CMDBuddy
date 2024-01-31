@@ -6,6 +6,7 @@ import styled from "styled-components";
 const CEFForm = styled.form`
 	background: ${({ theme }) => theme.commandGeneration.baseBackground};
 	color: ${({ theme }) => theme.commandGeneration.baseText};
+	max-width: 1200px;
 	padding: 1rem;
 	border-radius: 8px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -115,6 +116,7 @@ const CEFParametersContainer = styled.section`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	gap: 20px;
 `;
 
 // Pass in optional validation error

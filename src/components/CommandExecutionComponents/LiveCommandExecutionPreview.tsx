@@ -64,27 +64,24 @@ const LiveCommandExecutionPreview = ({
 
 	return (
 		<CommandPreviewContainer isvisible={isVisible ? "true" : "false"}>
+			{/* Clicking this button copies generated Command to clipboard */}{" "}
+			<CMDBuddyTooltip content="Copy generated Command to clipboard">
+				<CopyButton
+					onClick={(e) => copyCommandToClipboard(e, commandPreview)}
+					aria-label="Copy to clipboard"
+				>
+					<ClipboardCopyIconContainer>
+						<Image
+							src={copyToClipboardIcon}
+							alt="Copy to clipboard"
+							width={24}
+							height={24}
+							layout="intrinsic"
+						/>
+					</ClipboardCopyIconContainer>
+				</CopyButton>
+			</CMDBuddyTooltip>
 			<code>{commandPreview}</code>
-			{/* Clicking this button copies generated Command to clipboard */}
-			<div>
-				{" "}
-				<CMDBuddyTooltip content="Copy generated Command to clipboard">
-					<CopyButton
-						onClick={(e) => copyCommandToClipboard(e, commandPreview)}
-						aria-label="Copy to clipboard"
-					>
-						<ClipboardCopyIconContainer>
-							<Image
-								src={copyToClipboardIcon}
-								alt="Copy to clipboard"
-								width={24}
-								height={24}
-								layout="intrinsic"
-							/>
-						</ClipboardCopyIconContainer>
-					</CopyButton>
-				</CMDBuddyTooltip>
-			</div>
 		</CommandPreviewContainer>
 	);
 };
@@ -92,7 +89,7 @@ const LiveCommandExecutionPreview = ({
 export default LiveCommandExecutionPreview;
 
 // Onclick to copy generated Command to clipboard
-const copyCommandToClipboard = async (
+export const copyCommandToClipboard = async (
 	e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	commandText: string
 ) => {

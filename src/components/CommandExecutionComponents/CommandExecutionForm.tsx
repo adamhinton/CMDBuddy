@@ -27,7 +27,9 @@ import { useDispatch, useSelector } from "react-redux";
 import ParameterExecutionForm from "./ParameterExecutionForm";
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import LiveCommandExecutionPreview from "./LiveCommandExecutionPreview";
+import LiveCommandExecutionPreview, {
+	copyCommandToClipboard,
+} from "./LiveCommandExecutionPreview";
 import CEFStyles from "../../../utils/CommandExecutionUtils/CommandExecutionStyles";
 import { CMDBuddyCommandWithIsCollapsed } from "@/app/commands/generate/page";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
@@ -45,6 +47,12 @@ import exitIconDarkMode from "../../../utils/images/exit-icon-darkmode.svg";
 import { RootState } from "../../../redux/store";
 import resetIconLightMode from "../../../utils/images/reset icons/reset-icon-lightmode.svg";
 import resetIconDarkMode from "../../../utils/images/reset icons/reset-icon-darkmode.svg";
+import {
+	ClipboardCopyIconContainer,
+	CopyButton,
+} from "../../../utils/CommandCreationUtils/CommandPreviewStyles";
+import copyToClipboardIcon from "../../../utils/images/copy-to-clipboard-icon.png";
+import Image from "next/image";
 
 const {
 	ErrorItem,
@@ -126,6 +134,23 @@ const CommandExecutionForm = ({
 								iscollapsed={command.isCollapsed ? "true" : "false"}
 							/>
 						</StyledGeneralIcon>
+					</CMDBuddyTooltip>
+
+					<CMDBuddyTooltip content="Copy generated Command to clipboard">
+						<CopyButton
+							onClick={(e) => copyCommandToClipboard(e, command)}
+							aria-label="Copy to clipboard"
+						>
+							<ClipboardCopyIconContainer>
+								<Image
+									src={copyToClipboardIcon}
+									alt="Copy to clipboard"
+									width={24}
+									height={24}
+									layout="intrinsic"
+								/>
+							</ClipboardCopyIconContainer>
+						</CopyButton>
 					</CMDBuddyTooltip>
 
 					<IconWrapper>
