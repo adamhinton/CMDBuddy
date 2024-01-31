@@ -241,11 +241,6 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 
 	const formValues = methods.getValues();
 
-	// TODO: Delete this old useEffect
-	// useEffect(() => {
-	// 	console.log("formValues:", formValues);
-	// }, [formValues]);
-
 	return (
 		<FormProvider {...methods}>
 			<StyledCCFForm
@@ -376,7 +371,7 @@ const CommandCreationOrEditForm: React.FC<FormProps> = (props) => {
 				form", "Submit", "Collapse All Params" */}
 				{/* Made a function for this because it's used twice in this component */}
 				{/* Only shows at bottom of page if user has made at least one param, seems unnecessary otherwisei */}
-				{parameterList.length > 0 &&
+				{parameterList.length > 1 &&
 					parameterCreationButtons({
 						collapseAllParams,
 						update,

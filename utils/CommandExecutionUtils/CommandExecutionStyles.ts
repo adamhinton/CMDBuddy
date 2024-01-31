@@ -6,6 +6,7 @@ import styled from "styled-components";
 const CEFForm = styled.form`
 	background: ${({ theme }) => theme.commandGeneration.baseBackground};
 	color: ${({ theme }) => theme.commandGeneration.baseText};
+	max-width: 1200px;
 	padding: 1rem;
 	border-radius: 8px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -63,7 +64,7 @@ const CEFInput = styled.input<CEFTextInputProps>`
 			: null};
 	margin: 0.75rem 1rem;
 	box-sizing: border-box;
-	border: 1px solid ${({ theme }) => theme.commandGeneration.inputText};
+	border: 1px dotted ${({ theme }) => theme.commandGeneration.inputText};
 	border-radius: 4px;
 	background: ${({ theme, hasError }) =>
 		hasError
@@ -80,6 +81,7 @@ const CEFLabel = styled.label`
 	margin-left: 10px;
 	margin-right: 3px;
 	margin-bottom: 0.25rem;
+	max-width: 200px;
 `;
 
 const CEFButton = styled.button`
@@ -115,6 +117,7 @@ const CEFParametersContainer = styled.section`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	gap: 20px;
 `;
 
 // Pass in optional validation error
@@ -123,7 +126,7 @@ const CEFParametersContainer = styled.section`
 const PEFContainer = styled.div<{ haserror?: boolean }>`
 	display: flex;
 	flex-direction: row;
-	max-width: 400px;
+	max-width: 500px;
 	background: ${({ theme, haserror }) =>
 		haserror
 			? "rgba(255, 0, 0, 0.1)"
