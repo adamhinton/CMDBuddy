@@ -20,6 +20,7 @@ import {
 import {
 	CommandCreationUIElements,
 	DefaultValueInput,
+	renderParameterSpecificFields,
 } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 
 import {
@@ -143,45 +144,6 @@ const ParameterCreationOrEditForm = ({
 	 */
 	const isCollapsed = getValues(`parameters.${index}.isCollapsed`);
 
-	/**User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, or DROPDOWN */
-	// TODO Stretch: Just pass in the param type here and deal with the case logic in the function. To make PCEF code cleaner
-	const renderParameterSpecificFields = () => {
-		switch (parameterType) {
-			case "STRING":
-				return (
-					<StringParameterFields
-						index={index}
-						parameterErrors={parameterErrors as StringParameterErrors}
-					/>
-				);
-			case "INT":
-				return (
-					<IntParameterFields
-						index={index}
-						parameterErrors={parameterErrors as IntParameterErrors}
-					/>
-				);
-			case "BOOLEAN":
-				return <BooleanParameterFields index={index} />;
-			case "DROPDOWN":
-				return (
-					<DropdownParameterFields
-						index={index}
-						parameterErrors={parameterErrors as DropdownParameterErrors}
-					/>
-				);
-			case "FLAG":
-				return (
-					<FlagParameterFields
-						index={index}
-						parameterErrors={parameterErrors as FlagParameterErrors}
-					/>
-				);
-			default:
-				return null;
-		}
-	};
-
 	// Every Parameter has these fields, regardless of type
 	return (
 		<ParameterCreationFormContainer>
@@ -296,7 +258,7 @@ const ParameterCreationOrEditForm = ({
 					)}
 
 					{/* Render stuff specific to each Parameter's type */}
-					{renderParameterSpecificFields()}
+					{renderParameterSpecificFields(parameterType, parameterErrors, index)}
 				</div>
 			)}
 		</ParameterCreationFormContainer>

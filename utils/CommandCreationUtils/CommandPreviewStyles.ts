@@ -18,12 +18,15 @@ type CommandPreviewContainerProps = {
  * isvisible prop is all lowercase because React yelled at me otherwise, not sure why.
  *  */
 export const CommandPreviewContainer = styled.section<CommandPreviewContainerProps>`
+	display: flex;
+	align-items: center;
 	opacity: ${({ isvisible }) => (isvisible === "true" ? 1 : 0)};
+	gap: 8px;
 	visibility: ${({ isvisible }) =>
 		isvisible === "true" ? "visible" : "hidden"};
 	transition: opacity 0.5s, visibility 0.5s;
 	padding: 10px;
-	margin: 10px 0;
+	margin: 20px 0 30px;
 	border-radius: 5px;
 	box-shadow: ${({ theme }) => theme.commandPreview.boxShadow};
 	background-color: ${({ theme }) => theme.commandPreview.background};

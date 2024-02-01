@@ -5,6 +5,9 @@
 // TODO Stretch: Break this up into PCU and CCU; file getting too long
 
 import {
+	FieldError,
+	FieldErrorsImpl,
+	Merge,
 	UseFieldArrayAppend,
 	UseFieldArrayUpdate,
 	UseFormGetValues,
@@ -39,6 +42,7 @@ import {
 } from "../styles/CommandCreationStyles/CommandCreationStyles";
 import { CMDBuddyCommand } from "../zod/CommandSchema";
 import { useEffect, useState } from "react";
+import { ParameterType } from "@/API";
 
 /**Helper function to convert empty string to null bc schema expects null for some inputs if they're empty */
 const toNumberOrNullOrUndefined = (value: string) =>
@@ -412,6 +416,50 @@ export const DefaultValueInput = ({
 	}
 };
 
+/**User fills out different fields based on if the Parameter is a STRING, INT, BOOLEAN, FLAG or DROPDOWN */
+export const renderParameterSpecificFields = (
+	parameterType: ParameterCreationType,
+	parameterErrors:
+		| Merge<FieldError, FieldErrorsImpl<NonNullable<AnyParameter>>>
+		| undefined,
+	index: number
+) => {
+	switch (parameterType) {
+		case "STRING":
+			return (
+				<StringParameterFields
+					index={index}
+					parameterErrors={parameterErrors as StringParameterErrors}
+				/>
+			);
+		case "INT":
+			return (
+				<IntParameterFields
+					index={index}
+					parameterErrors={parameterErrors as IntParameterErrors}
+				/>
+			);
+		case "BOOLEAN":
+			return <BooleanParameterFields index={index} />;
+		case "DROPDOWN":
+			return (
+				<DropdownParameterFields
+					index={index}
+					parameterErrors={parameterErrors as DropdownParameterErrors}
+				/>
+			);
+		case "FLAG":
+			return (
+				<FlagParameterFields
+					index={index}
+					parameterErrors={parameterErrors as FlagParameterErrors}
+				/>
+			);
+		default:
+			return null;
+	}
+};
+
 type ParameterCreationButtonProps = {
 	collapseAllParams: (
 		update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>,
@@ -493,6 +541,7 @@ export const CommandCreationUIElements = {
 	FlagParameterFields,
 	collapseAllParams,
 	parameterCreationButtons,
+	renderParameterSpecificFields,
 };
 
 export type {
