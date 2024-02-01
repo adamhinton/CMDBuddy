@@ -103,7 +103,7 @@ const SideBar = () => {
 		return (
 			<SideBarContainer>
 				<h2>
-					Add commands <Link href="commands/create">here</Link>
+					Add commands <Link href="/commands/create">here</Link>
 				</h2>
 			</SideBarContainer>
 		);
