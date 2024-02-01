@@ -28,9 +28,9 @@ const AboutPageLayout = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
-	@media (max-width: 768px) {
+	/* @media (max-width: 768px) {
 		flex-direction: column;
-	}
+	} */
 	a {
 		color: green;
 	}
@@ -40,6 +40,10 @@ const ContentContainer = styled.div`
 	padding: 20px;
 	flex-grow: 1;
 	background-color: ${({ theme }) => theme.colors.background};
+
+	@media (max-width: 768px) {
+		padding: 10px;
+	}
 `;
 
 const Section = styled.section`
@@ -61,6 +65,8 @@ const StyledTableOfContents = styled.nav`
 
 	@media (max-width: 768px) {
 		position: relative;
+		margin-right: 10px;
+		width: 175px;
 	}
 
 	ul {
@@ -70,7 +76,7 @@ const StyledTableOfContents = styled.nav`
 	}
 
 	li {
-		margin-top: 10px;
+		margin-top: 8px;
 	}
 
 	a {
