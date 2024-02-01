@@ -112,7 +112,7 @@ const About = () => {
 						program, and a <strong>title</strong> to identify it in the sidebar.
 					</Text>
 					<ImageContainer>
-						<Image
+						<StyledImage
 							src={
 								isDarkMode
 									? darkModeCreateBaseCommandTitleIMG
@@ -145,7 +145,7 @@ const About = () => {
 						FLAG, and DROPDOWN. Each has different options for validation.
 					</Text>
 					<ImageContainer>
-						<Image
+						<StyledImage
 							src={isDarkMode ? darkModePCFIMG : lightModePCFIMG}
 							alt="Parameter Creation UI with inputs for Type, Name, Default Value, Optional (checkbox), min/max length, and Validation Regex"
 						/>
