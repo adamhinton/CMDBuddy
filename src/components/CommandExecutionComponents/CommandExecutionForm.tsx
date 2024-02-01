@@ -14,20 +14,17 @@
 
 // TODO Stretch: In PEF, on hover over a param, show its attributes (maxLength etc)
 
-// TODO: Clean up CEF collapse styling:
-//	-- Figure out collapsibleBar look
-//  -- Make the whole UI of it smaller when collapsed, like smaller fonts etc
-//  -- probably put copy button in collapsible bar
-
 import {
 	removeSingleActiveCommandByID,
 	toggleCommandCollapseByID,
 } from "../../../redux/slices/activeCommandsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ParameterExecutionForm from "./ParameterExecutionForm";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import LiveCommandExecutionPreview from "./LiveCommandExecutionPreview";
+import LiveCommandExecutionPreview, {
+	copyCommandToClipboard,
+} from "./LiveCommandExecutionPreview";
 import CEFStyles from "../../../utils/CommandExecutionUtils/CommandExecutionStyles";
 import { CMDBuddyCommandWithIsCollapsed } from "@/app/commands/generate/page";
 import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
@@ -45,6 +42,12 @@ import exitIconDarkMode from "../../../utils/images/exit-icon-darkmode.svg";
 import { RootState } from "../../../redux/store";
 import resetIconLightMode from "../../../utils/images/reset icons/reset-icon-lightmode.svg";
 import resetIconDarkMode from "../../../utils/images/reset icons/reset-icon-darkmode.svg";
+import {
+	ClipboardCopyIconContainer,
+	CopyButton,
+} from "../../../utils/CommandCreationUtils/CommandPreviewStyles";
+import copyToClipboardIcon from "../../../utils/images/copy-to-clipboard-icon.png";
+import Image from "next/image";
 
 const {
 	ErrorItem,
@@ -88,6 +91,8 @@ const CommandExecutionForm = ({
 		(state: RootState) => state.darkMode.isDarkMode
 	);
 
+	const [generatedCommandPreview, setGeneratedCommandPreview] = useState("");
+
 	// Error handling
 	// Display parameter errors here rather than in individual Parameter inputs to reduce clutter
 	// This displays a max of three errors at a time
@@ -128,22 +133,48 @@ const CommandExecutionForm = ({
 						</StyledGeneralIcon>
 					</CMDBuddyTooltip>
 
-					<IconWrapper>
-						<CMDBuddyTooltip content="Reset to default values">
-							<StyledGeneralIcon>
-								<StyledIconImage
-									src={isDarkMode ? resetIconDarkMode : resetIconLightMode}
-									alt="Reset to default values"
-									onClick={(e) => {
-										e.stopPropagation();
-										e.preventDefault();
-										// Stop click from bubbling up to the "collapse" onClick, which would toggle collapse unintentionally
-										methods.reset();
-									}}
-								/>
-							</StyledGeneralIcon>
+					{/* Show "copy to clipboard" icon --- but only when form is collapsed, because the copy icon already shows elsewhere when not collapsed */}
+					{command.isCollapsed && (
+						// This copy icon is also used in LCEP.tsx
+						<CMDBuddyTooltip content="Copy generated Command to clipboard">
+							<CopyButton
+								onClick={(e) =>
+									copyCommandToClipboard(e, generatedCommandPreview)
+								}
+								aria-label="Copy to clipboard"
+							>
+								<ClipboardCopyIconContainer>
+									<Image
+										src={copyToClipboardIcon}
+										alt="Copy to clipboard"
+										width={24}
+										height={24}
+										layout="intrinsic"
+									/>
+								</ClipboardCopyIconContainer>
+							</CopyButton>
 						</CMDBuddyTooltip>
-					</IconWrapper>
+					)}
+
+					{/* Only show "reset" icon when command isn't collapsed */}
+					{!command.isCollapsed && (
+						<IconWrapper>
+							<CMDBuddyTooltip content="Reset to default values">
+								<StyledGeneralIcon>
+									<StyledIconImage
+										src={isDarkMode ? resetIconDarkMode : resetIconLightMode}
+										alt="Reset to default values"
+										onClick={(e) => {
+											e.stopPropagation();
+											e.preventDefault();
+											// Stop click from bubbling up to the "collapse" onClick, which would toggle collapse unintentionally
+											methods.reset();
+										}}
+									/>
+								</StyledGeneralIcon>
+							</CMDBuddyTooltip>
+						</IconWrapper>
+					)}
 
 					<IconWrapper>
 						<CMDBuddyTooltip content="Exit this command">
@@ -170,6 +201,7 @@ const CommandExecutionForm = ({
 						<LiveCommandExecutionPreview
 							baseCommand={command.baseCommand}
 							parameters={command.parameters}
+							setGeneratedCommandPreview={setGeneratedCommandPreview}
 						/>
 
 						<CEFParametersContainer>
