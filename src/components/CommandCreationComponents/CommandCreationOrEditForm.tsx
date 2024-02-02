@@ -74,18 +74,18 @@ export type CMDBuddyCommandFormValidation = z.infer<
 export type ComponentMode = "editExistingCommand" | "createNewCommand";
 
 /**If using this component to edit an existing Command, a command to edit must be passed in */
-interface FormPropsEditExistingCommand {
+type FormPropsEditExistingCommand = Readonly<{
 	componentMode: "editExistingCommand";
 	commandToEdit: NonNullable<CMDBuddyCommand>;
-}
+}>;
 
 /**If using this component to add a new command, this tells that to the code */
-interface FormPropsCreateCommand {
+type FormPropsCreateCommand = Readonly<{
 	componentMode: "createNewCommand";
 	// No command to edit because we're creating a new command
 	// Added this property for type safety stuff
 	commandToEdit?: null;
-}
+}>;
 
 // Slightly different props based on if it's "edit" or "create" mode
 type FormProps = FormPropsCreateCommand | FormPropsEditExistingCommand;

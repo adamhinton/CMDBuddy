@@ -23,7 +23,7 @@ const ParameterExecutionForm = ({
 	parameter,
 	methods,
 }: {
-	parameter: CMDBuddyParameter;
+	parameter: Readonly<CMDBuddyParameter>;
 	methods: UseFormReturn<CEFDefaultValues, any, undefined>;
 }) => {
 	const {

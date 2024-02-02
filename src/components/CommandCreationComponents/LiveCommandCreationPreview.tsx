@@ -14,9 +14,9 @@ import { CMDBuddyCommandFormValidation } from "./CommandCreationOrEditForm";
 import { CommandPreviewContainer } from "../../../utils/CommandCreationUtils/CommandPreviewStyles";
 import { useEffect, useState } from "react";
 
-type LiveCommandPreviewProps = {
+type LiveCommandPreviewProps = Readonly<{
 	watch: UseFormWatch<CMDBuddyCommandFormValidation>;
-};
+}>;
 
 const LiveCommandPreview = ({ watch }: LiveCommandPreviewProps) => {
 	// Use watch to get real-time updates of form values

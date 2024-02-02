@@ -19,9 +19,9 @@ const TabContainer = styled.nav`
 	padding: 10px 0;
 `;
 
-type TabProps = {
+type TabProps = Readonly<{
 	active?: boolean;
-};
+}>;
 
 const Tab = styled.button<TabProps>`
 	background: ${({ theme, active }) =>

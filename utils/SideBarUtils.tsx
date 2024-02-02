@@ -134,9 +134,9 @@ export const ConfirmIcon = styled.span`
 
 /**User has saved their DnD changes to command order, so save that to redux state and db */
 const handleDnDSave = async (
-	localCommands: CMDBuddyCommand[],
+	localCommands: Readonly<CMDBuddyCommand[]>,
 	dispatch: Dispatch,
-	originalCommands: CMDBuddyCommand[],
+	originalCommands: Readonly<CMDBuddyCommand[]>,
 	setHasChanges: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
 	// Assign new order based on the current index in localCommands
@@ -190,7 +190,7 @@ const handleCommandTitlesEditSubmit = async (
 };
 
 const handleCommandDelete = async (
-	command: CMDBuddyCommand,
+	command: Readonly<CMDBuddyCommand>,
 	dispatch: Dispatch
 ) => {
 	// Optimistic UI update

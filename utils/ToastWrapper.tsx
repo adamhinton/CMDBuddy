@@ -4,9 +4,9 @@
 import { ToastContainer, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-interface ToastProviderProps {
-	children: React.ReactNode;
-}
+type ToastProviderProps = Readonly<{
+	children: Readonly<React.ReactNode>;
+}>;
 
 /**UI has to be wrapped in this for Toast purposes */
 export default function ToastWrapper({ children }: ToastProviderProps) {

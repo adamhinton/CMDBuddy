@@ -32,7 +32,7 @@ import { DispatchProp } from "react-redux";
 // This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
 // It also focuses the UI on the first error when user hits Submit.
 const validateParameterOnSubmit = (
-	parameter: AnyParameter,
+	parameter: Readonly<AnyParameter>,
 	index: number,
 	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
 	isValid: boolean,
@@ -215,7 +215,7 @@ const validateParameterOnSubmit = (
 
 /**Submit new Command, then submit its associated Parameters one by one */
 const submitNewCommandAndParamsToDB = async (
-	formData: CMDBuddyCommandFormValidation,
+	formData: Readonly<CMDBuddyCommandFormValidation>,
 	userID: string
 ): Promise<CMDBuddyCommand> => {
 	let completeCommand: CMDBuddyCommand | null = null;
@@ -268,8 +268,8 @@ const submitNewCommandAndParamsToDB = async (
 /**  When user edits a Command, this tells the code if its params are newly created, updated, or deleted. 
  Params that haven't changed are left out of the returned object  */
 const sortSubmittedEditedParams = (
-	data: CMDBuddyCommandFormValidation,
-	commandToEdit: CMDBuddyCommand
+	data: Readonly<CMDBuddyCommandFormValidation>,
+	commandToEdit: Readonly<CMDBuddyCommand>
 ) => {
 	const originalParameters = commandToEdit?.parameters;
 
@@ -322,7 +322,7 @@ const fetchCommandWithParameters = async (commandID: string) => {
  * Returns whether all parameters are valid.
  */
 function validateAndUpdateParameters(
-	parameters: AnyParameter[],
+	parameters: Readonly<AnyParameter[]>,
 	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>
 ): boolean {
@@ -352,7 +352,7 @@ function validateAndUpdateParameters(
  * Handles creation of new command.
  */
 async function createNewCommand(
-	data: CMDBuddyCommandFormValidation,
+	data: Readonly<CMDBuddyCommandFormValidation>,
 	dispatch: Dispatch<AnyAction>,
 	loggedInUserId: string
 ) {
@@ -380,9 +380,9 @@ async function createNewCommand(
  * Handles editing of existing command.
  */
 async function editExistingCommand(
-	data: CMDBuddyCommandFormValidation,
-	dispatch: any,
-	commandToEdit: CMDBuddyCommand
+	data: Readonly<CMDBuddyCommandFormValidation>,
+	dispatch: Dispatch,
+	commandToEdit: Readonly<CMDBuddyCommand>
 ) {
 	try {
 		await submitParamEditsToDB(data, commandToEdit);
@@ -401,7 +401,7 @@ async function editExistingCommand(
  * returns boolean, and the name of duplicate param if any, like so: [isValid: boolean; duplicateName? string]
  */
 function hasNoDuplicateParamNames(
-	parameters: AnyParameter[]
+	parameters: Readonly<AnyParameter[]>
 ): [isValid: boolean, duplicateName?: string] {
 	const seenNames = new Set<string>();
 
@@ -435,7 +435,7 @@ const handleSubmit = async ({
 	componentMode: ComponentMode;
 	setIsSubmitting: (value: React.SetStateAction<boolean>) => void;
 	dispatch: Dispatch<AnyAction>;
-	loggedInUser: CMDBuddyUser;
+	loggedInUser: Readonly<CMDBuddyUser>;
 	commandToEdit: CMDBuddyCommand | null;
 	methods: UseFormReturn<CMDBuddyCommandFormValidation>;
 	remove: (index?: number | number[] | undefined) => void;
@@ -526,8 +526,8 @@ const handleSubmit = async ({
 };
 
 const submitParamEditsToDB = async (
-	data: CMDBuddyCommandFormValidation,
-	commandToEdit: CMDBuddyCommand
+	data: Readonly<CMDBuddyCommandFormValidation>,
+	commandToEdit: Readonly<CMDBuddyCommand>
 ) => {
 	const sortedParameters = sortSubmittedEditedParams(data, commandToEdit!);
 	const newParameters = sortedParameters?.newParameters;
