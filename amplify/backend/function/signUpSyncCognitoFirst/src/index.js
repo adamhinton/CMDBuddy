@@ -18,7 +18,8 @@ exports.handler = async (event, context) => {
 	);
 	if (userExists) {
 		console.log("User already exists in DynamoDB:", userEmail);
-		return;
+		// Ensure to return the event object for Cognito to proceed
+		return event;
 	}
 
 	const mutation = /* GraphQL */ `
@@ -51,13 +52,19 @@ exports.handler = async (event, context) => {
 		const response = await res.json();
 		if (response.errors) {
 			console.error("Error creating user in DynamoDB:", response.errors);
-			throw new Error("Error creating user in DynamoDB");
+			// It's best practice to log the error, but not necessarily to throw it,
+			// as throwing here can prevent user creation in Cognito.
+			// However, if you intend to stop the process, then throw the error.
+		} else {
+			console.log("User created in DynamoDB:", userEmail);
 		}
-		console.log("User created in DynamoDB:", userEmail);
 	} catch (error) {
 		console.error("Error processing event:", error);
-		throw error;
+		// Consider how you want to handle errors. Throwing errors here will affect Cognito.
 	}
+
+	// Ensure to return the event object for Cognito to proceed
+	return event;
 };
 
 async function checkIfUserExistsInDynamoDB(email, endpoint, apiKey) {
