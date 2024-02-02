@@ -125,8 +125,7 @@ const SideBar = () => {
 											localCommands,
 											dispatch,
 											reduxStateCommands!,
-											setHasChanges,
-											setLocalCommands
+											setHasChanges
 										)
 									}
 								>

@@ -13,6 +13,7 @@ import React, { useState, useEffect } from "react";
 import {
 	UseFieldArrayUpdate,
 	UseFormGetValues,
+	UseFormSetValue,
 	useFormContext,
 } from "react-hook-form";
 import {
@@ -30,11 +31,6 @@ import {
 	StyledPCFNameInput,
 	StyledPCFOptionalCheckbox,
 } from "../../../utils/styles/CommandCreationStyles/ParameterCreationStyles";
-import {
-	StringParameterErrors,
-	IntParameterErrors,
-	DropdownParameterErrors,
-} from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 import downChevronLightMode from "../../../utils/images/chevrons/down-chevron-lightmode.svg";
 import downChevronDarkMode from "../../../utils/images/chevrons/down-chevron-darkmode.svg";
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
@@ -42,15 +38,14 @@ import DragNDropHandleIcon from "../../../utils/images/drag-drop-handle.svg";
 
 type FormProps = {
 	index: number;
-	removeParameter: Function;
+	removeParameter: (index?: number | number[] | undefined) => void;
 	parameterCreationType: ParameterCreationType;
-	setValue: Function;
+	setValue: UseFormSetValue<CMDBuddyCommandFormValidation>;
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
 	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>;
 	dragHandleProps: DraggableProvidedDragHandleProps;
 };
 
-import { FlagParameterErrors } from "../../../utils/CommandCreationUtils/CommandCreationUtils";
 import {
 	CollapsibleBar,
 	IconWrapper,
