@@ -5,14 +5,13 @@
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import styled, {
+import {
 	DefaultTheme,
 	ThemeProvider,
 	createGlobalStyle,
 } from "styled-components";
 import { RootState } from "../../redux/store";
 import { darkTheme, lightTheme } from "../../utils/styles/themes";
-import Link from "next/link";
 
 // I feel like there's a better way to pass in theme to GlobalStyles
 const GlobalStylesContainer = (theme: DefaultTheme) => {
@@ -48,21 +47,9 @@ const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<>
 			<GlobalStylesContainer theme={theme} />
-			<ThemeProvider theme={theme}>
-				{" "}
-				<h1>CMDBuddy is temporarily down.</h1>
-				<p>This is being actively worked on.</p>
-				<p>In the meantime, please check out my other project:</p>
-				<StyledLink href="https://master.dorqegfj1nrtm.amplifyapp.com/">
-					Risk BattleOdds Calculator
-				</StyledLink>
-			</ThemeProvider>
+			<ThemeProvider theme={theme}>{children}</ThemeProvider>
 		</>
 	);
 };
 
 export default ThemeProviderWrapper;
-
-const StyledLink = styled(Link)`
-	color: yellow;
-`;
