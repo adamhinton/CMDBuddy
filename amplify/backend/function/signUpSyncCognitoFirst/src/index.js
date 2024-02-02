@@ -65,7 +65,6 @@ exports.handler = async (event, context) => {
 		}
 	} catch (error) {
 		console.error("Error processing event:", error);
-		// Consider how you want to handle errors. Throwing errors here will affect Cognito.
 	}
 
 	// Ensure to return the event object for Cognito to proceed
