@@ -1,7 +1,6 @@
 "use client";
 
 import SideBar from "@/components/SideBar/SideBar";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "../../../redux/store";
@@ -12,14 +11,17 @@ export default function CommandsLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	// Redirect to login/registration if not logged in
 	const loggedInUser = useSelector((state: RootState) => state.auth.user);
 	const router = useRouter();
-	useEffect(() => {
-		if (!loggedInUser) {
-			router.push("/login");
-		}
-	}, [loggedInUser, router]);
+
+	// User needs an account to create/generate commands
+	if (!loggedInUser) {
+		return (
+			<LayoutContainer>
+				<h1>Log in to create and generate commands!</h1>
+			</LayoutContainer>
+		);
+	}
 
 	return (
 		<LayoutContainer>
