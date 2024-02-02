@@ -120,9 +120,13 @@ const CEFParametersContainer = styled.section`
 	gap: 20px;
 `;
 
-// Pass in optional validation error
-// If there's an error we do additional styling to make that clear
-// React is making me spell haserror all lower case for some reason
+/** Pass in optional validation error
+ *
+ * If there's an error we do additional styling to make that clear
+ *
+ * React is making me spell haserror all lower case for some reason
+ *  */
+
 const PEFContainer = styled.div<{ haserror?: boolean }>`
 	display: flex;
 	flex-direction: row;
