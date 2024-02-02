@@ -1,3 +1,7 @@
+// README:
+// The problem this function seeks to solve is that when a user signs up in the app, that adds the user to Cognito, but doesn't add their record to the db
+// So Cognito updates trigger
+
 const fetch = require("node-fetch");
 
 exports.handler = async (event, context) => {
