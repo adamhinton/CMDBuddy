@@ -35,7 +35,7 @@ const CommandInSideBar = ({
 	command,
 	dragHandleProps,
 }: {
-	command: CMDBuddyCommand;
+	command: Readonly<CMDBuddyCommand>;
 	dragHandleProps: DraggableProvidedDragHandleProps;
 }) => {
 	const { title } = command;

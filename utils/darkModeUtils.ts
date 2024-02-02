@@ -11,7 +11,7 @@ const localStorageDarkModeKey = "isDarkMode";
  * Checks (in order): Account preference, localStorage, system preference
  */
 export function getUserDarkModePreference(
-	user: CMDBuddyUser | null = null
+	user: Readonly<CMDBuddyUser | null> = null
 ): boolean {
 	// Check user preference in db first
 	if (user?.darkMode !== undefined) {

@@ -6,9 +6,9 @@
 import styled from "styled-components";
 
 // Not totally sure why I need to pass this in as a string, but it made errors go away
-type CommandPreviewContainerProps = {
+type CommandPreviewContainerProps = Readonly<{
 	isvisible: "true" | "false";
-};
+}>;
 
 // NOTE: See Readme. This component is used in two different files to do the same thing.
 /**Displays a preview of the generated CLI command.

@@ -67,7 +67,7 @@ const StringParameterFields = ({
 	parameterErrors,
 }: {
 	index: number;
-	parameterErrors: StringParameterErrors;
+	parameterErrors: Readonly<StringParameterErrors>;
 }) => {
 	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
 
@@ -138,7 +138,7 @@ const IntParameterFields = ({
 	parameterErrors,
 }: {
 	index: number;
-	parameterErrors: IntParameterErrors;
+	parameterErrors: Readonly<IntParameterErrors>;
 }) => {
 	const { register } = useFormContext<{ parameters: AnyParameter[] }>();
 
@@ -205,7 +205,7 @@ const DropdownParameterFields = ({
 	parameterErrors,
 }: {
 	index: number;
-	parameterErrors: DropdownParameterErrors;
+	parameterErrors: Readonly<DropdownParameterErrors>;
 }) => {
 	/**A single allowed dropdown value that the user inputs */
 	type Tag = string;
@@ -282,7 +282,7 @@ const FlagParameterFields = ({
 	parameterErrors,
 }: {
 	index: number;
-	parameterErrors: FlagParameterErrors;
+	parameterErrors: Readonly<FlagParameterErrors>;
 }) => {
 	// Nothing to put here right now but leaving this because I might have something soon
 	return <></>;
@@ -317,7 +317,9 @@ export const DefaultValueInput = ({
 		parameters: AnyParameter[];
 	}>;
 	index: number;
-	parameterErrors: any;
+	parameterErrors:
+		| Merge<FieldError, FieldErrorsImpl<NonNullable<AnyParameter>>>
+		| undefined;
 }) => {
 	switch (type) {
 		case "STRING":
@@ -458,7 +460,7 @@ export const renderParameterSpecificFields = (
 	}
 };
 
-type ParameterCreationButtonProps = {
+type ParameterCreationButtonProps = Readonly<{
 	collapseAllParams: (
 		update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>,
 		getValues: UseFormGetValues<CMDBuddyCommandFormValidation>
@@ -469,11 +471,13 @@ type ParameterCreationButtonProps = {
 	clearForm: () => void;
 	isSubmitting: boolean;
 	componentMode: ComponentMode;
-	commandToEdit: CMDBuddyCommand | null;
-};
+	commandToEdit: Readonly<CMDBuddyCommand | null>;
+}>;
 
 /**Reusable parameter creation buttons: "Add new parameter", "Clear form", "Submit", "Collapse All Params" */
-const parameterCreationButtons: React.FC<ParameterCreationButtonProps> = ({
+const parameterCreationButtons: React.FC<
+	Readonly<ParameterCreationButtonProps>
+> = ({
 	collapseAllParams,
 	update,
 	getValues,

@@ -36,7 +36,7 @@ import downChevronDarkMode from "../../../utils/images/chevrons/down-chevron-dar
 import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 import DragNDropHandleIcon from "../../../utils/images/drag-drop-handle.svg";
 
-type FormProps = {
+type FormProps = Readonly<{
 	index: number;
 	removeParameter: (index?: number | number[] | undefined) => void;
 	parameterCreationType: ParameterCreationType;
@@ -44,7 +44,7 @@ type FormProps = {
 	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
 	getValues: UseFormGetValues<CMDBuddyCommandFormValidation>;
 	dragHandleProps: DraggableProvidedDragHandleProps;
-};
+}>;
 
 import {
 	CollapsibleBar,

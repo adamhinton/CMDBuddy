@@ -6,9 +6,9 @@ import Link from "next/link";
 import { AboutPageStyles } from "../../../utils/styles/AboutPageStyles";
 const { StyledTableOfContents } = AboutPageStyles;
 
-type TableOfContentProps = {
+type TableOfContentProps = Readonly<{
 	headings: TOCHeadings;
-};
+}>;
 
 type TOCHeading = {
 	title: string;
