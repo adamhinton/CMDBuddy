@@ -1,6 +1,13 @@
 // README:
 // The problem this function seeks to solve is that when a user signs up in the app, that adds the user to Cognito, but doesn't add their record to the db
-// So Cognito updates trigger
+// So Cognito updates trigger this lambda function, which adds the user in question to the db
+// IMPORTANT: Cognito adds the user *after* this lambda function runs, and only *if* it returns valid JSON without throwing an error.
+// -- So, we *log* errors here, rather than throwing errors.
+
+// TODO Stretch: Extend cognito first stuff to other CRUD ops
+
+// TODO Stretch: Reinstate DB-first triggers to add Cognito users
+// -- Note that it needs to return valid JSON. This is easy, just return the event like in the function below.
 
 const fetch = require("node-fetch");
 
@@ -8,9 +15,6 @@ exports.handler = async (event, context) => {
 	const GRAPHQL_ENDPOINT =
 		process.env.API_CMDBUDDYSERVER2_GRAPHQLAPIENDPOINTOUTPUT;
 	const GRAPHQL_API_KEY = process.env.API_CMDBUDDYSERVER2_GRAPHQLAPIKEYOUTPUT;
-
-	console.log("GRAPHQL_ENDPOINT:", GRAPHQL_ENDPOINT);
-	console.log("GRAPHQL_API_KEY:", GRAPHQL_API_KEY);
 
 	const userEmail = event.request.userAttributes.email;
 
@@ -56,9 +60,6 @@ exports.handler = async (event, context) => {
 		const response = await res.json();
 		if (response.errors) {
 			console.error("Error creating user in DynamoDB:", response.errors);
-			// It's best practice to log the error, but not necessarily to throw it,
-			// as throwing here can prevent user creation in Cognito.
-			// However, if you intend to stop the process, then throw the error.
 		} else {
 			console.log("User created in DynamoDB:", userEmail);
 		}
