@@ -28,7 +28,7 @@ const LiveCommandExecutionPreview = ({
 }: {
 	baseCommand: string;
 	parameters: CMDBuddyParameter[] | undefined;
-	setGeneratedCommandPreview: Function;
+	setGeneratedCommandPreview: React.Dispatch<React.SetStateAction<string>>;
 }) => {
 	const { watch } = useFormContext();
 

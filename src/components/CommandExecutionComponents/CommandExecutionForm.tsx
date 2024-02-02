@@ -41,6 +41,7 @@ import {
 } from "../../../utils/CommandCreationUtils/CommandPreviewStyles";
 import copyToClipboardIcon from "../../../utils/images/copy-to-clipboard-icon.png";
 import Image from "next/image";
+import { Dispatch } from "redux";
 
 const {
 	ErrorItem,
@@ -54,7 +55,7 @@ const {
 const removeCommandOnClick = (
 	e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	commandID: string,
-	dispatch: Function
+	dispatch: Dispatch
 ): void => {
 	e.preventDefault();
 	dispatch(removeSingleActiveCommandByID(commandID));

@@ -22,7 +22,7 @@ import {
 } from "../../redux/slices/commandsSlice";
 import { AnyAction, Dispatch } from "redux";
 import { CMDBuddyUser } from "../zod/UserSchema";
-import { UseFormReturn } from "react-hook-form";
+import { UseFieldArrayUpdate, UseFormReturn } from "react-hook-form";
 import {
 	MAX_COMMAND_LIMIT_PER_USER,
 	MAX_PARAM_LIMIT_PER_COMMAND,
@@ -36,7 +36,7 @@ const validateParameterOnSubmit = (
 	index: number,
 	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
 	isValid: boolean,
-	update: Function
+	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>
 ): boolean => {
 	const { setError } = methods;
 
@@ -324,7 +324,7 @@ const fetchCommandWithParameters = async (commandID: string) => {
 function validateAndUpdateParameters(
 	parameters: AnyParameter[],
 	methods: UseFormReturn<CMDBuddyCommandFormValidation>,
-	update: Function
+	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>
 ): boolean {
 	let nonFlagOrder = 1;
 	let flagOrder = 1;
@@ -440,7 +440,7 @@ const handleSubmit = async ({
 	methods: UseFormReturn<CMDBuddyCommandFormValidation>;
 	remove: (index?: number | number[] | undefined) => void;
 	numCommands?: number;
-	update: Function;
+	update: UseFieldArrayUpdate<CMDBuddyCommandFormValidation>;
 }) => {
 	setIsSubmitting(true);
 	toast(

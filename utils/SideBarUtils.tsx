@@ -11,6 +11,7 @@ import {
 import { editCommandTitle, deleteCommand } from "../redux/slices/commandsSlice";
 import { CMDBuddyCommand } from "./zod/CommandSchema";
 import { reorderCommands } from "../redux/slices/commandsSlice";
+import { Dispatch } from "redux";
 
 export const SideBarContainer = styled.div`
 	width: 300px;
@@ -134,10 +135,9 @@ export const ConfirmIcon = styled.span`
 /**User has saved their DnD changes to command order, so save that to redux state and db */
 const handleDnDSave = async (
 	localCommands: CMDBuddyCommand[],
-	dispatch: Function,
+	dispatch: Dispatch,
 	originalCommands: CMDBuddyCommand[],
-	setHasChanges: Function,
-	setLocalCommands: Function
+	setHasChanges: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
 	// Assign new order based on the current index in localCommands
 	const updatedCommands = localCommands.map((cmd, index) => ({
@@ -179,7 +179,7 @@ const handleDnDSave = async (
 const handleCommandTitlesEditSubmit = async (
 	commandID: string,
 	editedTitle: string,
-	dispatch: Function
+	dispatch: Dispatch
 ) => {
 	// Optimistic UI update
 	dispatch(editCommandTitle({ commandId: commandID, newTitle: editedTitle }));
@@ -191,7 +191,7 @@ const handleCommandTitlesEditSubmit = async (
 
 const handleCommandDelete = async (
 	command: CMDBuddyCommand,
-	dispatch: Function
+	dispatch: Dispatch
 ) => {
 	// Optimistic UI update
 	dispatch(deleteCommand(command.id));
