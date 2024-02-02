@@ -91,7 +91,6 @@ export const toCHeadings: TOCHeadings = [
 			{ title: "Automating Routine Tasks" },
 		],
 	},
-	// TODO Stretch: FAQ
 ];
 
 export default TableOfContents;

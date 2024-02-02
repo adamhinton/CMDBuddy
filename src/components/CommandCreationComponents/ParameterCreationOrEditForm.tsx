@@ -9,8 +9,6 @@
 // FLAG Is stuff like `--headed` or `--all` which you either include in the command or don't.
 // BOOLEAN is a true/false variable, like `isLookingForJob=true`
 
-// TODO Stretch: Red border or something around PCEF when it has error
-
 import React, { useState, useEffect } from "react";
 import {
 	UseFieldArrayUpdate,
@@ -199,7 +197,6 @@ const ParameterCreationOrEditForm = ({
 						<ParameterCreationLabel>
 							Type{" "}
 							{/* Open in new tab because CCEF state isn't persisted right now */}
-							{/* TODO Stretch: Remove target blank after we persist CEF state */}
 							<StyledLink href="/about#String%20Parameter" target="_blank">
 								{"(What's this?)"}
 							</StyledLink>

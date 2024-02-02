@@ -2,8 +2,6 @@
 // This is to store re-usable variables
 // A single source of truth for the app on things that might change.
 
-// TODO Stretch: Add any other global variables
-
 /**The max number of Commands a user can have in the DB.
  *
  * This is to prevent spam but can be raised if users need it */

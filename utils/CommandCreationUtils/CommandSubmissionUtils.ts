@@ -29,8 +29,6 @@ import {
 } from "../MiscellaneousGlobalVariables";
 import { DispatchProp } from "react-redux";
 
-// TODO Stretch: Error on collapsed param uncollapses it, but doesn't focus to the param
-
 // This validates a single Parameter on submit, catching a few things that Zod etc couldnt.
 // It also focuses the UI on the first error when user hits Submit.
 const validateParameterOnSubmit = (
@@ -203,7 +201,7 @@ const validateParameterOnSubmit = (
 					message: "Add at least one allowed value",
 				},
 				{
-					// TODO Stretch: This isn't focusing but the other shouldFocuses work fine
+					// This isn't focusing but the other shouldFocuses work fine
 					shouldFocus: true,
 				}
 			);

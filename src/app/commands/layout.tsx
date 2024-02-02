@@ -15,7 +15,6 @@ export default function CommandsLayout({
 	// Redirect to login/registration if not logged in
 	const loggedInUser = useSelector((state: RootState) => state.auth.user);
 	const router = useRouter();
-	// TODO Stretch: Refreshing the page anywhere in /commands pushes to /login even if you're logged in
 	useEffect(() => {
 		if (!loggedInUser) {
 			router.push("/login");

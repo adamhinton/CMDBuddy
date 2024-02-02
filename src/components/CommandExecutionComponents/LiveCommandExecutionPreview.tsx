@@ -9,8 +9,6 @@
 // STYLING:
 // -- Since the UI is much the same, styling is shared between this and LiveCommandCreationPreview.tsx
 
-// TODO Stretch: Inline vs one per line LCEP
-
 import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CMDBuddyParameter } from "../../../utils/zod/ParameterSchema";

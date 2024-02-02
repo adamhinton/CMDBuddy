@@ -1,6 +1,3 @@
-// TODO Tests: Create mock store, wrap tested components in Provider with store
-// https://redux.js.org/usage/writing-tests
-
 import React from "react";
 import { Provider } from "react-redux";
 import { render, fireEvent, screen } from "@testing-library/react";

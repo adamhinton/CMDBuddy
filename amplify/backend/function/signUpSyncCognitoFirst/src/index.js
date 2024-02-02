@@ -4,11 +4,6 @@
 // IMPORTANT: Cognito adds the user *after* this lambda function runs, and only *if* it returns valid JSON without throwing an error.
 // -- So, we *log* errors here, rather than throwing errors.
 
-// TODO Stretch: Extend cognito first stuff to other CRUD ops
-
-// TODO Stretch: Reinstate DB-first triggers to add Cognito users
-// -- Note that it needs to return valid JSON. This is easy, just return the event like in the function below.
-
 const fetch = require("node-fetch");
 
 exports.handler = async (event, context) => {
