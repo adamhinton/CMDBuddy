@@ -19,6 +19,7 @@ const {
 	PEFContainer,
 } = CEFStyles;
 import { CEFDefaultValues } from "./CommandExecutionForm";
+import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
 const ParameterExecutionForm = ({
 	parameter,
 	methods,
@@ -230,3 +231,30 @@ const ParameterExecutionForm = ({
 };
 
 export default ParameterExecutionForm;
+
+/**Generate reminder text of the parameter's attributes
+ *
+ * For instance, max length, min length etc
+ *
+ * Returns an array of attribute strings which will be looped over to form a tooltip
+ */
+const generateParameterToolTip = (parameter: AnyParameter): string[] | [] => {
+	const addTextToToolTip = (text: string) => {
+		toolTipText.push(text);
+	};
+
+	let toolTipText: string[] = [];
+
+	switch (parameter.type) {
+		case "STRING": {
+			parameter.minLength &&
+				addTextToToolTip(`Min Length: ${parameter.minLength}`);
+			parameter.maxLength &&
+				toolTipText.push(`Max Length: ${parameter.maxLength}`);
+			parameter.validationRegex &&
+				addTextToToolTip(`Regex: ${parameter.validationRegex}`);
+		}
+	}
+
+	return toolTipText;
+};
