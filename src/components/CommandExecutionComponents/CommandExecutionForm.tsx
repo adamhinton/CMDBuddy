@@ -65,7 +65,7 @@ export type CEFDefaultValues = Record<string, any>;
 const CommandExecutionForm = ({
 	command,
 }: {
-	command: CMDBuddyCommandWithIsCollapsed;
+	command: Readonly<CMDBuddyCommandWithIsCollapsed>;
 }) => {
 	const methods = useForm({
 		// This looks weird but it just sets each parameter's initial value to its defaultValue (if any)
