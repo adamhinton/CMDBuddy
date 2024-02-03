@@ -19,6 +19,8 @@ const {
 	PEFContainer,
 } = CEFStyles;
 import { CEFDefaultValues } from "./CommandExecutionForm";
+import { AnyParameter } from "../../../utils/CommandCreationUtils/CommandCreationTypes";
+import CMDBuddyTooltip from "../../../utils/ToolTipUtils";
 const ParameterExecutionForm = ({
 	parameter,
 	methods,
@@ -218,15 +220,76 @@ const ParameterExecutionForm = ({
 	};
 
 	return (
-		// Has red background and more stand-out styling if there's a validation error
-		<PEFContainer haserror={hasError || undefined}>
-			<CEFLabel htmlFor={parameter.name}>
-				{/* Asterisk  next to param's name if param is required */}
-				{parameter.name} {!parameter.isNullable && "*"}
-			</CEFLabel>
-			{renderInputField()}
-		</PEFContainer>
+		<CMDBuddyTooltip content={generateParameterToolTip(parameter)}>
+			{/* Has red background and more stand-out styling if there's a validation error*/}
+			<PEFContainer haserror={hasError || undefined}>
+				<CEFLabel htmlFor={parameter.name}>
+					{/* Asterisk  next to param's name if param is required */}
+					{parameter.name} {!parameter.isNullable && "*"}
+				</CEFLabel>
+				{renderInputField()}
+			</PEFContainer>
+		</CMDBuddyTooltip>
 	);
 };
 
 export default ParameterExecutionForm;
+
+/**Generate reminder text of the parameter's attributes
+ *
+ * For instance, max length, min length etc (only if that attribute isn't null)
+ *
+ * Returns an array of attribute strings which will be looped over to form a tooltip.
+ *
+ * This is really only needed for int and string
+ */
+const generateParameterToolTip = (parameter: CMDBuddyParameter): string => {
+	const addTextToToolTip = (text: string) => {
+		toolTipStrings.push(text);
+	};
+
+	/** Making this an array of strings first, then will convert it to tooltip text */
+	let toolTipStrings: string[] = [];
+
+	parameter.defaultValue &&
+		addTextToToolTip(`Default value: ${parameter.defaultValue}`);
+
+	switch (parameter.type) {
+		case "INT": {
+			parameter.minValue &&
+				addTextToToolTip(`Min value: ${parameter.minValue}`);
+			parameter.maxValue &&
+				addTextToToolTip(`Max value: ${parameter.maxValue}`);
+			break;
+		}
+
+		case "STRING": {
+			parameter.minLength &&
+				addTextToToolTip(`Min length: ${parameter.minLength}`);
+			parameter.maxLength &&
+				addTextToToolTip(`Max length: ${parameter.maxLength}`);
+			parameter.validationRegex &&
+				addTextToToolTip(`Regex: ${parameter.validationRegex}`);
+			break;
+		}
+
+		case "BOOLEAN": {
+			// No additional fields here
+			break;
+		}
+
+		case "DROPDOWN": {
+			// No additional fields here
+			break;
+		}
+
+		case "FLAG": {
+			// No additional fields here
+			break;
+		}
+	}
+
+	/** Convert array of tooltip strings to a single string with separators */
+	const toolTipText = toolTipStrings.join(" || ");
+	return toolTipText;
+};
