@@ -289,7 +289,7 @@ const generateParameterToolTip = (parameter: CMDBuddyParameter): string => {
 		}
 	}
 
-	/** Convert array of tooltip strings to a single string with new lines */
-	const toolTipText = toolTipStrings.join("  || ");
+	/** Convert array of tooltip strings to a single string with separators */
+	const toolTipText = toolTipStrings.join(" || ");
 	return toolTipText;
 };
