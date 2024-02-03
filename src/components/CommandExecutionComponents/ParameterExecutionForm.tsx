@@ -234,9 +234,11 @@ export default ParameterExecutionForm;
 
 /**Generate reminder text of the parameter's attributes
  *
- * For instance, max length, min length etc
+ * For instance, max length, min length etc (only if that attribute isn't null)
  *
- * Returns an array of attribute strings which will be looped over to form a tooltip
+ * Returns an array of attribute strings which will be looped over to form a tooltip.
+ *
+ * This is really only needed for int and string
  */
 const generateParameterToolTip = (parameter: AnyParameter): string[] | [] => {
 	const addTextToToolTip = (text: string) => {
@@ -245,14 +247,40 @@ const generateParameterToolTip = (parameter: AnyParameter): string[] | [] => {
 
 	let toolTipText: string[] = [];
 
+	parameter.defaultValue &&
+		addTextToToolTip(`Default value: ${parameter.defaultValue}`);
+
 	switch (parameter.type) {
+		case "INT": {
+			parameter.minValue &&
+				addTextToToolTip(`Min value: ${parameter.minValue}`);
+			parameter.maxValue &&
+				addTextToToolTip(`Max value: ${parameter.maxValue}`);
+			return toolTipText;
+		}
+
 		case "STRING": {
 			parameter.minLength &&
-				addTextToToolTip(`Min Length: ${parameter.minLength}`);
+				addTextToToolTip(`Min length: ${parameter.minLength}`);
 			parameter.maxLength &&
-				toolTipText.push(`Max Length: ${parameter.maxLength}`);
+				toolTipText.push(`Max length: ${parameter.maxLength}`);
 			parameter.validationRegex &&
 				addTextToToolTip(`Regex: ${parameter.validationRegex}`);
+			return toolTipText;
+		}
+
+		// This is really only needed for int and string; I included the other fields below for clarity
+
+		case "BOOLEAN": {
+			// No additional fields here
+		}
+
+		case "DROPDOWN": {
+			// No additional fields here
+		}
+
+		case "FLAG": {
+			// No additional fields here
 		}
 	}
 
