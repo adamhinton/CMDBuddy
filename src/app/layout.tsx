@@ -13,6 +13,9 @@ import ToastWrapper from "../../utils/ToastWrapper";
 export const metadata = {
 	title: "CMDBuddy",
 	description: "Generate CLI Commands",
+	icons: {
+		icon: "/icon.ico",
+	},
 };
 
 export default async function RootLayout({
