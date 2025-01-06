@@ -62,7 +62,7 @@ const Header = () => {
 					LinkedIn
 				</StyledLink>
 				<StyledLink
-					href="https://master.dorqegfj1nrtm.amplifyapp.com/"
+					href="http://risk-battleodds-calculator.adam-hinton.com/"
 					target="_blank"
 				>
 					Risk BattleOdds Calculator
